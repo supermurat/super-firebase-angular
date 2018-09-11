@@ -59,3 +59,50 @@ typings/
 
 # next.js build output
 .next
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+yarn-error.log
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# compiled output
+dist
+dist-ssr
+/tmp
+/out-tsc
+/public
+/functions/lib
+/.firebase
+/.firebaserc
+/functions/package-lock.json
+/package-lock.json
+/README-MY.md
