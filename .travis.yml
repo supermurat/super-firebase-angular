@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-- "iojs"
 - "8"
 before_install:
 - echo "!before_install!"
@@ -23,8 +22,6 @@ after_failure:
 - echo "!after_failure!"
 before_deploy:
 - echo "!before_deploy!"
-deploy:
-- echo "!deploy!"
 after_deploy:
 - echo "!after_deploy!"
 after_script:
