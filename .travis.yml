@@ -1,9 +1,31 @@
 language: node_js
 node_js:
+  - "iojs"
   - "8"
-script:
-  -  echo "Deploy!!"
+before_install:
+  -  echo "!before_install!"
+  - nvm install 8
+  - npm i -g firebase-tools @angular/cli
 install:
-  -  npm install -g firebase-tools @angular/cli cpy-cli del-cli
+  -  echo "!install!"
+  - npm i -g cpy-cli del-cli
+  - npm install
+before_script:
+  -  echo "!before_script!"
+script:
+  -  echo "!script!"
+before_cache:
+  -  echo "!before_cache!"
 after_success:
-   -  firebase deploy --token $FIREBASE_TOKEN.
+  -  echo "!after_success!"
+   -  firebase deploy --token FIREBASE_TOKEN
+after_failure:
+  -  echo "!after_failure!"
+before_deploy:
+  -  echo "!before_deploy!"
+deploy:
+  -  echo "!deploy!"
+after_deploy:
+  -  echo "!after_deploy!"
+after_script:
+  -  echo "!after_script!"
