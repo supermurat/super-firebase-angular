@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - "8"
+script:
+  -  echo "Deploy!!"
+install:
+  -  npm install -g firebase-tools @angular/cli cpy-cli del-cli
+after_success:
+   -  firebase deploy --token $FIREBASE_TOKEN.
