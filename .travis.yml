@@ -15,7 +15,7 @@ script:
 - echo "!script!"
 after_success:
 - echo "!after_success!"
-- firebase deploy --project supermurat-com --token FIREBASE_TOKEN
+- firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"
 after_failure:
 - echo "!after_failure!"
 after_script:
