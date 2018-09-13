@@ -2,3 +2,7 @@
 
 # super-firebase-angular
 All-In-One firebase and angular project.
+
+# Run on your local machine in developer mode
+`npm run serve`
+

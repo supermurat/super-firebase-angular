@@ -16,8 +16,6 @@ script:
 - echo "!script!"
 after_success:
 - echo "!after_success!"
-- ng build --prod
-- ng run super-firebase-angular:server
 - firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"
 after_failure:
 - echo "!after_failure!"

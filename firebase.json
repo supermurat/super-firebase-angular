@@ -10,6 +10,8 @@
     "predeploy": [
       "npm --prefix './functions' run lint",
       "npm --prefix './functions' run build",
+      "ng build --prod",
+      "ng run super-firebase-angular:server",
       "del-cli './public/*.*'",
       "cpy './functions/dist/browser/*.js' './public'",
       "cpy './functions/dist/browser/*.css' './public'",
