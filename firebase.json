@@ -16,7 +16,8 @@
       "cpy './functions/dist/browser/*.js' './public'",
       "cpy './functions/dist/browser/*.css' './public'",
       "cpy './functions/dist/browser/*.ico' './public'",
-      "cpy './functions/dist/browser/*.txt' './public'"
+      "cpy './functions/dist/browser/*.txt' './public'",
+      "cpy './functions/dist/browser/404.html' './public'"
     ]
   },
   "hosting": {
@@ -27,10 +28,6 @@
       "**/node_modules/**"
     ],
     "rewrites": [
-      {
-        "source" : "**/*.@(css|js)",
-        "destination": "/index2.html"
-      },
       {
         "source": "/getTimeByURL",
         "function": "getTimeByURL"

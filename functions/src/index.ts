@@ -29,7 +29,7 @@ app.get('**', function(req, res) {
 
 exports.ssr = functions.https.onRequest(app);
 
-export const getTimeByURL = functions.https.onRequest((request, response) => {
+exports.getTimeByURL = functions.https.onRequest((request, response) => {
     //response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
     //response.set('Vary', 'Accept-Encoding, X-My-Custom-Header');
     const currentTime = new Date();

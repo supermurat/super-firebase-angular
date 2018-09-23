@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "serve" : "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build && ng build && ng run super-firebase-angular:server && del-cli \"./public/*.*\" && cpy \"./functions/dist/browser/*.js\" \"./public\" && cpy \"./functions/dist/browser/*.map\" \"./public\" && cpy \"./functions/dist/browser/*.css\" \"./public\" && cpy \"./functions/dist/browser/*.ico\" \"./public\" && cpy \"./functions/dist/browser/*.txt\" \"./public\" && firebase serve"
+    "serve" : "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build && ng build && ng run super-firebase-angular:server && del-cli \"./public/*.*\" && cpy \"./functions/dist/browser/*.js\" \"./public\" && cpy \"./functions/dist/browser/*.map\" \"./public\" && cpy \"./functions/dist/browser/*.css\" \"./public\" && cpy \"./functions/dist/browser/*.ico\" \"./public\" && cpy \"./functions/dist/browser/*.txt\" \"./public\" && cpy \"./functions/dist/browser/404.html\" \"./public\" && firebase serve"
   },
   "private": true,
   "dependencies": {
