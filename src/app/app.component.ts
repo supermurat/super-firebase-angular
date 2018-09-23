@@ -10,6 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   renderer = '';
+  title = 'app';
 
   constructor(@Inject(PLATFORM_ID) private platformId: string) {}
 

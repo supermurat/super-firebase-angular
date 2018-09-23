@@ -13,6 +13,16 @@ With "firebase serve" - http://localhost:5000/
 npm run serve
 ```
 
+### Unit Test - Karma
+```sh
+npm npm test
+```
+
+### Test - e2e 
+```sh
+npm run e2e
+```
+
 ### Production
 
 Build files and deploy to Firebase Hosting (Includes all of firebase rules, indexed etc.)
