@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './components/app/app.component';
-import {appDeclarations, appRoutes} from './app.module.routes';
 import {CommonModule} from '@angular/common';
 import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {AlertService, SeoService} from './services';
+import {AppComponent} from './components/app/app.component';
+import {appDeclarations, appRoutes} from './app.module.routes';
 
 @NgModule({
     declarations: appDeclarations,
@@ -19,6 +21,7 @@ import {AlertService, SeoService} from './services';
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
+        NgbModule,
 
         appRoutes
     ],
