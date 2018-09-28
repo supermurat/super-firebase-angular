@@ -18,7 +18,7 @@ npm run serve
 npm npm test
 ```
 
-### Test - e2e 
+### Protractor Test - e2e 
 ```sh
 npm run e2e
 ```
