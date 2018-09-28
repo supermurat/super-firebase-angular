@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import './navmenu.component.scss';
+import './nav-menu.component.scss';
 
 @Component({
     selector: 'app-nav-menu',
-    templateUrl: './navmenu.component.html'
+    templateUrl: './nav-menu.component.html'
 })
 export class NavMenuComponent {
     constructor() {
