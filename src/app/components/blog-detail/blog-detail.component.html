@@ -1,0 +1,14 @@
+<a routerLink="/blog" class="btn btn-info btn-sm">Back to Blog List</a>
+
+<div *ngIf="blog$ | async as blog" >
+    <div class="card">
+        <img class="card-img-top" [src]="blog.imgURL | async">
+        <div class="card-body">
+            <a href="/blog/{{ blog.name | lowercase }}">
+                <h3 class="card-title">{{ blog.name }}</h3>
+            </a>
+            <p class="card-text">{{ blog.bio }}</p>
+        </div>
+    </div>
+</div>
+

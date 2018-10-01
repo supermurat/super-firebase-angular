@@ -1,0 +1,14 @@
+
+<app-nav-menu></app-nav-menu>
+
+<div id="content-wrapper">
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-12 body-content'>
+                <h3 *ngIf="$isLoading">(Loading ...)</h3>
+                <app-alert></app-alert>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
