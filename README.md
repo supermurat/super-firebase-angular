@@ -15,7 +15,7 @@ npm run serve
 
 ### Unit Test - Karma
 ```sh
-npm npm test
+npm run test
 ```
 
 ### Protractor Test - e2e 
