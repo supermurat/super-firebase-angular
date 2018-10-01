@@ -8,13 +8,3 @@
   <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>
 </div>
 <hr>
-
-<h2>Add your Own</h2>
-
-<label>Blog Name</label>
-<input type="text" class="form-control" [(ngModel)]="newBlog.name">
-
-<label>Bio</label>
-<textarea type="text" class="form-control" [(ngModel)]="newBlog.bio"></textarea>
-
-<button (click)="create()">Create</button>
