@@ -1,5 +1,8 @@
-﻿export class Blog {
+﻿import {Observable} from 'rxjs';
+
+export class Blog {
     name: string | undefined;
     bio: string | undefined;
-    imgURL: string | undefined;
+    imgName: string | undefined;
+    imgURL: Observable<string> | undefined;
 }

@@ -1,3 +1,5 @@
+import {SeoService} from '../../services';
+
 declare let window: any;
 
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
@@ -12,10 +14,16 @@ export class HomeComponent implements OnInit {
     renderer = '';
     title = 'app';
 
-    constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: string,
+                private seo: SeoService) {}
 
     ngOnInit() {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
+
+        this.seo.generateTags({
+            title: this.title,
+            description: this.title
+        });
     }
 
     openAlert() {

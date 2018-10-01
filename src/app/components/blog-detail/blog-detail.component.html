@@ -2,7 +2,7 @@
 
 <div *ngIf="blog$ | async as blog" >
     <div class="card">
-        <img class="card-img-top" [src]="blog.imgURL">
+        <img class="card-img-top" [src]="blog.imgURL | async">
         <div class="card-body">
             <a href="/blog/{{ blog.name | lowercase }}">
                 <h3 class="card-title">{{ blog.name }}</h3>
