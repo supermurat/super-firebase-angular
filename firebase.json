@@ -12,12 +12,7 @@
       "npm --prefix './functions' run build",
       "ng build --prod",
       "ng run super-firebase-angular:server",
-      "del-cli './public/*.*'",
-      "cpy './functions/dist/browser/*.js' './public'",
-      "cpy './functions/dist/browser/*.css' './public'",
-      "cpy './functions/dist/browser/*.ico' './public'",
-      "cpy './functions/dist/browser/*.txt' './public'",
-      "cpy './functions/dist/browser/404.html' './public'"
+      "npm run copyToPublic"
     ]
   },
   "hosting": {

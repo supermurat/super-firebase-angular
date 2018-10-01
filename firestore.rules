@@ -1,5 +1,9 @@
 service cloud.firestore {
   match /databases/{database}/documents {
+    match /blogs/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }
