@@ -16,7 +16,7 @@ script:
 - echo "!script!"
 after_success:
 - echo "!after_success!"
-- firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"; fi
 after_failure:
 - echo "!after_failure!"
 after_script:
