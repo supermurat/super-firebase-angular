@@ -1,7 +1,5 @@
 import {SeoService} from '../../services';
 
-declare let window: any;
-
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -26,9 +24,4 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    openAlert() {
-        if (isPlatformBrowser(this.platformId)) {
-            window.alert('Yes it is!');
-        }
-    }
 }

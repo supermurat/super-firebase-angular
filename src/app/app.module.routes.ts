@@ -6,6 +6,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { HomeComponent } from './components/home/home.component';
+import { PlaygroundComponent } from './components/playground/playground.component';
 
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
@@ -16,6 +17,9 @@ export const appRoutes = RouterModule.forRoot([
     },
     {
         path: 'home', component: HomeComponent
+    },
+    {
+        path: 'playground', component: PlaygroundComponent
     },
     {
         path: 'blog', component: BlogListComponent
@@ -40,6 +44,7 @@ export const appDeclarations: any[] = [
     NotFoundComponent,
 
     HomeComponent,
+    PlaygroundComponent,
 
     BlogListComponent,
     BlogDetailComponent
