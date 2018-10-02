@@ -4,18 +4,23 @@
 All-In-One firebase and angular project.
 
 ### Development
-With "ng serve" - http://localhost:4200/
+With "ng serve" (default i18n - en) - http://localhost:4200/
 ```sh
 npm run start
 ```
-With "firebase serve" - http://localhost:5000/
+With "firebase serve" (i18n support - en, tr) - http://localhost:5000/
 ```sh
 npm run serve
 ```
 
+### Extract i18n Translation File
+```sh
+npm run extract:i18n
+```
+
 ### Unit Test - Karma
 ```sh
-npm npm test
+npm run test
 ```
 
 ### Protractor Test - e2e 

@@ -14,13 +14,23 @@ const { AppServerModuleNgFactory } = require('../dist/server/main');
 
 enableProdMode();
 
-const index = require('fs')
-    .readFileSync(path.resolve(__dirname, '../dist/browser/index.html'), 'utf8')
+const indexEN = require('fs')
+    .readFileSync(path.resolve(__dirname, '../dist/browser/en/index.html'), 'utf8')
+    .toString();
+const indexTR = require('fs')
+    .readFileSync(path.resolve(__dirname, '../dist/browser/tr/index.html'), 'utf8')
     .toString();
 
 const app = express();
 
 app.get('**', function(req, res) {
+    const supportedLocales = ['en', 'tr'];
+    const defaultLocale = 'en';
+    const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
+    //check if the requested url has a correct format '/locale' and matches any of the supportedLocales
+    const locale = (matches && supportedLocales.indexOf(matches[1]) !== -1) ? matches[1] : defaultLocale;
+
+    const index = locale ===  'tr' ? indexTR : indexEN;
     renderModuleFactory(AppServerModuleNgFactory, {
         url: req.path,
         document: index

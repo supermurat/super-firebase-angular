@@ -43,6 +43,52 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "production-en": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "functions/dist/browser/en/",
+              "baseHref": "/en/",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "error"
+            },
+            "production-tr": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputPath": "functions/dist/browser/tr/",
+              "baseHref": "/tr/",
+              "i18nFile": "src/locale/messages.tr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "tr",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -54,6 +100,12 @@
           "configurations": {
             "production": {
               "browserTarget": "super-firebase-angular:build:production"
+            },
+            "production-en": {
+              "browserTarget": "i18n-demo:build:production-en"
+            },
+            "production-tr": {
+              "browserTarget": "i18n-demo:build:production-tr"
             }
           }
         },
@@ -132,7 +184,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
