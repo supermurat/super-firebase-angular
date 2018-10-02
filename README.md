@@ -13,6 +13,11 @@ With "firebase serve" - http://localhost:5000/
 npm run serve
 ```
 
+### Extract i18n Translation File
+```sh
+npm run extract:i18n
+```
+
 ### Unit Test - Karma
 ```sh
 npm run test

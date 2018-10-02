@@ -6,11 +6,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:i18n": "ng run super-firebase-angular:build:production-en && ng run super-firebase-angular:build:production-tr",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "serve": "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build && ng build && ng run super-firebase-angular:server && npm run copyToPublic && firebase serve --project supermurat-com",
-    "copyToPublic": "del-cli \"./public/*.*\" && cpy \"./functions/dist/browser/*\" \"./public\" && del-cli \"./public/index.html\""
+    "serve": "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build && npm run build:i18n && ng run super-firebase-angular:server && npm run copyToPublic && firebase serve --project supermurat-com",
+    "copyToPublic": "del-cli \"./public/*\" && cpy \"./functions/dist/browser/*\" \"./public\" && cpy \"./functions/dist/browser/en/*\" \"./public/en\" && cpy \"./functions/dist/browser/tr/*\" \"./public/tr\" && npm run deleteIndexFromPublic",
+    "deleteIndexFromPublic" : "del-cli \"./public/index.html\" && del-cli \"./public/en/index.html\" && del-cli \"./public/tr/index.html\"",
+    "extract:i18n": "ng xi18n --output-path locale"
   },
   "private": true,
   "dependencies": {
