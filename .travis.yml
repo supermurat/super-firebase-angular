@@ -3,6 +3,10 @@ node_js:
 - "8"
 before_install:
 - echo "!before_install!"
+- echo "TRAVIS_BRANCH:" + "$TRAVIS_BRANCH"
+- echo "TRAVIS_PULL_REQUEST:" + "$TRAVIS_PULL_REQUEST"
+- echo "TRAVIS_PULL_REQUEST_BRANCH:" + "$TRAVIS_PULL_REQUEST_BRANCH"
+- echo "TRAVIS_TAG:" + "$TRAVIS_TAG"
 - nvm install 8
 - npm i -g firebase-tools @angular/cli
 install:
@@ -16,7 +20,7 @@ script:
 - echo "!script!"
 after_success:
 - echo "!after_success!"
-- if [[ "$TRAVIS_BRANCH" == "master" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"; fi
+- if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"; fi
 after_failure:
 - echo "!after_failure!"
 after_script:
