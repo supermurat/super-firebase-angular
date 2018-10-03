@@ -249,11 +249,18 @@
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="71c5a2d85870556e50fb868c43cb7946cff2a77a" datatype="html">
+        <source>Warning!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="introductionHeader" datatype="html">
         <source>Hello i18n!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="description">An introduction header for this sample</note>
         <note priority="1" from="meaning">User welcome</note>
@@ -262,57 +269,57 @@
         <source>The application is using the locale <x id="INTERPOLATION" equiv-text="{{locale}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html">
         <source>I don&apos;t output any element</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d69f6b42305f49332026fef24b40227f02e34594" datatype="html">
         <source>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5a134dee893586d02bffc9611056b9cadf9abfad" datatype="html">
         <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{minutes}}"/> minutes ago} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html">
         <source>The author is <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html">
         <source>{VAR_SELECT, select, male {male} female {female} other {other} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0f2800b9883d878ccc3fe1504a307405900b5d22" datatype="html">
         <source>Updated: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/> by <x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
     </body>

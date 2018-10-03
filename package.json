@@ -15,7 +15,7 @@
     "serve": "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build && npm run build:i18n && ng run super-firebase-angular:server && npm run copyToPublic && firebase serve --project supermurat-com",
     "copyToPublic": "del-cli \"./public/*\" && cpy \"./functions/dist/browser/*\" \"./public\" && cpy \"./functions/dist/browser/en/*\" \"./public/en\" && cpy \"./functions/dist/browser/tr/*\" \"./public/tr\" && npm run deleteIndexFromPublic",
     "deleteIndexFromPublic": "del-cli \"./public/index.html\" && del-cli \"./public/en/index.html\" && del-cli \"./public/tr/index.html\"",
-    "extract:i18n": "ng xi18n --output-path locale"
+    "extract:i18n": "ng xi18n --output-path locale && xliffmerge --profile xliffmerge.json"
   },
   "private": true,
   "dependencies": {
@@ -58,6 +58,7 @@
     "karma-coverage-istanbul-reporter": "^2.0.4",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^1.3.1",
+    "ngx-i18nsupport": "^0.17.1",
     "popper.js": "^1.14.4",
     "protractor": "~5.4.1",
     "ts-node": "~7.0.1",
