@@ -1,6 +1,6 @@
-import {SeoService} from '../../services';
+import { SeoService } from '../../services';
 
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 private seo: SeoService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
         this.seo.generateTags({

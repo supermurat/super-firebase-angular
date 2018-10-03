@@ -9,22 +9,22 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['/home']">
-                        <span class=''></span> Home <span class="sr-only">(current)</span>
+                        <span class='' i18n>Home</span> <span class="sr-only" i18n>(current)</span>
                     </a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['/blog']">
-                        <span class=''></span> Blog
+                        <span class='' i18n>Blog</span>
                     </a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['/playground']">
-                        <span class=''></span> Playground
+                        <span class='' i18n>Playground</span>
                     </a>
                 </li>
             </ul>
             <ul class="navbar-nav" id="lang">
-                <li class="nav-item" *ngFor="let locale of locales">
+                <li class="nav-item" *ngFor="let locale of locales; trackBy:trackByLocale">
                     <a class="nav-link lang-option" [href]="'/' + locale.code + currentUrl">
                         <span class=''></span> {{ locale.text }}
                     </a>

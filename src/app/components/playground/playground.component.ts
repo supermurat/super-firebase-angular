@@ -1,8 +1,8 @@
-import {SeoService} from '../../services';
+import { SeoService } from '../../services';
 
 declare let window: any;
 
-import { Component, OnInit, Inject, PLATFORM_ID, LOCALE_ID } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -17,18 +17,18 @@ export class PlaygroundComponent implements OnInit {
     minutes = 0;
     gender = 'female';
 
-    inc(i: number) {
+    inc(i: number): void {
         this.minutes = Math.min(5, Math.max(0, this.minutes + i));
     }
-    male() { this.gender = 'male'; }
-    female() { this.gender = 'female'; }
-    other() { this.gender = 'other'; }
+    male(): void { this.gender = 'male'; }
+    female(): void { this.gender = 'female'; }
+    other(): void { this.gender = 'other'; }
 
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
                 private seo: SeoService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
         this.seo.generateTags({
@@ -37,9 +37,8 @@ export class PlaygroundComponent implements OnInit {
         });
     }
 
-    openAlert() {
-        if (isPlatformBrowser(this.platformId)) {
+    openAlert(): void {
+        if (isPlatformBrowser(this.platformId))
             window.alert('Yes it is!');
-        }
     }
 }

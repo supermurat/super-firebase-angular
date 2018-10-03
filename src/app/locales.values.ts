@@ -2,13 +2,13 @@ export interface ILocale {
   code: string;
   text: string;
 }
-export const locales: ILocale[] = [
+export const locales: Array<ILocale> = [
   {
     code: 'en',
-    text: 'English',
+    text: 'English'
   },
   {
     code: 'tr',
-    text: 'Türkçe',
+    text: 'Türkçe'
   }
 ];

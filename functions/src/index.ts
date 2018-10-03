@@ -1,5 +1,5 @@
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
+// Start writing Firebase Functions
+// https://firebase.google.com/docs/functions/typescript
 //
 
 require('zone.js/dist/zone-node');

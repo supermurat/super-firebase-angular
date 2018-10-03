@@ -1,4 +1,4 @@
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -31,13 +31,13 @@ export const appRoutes = RouterModule.forRoot([
         path: '**', component: NotFoundComponent
     }
 ], {
-    // Router options
+    // router options
     useHash: false,
     preloadingStrategy: PreloadAllModules,
     initialNavigation: 'enabled'
 });
 
-export const appDeclarations: any[] = [
+export const appDeclarations: Array<any> = [
     AppComponent,
     NavMenuComponent,
     AlertComponent,
@@ -49,4 +49,3 @@ export const appDeclarations: any[] = [
     BlogListComponent,
     BlogDetailComponent
 ];
-

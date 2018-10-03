@@ -4,8 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { SeoService } from '../../services';
 import { Blog } from '../../models/blog';
-import { tap, startWith } from 'rxjs/operators';
-import { TransferState, makeStateKey, StateKey } from '@angular/platform-browser';
+import { startWith, tap } from 'rxjs/operators';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { Observable } from 'rxjs';
 
 const BLOG_KEY = makeStateKey<any>('blog');
 
@@ -26,20 +27,23 @@ export class BlogDetailComponent implements OnInit {
     ) {
     }
 
-    ngOnInit() {
-        const id = this.route.snapshot.paramMap.get('name').toLowerCase();
+    ngOnInit(): void {
+        const id = this.route.snapshot.paramMap.get('name')
+            .toLowerCase();
         this.blog$ = this.ssrFirestoreDoc(`blogs/${id}`);
 
-        // This will create a split second flash
+        // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
     }
 
-
-    ssrFirestoreDoc(path: string) {
+    ssrFirestoreDoc(path: string): Observable<Blog> {
         const exists = this.state.get(BLOG_KEY, new Blog());
-        return this.afs.doc<Blog>(path).valueChanges().pipe(
+
+        return this.afs.doc<Blog>(path)
+            .valueChanges()
+            .pipe(
             tap(blog => {
-                const ref = this.storage.ref('blogs/' + blog.imgName);
+                const ref = this.storage.ref(`blogs/${blog.imgName}`);
                 blog.imgURL = ref.getDownloadURL();
 
                 this.state.set(BLOG_KEY, blog);
