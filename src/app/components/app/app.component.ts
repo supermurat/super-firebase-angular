@@ -1,7 +1,7 @@
 declare let window: any;
 
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, LOCALE_ID, Renderer2 } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,12 @@ export class AppComponent implements OnInit, OnDestroy {
         return this._isLoading;
     }
 
-    constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: string,
+                @Inject(DOCUMENT) doc: Document,
+                @Inject(LOCALE_ID) locale: string,
+                renderer: Renderer2) {
+        renderer.setAttribute(doc.documentElement, 'lang', locale);
+    }
 
     ngOnInit() {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
