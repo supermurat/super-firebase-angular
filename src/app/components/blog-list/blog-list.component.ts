@@ -26,4 +26,8 @@ export class BlogListComponent implements OnInit {
             description: this.description
         });
     }
+
+    trackByBlog(index, item): number {
+        return index;
+    }
 }

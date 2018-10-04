@@ -9,6 +9,7 @@
     "start:tr": "ng serve --configuration=tr",
     "build": "ng build",
     "build:i18n": "ng run super-firebase-angular:build:production-en && ng run super-firebase-angular:build:production-tr",
+    "deploy": "firebase deploy --project supermurat-com",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
