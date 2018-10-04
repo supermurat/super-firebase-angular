@@ -10,7 +10,7 @@
     "predeploy": [
       "npm --prefix './functions' run lint",
       "npm --prefix './functions' run build",
-      "npm run build:i18n",
+      "npm run build:production:i18n",
       "ng run super-firebase-angular:server",
       "npm run copyToPublic"
     ]

@@ -27,6 +27,24 @@
             "scripts": []
           },
           "configurations": {
+            "en": {
+              "aot": true,
+              "outputPath": "functions/dist/browser/en/",
+              "baseHref": "/en/",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
+              "i18nMissingTranslation": "error"
+            },
+            "tr": {
+              "aot": true,
+              "outputPath": "functions/dist/browser/tr/",
+              "baseHref": "/tr/",
+              "i18nFile": "src/locale/messages.tr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "tr",
+              "i18nMissingTranslation": "error"
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -98,13 +116,19 @@
             "browserTarget": "super-firebase-angular:build"
           },
           "configurations": {
+            "en": {
+              "browserTarget": "super-firebase-angular:build:en"
+            },
+            "tr": {
+              "browserTarget": "super-firebase-angular:build:tr"
+            },
             "production": {
               "browserTarget": "super-firebase-angular:build:production"
             },
-            "en": {
+            "production-en": {
               "browserTarget": "super-firebase-angular:build:production-en"
             },
-            "tr": {
+            "production-tr": {
               "browserTarget": "super-firebase-angular:build:production-tr"
             }
           }
