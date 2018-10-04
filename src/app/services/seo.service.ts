@@ -6,7 +6,7 @@ export class SeoService {
 
   constructor(private meta: Meta, private titleService: Title) { }
 
-  generateTags(tags) {
+  generateTags(tags): void {
     // default values
     tags = {
       title: 'Angular SSR',
@@ -16,10 +16,10 @@ export class SeoService {
       ...tags
     };
 
-    // Set a title
+    // set a title
     this.titleService.setTitle(tags.title);
 
-    // Set meta tags
+    // set meta tags
     this.meta.updateTag({ name: 'twitter:card', content: 'summary' });
     this.meta.updateTag({ name: 'twitter:site', content: '@angularfirebase' });
     this.meta.updateTag({ name: 'twitter:title', content: tags.title });
@@ -33,6 +33,4 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image', content: tags.image });
     this.meta.updateTag({ property: 'og:url', content: `https://instafire-app.firebaseapp.com/${tags.slug}` });
   }
-
-
 }

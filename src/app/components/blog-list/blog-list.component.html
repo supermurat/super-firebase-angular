@@ -2,7 +2,7 @@
 
 <p>{{ description }}</p>
 
-<h2>Blog Entries</h2>
+<h2 i18n>Blog Entries</h2>
 <hr>
 <div *ngFor="let blog of blogs$ | async">
   <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>

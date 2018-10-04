@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="en">
     <body>
       <trans-unit id="ngb.alert.close" datatype="html">
         <source>Close</source>
@@ -257,6 +257,12 @@
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">66</context>
         </context-group>
+      </trans-unit><trans-unit id="d6053bbc60b540f2db8c00b119ed27036391dd5e" datatype="html">
+        <source>(Loading ...)</source><target state="final">(Loading ...)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/app/app.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4865ecf44ecb3799ce27539d4fe4bfadc9ed1907" datatype="html">
         <source>Navbar</source>
@@ -264,6 +270,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html">
+        <source>Home</source><target state="final">Home</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit><trans-unit id="eb98135e35af26a9a326ee69bd8ff104d36dd8ec" datatype="html">
+        <source>(current)</source><target state="final">(current)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit><trans-unit id="013acfd8797bf5ade4a15c71fa24178f913c4cae" datatype="html">
+        <source>Blog</source><target state="final">Blog</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit><trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
+        <source>Playground</source><target state="final">Playground</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search" datatype="html">
@@ -273,87 +303,155 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">35</context>
         </context-group>
+      </trans-unit><trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
+        <source>Page not found</source><target state="final">Page not found</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/not-found/not-found.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="356501fb47a7de720e71263c3d1cce5d6e681c4b" datatype="html">
+        <source>Welcome!</source><target state="final">Welcome!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/home/home.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="d8fd0a7dbf76ea9855f9027c8ea7e58d8c95dc17" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</source><target state="final"><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html">
         <source>Angular logo</source>
         <target>Angular logo</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit><trans-unit id="7c3d41811fe34133ef9f9739de524cdee0c1cadf" datatype="html">
+        <source>Is browser code loaded?</source><target state="final">Is browser code loaded?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit><trans-unit id="482ecf35df28e21d3372449451f43b2d3c961442" datatype="html">
+        <source>
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Sample alert.
+    </source><target state="final">
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Sample alert.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit><trans-unit id="71c5a2d85870556e50fb868c43cb7946cff2a77a" datatype="html">
+        <source>Warning!</source>
+        <target>Warning!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="introductionHeader" datatype="html">
         <source>Hello i18n!</source>
         <target>Hello i18n!</target>
+        
+        <note priority="1" from="description">An introduction header for this sample</note>
+        <note priority="1" from="meaning">User welcome</note>
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="7d51bdab3ba69a0326c16b5c5eb9403022bad2b4" datatype="html">
+        <source>Today is <x id="INTERPOLATION" equiv-text="{{today | date}}"/></source><target state="final">Today is <x id="INTERPOLATION" equiv-text="{{today | date}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="946d53e17e067caa26d9c14574acdb0c78ab2ecf" datatype="html">
+        <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{today | date:'fullDate'}}"/></source><target state="final">Or if you prefer, <x id="INTERPOLATION" equiv-text="{{today | date:'fullDate'}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit><trans-unit id="c180ccdc2d7faa7e75c0cc0e2d7c419154a98f9b" datatype="html">
+        <source>The time is <x id="INTERPOLATION" equiv-text="{{today | date:'h:mm a z'}}"/></source><target state="final">The time is <x id="INTERPOLATION" equiv-text="{{today | date:'h:mm a z'}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <note priority="1" from="description">An introduction header for this sample</note>
-        <note priority="1" from="meaning">User welcome</note>
       </trans-unit>
       <trans-unit id="70214618fbda172c4d710a73364169a6e43a5dd7" datatype="html">
         <source>The application is using the locale <x id="INTERPOLATION" equiv-text="{{locale}}"/></source>
         <target>The application is using the locale <x id="INTERPOLATION" equiv-text="{{locale}}"/></target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit>
+      <trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html">
+        <source>I don't output any element</source>
+        <target>I don't output any element</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="08d4402532d6eb348cf14a6d774f2474da4aaf8d" datatype="html">
+        <source>+</source><target state="final">+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit><trans-unit id="37a0c0fffef57ba4b1fe7bf2318fc9211267286e" datatype="html">
+        <source>-</source><target state="final">-</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html">
-        <source>I don&apos;t output any element</source>
-        <target>I don&apos;t output any element</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="d69f6b42305f49332026fef24b40227f02e34594" datatype="html">
         <source>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></source>
         <target>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
       <trans-unit id="5a134dee893586d02bffc9611056b9cadf9abfad" datatype="html">
         <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{minutes}}"/> minutes ago} }</source>
         <target>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{minutes}}"/> minutes ago} }</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">29</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="e37ea76f97bda09179bff45dd514d586fc783241" datatype="html">
+        <source>♂</source><target state="final">♂</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="a67056c7a596774989449aad8dd898e2b32a7a22" datatype="html">
+        <source>♀</source><target state="final">♀</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="dc5042b4003609f59b9787f5023328fc5c9bf2bd" datatype="html">
+        <source>⚧</source><target state="final">⚧</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">33</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f99f34ac9bd4606345071bd813858dec29f3b7d1" datatype="html">
         <source>The author is <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
         <target>The author is <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit>
       <trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html">
         <source>{VAR_SELECT, select, male {male} female {female} other {other} }</source>
         <target>{VAR_SELECT, select, male {male} female {female} other {other} }</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-      </trans-unit>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
       <trans-unit id="0f2800b9883d878ccc3fe1504a307405900b5d22" datatype="html">
         <source>Updated: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/> by <x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
         <target>Updated: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/> by <x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/></target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="9d2c08f67d083d95f0085db3939afdf70efe6889" datatype="html">
+        <source>Blog Entries</source><target state="final">Blog Entries</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="218ed6d9fd5d6b4eef31a6c3c4d7f9b72f2163c0" datatype="html">
+        <source>Back to Blog List</source><target state="final">Back to Blog List</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
     </body>

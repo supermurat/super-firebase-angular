@@ -101,11 +101,11 @@
             "production": {
               "browserTarget": "super-firebase-angular:build:production"
             },
-            "production-en": {
-              "browserTarget": "i18n-demo:build:production-en"
+            "en": {
+              "browserTarget": "super-firebase-angular:build:production-en"
             },
-            "production-tr": {
-              "browserTarget": "i18n-demo:build:production-tr"
+            "tr": {
+              "browserTarget": "super-firebase-angular:build:production-tr"
             }
           }
         },

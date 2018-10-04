@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
 import { locales } from '../../locales.values';
 import './nav-menu.component.scss';
@@ -17,7 +17,7 @@ export class NavMenuComponent implements OnInit {
         private router: Router) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.locales = locales;
 
         this.router.events
@@ -25,5 +25,9 @@ export class NavMenuComponent implements OnInit {
             .subscribe((event: NavigationEnd) => {
                 this.currentUrl = this.router.url;
             });
+    }
+
+    trackByLocale(index, item): number {
+        return index;
     }
 }

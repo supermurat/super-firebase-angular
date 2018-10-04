@@ -1,4 +1,4 @@
-﻿import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 export class Blog {
     name: string | undefined;

@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 
-import {CommonModule} from '@angular/common';
-import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireStorageModule} from '@angular/fire/storage';
-import {AngularFireAuthModule} from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import {AlertService, SeoService} from './services';
-import {AppComponent} from './components/app/app.component';
-import {appDeclarations, appRoutes} from './app.module.routes';
+import { AlertService, SeoService } from './services';
+import { AppComponent } from './components/app/app.component';
+import { appDeclarations, appRoutes } from './app.module.routes';
 
 import { firebaseConfig } from '../environments/firebase.config';
 

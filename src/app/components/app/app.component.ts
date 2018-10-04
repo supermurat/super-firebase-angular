@@ -1,35 +1,35 @@
 declare let window: any;
 
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
     renderer = '';
     title = 'app';
 
     private _isLoading = false;
-    public get $isLoading() {
+    get $isLoading(): boolean {
         return this._isLoading;
     }
 
-    constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: string,
+                @Inject(DOCUMENT) doc: Document,
+                @Inject(LOCALE_ID) locale: string,
+                renderer: Renderer2) {
+        renderer.setAttribute(doc.documentElement, 'lang', locale);
+    }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
     }
 
-    ngOnDestroy() {
-
-    }
-
-    openAlert() {
-        if (isPlatformBrowser(this.platformId)) {
+    openAlert(): void {
+        if (isPlatformBrowser(this.platformId))
             window.alert('Yes it is!');
-        }
     }
 }
