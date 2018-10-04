@@ -11,7 +11,7 @@ npm run start
 ```
 With "firebase serve" (i18n support - en, tr) - http://localhost:5000/
 ```sh
-npm run serve
+npm run serve:i18n
 ```
 
 ### Extract i18n Translation File
