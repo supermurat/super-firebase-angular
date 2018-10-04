@@ -4,7 +4,7 @@
 
 <h2 i18n>Blog Entries</h2>
 <hr>
-<div *ngFor="let blog of blogs$ | async">
+<div *ngFor="let blog of blogs$ | async; trackBy:trackByBlog">
   <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>
 </div>
 <hr>
