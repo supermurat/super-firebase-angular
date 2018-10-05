@@ -9,17 +9,32 @@ const express = require('express');
 const path = require('path');
 const { enableProdMode } = require('@angular/core');
 const { renderModuleFactory } = require('@angular/platform-server');
+const { readFileSync, existsSync } = require('fs');
 
-const { AppServerModuleNgFactory } = require('../dist/server/main');
+
+let serverMain;
+let serverEN;
+let serverTR;
+let indexMain;
+let indexEN;
+let indexTR;
+
+const isI18N = !existsSync(path.resolve(__dirname, '../dist/browser/index.html'));
+
+if (isI18N) {
+    serverEN = require('../dist/server/en/main');
+    serverTR = require('../dist/server/tr/main');
+    indexEN = readFileSync(path.resolve(__dirname, '../dist/browser/en/index.html'), 'utf8')
+        .toString();
+    indexTR = readFileSync(path.resolve(__dirname, '../dist/browser/tr/index.html'), 'utf8')
+        .toString();
+} else {
+    serverMain = require('../dist/server/main');
+    indexMain = readFileSync(path.resolve(__dirname, '../dist/browser/index.html'), 'utf8')
+        .toString();
+}
 
 enableProdMode();
-
-const indexEN = require('fs')
-    .readFileSync(path.resolve(__dirname, '../dist/browser/en/index.html'), 'utf8')
-    .toString();
-const indexTR = require('fs')
-    .readFileSync(path.resolve(__dirname, '../dist/browser/tr/index.html'), 'utf8')
-    .toString();
 
 const app = express();
 
@@ -30,8 +45,9 @@ app.get('**', function(req, res) {
     //check if the requested url has a correct format '/locale' and matches any of the supportedLocales
     const locale = (matches && supportedLocales.indexOf(matches[1]) !== -1) ? matches[1] : defaultLocale;
 
-    const index = locale ===  'tr' ? indexTR : indexEN;
-    renderModuleFactory(AppServerModuleNgFactory, {
+    const index = !isI18N ? indexMain : locale ===  'tr' ? indexTR : indexEN;
+    const server = !isI18N ? serverMain : locale ===  'tr' ? serverTR : serverEN;
+    renderModuleFactory(server.AppServerModuleNgFactory, {
         url: req.path,
         document: index
     }).then(html => res.status(200).send(html));

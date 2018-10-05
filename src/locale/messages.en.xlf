@@ -315,8 +315,8 @@
           <context context-type="sourcefile">app/components/home/home.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
-      </trans-unit><trans-unit id="d8fd0a7dbf76ea9855f9027c8ea7e58d8c95dc17" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</source><target state="final"><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</target>
+      </trans-unit><trans-unit id="88d56c4350ea466b7c77ec075e87d6368faef123" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #2</source><target state="final"><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #2</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">3</context>

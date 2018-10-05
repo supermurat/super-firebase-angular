@@ -30,6 +30,7 @@ export class PlaygroundComponent implements OnInit {
 
     ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
+        // console.log('LOCALE_ID:', this.locale);
 
         this.seo.generateTags({
             title: this.title,

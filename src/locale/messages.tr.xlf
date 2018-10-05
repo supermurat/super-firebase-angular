@@ -315,8 +315,8 @@
           <context context-type="sourcefile">app/components/home/home.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
-      </trans-unit><trans-unit id="d8fd0a7dbf76ea9855f9027c8ea7e58d8c95dc17" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</source><target state="final"><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #1</target>
+      </trans-unit><trans-unit id="88d56c4350ea466b7c77ec075e87d6368faef123" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #2</source><target state="new"><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #2</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">3</context>
@@ -335,7 +335,7 @@
       </trans-unit><trans-unit id="482ecf35df28e21d3372449451f43b2d3c961442" datatype="html">
         <source>
         <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Sample alert.
-    </source><target state="final">
+    </source><target state="translated">
         <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Dikkat!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Örnek uyarı.
     </target>
         <context-group purpose="location">
@@ -439,7 +439,7 @@
       <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
       <trans-unit id="0f2800b9883d878ccc3fe1504a307405900b5d22" datatype="html">
         <source>Updated: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/> by <x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
-        <target>Güncelleme: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/>&nbsp;<x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/> tarafından</target>
+        <target>Güncelleme: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/>&amp;nbsp;<x id="ICU_1" equiv-text="{gender, select, male {...} female {...} other {...}}"/> tarafından</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="9d2c08f67d083d95f0085db3939afdf70efe6889" datatype="html">
         <source>Blog Entries</source><target state="final">Günlük Notları</target>
