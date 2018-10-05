@@ -16,8 +16,6 @@
     "deploy": "firebase deploy --project supermurat-com",
     "test": "ng test",
     "test:cover": "del-cli \"./coverage\" && ng test --watch=false --code-coverage",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "codacy": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p .",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:functions": "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build",
