@@ -45,15 +45,17 @@ export class BlogDetailComponent implements OnInit {
             .valueChanges()
             .pipe(
             tap(blog => {
-                const ref = this.storage.ref(`blogs/${blog.imgName}`);
-                blog.imgURL = ref.getDownloadURL();
+                if (blog) {
+                    const ref = this.storage.ref(`blogs/${blog.imgName}`);
+                    blog.imgURL = ref.getDownloadURL();
 
-                this.state.set(BLOG_KEY, blog);
-                this.seo.generateTags({
-                    title: blog.name,
-                    description: blog.bio,
-                    image: blog.imgName
-                });
+                    this.state.set(BLOG_KEY, blog);
+                    this.seo.generateTags({
+                        title: blog.name,
+                        description: blog.bio,
+                        image: blog.imgName
+                    });
+                }
             }),
             startWith(exists)
         );

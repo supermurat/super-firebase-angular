@@ -1,4 +1,4 @@
-import { SeoService } from '../../services';
+import { AlertService, SeoService } from '../../services';
 
 declare let window: any;
 
@@ -26,7 +26,8 @@ export class PlaygroundComponent implements OnInit {
 
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
-                private seo: SeoService) {}
+                private seo: SeoService,
+                private alert: AlertService) {}
 
     ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
@@ -39,6 +40,7 @@ export class PlaygroundComponent implements OnInit {
     }
 
     openAlert(): void {
+        this.alert.success('This is alert test');
         if (isPlatformBrowser(this.platformId))
             window.alert('Yes it is!');
     }

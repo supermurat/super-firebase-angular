@@ -33,4 +33,12 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image', content: tags.image });
     this.meta.updateTag({ property: 'og:url', content: `https://instafire-app.firebaseapp.com/${tags.slug}` });
   }
+
+  getTitle(): string {
+    return this.titleService.getTitle();
+  }
+
+  getMeta(): Meta {
+    return this.meta;
+  }
 }

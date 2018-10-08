@@ -52,6 +52,7 @@ describe('BlogDetailComponent', () => {
 
     it("should render 'Back to Blog List' in an a", async(() => {
         const fixture = TestBed.createComponent(BlogDetailComponent);
+        fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('a').textContent)
             .toContain('Back to Blog List');

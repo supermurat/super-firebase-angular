@@ -46,6 +46,7 @@ describe('BlogListComponent', () => {
 
     it("should render 'Blog Entries' in a h2", async(() => {
         const fixture = TestBed.createComponent(BlogListComponent);
+        fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('h2').textContent)
             .toContain('Blog Entries');

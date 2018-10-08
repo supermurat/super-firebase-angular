@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlaygroundComponent } from './playground.component';
@@ -13,7 +13,8 @@ describe('PlaygroundComponent', () => {
                 PlaygroundComponent
             ],
             providers: [
-                AlertService, SeoService
+                AlertService, SeoService,
+                { provide: ComponentFixtureAutoDetect, useValue: true }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -37,7 +38,7 @@ describe('PlaygroundComponent', () => {
             .toEqual('Play Ground');
     }));
 
-    it("should render 'Browser side rendering with Firebase 🔥 Build Test' in a hr", async(() => {
+    it("should render 'Browser side rendering with Firebase 🔥 Build Test' in a h2", async(() => {
         const fixture = TestBed.createComponent(PlaygroundComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;

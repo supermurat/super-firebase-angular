@@ -31,9 +31,4 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
     }
-
-    openAlert(): void {
-        if (isPlatformBrowser(this.platformId))
-            window.alert('Yes it is!');
-    }
 }
