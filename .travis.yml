@@ -11,7 +11,7 @@ before_install:
 - echo "TRAVIS_PULL_REQUEST_BRANCH:" + "$TRAVIS_PULL_REQUEST_BRANCH"
 - echo "TRAVIS_TAG:" + "$TRAVIS_TAG"
 - nvm install 8
-- npm i -g firebase-tools @angular/cli karma
+- npm i -g firebase-tools @angular/cli
 install:
 - echo "!install!"
 - npm i -g cpy-cli del-cli

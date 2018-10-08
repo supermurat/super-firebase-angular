@@ -1,4 +1,4 @@
-import { SeoService } from '../../services';
+import { AlertService, SeoService } from '../../services';
 
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,10 +10,10 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
     renderer = '';
-    title = 'app';
+    title = 'home';
 
     constructor(@Inject(PLATFORM_ID) private platformId: string,
-                private seo: SeoService) {}
+                public seo: SeoService, public alert: AlertService) {}
 
     ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';

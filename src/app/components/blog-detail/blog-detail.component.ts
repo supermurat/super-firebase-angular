@@ -17,6 +17,7 @@ const BLOG_KEY = makeStateKey<any>('blog');
 })
 export class BlogDetailComponent implements OnInit {
     blog$;
+    blogName = '';
 
     constructor(
         private afs: AngularFirestore,
@@ -28,9 +29,10 @@ export class BlogDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const id = this.route.snapshot.paramMap.get('name')
-            .toLowerCase();
-        this.blog$ = this.ssrFirestoreDoc(`blogs/${id}`);
+        this.route.params.subscribe(params => {
+            this.blogName = params['name'].toLowerCase();
+        });
+        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogName}`);
 
         // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
