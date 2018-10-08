@@ -18,6 +18,7 @@ const BLOG_KEY = makeStateKey<any>('blog');
 export class BlogDetailComponent implements OnInit {
     blog$;
     blogName = '';
+    imgURL;
 
     constructor(
         private afs: AngularFirestore,
@@ -48,6 +49,10 @@ export class BlogDetailComponent implements OnInit {
                 if (blog) {
                     const ref = this.storage.ref(`blogs/${blog.imgName}`);
                     blog.imgURL = ref.getDownloadURL();
+
+                    blog.imgURL.subscribe(result => {
+                        this.imgURL = result;
+                    });
 
                     this.state.set(BLOG_KEY, blog);
                     this.seo.generateTags({
