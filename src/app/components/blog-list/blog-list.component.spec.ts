@@ -73,4 +73,12 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('trackByBlog(2) should return 2', async(() => {
+        const fixture = TestBed.createComponent(BlogListComponent);
+        fixture.detectChanges();
+        const app = fixture.debugElement.componentInstance;
+        expect(app.trackByBlog(2, {}))
+            .toBe(2);
+    }));
+
 });
