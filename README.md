@@ -8,9 +8,11 @@
 # super-firebase-angular
 All-In-One firebase and angular project.
 
-## Install global dependencies
+## Install dependencies
 ```sh
 npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli
+npm install
+npm --prefix './functions' install
 ```
 
 ## Development
