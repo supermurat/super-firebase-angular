@@ -16,7 +16,7 @@
     "deploy": "firebase deploy --project supermurat-com",
     "test": "ng test",
     "test:cover": "del-cli \"./coverage\" && ng test --watch=false --code-coverage",
-    "test:cover:open": "del-cli \"./coverage\" && ng test --watch=false --code-coverage && opn \"./coverage/index.html\"",
+    "test:cover:open": "npm run test:cover && opn \"./coverage/index.html\"",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:functions": "npm --prefix \"./functions\" run lint && npm --prefix \"./functions\" run build",

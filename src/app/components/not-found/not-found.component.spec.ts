@@ -31,4 +31,12 @@ describe('NotFoundComponent', () => {
             .toContain('Page not found');
     }));
 
+    it("position of div.host should be 'absolute'", async(() => {
+        const fixture = TestBed.createComponent(NotFoundComponent);
+        const position = window.getComputedStyle(fixture.nativeElement.querySelector('div.host'), undefined)
+            .getPropertyValue('position');
+        expect(position)
+            .toBe('absolute');
+    }));
+
 });
