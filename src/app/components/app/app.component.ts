@@ -1,3 +1,5 @@
+import { AlertService, SeoService } from '../../services';
+
 declare let window: any;
 
 import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
@@ -20,16 +22,13 @@ export class AppComponent implements OnInit {
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(DOCUMENT) doc: Document,
                 @Inject(LOCALE_ID) locale: string,
-                renderer: Renderer2) {
+                renderer: Renderer2,
+                public seo: SeoService,
+                public alert: AlertService) {
         renderer.setAttribute(doc.documentElement, 'lang', locale);
     }
 
     ngOnInit(): void {
         this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
-    }
-
-    openAlert(): void {
-        if (isPlatformBrowser(this.platformId))
-            window.alert('Yes it is!');
     }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-blog-list',

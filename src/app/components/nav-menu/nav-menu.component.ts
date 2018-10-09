@@ -2,11 +2,11 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
 import { locales } from '../../locales.values';
-import './nav-menu.component.scss';
 
 @Component({
     selector: 'app-nav-menu',
-    templateUrl: './nav-menu.component.html'
+    templateUrl: './nav-menu.component.html',
+    styleUrls: ['./nav-menu.component.scss']
 })
 export class NavMenuComponent implements OnInit {
     locales = [];

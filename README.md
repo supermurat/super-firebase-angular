@@ -8,6 +8,11 @@
 # super-firebase-angular
 All-In-One firebase and angular project.
 
+## Install global dependencies
+```sh
+npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli
+```
+
 ## Development
 With "ng serve" (default i18n - en) - [`http://localhost:4200/`](http://localhost:4200/)
 ```sh
