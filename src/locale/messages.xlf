@@ -291,8 +291,8 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="88d56c4350ea466b7c77ec075e87d6368faef123" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{renderer}}"/> side rendering with Firebase 🔥 Build Test #2</source>
+      <trans-unit id="c47c5656e72dacecfb416b45427f36079e42d7f1" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">3</context>
