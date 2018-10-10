@@ -10,7 +10,7 @@ import { AlertService } from '../../services';
 
 export class AlertComponent implements OnDestroy, OnInit {
     message: any;
-    private subscription: Subscription | undefined;
+    subscription: Subscription | undefined;
 
     constructor(public alertService: AlertService) { }
 

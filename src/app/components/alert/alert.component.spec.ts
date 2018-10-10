@@ -28,6 +28,14 @@ describe('AlertComponent', () => {
             .toBeTruthy();
     }));
 
+    it('should create the app and destroy with undefined subscription', async(() => {
+        const fixture = TestBed.createComponent(AlertComponent);
+        const app = fixture.debugElement.componentInstance;
+        app.subscription = undefined;
+        expect(app)
+            .toBeTruthy();
+    }));
+
     it("should add 'My success message' to alert.service and get 'My success message' from alert.service", async(() => {
         const fixture = TestBed.createComponent(AlertComponent);
         const app = fixture.debugElement.componentInstance;

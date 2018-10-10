@@ -11,7 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
     styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
-    renderer = '';
+    rendererText = '';
     title = 'Play Ground';
     today: number = Date.now();
     minutes = 0;
@@ -30,8 +30,7 @@ export class PlaygroundComponent implements OnInit {
                 public alert: AlertService) {}
 
     ngOnInit(): void {
-        this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
-        // console.log('LOCALE_ID:', this.locale);
+        this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
         this.seo.generateTags({
             title: this.title,
