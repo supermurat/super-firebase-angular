@@ -5,8 +5,7 @@ import { locales } from '../../locales.values';
 
 @Component({
     selector: 'app-nav-menu',
-    templateUrl: './nav-menu.component.html',
-    styleUrls: ['./nav-menu.component.scss']
+    templateUrl: './nav-menu.component.html'
 })
 export class NavMenuComponent implements OnInit {
     locales = [];
