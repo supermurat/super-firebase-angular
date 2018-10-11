@@ -8,11 +8,14 @@
 # super-firebase-angular
 All-In-One firebase and angular project.
 
+## Install global dependencies
+```sh
+npm run install:dependencies:global
+```
+
 ## Install dependencies
 ```sh
-npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli
-npm install
-npm --prefix './functions' install
+npm run install:dependencies
 ```
 
 ## Development
@@ -28,6 +31,11 @@ npm run serve:i18n
 ## Extract i18n Translation File
 ```sh
 npm run extract:i18n
+```
+
+## Check Bundle Stats
+```sh
+npm run stats
 ```
 
 ## Unit Test - Karma
