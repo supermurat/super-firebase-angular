@@ -16,6 +16,8 @@ import { AppComponent } from './components/app/app.component';
 import { appDeclarations, appRoutes } from './app.module.routes';
 
 import { firebaseConfig } from '../environments/firebase.config';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: appDeclarations,
@@ -35,7 +37,9 @@ import { firebaseConfig } from '../environments/firebase.config';
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
 
-        appRoutes
+        appRoutes,
+
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         AlertService,

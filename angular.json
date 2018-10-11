@@ -19,7 +19,8 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/404.html"
+              "src/404.html",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.scss"
@@ -60,7 +61,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             },
             "production-en": {
               "optimization": true,
@@ -76,8 +78,13 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.en.json"
                 }
               ],
+              "serviceWorker": true,
               "outputPath": "functions/dist/browser/en/",
               "baseHref": "/en/",
               "i18nFile": "src/locale/messages.en.xlf",
@@ -99,8 +106,13 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.tr.json"
                 }
               ],
+              "serviceWorker": true,
               "outputPath": "functions/dist/browser/tr/",
               "baseHref": "/tr/",
               "i18nFile": "src/locale/messages.tr.xlf",
@@ -153,7 +165,8 @@
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/manifest.json"
             ]
           }
         },

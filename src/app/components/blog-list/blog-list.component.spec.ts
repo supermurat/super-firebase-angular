@@ -15,12 +15,15 @@ const testData: Array<Array<Blog>> = [[
 ]];
 
 const angularFirestoreStub = {
-    collection: jasmine.createSpy('collection').and
-        .returnValue(
-    {
-        valueChanges: jasmine.createSpy('valueChanges').and
-            .returnValue(Observable.from(testData))
-    })
+    collection(path: string, queryFn?: any): any {
+        queryFn({orderBy(fieldPath): any { return {fieldPath}; }});
+
+        return {
+            valueChanges(): any {
+                return Observable.from(testData);
+            }
+        };
+    }
 };
 
 describe('BlogListComponent', () => {

@@ -8,8 +8,7 @@
   },
   "functions": {
     "predeploy": [
-      "npm --prefix './functions' run lint",
-      "npm --prefix './functions' run build",
+      "npm run build:functions",
       "npm run build:production:i18n",
       "npm run server:production:i18n",
       "npm run copyToPublic"

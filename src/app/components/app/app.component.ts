@@ -1,17 +1,13 @@
 import { AlertService, SeoService } from '../../services';
 
-declare let window: any;
-
-import { Component, Inject, LOCALE_ID, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, LOCALE_ID, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {
-    renderer = '';
+export class AppComponent {
     title = 'app';
 
     private _isLoading = false;
@@ -26,9 +22,5 @@ export class AppComponent implements OnInit {
                 public seo: SeoService,
                 public alert: AlertService) {
         renderer.setAttribute(doc.documentElement, 'lang', locale);
-    }
-
-    ngOnInit(): void {
-        this.renderer = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
     }
 }
