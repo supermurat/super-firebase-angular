@@ -5,6 +5,19 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8bd28c7d9e4499aa0e0cee622fe2352)](https://www.codacy.com/app/supermurat/super-firebase-angular?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=supermurat/super-firebase-angular&amp;utm_campaign=Badge_Grade)
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
 
+[![GitHub issues](https://img.shields.io/github/issues/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/issues)
+[![GitHub forks](https://img.shields.io/github/forks/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/network)
+[![GitHub stars](https://img.shields.io/github/stars/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/stargazers)
+[![GitHub license](https://img.shields.io/github/license/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/blob/master/LICENSE)
+
+[![repo size](https://img.shields.io/github/repo-size/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular)
+[![last commit](https://img.shields.io/github/last-commit/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
+[![commit activity](https://img.shields.io/github/commit-activity/w/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
+<!--
+[![latest release](https://img.shields.io/github/release/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/releases)
+[![commits since last release](https://img.shields.io/github/commits-since/supermurat/super-firebase-angular/latest.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
+-->
+
 # super-firebase-angular
 All-In-One firebase and angular project.
 
