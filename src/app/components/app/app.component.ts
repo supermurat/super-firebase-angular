@@ -21,6 +21,6 @@ export class AppComponent {
                 renderer: Renderer2,
                 public seo: SeoService,
                 public alert: AlertService) {
-        renderer.setAttribute(doc.documentElement, 'lang', locale);
+        renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
     }
 }

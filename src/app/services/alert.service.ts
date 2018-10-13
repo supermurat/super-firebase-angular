@@ -25,6 +25,7 @@ export class AlertService {
         this.subject.next({ type: 'success', text: message });
     }
 
+    /* istanbul ignore next */
     error(message: string, keepAfterNavigationChange = false): void {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'error', text: message });

@@ -34,8 +34,14 @@
               "baseHref": "/en/",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "en",
-              "i18nMissingTranslation": "error"
+              "i18nLocale": "en-US",
+              "i18nMissingTranslation": "error",
+              "fileReplacements": [
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.en.json"
+                }
+              ]
             },
             "tr": {
               "aot": true,
@@ -43,8 +49,14 @@
               "baseHref": "/tr/",
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "tr",
-              "i18nMissingTranslation": "error"
+              "i18nLocale": "tr-TR",
+              "i18nMissingTranslation": "error",
+              "fileReplacements": [
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.tr.json"
+                }
+              ]
             },
             "production": {
               "optimization": true,
@@ -89,7 +101,7 @@
               "baseHref": "/en/",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "en",
+              "i18nLocale": "en-US",
               "i18nMissingTranslation": "error"
             },
             "production-tr": {
@@ -117,7 +129,7 @@
               "baseHref": "/tr/",
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "tr",
+              "i18nLocale": "tr-TR",
               "i18nMissingTranslation": "error"
             }
           }
@@ -194,13 +206,13 @@
               "outputPath": "functions/dist/server/en",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "en"
+              "i18nLocale": "en-US"
             },
             "tr": {
               "outputPath": "functions/dist/server/tr",
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "tr"
+              "i18nLocale": "tr-TR"
             },
             "production": {
               "outputPath": "functions/dist/server",
@@ -215,7 +227,7 @@
               "outputPath": "functions/dist/server/en",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "en",
+              "i18nLocale": "en-US",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -227,7 +239,7 @@
               "outputPath": "functions/dist/server/tr",
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
-              "i18nLocale": "tr",
+              "i18nLocale": "tr-TR",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
