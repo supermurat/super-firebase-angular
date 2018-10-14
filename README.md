@@ -13,10 +13,6 @@
 [![repo size](https://img.shields.io/github/repo-size/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular)
 [![last commit](https://img.shields.io/github/last-commit/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
 [![commit activity](https://img.shields.io/github/commit-activity/w/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
-<!--
-[![latest release](https://img.shields.io/github/release/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/releases)
-[![commits since last release](https://img.shields.io/github/commits-since/supermurat/super-firebase-angular/latest.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
--->
 
 # super-firebase-angular
 All-In-One firebase and angular project.
@@ -41,33 +37,41 @@ With "firebase serve" (i18n support - en, tr) - [`http://localhost:5000/`](http:
 npm run serve:i18n
 ```
 
-## Extract i18n Translation File
+### Extract i18n Translation File
 ```sh
 npm run extract:i18n
 ```
 
-## Check Bundle Stats
+### Check Bundle Stats
 ```sh
 npm run stats
 ```
 
-## Unit Test - Karma
+### Unit Test - Karma
 ```sh
 npm run test
 ```
 
-## Protractor Test - e2e 
+### Protractor Test - e2e 
 ```sh
 npm run e2e
 ```
 
 ## Production
 
-Build files and deploy to Firebase Hosting (Includes all of firebase rules, indexed etc.)
+Build files and deploy to Firebase Hosting 
+(Includes all of firebase rules, indexed etc.)
 
 ```sh
 firebase deploy
 ```
+
+## Angular CLI
+get more info [`angular-cli/wiki`](https://github.com/angular/angular-cli/wiki)
+
+ng generate [`angular-cli/wiki/generate`](https://github.com/angular/angular-cli/wiki/generate)
+
+stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki/stories)
 
 ## Licence
 

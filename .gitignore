@@ -105,5 +105,4 @@ dist-ssr
 /.firebaserc
 /functions/package-lock.json
 /package-lock.json
-/README-MY.md
-/firebase-SAMPLE.json
+/temp
