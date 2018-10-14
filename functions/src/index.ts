@@ -54,20 +54,3 @@ app.get('**', function(req, res) {
 });
 
 exports.ssr = functions.https.onRequest(app);
-
-exports.getTimeByURL = functions.https.onRequest((request, response) => {
-    //response.set('Cache-Control', 'public, max-age=300, s-maxage=600');
-    //response.set('Vary', 'Accept-Encoding, X-My-Custom-Header');
-    const currentTime = new Date();
-    response.status(200).send(`
-    <!doctype html>
-        <head>
-          <title>Time</title>
-        </head>
-        <body>
-          Current Time At Server : ${currentTime}
-        </body>
-    </html>`);
-
-    //response.send("Hello from Firebase!");
-});

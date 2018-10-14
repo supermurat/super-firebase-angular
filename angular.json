@@ -19,7 +19,6 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/404.html",
               "src/manifest.json"
             ],
             "styles": [
