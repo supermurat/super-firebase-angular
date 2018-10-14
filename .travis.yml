@@ -32,7 +32,7 @@ after_success:
 - echo "!after_success!"
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 - cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
-- if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN"; fi
+- if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; fi
 after_failure:
 - echo "!after_failure!"
 after_script:
