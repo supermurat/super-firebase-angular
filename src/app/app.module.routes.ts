@@ -11,6 +11,7 @@ import { PlaygroundComponent } from './components/playground/playground.componen
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 
+/** routes of App */
 export const appRoutes = RouterModule.forRoot([
     {
         path: '', component: HomeComponent
@@ -37,6 +38,7 @@ export const appRoutes = RouterModule.forRoot([
     initialNavigation: 'enabled'
 });
 
+/** declarations of App */
 export const appDeclarations: Array<any> = [
     AppComponent,
     NavMenuComponent,

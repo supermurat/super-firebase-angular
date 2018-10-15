@@ -4,9 +4,21 @@ import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { LinkDefinition, TagsDefinition } from '../models';
 import { environment } from '../../environments/environment';
 
+/**
+ * Seo Service
+ */
 @Injectable()
 export class SeoService {
 
+    /**
+     * constructor of SeoService
+     * @param meta: Meta
+     * @param titleService: Title
+     * @param rendererFactory: RendererFactory2
+     * @param platformLocation: PlatformLocation
+     * @param locale: LOCALE_ID
+     * @param document: DOCUMENT
+     */
     constructor(private meta: Meta,
                 private titleService: Title,
                 private rendererFactory: RendererFactory2,
@@ -15,6 +27,10 @@ export class SeoService {
                 @Inject(DOCUMENT) public document) {
     }
 
+    /**
+     * Generate page tags
+     * @param tags: tags of current page
+     */
     generateTags(tags: TagsDefinition): void {
         const defaultTags = new TagsDefinition();
         defaultTags.cultureCode = this.locale;
@@ -103,7 +119,11 @@ export class SeoService {
         }
     }
 
-    updateLink(tag: LinkDefinition): void {
+    /**
+     * add or update link to head of document
+     * @param linkObject: tags of link
+     */
+    updateLink(linkObject: LinkDefinition): void {
         try {
             const renderer = this.rendererFactory.createRenderer(this.document, {
                 id: '-1',
@@ -120,14 +140,14 @@ export class SeoService {
             if (head === null)
                 return; // <head> not found within DOCUMENT
 
-            Object.keys(tag)
+            Object.keys(linkObject)
                 .forEach((prop: string) => {
-                    return renderer.setAttribute(link, prop, tag[prop]);
+                    return renderer.setAttribute(link, prop, linkObject[prop]);
                 });
 
             /* istanbul ignore next */
-            const attr: string = tag.rel ? 'rel' : 'hreflang';
-            const attrSelector = `${attr}="${tag[attr]}"`;
+            const attr: string = linkObject.rel ? 'rel' : 'hreflang';
+            const attrSelector = `${attr}="${linkObject[attr]}"`;
             const linkTags = this.document.querySelectorAll(`link[${attrSelector}]`);
             for (const oldLink of linkTags)
                 renderer.removeChild(head, oldLink);
@@ -137,10 +157,16 @@ export class SeoService {
         }
     }
 
+    /**
+     * get title of current page
+     */
     getTitle(): string {
         return this.titleService.getTitle();
     }
 
+    /**
+     * get meta object of current page
+     */
     getMeta(): Meta {
         return this.meta;
     }

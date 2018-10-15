@@ -8,6 +8,9 @@ import localeTr from '@angular/common/locales/tr';
 import localeTrExtra from '@angular/common/locales/extra/tr';
 registerLocaleData(localeTr, 'tr', localeTrExtra);
 
+/**
+ * App Server Module
+ */
 @NgModule({
     imports: [
         ServerModule,

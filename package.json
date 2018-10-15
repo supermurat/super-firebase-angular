@@ -35,7 +35,7 @@
     "stats:i18n:tr": "ng run super-firebase-angular:build:tr --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/tr/stats.json\" --host 127.0.0.1 --port 8044",
     "stats:production:i18n:en": "ng run super-firebase-angular:build:production-en --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/en/stats.json\" --host 127.0.0.1 --port 8045",
     "stats:production:i18n:tr": "ng run super-firebase-angular:build:production-tr --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/tr/stats.json\" --host 127.0.0.1 --port 8046",
-    "install:dependencies:global": "npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc",
+    "install:dependencies:global": "npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc selenium-webdriver",
     "install:dependencies": "npm install && cd functions && npm install",
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",

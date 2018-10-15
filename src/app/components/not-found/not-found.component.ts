@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * Not Found Component
+ */
 @Component({
     templateUrl: './not-found.component.html',
     styleUrls: ['./not-found.component.scss']

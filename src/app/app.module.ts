@@ -19,6 +19,9 @@ import { firebaseConfig } from '../environments/firebase.config';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+/**
+ * App Module
+ */
 @NgModule({
     declarations: appDeclarations,
     imports: [
