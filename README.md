@@ -76,3 +76,7 @@ stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki
 ## Licence
 
 MIT
+
+## Thanks
+
+[![browserstack](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)](https://www.browserstack.com/)
