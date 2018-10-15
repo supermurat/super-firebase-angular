@@ -260,6 +260,11 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "super-firebase-angular:serve"
+          },
+          "configurations": {
+            "browserstack": {
+              "protractorConfig": "./protractor.browserstack.conf.js"
+            }
           }
         },
         "lint": {

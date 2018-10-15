@@ -22,6 +22,7 @@
     "lint:md": "remark .",
     "stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e",
+    "e2e:browserstack": "ng e2e --configuration=browserstack",
     "build:functions": "npm run lint:functions && npm --prefix \"./functions\" run build",
     "serve": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build && npm run server && npm run copyToPublic && firebase serve --project supermurat-com",
     "serve:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:i18n && npm run server:i18n && npm run copyToPublic && firebase serve --project supermurat-com",
@@ -39,8 +40,7 @@
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
     "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
-    "commit": "commit-wizard",
-    "e2e:browserstack": "protractor protractor.browserstack.conf.js"
+    "commit": "commit-wizard"
   },
   "private": true,
   "dependencies": {

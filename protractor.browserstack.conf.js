@@ -14,7 +14,7 @@ exports.config = {
     commonCapabilities: {
         'name': 'E2E Test',
         'project': 'super-firebase-angular',
-        'build': 'Build ' + process.env.TRAVIS_BUILD_NUMBER + '#',
+        'build': '' + (process.env.TRAVIS_BUILD_NUMBER || 'Local') + '#',
         'browserstack.user': process.env.BROWSERSTACK_USERNAME,
         'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
         'acceptSslCerts': true,
