@@ -5,9 +5,6 @@ export class TagsDefinition {
     description ? = environment.defaultDescription;
     image?: string;
 
-    protocol ? = environment.protocol;
-    host ? = environment.host;
-
     slug?: string;
     cultureCode?: string;
     languageCode?: string;

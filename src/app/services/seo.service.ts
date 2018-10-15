@@ -2,6 +2,7 @@ import { Inject, Injectable, LOCALE_ID, RendererFactory2, ViewEncapsulation } fr
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { LinkDefinition, TagsDefinition } from '../models';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SeoService {
@@ -29,11 +30,14 @@ export class SeoService {
 
         tags = {...defaultTags, ...tags};
 
+        const protocol = environment.protocol;
+        const host = environment.host;
+
         // set a title
         this.titleService.setTitle(tags.title);
         this.meta.updateTag({itemprop: 'name', content: tags.title});
 
-        this.updateLink({rel: 'canonical', href: `${tags.protocol}//${tags.host}${tags.slug}`});
+        this.updateLink({rel: 'canonical', href: `${protocol}//${host}${tags.slug}`});
 
         this.meta.updateTag({name: 'description', content: tags.description});
         this.meta.updateTag({itemprop: 'description', content: tags.description});
@@ -56,7 +60,7 @@ export class SeoService {
             this.meta.updateTag({property: 'og:type', content: tags.ogType});
             this.meta.updateTag({property: 'og:title', content: tags.ogTitle});
             this.meta.updateTag({property: 'og:description', content: tags.ogDescription});
-            this.meta.updateTag({property: 'og:url', content: `${tags.protocol}//${tags.host}${tags.slug}`});
+            this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${tags.slug}`});
             this.meta.updateTag({property: 'og:locale', content: tags.cultureCode});
             if (tags.ogSiteName)
                 this.meta.updateTag({property: 'og:site_name', content: tags.ogSiteName});
@@ -88,13 +92,13 @@ export class SeoService {
 
         this.updateLink({
             rel: 'alternate',
-            href: `${tags.protocol}//${tags.host}${tags.slug}`,
+            href: `${protocol}//${host}${tags.slug}`,
             hreflang: 'x-default'});
         for (const langAlternate of tags.langAlternates) {
             if (tags.ogType) this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode});
             this.updateLink({
                 rel: 'alternate',
-                href: `${tags.protocol}//${tags.host}${langAlternate.slug}`,
+                href: `${protocol}//${host}${langAlternate.slug}`,
                 hreflang: langAlternate.languageCode});
         }
     }
@@ -114,7 +118,7 @@ export class SeoService {
 
             /* istanbul ignore if */
             if (head === null)
-                throw new Error('<head> not found within DOCUMENT.');
+                return; // <head> not found within DOCUMENT
 
             Object.keys(tag)
                 .forEach((prop: string) => {
@@ -128,7 +132,6 @@ export class SeoService {
             for (const oldLink of linkTags)
                 renderer.removeChild(head, oldLink);
             renderer.appendChild(head, link);
-
         } catch (e) {
             // console.error('Error within linkService : ', e);
         }
