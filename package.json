@@ -39,7 +39,8 @@
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
     "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
-    "commit": "commit-wizard"
+    "commit": "commit-wizard",
+    "e2e:browserstack": "protractor protractor.browserstack.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -77,6 +78,7 @@
     "@types/node": "^10.11.4",
     "angular-tslint-rules": "^1.5.0",
     "browserslist": "^4.2.0",
+    "browserstack-local": "^1.3.4",
     "codacy-coverage": "^3.1.0",
     "codelyzer": "^4.4.4",
     "conventional-commit-message": "^1.1.0",
@@ -117,7 +119,11 @@
   "config": {
     "pre-git": {
       "commit-msg": "conventional",
-      "pre-commit": ["echo 'Pre-commit: running lint...' && exit 0", "npm run lint", "npm run lint:functions"],
+      "pre-commit": [
+        "echo 'Pre-commit: running lint...' && exit 0",
+        "npm run lint",
+        "npm run lint:functions"
+      ],
       "pre-push": [],
       "post-commit": [],
       "post-checkout": [],

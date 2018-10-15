@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/supermurat/super-firebase-angular.svg?branch=master)](https://travis-ci.org/supermurat/super-firebase-angular)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=UFJndlRoc0JrdjBKZVBza3BYTDB6QlhwazZsYmRISnZJNXFtREZ2ZWkrRT0tLS9tVE1TU0h4N2wrekk2eWhrUlg3WkE9PQ==--880a4252fa570dd945d54f88848d9a694a2bae72)](https://www.browserstack.com/automate/public-build/UFJndlRoc0JrdjBKZVBza3BYTDB6QlhwazZsYmRISnZJNXFtREZ2ZWkrRT0tLS9tVE1TU0h4N2wrekk2eWhrUlg3WkE9PQ==--880a4252fa570dd945d54f88848d9a694a2bae72)
 [![Coverage Status](https://coveralls.io/repos/github/supermurat/super-firebase-angular/badge.svg?branch=master)](https://coveralls.io/github/supermurat/super-firebase-angular?branch=master)
 [![Dependency Status](https://david-dm.org/supermurat/super-firebase-angular.svg)](https://david-dm.org/supermurat/super-firebase-angular)
 [![devDependency Status](https://david-dm.org/supermurat/super-firebase-angular/dev-status.svg)](https://david-dm.org/supermurat/super-firebase-angular?type=dev)

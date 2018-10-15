@@ -106,3 +106,4 @@ dist-ssr
 /package-lock.json
 /temp
 /documentation
+/browserstack.err

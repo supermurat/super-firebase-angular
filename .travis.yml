@@ -1,6 +1,10 @@
 dist: trusty
 addons:
   chrome: stable
+  browserstack:
+    username: "$BROWSERSTACK_USERNAME"
+    access_key:
+      secure: "$BROWSERSTACK_ACCESS_KEY"
 language: node_js
 node_js:
 - "8"
@@ -27,7 +31,7 @@ script:
 - echo "!script!"
 - npm run lint
 - npm run test:cover
-- npm run e2e
+- npm run e2e:browserstack
 after_success:
 - echo "!after_success!"
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
