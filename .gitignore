@@ -61,7 +61,6 @@ typings/
 .next
 
 # IDEs and editors
-/.idea
 .project
 .classpath
 .c9/
@@ -105,5 +104,6 @@ dist-ssr
 /.firebaserc
 /functions/package-lock.json
 /package-lock.json
-/README-MY.md
-/firebase-SAMPLE.json
+/temp
+/documentation
+/browserstack.err

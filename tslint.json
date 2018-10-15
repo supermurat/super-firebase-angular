@@ -29,6 +29,7 @@
     "no-string-literal": false,
     "no-use-before-declare": true,
     "no-var-keyword": true,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "completed-docs": true
   }
 }

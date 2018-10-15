@@ -1,6 +1,10 @@
 dist: trusty
 addons:
   chrome: stable
+  browserstack:
+    forcelocal: true
+    username: "$BROWSERSTACK_USERNAME"
+    access_key: "$BROWSERSTACK_ACCESS_KEY"
 language: node_js
 node_js:
 - "8"
@@ -11,7 +15,7 @@ before_install:
 - echo "TRAVIS_PULL_REQUEST_BRANCH:" + "$TRAVIS_PULL_REQUEST_BRANCH"
 - echo "TRAVIS_TAG:" + "$TRAVIS_TAG"
 - nvm install 8
-- npm i -g firebase-tools @angular/cli
+- npm i -g firebase-tools @angular/cli selenium-webdriver
 install:
 - echo "!install!"
 - npm i -g cpy-cli del-cli
@@ -27,7 +31,7 @@ script:
 - echo "!script!"
 - npm run lint
 - npm run test:cover
-- npm run e2e
+- npm run e2e:browserstack
 after_success:
 - echo "!after_success!"
 - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js

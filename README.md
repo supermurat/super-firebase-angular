@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/supermurat/super-firebase-angular.svg?branch=master)](https://travis-ci.org/supermurat/super-firebase-angular)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=UFJndlRoc0JrdjBKZVBza3BYTDB6QlhwazZsYmRISnZJNXFtREZ2ZWkrRT0tLS9tVE1TU0h4N2wrekk2eWhrUlg3WkE9PQ==--880a4252fa570dd945d54f88848d9a694a2bae72)](https://www.browserstack.com/automate/public-build/UFJndlRoc0JrdjBKZVBza3BYTDB6QlhwazZsYmRISnZJNXFtREZ2ZWkrRT0tLS9tVE1TU0h4N2wrekk2eWhrUlg3WkE9PQ==--880a4252fa570dd945d54f88848d9a694a2bae72)
 [![Coverage Status](https://coveralls.io/repos/github/supermurat/super-firebase-angular/badge.svg?branch=master)](https://coveralls.io/github/supermurat/super-firebase-angular?branch=master)
 [![Dependency Status](https://david-dm.org/supermurat/super-firebase-angular.svg)](https://david-dm.org/supermurat/super-firebase-angular)
 [![devDependency Status](https://david-dm.org/supermurat/super-firebase-angular/dev-status.svg)](https://david-dm.org/supermurat/super-firebase-angular?type=dev)
@@ -13,10 +14,6 @@
 [![repo size](https://img.shields.io/github/repo-size/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular)
 [![last commit](https://img.shields.io/github/last-commit/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
 [![commit activity](https://img.shields.io/github/commit-activity/w/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
-<!--
-[![latest release](https://img.shields.io/github/release/supermurat/super-firebase-angular.svg)](https://github.com/supermurat/super-firebase-angular/releases)
-[![commits since last release](https://img.shields.io/github/commits-since/supermurat/super-firebase-angular/latest.svg)](https://github.com/supermurat/super-firebase-angular/commits/master)
--->
 
 # super-firebase-angular
 All-In-One firebase and angular project.
@@ -41,34 +38,46 @@ With "firebase serve" (i18n support - en, tr) - [`http://localhost:5000/`](http:
 npm run serve:i18n
 ```
 
-## Extract i18n Translation File
+### Extract i18n Translation File
 ```sh
 npm run extract:i18n
 ```
 
-## Check Bundle Stats
+### Check Bundle Stats
 ```sh
 npm run stats
 ```
 
-## Unit Test - Karma
+### Unit Test - Karma
 ```sh
 npm run test
 ```
 
-## Protractor Test - e2e 
+### Protractor Test - e2e 
 ```sh
 npm run e2e
 ```
 
 ## Production
 
-Build files and deploy to Firebase Hosting (Includes all of firebase rules, indexed etc.)
+Build files and deploy to Firebase Hosting 
+(Includes all of firebase rules, indexed etc.)
 
 ```sh
 firebase deploy
 ```
 
+## Angular CLI
+get more info [`angular-cli/wiki`](https://github.com/angular/angular-cli/wiki)
+
+ng generate [`angular-cli/wiki/generate`](https://github.com/angular/angular-cli/wiki/generate)
+
+stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki/stories)
+
 ## Licence
 
 MIT
+
+## Thanks
+
+[![browserstack](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)](https://www.browserstack.com/)

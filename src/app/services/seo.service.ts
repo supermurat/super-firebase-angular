@@ -2,10 +2,23 @@ import { Inject, Injectable, LOCALE_ID, RendererFactory2, ViewEncapsulation } fr
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT, PlatformLocation } from '@angular/common';
 import { LinkDefinition, TagsDefinition } from '../models';
+import { environment } from '../../environments/environment';
 
+/**
+ * Seo Service
+ */
 @Injectable()
 export class SeoService {
 
+    /**
+     * constructor of SeoService
+     * @param meta: Meta
+     * @param titleService: Title
+     * @param rendererFactory: RendererFactory2
+     * @param platformLocation: PlatformLocation
+     * @param locale: LOCALE_ID
+     * @param document: DOCUMENT
+     */
     constructor(private meta: Meta,
                 private titleService: Title,
                 private rendererFactory: RendererFactory2,
@@ -14,6 +27,10 @@ export class SeoService {
                 @Inject(DOCUMENT) public document) {
     }
 
+    /**
+     * Generate page tags
+     * @param tags: tags of current page
+     */
     generateTags(tags: TagsDefinition): void {
         const defaultTags = new TagsDefinition();
         defaultTags.cultureCode = this.locale;
@@ -29,11 +46,14 @@ export class SeoService {
 
         tags = {...defaultTags, ...tags};
 
+        const protocol = environment.protocol;
+        const host = environment.host;
+
         // set a title
         this.titleService.setTitle(tags.title);
         this.meta.updateTag({itemprop: 'name', content: tags.title});
 
-        this.updateLink({rel: 'canonical', href: `${tags.protocol}//${tags.host}${tags.slug}`});
+        this.updateLink({rel: 'canonical', href: `${protocol}//${host}${tags.slug}`});
 
         this.meta.updateTag({name: 'description', content: tags.description});
         this.meta.updateTag({itemprop: 'description', content: tags.description});
@@ -56,7 +76,7 @@ export class SeoService {
             this.meta.updateTag({property: 'og:type', content: tags.ogType});
             this.meta.updateTag({property: 'og:title', content: tags.ogTitle});
             this.meta.updateTag({property: 'og:description', content: tags.ogDescription});
-            this.meta.updateTag({property: 'og:url', content: `${tags.protocol}//${tags.host}${tags.slug}`});
+            this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${tags.slug}`});
             this.meta.updateTag({property: 'og:locale', content: tags.cultureCode});
             if (tags.ogSiteName)
                 this.meta.updateTag({property: 'og:site_name', content: tags.ogSiteName});
@@ -88,18 +108,22 @@ export class SeoService {
 
         this.updateLink({
             rel: 'alternate',
-            href: `${tags.protocol}//${tags.host}${tags.slug}`,
+            href: `${protocol}//${host}${tags.slug}`,
             hreflang: 'x-default'});
         for (const langAlternate of tags.langAlternates) {
             if (tags.ogType) this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode});
             this.updateLink({
                 rel: 'alternate',
-                href: `${tags.protocol}//${tags.host}${langAlternate.slug}`,
+                href: `${protocol}//${host}${langAlternate.slug}`,
                 hreflang: langAlternate.languageCode});
         }
     }
 
-    updateLink(tag: LinkDefinition): void {
+    /**
+     * add or update link to head of document
+     * @param linkObject: tags of link
+     */
+    updateLink(linkObject: LinkDefinition): void {
         try {
             const renderer = this.rendererFactory.createRenderer(this.document, {
                 id: '-1',
@@ -114,30 +138,35 @@ export class SeoService {
 
             /* istanbul ignore if */
             if (head === null)
-                throw new Error('<head> not found within DOCUMENT.');
+                return; // <head> not found within DOCUMENT
 
-            Object.keys(tag)
+            Object.keys(linkObject)
                 .forEach((prop: string) => {
-                    return renderer.setAttribute(link, prop, tag[prop]);
+                    return renderer.setAttribute(link, prop, linkObject[prop]);
                 });
 
             /* istanbul ignore next */
-            const attr: string = tag.rel ? 'rel' : 'hreflang';
-            const attrSelector = `${attr}="${tag[attr]}"`;
+            const attr: string = linkObject.rel ? 'rel' : 'hreflang';
+            const attrSelector = `${attr}="${linkObject[attr]}"`;
             const linkTags = this.document.querySelectorAll(`link[${attrSelector}]`);
             for (const oldLink of linkTags)
                 renderer.removeChild(head, oldLink);
             renderer.appendChild(head, link);
-
         } catch (e) {
             // console.error('Error within linkService : ', e);
         }
     }
 
+    /**
+     * get title of current page
+     */
     getTitle(): string {
         return this.titleService.getTitle();
     }
 
+    /**
+     * get meta object of current page
+     */
     getMeta(): Meta {
         return this.meta;
     }

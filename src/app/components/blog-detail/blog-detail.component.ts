@@ -8,18 +8,33 @@ import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
+/** State key of current blog */
 const BLOG_KEY = makeStateKey<any>('blog');
 
+/**
+ * Blog Detail Component
+ */
 @Component({
     selector: 'app-blog-detail',
     templateUrl: './blog-detail.component.html',
     styleUrls: ['./blog-detail.component.scss']
 })
 export class BlogDetailComponent implements OnInit {
+    /** current blog object */
     blog$;
+    /** current blog name */
     blogName = '';
+    /** current blog`s image url */
     imgURL;
 
+    /**
+     * constructor of BlogDetailComponent
+     * @param afs: AngularFirestore
+     * @param storage: AngularFireStorage
+     * @param seo: SeoService
+     * @param route: ActivatedRoute
+     * @param state: TransferState
+     */
     constructor(
         private afs: AngularFirestore,
         private storage: AngularFireStorage,
@@ -29,6 +44,9 @@ export class BlogDetailComponent implements OnInit {
     ) {
     }
 
+    /**
+     * ngOnInit
+     */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.blogName = params['name'].toLowerCase();
@@ -39,6 +57,10 @@ export class BlogDetailComponent implements OnInit {
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
     }
 
+    /**
+     * Get blog object from firestore by path
+     * @param path: blog path
+     */
     ssrFirestoreDoc(path: string): Observable<Blog> {
         const exists = this.state.get(BLOG_KEY, new Blog());
 
