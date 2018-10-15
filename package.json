@@ -39,7 +39,6 @@
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
     "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
-    "prepareNewBranche": "npm install pre-git",
     "commit": "commit-wizard"
   },
   "private": true,
@@ -121,7 +120,7 @@
       "pre-commit": ["echo 'Pre-commit: running lint...' && exit 0", "npm run lint", "npm run lint:functions"],
       "pre-push": [],
       "post-commit": [],
-      "post-checkout": ["echo 'Post-checkout: installing dependencies...' && exit 0", "npm run install:dependencies:global", "npm run install:dependencies"],
+      "post-checkout": [],
       "post-merge": []
     }
   }
