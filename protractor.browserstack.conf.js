@@ -1,10 +1,10 @@
-var browserstack = require('browserstack-local');
+const browserstack = require("browserstack-local");
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter } = require("jasmine-spec-reporter");
 
-console.log("process.env.BROWSERSTACK_USERNAME:", process.env.BROWSERSTACK_USERNAME);
+Console.log("process.env.BROWSERSTACK_USERNAME:", process.env.BROWSERSTACK_USERNAME);
 
 exports.config = {
     allScriptsTimeout: 11000,
@@ -12,19 +12,19 @@ exports.config = {
         "./e2e/**/*.e2e-spec.ts"
     ],
     commonCapabilities: {
-        'name': 'E2E Test',
-        'project': 'super-firebase-angular',
-        'build': '' + (process.env.TRAVIS_BUILD_NUMBER || 'Local') + '#',
-        'browserstack.user': process.env.BROWSERSTACK_USERNAME,
-        'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
-        'acceptSslCerts': true,
-        'browserstack.local': true,
-        'browserstack.video': false,
+        "name": "E2E Test",
+        "project": "super-firebase-angular",
+        "build": "" + (process.env.TRAVIS_BUILD_NUMBER || "Local") + "#",
+        "browserstack.user": process.env.BROWSERSTACK_USERNAME,
+        "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
+        "acceptSslCerts": true,
+        "browserstack.local": true,
+        "browserstack.video": false,
     },
     multiCapabilities: [{
-        'browserName': 'Chrome',
-        'chromeOptions': {
-            'args': ["--disable-popup-blocking"]
+        "browserName": "Chrome",
+        "chromeOptions": {
+            "args": ["--disable-popup-blocking"]
         }
     },/* {
         'browserName': 'Safari',
@@ -36,7 +36,7 @@ exports.config = {
         'browserstack.ie.enablePopups': true
     }*/
     ],
-    seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
+    seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
     baseUrl: "http://localhost:4200/",
     framework: "jasmine",
     jasmineNodeOpts: {
@@ -52,27 +52,33 @@ exports.config = {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
     },
     // Code to start browserstack local before start of test
-    beforeLaunch: function () {
-        console.log("Connecting local");
+    beforeLaunch() {
+        Console.log("Connecting local");
         return new Promise(function (resolve, reject) {
-            exports.bs_local = new browserstack.Local();
-            exports.bs_local.start({'key': exports.config.commonCapabilities['browserstack.key']}, function (error) {
-                if (error) return reject(error);
-                console.log('Connected. Now testing...');
+            exports.bsLocal = new browserstack.Local();
+            exports.bsLocal.start({'key': exports.config.commonCapabilities['browserstack.key']}, function (error) {
+                if (error) {
+                    return reject(error);
+                }
+                Console.log('Connected. Now testing...');
 
                 resolve();
             });
         });
     },
     // Code to stop browserstack local after end of test
-    afterLaunch: function () {
+    afterLaunch() {
         return new Promise(function (resolve, reject) {
-            exports.bs_local.stop(resolve);
+            exports.bsLocal.stop(resolve);
         });
     }
 };
 
 // Code to support common capabilities
 exports.config.multiCapabilities.forEach(function(caps){
-    for(let i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
+    for(let i in exports.config.commonCapabilities) {
+        if ({}.hasOwnProperty.call(exports.config.commonCapabilities, i)) {
+            caps[i] = caps[i] || exports.config.commonCapabilities[i];
+        }
+    }
 });
