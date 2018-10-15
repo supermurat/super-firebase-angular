@@ -36,10 +36,11 @@
     "stats:production:i18n:tr": "ng run super-firebase-angular:build:production-tr --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/tr/stats.json\" --host 127.0.0.1 --port 8046",
     "install:dependencies:global": "npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc",
     "install:dependencies": "npm install && cd functions && npm install",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
-    "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70"
+    "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
+    "prepareNewBranche": "npm install pre-git",
+    "commit": "commit-wizard"
   },
   "private": true,
   "dependencies": {
@@ -79,6 +80,7 @@
     "browserslist": "^4.2.0",
     "codacy-coverage": "^3.1.0",
     "codelyzer": "^4.4.4",
+    "conventional-commit-message": "^1.1.0",
     "coveralls": "^3.0.2",
     "jasmine-core": "~3.2.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -94,8 +96,7 @@
     "ngx-i18nsupport": "^0.17.1",
     "node-sass": "^4.9.3",
     "popper.js": "^1.14.4",
-    "pre-commit": "^1.2.2",
-    "pre-push": "^0.1.1",
+    "pre-git": "^3.17.1",
     "remark-cli": "^5.0.0",
     "remark-lint": "^6.0.2",
     "remark-preset-lint-markdown-style-guide": "^2.1.2",
@@ -106,19 +107,22 @@
     "typescript": "2.9.2",
     "webpack-bundle-analyzer": "^3.0.2"
   },
-  "pre-commit": {
-    "run": [
-      "precommit-msg",
-      "lint",
-      "lint:functions"
-    ]
-  },
-  "pre-push": {
-    "run": []
-  },
   "remarkConfig": {
     "plugins": [
       "remark-preset-lint-markdown-style-guide"
     ]
+  },
+  "release": {
+    "analyzeCommits": "conventional-commit-message"
+  },
+  "config": {
+    "pre-git": {
+      "commit-msg": "conventional",
+      "pre-commit": ["echo 'Pre-commit: running lint...' && exit 0", "npm run lint", "npm run lint:functions"],
+      "pre-push": [],
+      "post-commit": [],
+      "post-checkout": ["echo 'Post-checkout: installing dependencies...' && exit 0", "npm run install:dependencies:global", "npm run install:dependencies"],
+      "post-merge": []
+    }
   }
 }
