@@ -52,7 +52,7 @@ exports.config = {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
     },
     // Code to start browserstack local before start of test
-    beforeLaunch: function () {
+    beforeLaunch() {
         // console.log("Connecting local");
         return new Promise(function (resolve, reject) {
             exports.bsLocal = new browserstack.Local();
@@ -76,11 +76,5 @@ exports.config = {
 
 // Code to support common capabilities
 exports.config.multiCapabilities.forEach(function(caps){
-    for(let i in exports.config.commonCapabilities) {
-        if ({}.hasOwnProperty.call(exports.config.commonCapabilities, i)) {
-            if (caps[i] === undefined) {
-                caps[i] = exports.config.commonCapabilities[i];
-            }
-        }
-    }
+    Object.assign(caps, Object.assign({}, exports.config.commonCapabilities, caps));
 });
