@@ -4,7 +4,7 @@ const browserstack = require("browserstack-local");
 
 const { SpecReporter } = require("jasmine-spec-reporter");
 
-Console.log("process.env.BROWSERSTACK_USERNAME:", process.env.BROWSERSTACK_USERNAME);
+// console.log("process.env.BROWSERSTACK_USERNAME:", process.env.BROWSERSTACK_USERNAME);
 
 exports.config = {
     allScriptsTimeout: 11000,
@@ -52,15 +52,15 @@ exports.config = {
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
     },
     // Code to start browserstack local before start of test
-    beforeLaunch() {
-        Console.log("Connecting local");
+    beforeLaunch: function () {
+        // console.log("Connecting local");
         return new Promise(function (resolve, reject) {
             exports.bsLocal = new browserstack.Local();
-            exports.bsLocal.start({'key': exports.config.commonCapabilities['browserstack.key']}, function (error) {
+            exports.bsLocal.start({"key": exports.config.commonCapabilities["browserstack.key"]}, function (error) {
                 if (error) {
                     return reject(error);
                 }
-                Console.log('Connected. Now testing...');
+                // console.log('Connected. Now testing...');
 
                 resolve();
             });
@@ -78,7 +78,9 @@ exports.config = {
 exports.config.multiCapabilities.forEach(function(caps){
     for(let i in exports.config.commonCapabilities) {
         if ({}.hasOwnProperty.call(exports.config.commonCapabilities, i)) {
-            caps[i] = caps[i] || exports.config.commonCapabilities[i];
+            if (caps[i] === undefined) {
+                caps[i] = exports.config.commonCapabilities[i];
+            }
         }
     }
 });
