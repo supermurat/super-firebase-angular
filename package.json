@@ -23,6 +23,7 @@
     "stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e",
     "e2e:browserstack": "ng e2e --configuration=browserstack",
+    "e2e:browserstack:live": "protractor ./protractor.browserstack.live.conf.js",
     "build:functions": "npm run lint:functions && npm --prefix \"./functions\" run build",
     "serve": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build && npm run server && npm run copyToPublic && firebase serve --project supermurat-com",
     "serve:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:i18n && npm run server:i18n && npm run copyToPublic && firebase serve --project supermurat-com",
