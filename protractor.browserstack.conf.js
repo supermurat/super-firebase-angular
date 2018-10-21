@@ -5,12 +5,12 @@ const { SpecReporter } = require("jasmine-spec-reporter");
 const browserstack = require("browserstack-local");
 
 if (process.env.BROWSERSTACK_USERNAME === undefined || process.env.BROWSERSTACK_ACCESS_KEY === undefined) {
-    throw new Error('Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY ' +
-        'to your system`s environment variables.');
+    throw new Error("Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY " +
+        "to your system`s environment variables.");
 }
 const buildForLocal = ("Local" + (new Date()).getFullYear() + ((new Date()).getMonth() + 1) +
     (new Date()).getDate() + (new Date()).getHours() + (new Date()).getMinutes());
-const localIdentifier = 'TestID' + (process.env.TRAVIS_BUILD_NUMBER || "Local");
+const localIdentifier = "TestID" + (process.env.TRAVIS_BUILD_NUMBER || "Local");
 
 exports.config = {
     allScriptsTimeout: 1000 * 60 * 2,
@@ -26,18 +26,30 @@ exports.config = {
         "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
         "acceptSslCerts": true,
         "browserstack.local": true,
-        'browserstack.localIdentifier' : localIdentifier,
+        "browserstack.localIdentifier" : localIdentifier,
         "browserstack.video": false,
     },
     multiCapabilities: [{
         "browserName": "Chrome"
     },/*{
-        'browserName': 'Safari'
+        "browserName": "Safari"
     },*/ {
-        'browserName': 'Firefox'
+        "browserName": "Firefox"
     }, {
-        'browserName': 'IE'
-    }],
+        "browserName": "IE"
+    }, {
+        "browserName": "android",
+        "device": "Samsung Galaxy S9 Plus",
+        "realMobile": true
+    }, {
+        "browserName": "android",
+        "device": "Google Pixel 2",
+        "realMobile": true
+    },/*{
+        "browserName": "Safari",
+        "device": "iPhone X",
+        "realMobile": true
+    }*/],
     seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
     baseUrl: "http://localhost:4200/",
     framework: "jasmine",
@@ -62,10 +74,10 @@ exports.config = {
                 "key": exports.config.commonCapabilities["browserstack.key"],
                 "local-identifier": localIdentifier}, function (error) {
                 if (error) {
-                    process.stdout.write('Error: Couldn`t connected!\n');
+                    process.stdout.write("Error: Couldn`t connected!\n");
                     return reject(error);
                 }
-                process.stdout.write('Connected. Now testing...\n');
+                process.stdout.write("Connected. Now testing...\n");
 
                 resolve();
             });

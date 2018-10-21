@@ -4,8 +4,8 @@
 const { SpecReporter } = require("jasmine-spec-reporter");
 
 if (process.env.BROWSERSTACK_USERNAME === undefined || process.env.BROWSERSTACK_ACCESS_KEY === undefined) {
-    throw new Error('Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY ' +
-        'to your system`s environment variables.');
+    throw new Error("Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY " +
+        "to your system`s environment variables.");
 }
 const buildForLocal = ("Local" + (new Date()).getFullYear() + ((new Date()).getMonth() + 1) +
     (new Date()).getDate() + (new Date()).getHours() + (new Date()).getMinutes());
@@ -29,11 +29,11 @@ exports.config = {
     multiCapabilities: [{
         "browserName": "Chrome"
     },{
-        'browserName': 'Safari'
+        "browserName": "Safari"
     }, {
-        'browserName': 'Firefox'
+        "browserName": "Firefox"
     }, {
-        'browserName': 'IE'
+        "browserName": "IE"
     }],
     seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
     baseUrl: "https://supermurat-com.firebaseapp.com/",
