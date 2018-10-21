@@ -15,7 +15,7 @@ before_install:
 - echo "TRAVIS_PULL_REQUEST_BRANCH:" + "$TRAVIS_PULL_REQUEST_BRANCH"
 - echo "TRAVIS_TAG:" + "$TRAVIS_TAG"
 - nvm install 8
-- npm i -g firebase-tools @angular/cli selenium-webdriver
+- npm i -g firebase-tools @angular/cli selenium-webdriver @commitlint/travis-cli
 install:
 - echo "!install!"
 - npm i -g cpy-cli del-cli
@@ -29,6 +29,7 @@ before_script:
 - ng -v
 script:
 - echo "!script!"
+- commitlint-travis
 - npm run lint
 - npm run test:cover
 - npm run e2e:browserstack

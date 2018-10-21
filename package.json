@@ -36,7 +36,7 @@
     "stats:i18n:tr": "ng run super-firebase-angular:build:tr --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/tr/stats.json\" --host 127.0.0.1 --port 8044",
     "stats:production:i18n:en": "ng run super-firebase-angular:build:production-en --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/en/stats.json\" --host 127.0.0.1 --port 8045",
     "stats:production:i18n:tr": "ng run super-firebase-angular:build:production-tr --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/tr/stats.json\" --host 127.0.0.1 --port 8046",
-    "install:dependencies:global": "npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc selenium-webdriver",
+    "install:dependencies:global": "npm install -g firebase-tools @angular/cli cpy-cli del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc selenium-webdriver @commitlint/cli",
     "install:dependencies": "npm install && cd functions && npm install",
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
@@ -74,6 +74,8 @@
     "@angular/cli": "^6.2.1",
     "@angular/compiler-cli": "6.1.7",
     "@angular/language-service": "6.1.7",
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^10.11.4",
@@ -82,8 +84,8 @@
     "browserstack-local": "^1.3.4",
     "codacy-coverage": "^3.1.0",
     "codelyzer": "^4.4.4",
-    "conventional-commit-message": "^1.1.0",
     "coveralls": "^3.0.2",
+    "husky": "^1.1.2",
     "jasmine-core": "~3.2.1",
     "jasmine-spec-reporter": "~4.2.1",
     "jquery": "^3.3.1",
@@ -98,7 +100,6 @@
     "ngx-i18nsupport": "^0.17.1",
     "node-sass": "^4.9.3",
     "popper.js": "^1.14.4",
-    "pre-git": "^3.17.1",
     "remark-cli": "^5.0.0",
     "remark-lint": "^6.0.2",
     "remark-preset-lint-markdown-style-guide": "^2.1.2",
@@ -114,21 +115,13 @@
       "remark-preset-lint-markdown-style-guide"
     ]
   },
-  "release": {
-    "analyzeCommits": "conventional-commit-message"
-  },
-  "config": {
-    "pre-git": {
-      "commit-msg": "conventional",
-      "pre-commit": [
-        "echo 'Pre-commit: running lint...' && exit 0",
-        "npm run lint",
-        "npm run lint:functions"
-      ],
-      "pre-push": [],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "echo 'Pre-commit: running lint...' && npm run lint && npm run lint:functions"
     }
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"]
   }
 }
