@@ -3,7 +3,7 @@
 
 const { SpecReporter } = require("jasmine-spec-reporter");
 
-if (process.env.BROWSERSTACK_USERNAME === undefined || process.env.BROWSERSTACK_ACCESS_KEY === undefined) {
+if (!process.env.BROWSERSTACK_USERNAME || !process.env.BROWSERSTACK_ACCESS_KEY) {
     throw new Error("Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY " +
         "to your system`s environment variables.");
 }
