@@ -1,3 +1,5 @@
+
+import { from } from 'rxjs';
 import { async, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -5,9 +7,7 @@ import { BlogListComponent } from './blog-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { AlertService, SeoService } from '../../services';
-import { Observable } from 'rxjs';
-import { Blog } from '../../models/blog';
-import 'rxjs-compat/add/observable/from';
+import { Blog } from '../../models';
 
 const testData: Array<Array<Blog>> = [[
     { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined},
@@ -20,7 +20,7 @@ const angularFirestoreStub = {
 
         return {
             valueChanges(): any {
-                return Observable.from(testData);
+                return from(testData);
             }
         };
     }
