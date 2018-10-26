@@ -2,7 +2,6 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter } = require("jasmine-spec-reporter");
-const browserstack = require("browserstack-local");
 
 if (!process.env.BROWSERSTACK_USERNAME || !process.env.BROWSERSTACK_ACCESS_KEY) {
     throw new Error("Please add BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY " +
@@ -10,7 +9,6 @@ if (!process.env.BROWSERSTACK_USERNAME || !process.env.BROWSERSTACK_ACCESS_KEY) 
 }
 const buildForLocal = ("Local" + (new Date()).getFullYear() + ((new Date()).getMonth() + 1) +
     (new Date()).getDate() + (new Date()).getHours() + (new Date()).getMinutes());
-const localIdentifier = "TestID" + (process.env.TRAVIS_BUILD_NUMBER || "Local");
 
 exports.config = {
     allScriptsTimeout: 1000 * 60 * 2,
@@ -25,33 +23,20 @@ exports.config = {
         "browserstack.user": process.env.BROWSERSTACK_USERNAME,
         "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
         "acceptSslCerts": true,
-        "browserstack.local": true,
-        "browserstack.localIdentifier" : localIdentifier,
+        "browserstack.local": false,
         "browserstack.video": false,
     },
     multiCapabilities: [{
         "browserName": "Chrome"
-    },/*{
+    },{
         "browserName": "Safari"
-    },*/ {
+    }, {
         "browserName": "Firefox"
     }, {
         "browserName": "IE"
-    }, {
-        "browserName": "android",
-        "device": "Samsung Galaxy S9 Plus",
-        "realMobile": true
-    }, {
-        "browserName": "android",
-        "device": "Google Pixel 2",
-        "realMobile": true
-    },/*{
-        "browserName": "Safari",
-        "device": "iPhone X",
-        "realMobile": true
-    }*/],
+    }],
     seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
-    baseUrl: "http://localhost:4200/",
+    baseUrl: "https://supermurat-com.firebaseapp.com/",
     framework: "jasmine",
     jasmineNodeOpts: {
         showColors: true,
@@ -64,30 +49,6 @@ exports.config = {
             project: "e2e/tsconfig.e2e.json"
         });
         jasmine.getEnv().addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
-    },
-    // Code to start browserstack local before start of test
-    beforeLaunch() {
-        process.stdout.write("Connecting local\n");
-        return new Promise(function (resolve, reject) {
-            exports.bsLocal = new browserstack.Local();
-            exports.bsLocal.start({
-                "key": exports.config.commonCapabilities["browserstack.key"],
-                "local-identifier": localIdentifier}, function (error) {
-                if (error) {
-                    process.stdout.write("Error: Couldn`t connected!\n");
-                    return reject(error);
-                }
-                process.stdout.write("Connected. Now testing...\n");
-
-                resolve();
-            });
-        });
-    },
-    // Code to stop browserstack local after end of test
-    afterLaunch() {
-        return new Promise(function (resolve, reject) {
-            exports.bsLocal.stop(resolve);
-        });
     }
 };
 
