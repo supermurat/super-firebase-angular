@@ -13,6 +13,7 @@ const buildForLocal = ("Local" + (new Date()).getFullYear() + ((new Date()).getM
 exports.config = {
     allScriptsTimeout: 1000 * 60 * 2,
     getPageTimeout: 1000 * 60 * 2,
+    maxSessions: 2,
     specs: [
         "./e2e/**/*.e2e-spec.ts"
     ],
@@ -25,6 +26,7 @@ exports.config = {
         "acceptSslCerts": true,
         "browserstack.local": false,
         "browserstack.video": false,
+        "browserstack.networkLogs": true
     },
     multiCapabilities: [{
         "browserName": "Chrome"
@@ -33,8 +35,24 @@ exports.config = {
     }, {
         "browserName": "Firefox"
     }, {
-        "browserName": "IE"
-    }],
+        "os" : "Windows",
+        "os_version" : "7",
+        "browserName": "IE",
+        "browser_version" : "10.0",
+    }, {
+        "browserName": "android",
+        "device": "Samsung Galaxy S9 Plus",
+        "realMobile": true
+    }, {
+        "browserName": "android",
+        "device": "Google Pixel 2",
+        "realMobile": true
+    }, /*{
+        // https://www.browserstack.com/question/663
+        "browserName": "iPhone",
+        "device": "iPhone X",
+        "realMobile": true
+    }*/],
     seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
     baseUrl: "https://supermurat-com.firebaseapp.com/",
     framework: "jasmine",

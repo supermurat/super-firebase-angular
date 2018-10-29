@@ -15,10 +15,12 @@ const localIdentifier = "TestID" + (process.env.TRAVIS_BUILD_NUMBER || "Local");
 exports.config = {
     allScriptsTimeout: 1000 * 60 * 2,
     getPageTimeout: 1000 * 60 * 2,
+    maxSessions: 2,
     specs: [
         "./e2e/**/*.e2e-spec.ts"
     ],
     commonCapabilities: {
+        // https://www.browserstack.com/automate/capabilities
         "name": "E2E Test",
         "project": "super-firebase-angular",
         "build": "" + (process.env.TRAVIS_BUILD_NUMBER || buildForLocal) + "#",
@@ -28,15 +30,19 @@ exports.config = {
         "browserstack.local": true,
         "browserstack.localIdentifier" : localIdentifier,
         "browserstack.video": false,
+        "browserstack.networkLogs": true
     },
     multiCapabilities: [{
         "browserName": "Chrome"
-    },/*{
+    },{
         "browserName": "Safari"
-    },*/ {
+    }, {
         "browserName": "Firefox"
     }, {
-        "browserName": "IE"
+        "os" : "Windows",
+        "os_version" : "7",
+        "browserName": "IE",
+        "browser_version" : "10.0",
     }, {
         "browserName": "android",
         "device": "Samsung Galaxy S9 Plus",
@@ -45,8 +51,9 @@ exports.config = {
         "browserName": "android",
         "device": "Google Pixel 2",
         "realMobile": true
-    },/*{
-        "browserName": "Safari",
+    }, /*{
+        // https://www.browserstack.com/question/663
+        "browserName": "iPhone",
         "device": "iPhone X",
         "realMobile": true
     }*/],
