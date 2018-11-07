@@ -41,6 +41,10 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.en.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.en.html"
                 }
               ]
             },
@@ -56,6 +60,10 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.tr.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.tr.html"
                 }
               ]
             },
@@ -95,6 +103,10 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.en.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.en.html"
                 }
               ],
               "serviceWorker": true,
@@ -123,6 +135,10 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.tr.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.tr.html"
                 }
               ],
               "serviceWorker": true,
