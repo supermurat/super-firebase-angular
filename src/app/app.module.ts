@@ -13,17 +13,34 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AlertService, SeoService } from './services';
 import { AppComponent } from './components/app/app.component';
-import { appDeclarations, appRoutes } from './app.module.routes';
+import { AppRoutingModule } from './app-routing.module';
 
 import { firebaseConfig } from '../environments/firebase.config';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { PlaygroundComponent } from './components/playground/playground.component';
+import { BlogListComponent } from './components/blog-list/blog-list.component';
+import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+
 /**
  * App Module
  */
 @NgModule({
-    declarations: appDeclarations,
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        AlertComponent,
+        NotFoundComponent,
+        HomeComponent,
+        PlaygroundComponent,
+        BlogListComponent,
+        BlogDetailComponent
+    ],
     imports: [
         CommonModule,
         BrowserModule.withServerTransition({
@@ -40,7 +57,7 @@ import { environment } from '../environments/environment';
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
 
-        appRoutes,
+        AppRoutingModule,
 
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
