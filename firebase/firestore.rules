@@ -4,6 +4,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+    match /dynamicFiles/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }
