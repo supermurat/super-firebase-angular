@@ -11,7 +11,11 @@
       "npm run build:functions",
       "npm run build:production:i18n",
       "npm run server:production:i18n",
-      "npm run copyToPublic"
+      "npm run copyToPublic",
+      "npm help-search \"if you want to deploy manually instead of travis-CI, you need to run test:cover in order to generate coverage directory for public : 'npm run test:cover'\"",
+      "npm run copyCoverageToPublic",
+      "npm run compodoc",
+      "npm run copyDocumentationToPublic"
     ]
   },
   "hosting": {

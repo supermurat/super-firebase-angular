@@ -64,6 +64,7 @@ Build files and deploy to Firebase Hosting
 (Includes all of firebase rules, indexed etc.)
 
 ```sh
+npm run test:cover
 firebase deploy
 ```
 

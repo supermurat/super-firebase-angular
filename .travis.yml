@@ -18,7 +18,7 @@ before_install:
 - npm i -g firebase-tools @angular/cli selenium-webdriver @commitlint/travis-cli
 install:
 - echo "!install!"
-- npm i -g cpy-cli del-cli
+- npm i -g ncp del-cli
 - npm install
 - cd functions && npm install && cd ..
 before_script:
