@@ -1,7 +1,7 @@
 import { Inject, Injectable, LOCALE_ID, RendererFactory2, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT, PlatformLocation } from '@angular/common';
-import { LinkDefinition, TagsDefinition } from '../models';
+import { HtmlDocumentModel, HtmlLinkElementModel } from '../models';
 import { environment } from '../../environments/environment';
 
 /**
@@ -31,8 +31,8 @@ export class SeoService {
      * Generate page tags
      * @param tags: tags of current page
      */
-    generateTags(tags: TagsDefinition): void {
-        const defaultTags = new TagsDefinition();
+    generateTags(tags: HtmlDocumentModel): void {
+        const defaultTags = new HtmlDocumentModel();
         defaultTags.cultureCode = this.locale;
         defaultTags.languageCode = this.locale.substr(0, 2);
         defaultTags.slug =
@@ -123,7 +123,7 @@ export class SeoService {
      * add or update link to head of document
      * @param linkObject: tags of link
      */
-    updateLink(linkObject: LinkDefinition): void {
+    updateLink(linkObject: HtmlLinkElementModel): void {
         try {
             const renderer = this.rendererFactory.createRenderer(this.document, {
                 id: '-1',
