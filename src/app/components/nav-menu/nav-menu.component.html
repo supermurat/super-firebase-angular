@@ -22,6 +22,16 @@
                         <span class='' i18n>Playground</span>
                     </a>
                 </li>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" href="/coverage" target="_blank">
+                        <span class='' i18n>Coverage</span>
+                    </a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" href="/documentation" target="_blank">
+                        <span class='' i18n>Documentation</span>
+                    </a>
+                </li>
             </ul>
             <ul class="navbar-nav" id="lang">
                 <li class="nav-item" *ngFor="let locale of locales; trackBy:trackByLocale">

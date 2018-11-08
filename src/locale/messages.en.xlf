@@ -295,15 +295,24 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
+      </trans-unit><trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">
+        <source>Coverage</source><target state="final">Coverage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit><trans-unit id="fcfd4675b4c90f08d18d3abede9a9a4dff4cfdc7" datatype="html">
+        <source>Documentation</source><target state="final">Documentation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="search" datatype="html">
         <source>Search</source>
         <target>Search</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit><trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source><target state="final">Page not found</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/not-found/not-found.component.html</context>
@@ -314,6 +323,24 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/home/home.component.html</context>
           <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="d106826fbee9f9e017fe78864b10259e1c4f46f9" datatype="html">
+        <source>Hello,</source><target state="final">Hello,</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/home/home.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit><trans-unit id="640eec093c685babaa3265137215e3cc92ad704d" datatype="html">
+        <source>Sign Out</source><target state="final">Sign Out</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/home/home.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit><trans-unit id="6f21558313038c924127b3ff527b6a6ec2ec17d7" datatype="html">
+        <source>Login with Google</source><target state="final">Login with Google</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/home/home.component.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit><trans-unit id="c47c5656e72dacecfb416b45427f36079e42d7f1" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</source><target state="final"><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</target>
