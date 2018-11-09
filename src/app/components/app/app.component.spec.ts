@@ -5,8 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { AlertComponent } from '../alert/alert.component';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PaginationService, SeoService } from '../../services';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -14,11 +16,13 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent
+                AlertComponent,
+                LoadingSpinnerComponent
             ],
             providers: [
-                AlertService, SeoService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                AlertService, SeoService, PaginationService,
+                { provide: ComponentFixtureAutoDetect, useValue: true },
+                { provide: AngularFirestore, useValue: {} }
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -53,11 +57,13 @@ describe('AppComponentSeoService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent
+                AlertComponent,
+                LoadingSpinnerComponent
             ],
             providers: [
-                AlertService, SeoService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                AlertService, SeoService, PaginationService,
+                { provide: ComponentFixtureAutoDetect, useValue: true },
+                { provide: AngularFirestore, useValue: {} }
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -167,11 +173,13 @@ describe('AppComponentAlertService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent
+                AlertComponent,
+                LoadingSpinnerComponent
             ],
             providers: [
-                AlertService, SeoService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                AlertService, SeoService, PaginationService,
+                { provide: ComponentFixtureAutoDetect, useValue: true },
+                { provide: AngularFirestore, useValue: {} }
             ],
             imports: [
                 RouterTestingModule.withRoutes([

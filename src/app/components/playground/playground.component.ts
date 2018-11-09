@@ -1,4 +1,4 @@
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PaginationService, SeoService } from '../../services';
 
 /** window object of browser */
 declare let window: any;
@@ -54,16 +54,20 @@ export class PlaygroundComponent implements OnInit {
      * @param locale: LOCALE_ID
      * @param seo: SeoService
      * @param alert: AlertService
+     * @param page: PaginationService
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
                 private seo: SeoService,
-                public alert: AlertService) {}
+                public alert: AlertService,
+                public page: PaginationService) {}
 
     /**
      * ngOnDestroy
      */
     ngOnInit(): void {
+        this.page.init('blogs', 'imgName', { reverse: false, prepend: false });
+
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
         this.seo.generateTags({
@@ -79,5 +83,25 @@ export class PlaygroundComponent implements OnInit {
         this.alert.success('This is alert test');
         if (isPlatformBrowser(this.platformId))
             window.alert('Yes it is!');
+    }
+
+    /**
+     * scroll handler for pagination
+     * @param e: event
+     */
+    scrollHandler(e): void {
+        if (e === 'bottom')
+            this.page.more();
+        if (e === 'top')
+            this.page.more();
+    }
+
+    /**
+     * track blog object array by blog
+     * @param index: blog index no
+     * @param item: blog object
+     */
+    trackByBlog(index, item): number {
+        return index;
     }
 }

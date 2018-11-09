@@ -5,7 +5,7 @@
     <div class='container-fluid'>
         <div class='row'>
             <div class='col-12 body-content'>
-                <h3 *ngIf="$isLoading" i18n>(Loading ...)</h3>
+                <app-loading-spinner *ngIf="page.loading | async"></app-loading-spinner>
                 <app-alert></app-alert>
                 <router-outlet></router-outlet>
             </div>

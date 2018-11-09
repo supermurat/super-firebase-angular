@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
  */
 export class Blog {
     /** name of blog */
-    name: string | undefined;
+    name?: string | undefined;
     /** bio of blog */
-    bio: string | undefined;
+    bio?: string | undefined;
     /** image name of blog */
-    imgName: string | undefined;
+    imgName?: string | undefined;
     /** image url of blog */
-    imgURL: Observable<string> | undefined;
+    imgURL?: Observable<string> | undefined;
 }

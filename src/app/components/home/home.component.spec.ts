@@ -3,7 +3,65 @@ import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
 
-import { AlertService, SeoService } from '../../services';
+import { AlertService, AuthService, SeoService } from '../../services';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { BehaviorSubject, from } from 'rxjs';
+
+const testData: Array<any> = [
+    {uid: 'ABC123', email: 'abc@123.com'}
+];
+
+const angularFirestoreStub = {
+    doc: jasmine.createSpy('doc').and
+        .returnValue(
+            {
+                valueChanges: jasmine.createSpy('valueChanges').and
+                    .returnValue(from(testData))
+            })
+};
+
+const credentialsMock = {
+    email: 'abc@123.com',
+    password: 'password'
+};
+
+const userMock = {
+    uid: 'ABC123',
+    email: credentialsMock.email
+};
+
+const fakeAuthState = new BehaviorSubject(undefined);
+
+const fakeSignInHandler = (email, password): Promise<any> => {
+    fakeAuthState.next(userMock);
+
+    return Promise.resolve(userMock);
+};
+
+const fakeSignOutHandler = (): Promise<any> => {
+    fakeAuthState.next(undefined);
+
+    return Promise.resolve();
+};
+
+const angularFireAuthStub = {
+    authState: fakeAuthState,
+    auth: {
+        createUserWithEmailAndPassword: jasmine
+            .createSpy('createUserWithEmailAndPassword')
+            .and
+            .callFake(fakeSignInHandler),
+        signInWithEmailAndPassword: jasmine
+            .createSpy('signInWithEmailAndPassword')
+            .and
+            .callFake(fakeSignInHandler),
+        signOut: jasmine
+            .createSpy('signOut')
+            .and
+            .callFake(fakeSignOutHandler)
+    }
+};
 
 describe('HomeComponent', () => {
     beforeEach(async(() => {
@@ -12,7 +70,9 @@ describe('HomeComponent', () => {
                 HomeComponent
             ],
             providers: [
-                AlertService, SeoService
+                AlertService, SeoService, AuthService,
+                { provide: AngularFirestore, useValue: angularFirestoreStub },
+                { provide: AngularFireAuth, useValue: angularFireAuthStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: HomeComponent}])

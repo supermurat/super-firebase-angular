@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
+import { Blog } from '../../models';
+import { Observable } from 'rxjs';
 
 /**
  * Blog List Component
@@ -12,7 +14,7 @@ import { SeoService } from '../../services';
 })
 export class BlogListComponent implements OnInit {
     /** blog object array */
-    blogs$;
+    blogs$: Observable<Array<Blog>>;
     /** current page`s title */
     title = 'Blog App';
     /** current page`s description */

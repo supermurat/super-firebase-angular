@@ -228,13 +228,6 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d6053bbc60b540f2db8c00b119ed27036391dd5e" datatype="html">
-        <source>(Loading ...)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/app/app.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="4865ecf44ecb3799ce27539d4fe4bfadc9ed1907" datatype="html">
         <source>Navbar</source>
         <context-group purpose="location">
@@ -476,6 +469,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f1a2bd5833a685d9eb7e6037c7be59ff5c71ec27" datatype="html">
+        <source>I ran out of blogs!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9d2c08f67d083d95f0085db3939afdf70efe6889" datatype="html">

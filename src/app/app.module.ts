@@ -11,7 +11,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AlertService, SeoService } from './services';
+import { AlertService, AuthService, PaginationService, SeoService } from './services';
+import { ScrollableDirective } from './directives';
 import { AppComponent } from './components/app/app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -26,6 +27,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 /**
  * App Module
@@ -39,7 +41,9 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
         HomeComponent,
         PlaygroundComponent,
         BlogListComponent,
-        BlogDetailComponent
+        BlogDetailComponent,
+        ScrollableDirective,
+        LoadingSpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -53,6 +57,7 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
         NgbModule,
 
         AngularFireModule.initializeApp(firebaseConfig),
+        AngularFirestoreModule.enablePersistence(),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
@@ -63,7 +68,9 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
     ],
     providers: [
         AlertService,
-        SeoService
+        SeoService,
+        AuthService,
+        PaginationService
     ],
     bootstrap: [AppComponent]
 })

@@ -4,8 +4,62 @@ import { PLATFORM_ID } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlaygroundComponent } from './playground.component';
 
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PaginationService, SeoService } from '../../services';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Blog } from '../../models';
+import { from } from 'rxjs';
+
+const testData: Array<Array<Blog>> = [[
+    { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined},
+    { name: 'second-block', bio: 'this is better sample', imgName: 'bad, very bad angel.gif', imgURL: undefined}
+]];
+
+const angularFirestoreStub = {
+    collection(path: string, queryFn?: any): any {
+        queryFn({
+            orderBy(fieldPath): any {
+                return {
+                    limit(limitNumber): any {
+                        return {
+                            startAfter(c): any {
+                                return {
+                                    snapshotChanges(): any {
+                                        return {
+                                        };
+                                    }
+                                };
+                            },
+                            snapshotChanges(): any {
+                                return {
+                                };
+                            }};
+                    }
+                };
+            }
+        });
+
+        return {
+            valueChanges(): any {
+                return from(testData);
+            },
+            snapshotChanges(): any {
+                return {
+                    pipe(): any {
+                        return {
+                            pipe(): any {
+                                return {
+                                    subscribe(): any {
+                                        return {};
+                                    }};
+                            }
+                        };
+                    }
+                };
+            }
+        };
+    }
+};
 
 describe('PlaygroundComponent', () => {
     beforeEach(async(() => {
@@ -14,8 +68,9 @@ describe('PlaygroundComponent', () => {
                 PlaygroundComponent
             ],
             providers: [
-                AlertService, SeoService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                AlertService, SeoService, PaginationService,
+                { provide: ComponentFixtureAutoDetect, useValue: true },
+                { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -104,9 +159,10 @@ describe('PlaygroundComponentServer', () => {
                 PlaygroundComponent
             ],
             providers: [
-                AlertService, SeoService,
+                AlertService, SeoService, PaginationService,
                 { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: PLATFORM_ID, useValue: 'server' }
+                { provide: PLATFORM_ID, useValue: 'server' },
+                { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),

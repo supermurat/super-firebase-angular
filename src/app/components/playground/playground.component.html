@@ -36,3 +36,14 @@
     <span i18n>Updated: {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} by {gender, select, male {male} female {female} other {other}}</span>
 
 </div>
+<hr>
+<div class="content" appScrollable (scrollPosition)="scrollHandler($event)">
+    <div class="contentItem2" *ngFor="let blog of page.data | async; trackBy:trackByBlog">
+        <hr>
+        <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>
+    </div>
+    <p class="tag is-warning" *ngIf="page.done | async" i18n>I ran out of blogs!</p>
+</div>
+<hr>
+<br/>
+<br/>
