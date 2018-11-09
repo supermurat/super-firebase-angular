@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
      * @param platformId: PLATFORM_ID
      * @param seo: SeoService
      * @param alert: AlertService
+     * @param auth: AuthService
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 public seo: SeoService,

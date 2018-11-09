@@ -10,6 +10,7 @@ import {
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { UserCredentialsModel, UserModel } from '../models';
 
 /**
  * Authentication Service
@@ -17,7 +18,7 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     /** current user */
-    user$: Observable<any>;
+    user$: Observable<UserModel>;
 
     /**
      * constructor of AuthService
@@ -39,6 +40,30 @@ export class AuthService {
                     return of(undefined);
             })
         );
+    }
+
+    /**
+     * register user
+     * @param credentials: user credentials
+     */
+    register(credentials: UserCredentialsModel): Promise<any> {
+        return this.afAuth.auth
+            .createUserWithEmailAndPassword(
+                credentials.email,
+                credentials.password
+            );
+    }
+
+    /**
+     * log in with credentials
+     * @param credentials: user credentials
+     */
+    logIn(credentials: UserCredentialsModel): Promise<any> {
+        return this.afAuth.auth
+            .signInWithEmailAndPassword(
+                credentials.email,
+                credentials.password
+            );
     }
 
     /**
