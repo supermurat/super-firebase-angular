@@ -1,11 +1,10 @@
 
 import { from } from 'rxjs';
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlogDetailComponent } from './blog-detail.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { TransferState } from '@angular/platform-browser';
 
 import { AlertService, SeoService } from '../../services';
@@ -13,7 +12,7 @@ import { ActivatedRoute, Data } from '@angular/router';
 import { Blog } from '../../models';
 
 const testData: Array<Blog> = [
-    { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined}
+    { id: 'first-blog', title: 'First Blog', content: 'this is good sample'}
 ];
 
 const angularFirestoreStub = {
@@ -22,17 +21,6 @@ const angularFirestoreStub = {
         {
             valueChanges: jasmine.createSpy('valueChanges').and
                 .returnValue(from(testData))
-        })
-};
-
-const angularFireStorageStub = {
-    ref: jasmine.createSpy('ref').and
-        .returnValue(
-        {
-            getDownloadURL: jasmine.createSpy('getDownloadURL').and
-                .returnValue(
-                    from(['https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com' +
-                '/o/blogs%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=382c3835-1ee6-4d2f-81b3-570e0a1f3086']))
         })
 };
 
@@ -55,8 +43,7 @@ describe('BlogDetailComponent', () => {
                         }
                     }
                 },
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireStorage, useValue: angularFireStorageStub }
+                { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: 'blog/:name', component: BlogDetailComponent}])
@@ -78,21 +65,6 @@ describe('BlogDetailComponent', () => {
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('a').textContent)
             .toContain('Back to Blog List');
-    }));
-
-    it('imgURL of blog should be predefined', fakeAsync(() => {
-        const fixture = TestBed.createComponent(BlogDetailComponent);
-        const app = fixture.debugElement.componentInstance;
-        fixture.detectChanges();
-        app.blog$.subscribe(blog => {
-            tick();
-            fixture.detectChanges();
-            expect(app.imgURL)
-                .toEqual('https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com' +
-                    '/o/blogs%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=382c3835-1ee6-4d2f-81b3-570e0a1f3086');
-        });
-        tick();
-        fixture.detectChanges();
     }));
 
 });

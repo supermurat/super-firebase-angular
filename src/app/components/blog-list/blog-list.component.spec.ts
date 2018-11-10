@@ -9,9 +9,13 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AlertService, SeoService } from '../../services';
 import { Blog } from '../../models';
 
-const testData: Array<Array<Blog>> = [[
-    { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined},
-    { name: 'second-block', bio: 'this is better sample', imgName: 'bad, very bad angel.gif', imgURL: undefined}
+const testData: any = [[
+    {payload: {doc: {id: 'first-blog', data(): Blog {
+        return { id: 'first-blog', title: 'First Blog', content: 'this is good sample'};
+    }}}},
+    {payload: {doc: {id: 'second-blog', data(): Blog {
+        return { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'};
+    }}}}
 ]];
 
 const angularFirestoreStub = {
@@ -19,7 +23,7 @@ const angularFirestoreStub = {
         queryFn({orderBy(fieldPath): any { return {fieldPath}; }});
 
         return {
-            valueChanges(): any {
+            snapshotChanges(): any {
                 return from(testData);
             }
         };

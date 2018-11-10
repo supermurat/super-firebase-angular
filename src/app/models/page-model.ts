@@ -5,19 +5,19 @@ import { HtmlDocumentModel } from './html-document-model';
  */
 export class PageModel extends HtmlDocumentModel {
     /** html content or content array of page */
-    content: any;
+    content?: any;
     /** carousel item array of page */
-    carousel: any;
+    carousel?: any;
     /** summary html content of page */
-    contentSummary: string;
+    contentSummary?: string;
     /** unique key for translations */
-    i18nKey: string;
+    i18nKey?: string;
     /** creation date */
-    created: number;
+    created?: number;
     /** creator person */
-    createdBy: string;
+    createdBy?: string;
     /** last change date */
-    changed: number;
+    changed?: number;
     /** last changer person */
-    changedBy: string;
+    changedBy?: string;
 }

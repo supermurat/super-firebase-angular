@@ -1,4 +1,4 @@
-import { async, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,12 +7,13 @@ import { PlaygroundComponent } from './playground.component';
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Blog } from '../../models';
 import { from } from 'rxjs';
 
 const testData: Array<Array<Blog>> = [[
-    { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined},
-    { name: 'second-block', bio: 'this is better sample', imgName: 'bad, very bad angel.gif', imgURL: undefined}
+    { id: 'first-blog', title: 'First Blog', content: 'this is good sample'},
+    { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'}
 ]];
 
 const angularFirestoreStub = {
@@ -61,6 +62,17 @@ const angularFirestoreStub = {
     }
 };
 
+const angularFireStorageStub = {
+    ref: jasmine.createSpy('ref').and
+        .returnValue(
+            {
+                getDownloadURL: jasmine.createSpy('getDownloadURL').and
+                    .returnValue(
+                        from(['https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com' +
+                        '/o/blogs%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=382c3835-1ee6-4d2f-81b3-570e0a1f3086']))
+            })
+};
+
 describe('PlaygroundComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -70,7 +82,8 @@ describe('PlaygroundComponent', () => {
             providers: [
                 AlertService, SeoService, PaginationService,
                 { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                { provide: AngularFirestore, useValue: angularFirestoreStub },
+                { provide: AngularFireStorage, useValue: angularFireStorageStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -150,6 +163,21 @@ describe('PlaygroundComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('imgURL of image stored on firebase should be predefined', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        app.imgURL$.subscribe(blog => {
+            tick();
+            fixture.detectChanges();
+            expect(app.imgURL)
+                .toEqual('https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com' +
+                    '/o/blogs%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=382c3835-1ee6-4d2f-81b3-570e0a1f3086');
+        });
+        tick();
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('PlaygroundComponentServer', () => {
@@ -162,7 +190,8 @@ describe('PlaygroundComponentServer', () => {
                 AlertService, SeoService, PaginationService,
                 { provide: ComponentFixtureAutoDetect, useValue: true },
                 { provide: PLATFORM_ID, useValue: 'server' },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                { provide: AngularFirestore, useValue: angularFirestoreStub },
+                { provide: AngularFireStorage, useValue: angularFireStorageStub }
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),

@@ -1,15 +1,9 @@
-import { Observable } from 'rxjs';
+import { PageModel } from './page-model';
 
 /**
  * Blog Class
  */
-export class Blog {
-    /** name of blog */
-    name?: string | undefined;
-    /** bio of blog */
-    bio?: string | undefined;
-    /** image name of blog */
-    imgName?: string | undefined;
-    /** image url of blog */
-    imgURL?: Observable<string> | undefined;
+export class Blog extends PageModel {
+    /** id of record */
+    id?: string;
 }

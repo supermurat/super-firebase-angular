@@ -21,7 +21,7 @@ const routes: Routes = [
         path: 'blog', component: BlogListComponent
     },
     {
-        path: 'blog/:name', component: BlogDetailComponent
+        path: 'blog/:id', component: BlogDetailComponent
     },
     {
         path: '**', component: NotFoundComponent

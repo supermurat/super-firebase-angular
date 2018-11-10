@@ -35,6 +35,10 @@
     <br><br>
     <span i18n>Updated: {minutes, plural, =0 {just now} =1 {one minute ago} other {{{minutes}} minutes ago}} by {gender, select, male {male} female {female} other {other}}</span>
 
+    <br><br>
+    <img class="card-img-top" style="width: 200px;" [src]="imgURL$ | async">
+    <img class="card-img-top" style="width: 200px;" [src]="imgURL">
+
 </div>
 <hr>
 <div class="content" appScrollable (scrollPosition)="scrollHandler($event)">

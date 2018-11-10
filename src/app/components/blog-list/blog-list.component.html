@@ -5,6 +5,6 @@
 <h2 i18n>Blog Entries</h2>
 <hr>
 <div class="blogsPanel" *ngFor="let blog of blogs$ | async; trackBy:trackByBlog">
-  <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>
+  <a [routerLink]="blog.id">{{ blog.title }}</a>
 </div>
 <hr>

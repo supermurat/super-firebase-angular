@@ -5,6 +5,8 @@ declare let window: any;
 
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
 
 /**
  * Playground Component
@@ -25,6 +27,10 @@ export class PlaygroundComponent implements OnInit {
     minutes = 0;
     /** current gender */
     gender = 'female';
+    /** async image URL */
+    imgURL$: Observable<any>;
+    /** image URL */
+    imgURL: string;
 
     /**
      * increase current minutes by i
@@ -55,24 +61,32 @@ export class PlaygroundComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      * @param page: PaginationService
+     * @param storage: AngularFireStorage
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
                 private seo: SeoService,
                 public alert: AlertService,
-                public page: PaginationService) {}
+                public page: PaginationService,
+                private storage: AngularFireStorage) {}
 
     /**
      * ngOnDestroy
      */
     ngOnInit(): void {
-        this.page.init('blogs', 'imgName', { reverse: false, prepend: false });
+        this.page.init('blogs', 'created', { reverse: true, prepend: false });
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
         this.seo.generateTags({
             title: this.title,
             description: this.title
+        });
+
+        const ref = this.storage.ref('blogs/bad, very bad angel.gif');
+        this.imgURL$ = ref.getDownloadURL();
+        this.imgURL$.subscribe(result => {
+            this.imgURL = result;
         });
     }
 

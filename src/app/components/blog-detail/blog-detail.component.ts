@@ -21,23 +21,19 @@ const BLOG_KEY = makeStateKey<any>('blog');
 })
 export class BlogDetailComponent implements OnInit {
     /** current blog object */
-    blog$;
+    blog$: Observable<Blog>;
     /** current blog name */
-    blogName = '';
-    /** current blog`s image url */
-    imgURL;
+    blogID = '';
 
     /**
      * constructor of BlogDetailComponent
      * @param afs: AngularFirestore
-     * @param storage: AngularFireStorage
      * @param seo: SeoService
      * @param route: ActivatedRoute
      * @param state: TransferState
      */
     constructor(
         private afs: AngularFirestore,
-        private storage: AngularFireStorage,
         private seo: SeoService,
         private route: ActivatedRoute,
         private state: TransferState
@@ -49,9 +45,9 @@ export class BlogDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.blogName = params['name'].toLowerCase();
+            this.blogID = params['id'];
         });
-        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogName}`);
+        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogID}`);
 
         // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
@@ -68,18 +64,10 @@ export class BlogDetailComponent implements OnInit {
             .valueChanges()
             .pipe(
             tap(blog => {
-                const ref = this.storage.ref(`blogs/${blog.imgName}`);
-                blog.imgURL = ref.getDownloadURL();
-
-                blog.imgURL.subscribe(result => {
-                    this.imgURL = result;
-                });
-
                 this.state.set(BLOG_KEY, blog);
                 this.seo.generateTags({
-                    title: blog.name,
-                    description: blog.bio,
-                    image: blog.imgName
+                    title: blog.title,
+                    description: blog.content
                 });
             }),
             startWith(exists)
