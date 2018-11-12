@@ -6,6 +6,9 @@ Import your data directly to Cloud Firestore.
 npm run install
 ```
 
+## Export Data
+[`./README-EXPORT.md`](./README-EXPORT.md)
+
 ## Setup
 ### Create Service Account
 Service Account Name: data-transfer  
@@ -21,14 +24,15 @@ Relative Path: (project root)/import-data-into-firestore/supermurat-com-service-
 **DO NOT COMMIT your key file to GIT!**
 
 ### Edit Data
-Edit data.json file and save  
-Check out data-sample.json  
+Make a copy of "data-sample.json" file and rename it as "data.json"  
+Clean and Edit "data.json" file and save  
+Check out "data-sample.json"  
 Data types : [`https://firebase.google.com/docs/firestore/manage-data/data-types`](https://firebase.google.com/docs/firestore/manage-data/data-types)  
 JSON Mapping : 
 [`https://developers.google.com/protocol-buffers/docs/proto3#json`](https://developers.google.com/protocol-buffers/docs/proto3#json)
 
 ## Run
-**DO NOT RUN unless you are very sure about data.json!**  
+**DO NOT RUN unless you are very sure about "data.json"!**  
 **!!! Matched collections/documents/fields will be OVERWRITTEN !!!**
 ```sh
 npm run json-to-firestore
