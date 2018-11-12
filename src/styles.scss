@@ -1,6 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "variables";
 
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
 .content {
   overflow-y: scroll;
   max-height: 100vh;

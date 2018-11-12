@@ -10,6 +10,9 @@ import { TransferState } from '@angular/platform-browser';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, Data } from '@angular/router';
 import { Blog } from '../../models';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { FooterComponent } from '../footer/footer.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 
 const testData: Array<Blog> = [
     { id: 'first-blog', title: 'First Blog', content: 'this is good sample'}
@@ -29,7 +32,9 @@ describe('BlogDetailComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent
+                BlogDetailComponent,
+                FooterComponent,
+                SideBarComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -59,12 +64,11 @@ describe('BlogDetailComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should render 'Back to Blog List' in an a", async(() => {
+    it("should render 'Blog' in an a", async(() => {
         const fixture = TestBed.createComponent(BlogDetailComponent);
-        fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('a').textContent)
-            .toContain('Back to Blog List');
+            .toContain('Blog');
     }));
 
 });

@@ -8,6 +8,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { AlertService, SeoService } from '../../services';
 import { Blog } from '../../models';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { FooterComponent } from '../footer/footer.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 
 const testData: any = [[
     {payload: {doc: {id: 'first-blog', data(): Blog {
@@ -34,7 +37,9 @@ describe('BlogListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogListComponent
+                BlogListComponent,
+                FooterComponent,
+                SideBarComponent
             ],
             providers: [
                 AlertService, SeoService,
@@ -54,19 +59,11 @@ describe('BlogListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'Blog App'", async(() => {
+    it("should have as title 'Murat Demir's blog'", async(() => {
         const fixture = TestBed.createComponent(BlogListComponent);
         const app = fixture.debugElement.componentInstance;
         expect(app.title)
-            .toEqual('Blog App');
-    }));
-
-    it("should render 'Blog Entries' in a h2", async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('h2').textContent)
-            .toContain('Blog Entries');
+            .toEqual('Murat Demir\'s blog');
     }));
 
     it('count of blog should be 2', async(() => {

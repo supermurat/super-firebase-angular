@@ -1,14 +1,17 @@
 
 <app-nav-menu></app-nav-menu>
 
-<div id="content-wrapper">
-    <div class='container-fluid'>
-        <div class='row'>
-            <div class='col-12 body-content'>
-                <app-loading-spinner *ngIf="page.loading | async"></app-loading-spinner>
-                <app-alert></app-alert>
-                <router-outlet></router-outlet>
-            </div>
+<!-- Page Content -->
+<div class="container">
+    <div class='row'>
+        <div class='col-12'>
+            <app-loading-spinner *ngIf="page.loading | async"></app-loading-spinner>
+            <app-alert></app-alert>
         </div>
     </div>
+    <!-- /.row -->
+    <router-outlet></router-outlet>
 </div>
+<!-- /.container -->
+
+<app-footer></app-footer>

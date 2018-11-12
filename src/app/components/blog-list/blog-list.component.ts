@@ -17,7 +17,7 @@ export class BlogListComponent implements OnInit {
     /** blog object array */
     blogs$: Observable<Array<Blog>>;
     /** current page`s title */
-    title = 'Blog App';
+    title = 'Murat Demir\'s blog';
     /** current page`s description */
     description = 'This App is in development!';
     /** count of blogs */
@@ -42,8 +42,11 @@ export class BlogListComponent implements OnInit {
                 return actions.map(action => {
                     this.countItems = actions.length;
                     const id = action.payload.doc.id;
+                    const data = action.payload.doc.data();
+                    if (!data.hasOwnProperty('contentSummary'))
+                        data['contentSummary'] = data['content'];
 
-                    return { id, ...action.payload.doc.data() as Blog };
+                    return { id, ...data as Blog };
                 });
             }));
 

@@ -20,7 +20,8 @@ Key Type: JSON
 
 ### Download private key file and copy to current directory
 File Name: supermurat-com-service-key.json  
-Relative Path: (project root)/import-data-into-firestore/supermurat-com-service-key.json  
+Relative Path: 
+(project root)/import-data-into-firestore/supermurat-com-service-key.json  
 **DO NOT COMMIT your key file to GIT!**
 
 ### Edit Data

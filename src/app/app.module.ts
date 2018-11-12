@@ -29,6 +29,8 @@ import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
 
 /**
  * App Module
@@ -45,7 +47,9 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
         BlogDetailComponent,
         ScrollableDirective,
         LoadingSpinnerComponent,
-        AdminLoginComponent
+        AdminLoginComponent,
+        FooterComponent,
+        SideBarComponent
     ],
     imports: [
         CommonModule,
