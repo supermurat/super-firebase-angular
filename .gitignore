@@ -107,3 +107,5 @@ dist-ssr
 /temp
 /documentation
 /browserstack.err
+/import-data-into-firestore/supermurat-com-service-key.json
+/import-data-into-firestore/package-lock.json

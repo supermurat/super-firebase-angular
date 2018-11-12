@@ -1,0 +1,10 @@
+{
+  "name": "import-data-into-firestore",
+  "scripts": {
+    "json-to-firestore": "node json-to-firestore.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^6.1.0"
+  },
+  "private": true
+}
