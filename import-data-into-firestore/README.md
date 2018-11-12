@@ -21,7 +21,11 @@ Relative Path: (project root)/import-data-into-firestore/supermurat-com-service-
 **DO NOT COMMIT your key file to GIT!**
 
 ### Edit Data
-Edit data.json file and save
+Edit data.json file and save  
+Check out data-sample.json  
+Data types : [`https://firebase.google.com/docs/firestore/manage-data/data-types`](https://firebase.google.com/docs/firestore/manage-data/data-types)  
+JSON Mapping : 
+[`https://developers.google.com/protocol-buffers/docs/proto3#json`](https://developers.google.com/protocol-buffers/docs/proto3#json)
 
 ## Run
 **DO NOT RUN unless you are very sure about data.json!**  
