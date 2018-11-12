@@ -28,6 +28,7 @@ import { PlaygroundComponent } from './components/playground/playground.componen
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 /**
  * App Module
@@ -43,7 +44,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
         BlogListComponent,
         BlogDetailComponent,
         ScrollableDirective,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        AdminLoginComponent
     ],
     imports: [
         CommonModule,

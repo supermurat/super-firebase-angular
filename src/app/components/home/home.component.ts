@@ -1,4 +1,4 @@
-import { AlertService, AuthService, SeoService } from '../../services';
+import { AlertService, SeoService } from '../../services';
 
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 
@@ -19,12 +19,10 @@ export class HomeComponent implements OnInit {
      * @param platformId: PLATFORM_ID
      * @param seo: SeoService
      * @param alert: AlertService
-     * @param auth: AuthService
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 public seo: SeoService,
-                public alert: AlertService,
-                public auth: AuthService) {}
+                public alert: AlertService) {}
 
     /**
      * ngOnInit

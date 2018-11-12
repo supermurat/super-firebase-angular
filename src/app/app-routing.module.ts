@@ -6,6 +6,7 @@ import { PlaygroundComponent } from './components/playground/playground.componen
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 const routes: Routes = [
     {
@@ -22,6 +23,9 @@ const routes: Routes = [
     },
     {
         path: 'blog/:id', component: BlogDetailComponent
+    },
+    {
+        path: 'admin-login', component: AdminLoginComponent
     },
     {
         path: '**', component: NotFoundComponent
