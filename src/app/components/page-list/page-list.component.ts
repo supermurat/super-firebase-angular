@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
-import { BlogModel } from '../../models';
+import { PageModel } from '../../models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
- * Blog List Component
+ * Page List Component
  */
 @Component({
-    selector: 'app-blog-list',
-    templateUrl: './blog-list.component.html',
-    styleUrls: ['./blog-list.component.scss']
+    selector: 'app-page-list',
+    templateUrl: './page-list.component.html',
+    styleUrls: ['./page-list.component.scss']
 })
-export class BlogListComponent implements OnInit {
-    /** blog object array */
-    blogs$: Observable<Array<BlogModel>>;
+export class PageListComponent implements OnInit {
+    /** page object array */
+    pages$: Observable<Array<PageModel>>;
     /** current page`s title */
-    title = 'Murat Demir\'s blog';
+    title = 'This is temporary page list';
     /** current page`s description */
     description = 'This App is in development!';
-    /** count of blogs */
+    /** count of pages */
     countItems: number;
 
     /**
-     * constructor of BlogListComponent
+     * constructor of PageListComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
      */
@@ -36,7 +36,7 @@ export class BlogListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.blogs$ = this.afs.collection('blogs', ref => ref.orderBy('created', 'desc'))
+        this.pages$ = this.afs.collection('pages', ref => ref.orderBy('created', 'desc'))
             .snapshotChanges()
             .pipe(map(actions => {
                 return actions.map(action => {
@@ -46,7 +46,7 @@ export class BlogListComponent implements OnInit {
                     if (!data.hasOwnProperty('contentSummary'))
                         data['contentSummary'] = data['content'];
 
-                    return { id, ...data as BlogModel };
+                    return { id, ...data as PageModel };
                 });
             }));
 
@@ -57,11 +57,11 @@ export class BlogListComponent implements OnInit {
     }
 
     /**
-     * track blog object array by blog
-     * @param index: blog index no
-     * @param item: blog object
+     * track page object array by page
+     * @param index: page index no
+     * @param item: page object
      */
-    trackByBlog(index, item): number {
+    trackByPage(index, item): number {
         return index;
     }
 }

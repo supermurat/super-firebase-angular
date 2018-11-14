@@ -3,18 +3,18 @@ import { from } from 'rxjs';
 import { async, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { BlogDetailComponent } from './blog-detail.component';
+import { PageDetailComponent } from './page-detail.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
 
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, Data } from '@angular/router';
-import { BlogModel } from '../../models';
+import { PageModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 
-const testData: Array<BlogModel> = [
-    { id: 'first-blog', title: 'First Blog', content: 'this is good sample'}
+const testData: Array<PageModel> = [
+    { id: 'first-page', title: 'First Page', content: 'this is good sample'}
 ];
 
 const angularFirestoreStub = {
@@ -26,12 +26,12 @@ const angularFirestoreStub = {
         })
 };
 
-describe('BlogDetailComponent', () => {
+describe('PageDetailComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent,
+                PageDetailComponent,
                 FooterComponent,
                 SideBarComponent
             ],
@@ -50,24 +50,24 @@ describe('BlogDetailComponent', () => {
                 { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
-                RouterTestingModule.withRoutes([{path: 'blog/:name', component: BlogDetailComponent}])
+                RouterTestingModule.withRoutes([{path: 'page/:name', component: PageDetailComponent}])
             ]
         })
             .compileComponents();
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(BlogDetailComponent);
+        const fixture = TestBed.createComponent(PageDetailComponent);
         const app = fixture.debugElement.componentInstance;
         expect(app)
             .toBeTruthy();
     }));
 
-    it("should render 'Blog' in an a", async(() => {
-        const fixture = TestBed.createComponent(BlogDetailComponent);
+    it("should render 'Page' in an a", async(() => {
+        const fixture = TestBed.createComponent(PageDetailComponent);
         const compiled = fixture.debugElement.nativeElement;
         expect(compiled.querySelector('a').textContent)
-            .toContain('Blog');
+            .toContain('Page');
     }));
 
 });

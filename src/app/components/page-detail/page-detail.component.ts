@@ -3,30 +3,30 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { SeoService } from '../../services';
-import { BlogModel } from '../../models/blog-model';
+import { PageModel } from '../../models';
 import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
-/** State key of current blog */
-const BLOG_KEY = makeStateKey<any>('blog');
+/** State key of current page */
+const BLOG_KEY = makeStateKey<any>('page');
 
 /**
- * Blog Detail Component
+ * Page Detail Component
  */
 @Component({
-    selector: 'app-blog-detail',
-    templateUrl: './blog-detail.component.html',
-    styleUrls: ['./blog-detail.component.scss']
+    selector: 'app-page-detail',
+    templateUrl: './page-detail.component.html',
+    styleUrls: ['./page-detail.component.scss']
 })
-export class BlogDetailComponent implements OnInit {
-    /** current blog object */
-    blog$: Observable<BlogModel>;
-    /** current blog name */
-    blogID = '';
+export class PageDetailComponent implements OnInit {
+    /** current page object */
+    page$: Observable<PageModel>;
+    /** current page name */
+    pageID = '';
 
     /**
-     * constructor of BlogDetailComponent
+     * constructor of PageDetailComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
      * @param route: ActivatedRoute
@@ -45,29 +45,29 @@ export class BlogDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.blogID = params['id'];
+            this.pageID = params['id'];
         });
-        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogID}`);
+        this.page$ = this.ssrFirestoreDoc(`pages/${this.pageID}`);
 
         // this will create a split second flash
-        // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
+        // this.page$ = this.afs.doc(`pages/${id}`).valueChanges();
     }
 
     /**
-     * Get blog object from firestore by path
-     * @param path: blog path
+     * Get page object from firestore by path
+     * @param path: page path
      */
-    ssrFirestoreDoc(path: string): Observable<BlogModel> {
-        const exists = this.state.get(BLOG_KEY, new BlogModel());
+    ssrFirestoreDoc(path: string): Observable<PageModel> {
+        const exists = this.state.get(BLOG_KEY, new PageModel());
 
-        return this.afs.doc<BlogModel>(path)
+        return this.afs.doc<PageModel>(path)
             .valueChanges()
             .pipe(
-            tap(blog => {
-                this.state.set(BLOG_KEY, blog);
+            tap(page => {
+                this.state.set(BLOG_KEY, page);
                 this.seo.generateTags({
-                    title: blog.title,
-                    description: blog.content
+                    title: page.title,
+                    description: page.content
                 });
             }),
             startWith(exists)

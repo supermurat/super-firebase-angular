@@ -4,6 +4,8 @@ import { HtmlDocumentModel } from './html-document-model';
  * Page Base Class
  */
 export class PageModel extends HtmlDocumentModel {
+    /** id of record */
+    id?: string;
     /** html content or content array of page */
     content?: any;
     /** carousel item array of page */

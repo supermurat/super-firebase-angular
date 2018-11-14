@@ -1,0 +1,29 @@
+<div class='row'>
+    <!-- Page Entries Column -->
+    <div class="col-md-8">
+
+        <div class="card my-4" *ngIf="page$ | async as page">
+            <img class="card-img-top" *ngIf="page.image" [src]="page.image" alt="Card image cap">
+            <div class="card-body">
+                <a [routerLink]="page.id"><h2 class="card-title">{{ page.title }}</h2></a>
+                <p class="card-text" [innerHTML]="page.content"></p>
+            </div>
+            <div class="card-footer text-muted">
+                <!--<span i18n>Posted on {{ page.created.toMillis() | date:'medium' }} by {{ page.createdBy }}</span>-->
+            </div>
+        </div>
+
+        <div class="col-md-12 text-center mb-4">
+            <a routerLink="/page" class="btn btn-primary btn-sm mr-2" role="button" i18n>&lArr; Previous Page</a>
+            <a routerLink="/page" class="btn btn-primary btn-sm mr-2" role="button" i18n>Return to Page List &uArr;</a>
+            <a routerLink="/page" class="btn btn-primary btn-sm mr-2" role="button" i18n>Next Page &rArr;</a>
+        </div>
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </div>
+
+</div>

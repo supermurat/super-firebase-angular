@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { PageListComponent } from './components/page-list/page-list.component';
+import { PageDetailComponent } from './components/page-detail/page-detail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
@@ -23,6 +25,12 @@ const routes: Routes = [
     },
     {
         path: 'blog/:id', component: BlogDetailComponent
+    },
+    {
+        path: 'page', component: PageListComponent
+    },
+    {
+        path: 'page/:id', component: PageDetailComponent
     },
     {
         path: 'admin-login', component: AdminLoginComponent

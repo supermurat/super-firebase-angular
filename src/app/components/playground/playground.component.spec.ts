@@ -8,10 +8,10 @@ import { AlertService, PaginationService, SeoService } from '../../services';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Blog } from '../../models';
+import { BlogModel } from '../../models';
 import { from } from 'rxjs';
 
-const testData: Array<Array<Blog>> = [[
+const testData: Array<Array<BlogModel>> = [[
     { id: 'first-blog', title: 'First Blog', content: 'this is good sample'},
     { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'}
 ]];
