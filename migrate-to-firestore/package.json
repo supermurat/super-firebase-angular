@@ -1,5 +1,5 @@
 {
-  "name": "import-data-into-firestore",
+  "name": "migrate-to-firestore",
   "scripts": {
     "export-from-mysql": "node export-from-mysql.js",
     "export-from-drupal-7": "node export-from-drupal-7.js",

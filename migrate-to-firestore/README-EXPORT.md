@@ -1,4 +1,4 @@
-# super-firebase-angular / import-data-into-firestore
+# super-firebase-angular / migrate-to-firestore
 Export your data from MySQL.
 
 ## Install dependencies

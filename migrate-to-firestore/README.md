@@ -1,4 +1,4 @@
-# super-firebase-angular / import-data-into-firestore
+# super-firebase-angular / migrate-to-firestore
 Import your data directly to Cloud Firestore.
 
 ## Install dependencies
@@ -21,7 +21,7 @@ Key Type: JSON
 ### Download private key file and copy to current directory
 File Name: supermurat-com-service-key.json  
 Relative Path: 
-(project root)/import-data-into-firestore/supermurat-com-service-key.json  
+(project root)/migrate-to-firestore/supermurat-com-service-key.json  
 **DO NOT COMMIT your key file to GIT!**
 
 ### Edit Data

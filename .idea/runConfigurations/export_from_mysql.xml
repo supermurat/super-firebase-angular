@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="export-from-mysql" type="js.build_tools.npm" factoryName="npm" nameIsGenerated="true">
+    <package-json value="$PROJECT_DIR$/migrate-to-firestore/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="export-from-mysql" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

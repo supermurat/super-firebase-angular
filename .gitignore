@@ -107,7 +107,7 @@ dist-ssr
 /temp
 /documentation
 /browserstack.err
-/import-data-into-firestore/supermurat-com-service-key.json
-/import-data-into-firestore/package-lock.json
-/import-data-into-firestore/mysql-config.json
-/import-data-into-firestore/data.json
+/migrate-to-firestore/supermurat-com-service-key.json
+/migrate-to-firestore/package-lock.json
+/migrate-to-firestore/mysql-config.json
+/migrate-to-firestore/data.json
