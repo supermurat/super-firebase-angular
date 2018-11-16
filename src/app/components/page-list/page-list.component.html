@@ -21,11 +21,11 @@
 
         <!-- Pagination -->
         <ul class="pagination justify-content-center mb-4">
-            <li class="page-item">
-                <a class="page-link" href="#" i18n>&larr; Older</a>
+            <li class="page-item {{ previousPageNo ? '' : 'disabled' }}">
+                <a class="page-link" [routerLink]="['/pages/' + previousPageNo]" i18n>&larr; Newer</a>
             </li>
-            <li class="page-item disabled">
-                <a class="page-link" href="#" i18n>Newer &rarr;</a>
+            <li class="page-item {{ nextPageNo ? '' : 'disabled' }}">
+                <a class="page-link" [routerLink]="['/pages/' + nextPageNo]" i18n>Older &rarr;</a>
             </li>
         </ul>
 

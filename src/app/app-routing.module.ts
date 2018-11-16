@@ -27,6 +27,12 @@ const routes: Routes = [
         path: 'blog/:id', component: BlogDetailComponent
     },
     {
+        path: 'pages', component: PageListComponent
+    },
+    {
+        path: 'pages/:id', component: PageListComponent
+    },
+    {
         path: 'page', component: PageListComponent
     },
     {

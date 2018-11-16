@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
 import { PageModel } from '../../models';
@@ -20,27 +21,97 @@ export class PageListComponent implements OnInit {
     title = 'This is temporary page list';
     /** current page`s description */
     description = 'This App is in development!';
-    /** count of pages */
-    countItems: number;
+
+    /** current page no */
+    currentPageNo = 1;
+    /** next page no */
+    nextPageNo = 2;
+    /** previous page no */
+    previousPageNo: number;
+    /** page size */
+    pageSize = 3;
+
+    /** first page */
+    firstItem: PageModel;
+    /** order no of first page, also it means (count of items * -1) */
+    firstItemOrderNo: number;
+
+    /** last item of current page */
+    lastItemOfCurrentPage: PageModel;
+    /** last item order no of current page */
+    lastItemOrderNoOfCurrentPage: number;
 
     /**
      * constructor of PageListComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
+     * @param route: ActivatedRoute
      */
     constructor(private afs: AngularFirestore,
-                private seo: SeoService) {
+                private seo: SeoService,
+                private route: ActivatedRoute) {
     }
 
     /**
      * ngOnInit
      */
     ngOnInit(): void {
-        this.pages$ = this.afs.collection('pages', ref => ref.orderBy('created', 'desc'))
+        this.route.params.subscribe(params => {
+            if (params['id'])
+                this.currentPageNo = Number(params['id']);
+            this.initPages();
+        });
+
+        this.seo.generateTags({
+            title: this.title,
+            description: this.description
+        });
+    }
+
+    /**
+     * init pages and get first item
+     */
+    initPages(): void {
+        if (this.firstItem) {
+            this.getPages();
+
+            return; // no need to get firstItem again
+        }
+        this.afs.collection('pages',
+            ref => ref.orderBy('orderNo')
+                .limit(1)
+        )
+            .valueChanges()
+            .subscribe(pages => {
+                if (pages.length > 0) {
+                    this.firstItem = pages[0];
+                    this.firstItemOrderNo = this.firstItem.orderNo;
+                    this.getPages();
+                }
+            });
+    }
+
+    /**
+     * get pages
+     */
+    getPages(): void {
+        this.previousPageNo = this.currentPageNo - 1;
+        this.nextPageNo = this.currentPageNo + 1;
+        if (this.currentPageNo === 1)
+            this.previousPageNo = undefined;
+        if (this.currentPageNo >= ((this.firstItemOrderNo * -1) / this.pageSize))
+            this.nextPageNo = undefined;
+
+        const startAtOrderNo = this.firstItemOrderNo + ((this.currentPageNo - 1) * this.pageSize);
+
+        this.pages$ = this.afs.collection('pages',
+            ref => ref.orderBy('orderNo')
+                .startAt(startAtOrderNo)
+                .limit(this.pageSize)
+        )
             .snapshotChanges()
             .pipe(map(actions => {
                 return actions.map(action => {
-                    this.countItems = actions.length;
                     const id = action.payload.doc.id;
                     const data = action.payload.doc.data();
                     if (!data.hasOwnProperty('contentSummary'))
@@ -49,10 +120,11 @@ export class PageListComponent implements OnInit {
                     return { id, ...data as PageModel };
                 });
             }));
-
-        this.seo.generateTags({
-            title: this.title,
-            description: this.description
+        this.pages$.subscribe(pages => {
+            if (pages.length > 0) {
+                this.lastItemOfCurrentPage = pages[pages.length - 1];
+                this.lastItemOrderNoOfCurrentPage = this.lastItemOfCurrentPage.orderNo;
+            }
         });
     }
 
