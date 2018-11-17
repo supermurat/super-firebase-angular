@@ -61,12 +61,7 @@ export class PageDetailComponent implements OnInit {
                             this.router.navigate(['/pages']);
                         else
                             this.router.navigate(['/page', Number(params['id']) + 1]);
-                    })
-                    /*.forEach(user => {
-                        user.forEach(userData => {
-                            this.router.navigate(['/page', userData.payload.doc.id]);
-                        });
-                    })*/;
+                    });
 
                 return;
             }
@@ -93,8 +88,7 @@ export class PageDetailComponent implements OnInit {
 
         return this.afs.doc<PageModel>(path)
             .valueChanges()
-            .pipe(
-            tap(page => {
+            .pipe(tap(page => {
                 this.state.set(BLOG_KEY, page);
                 this.seo.generateTags({
                     title: page.title,

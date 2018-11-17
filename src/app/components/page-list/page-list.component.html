@@ -15,7 +15,7 @@
                 <a [routerLink]="['/page', page.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
             </div>
             <div class="card-footer text-muted">
-                <!--<span i18n>Posted on {{ page.created.toMillis() | date:'medium' }} by {{ page.createdBy }}</span>-->
+                <span i18n>Posted on {{ page.created.seconds * 1000 | date:'medium' }} by {{ page.createdBy }}</span>
             </div>
         </div>
 

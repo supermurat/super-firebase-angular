@@ -3,13 +3,13 @@
     <div class="col-md-8">
         <div *ngIf="page$ | async as page">
             <div class="card my-4">
-                <img class="card-img-top" *ngIf="page.image" [src]="page.image" alt="Card image cap">
+                <img class="card-img-top" *ngIf="page.image" [src]="page.image">
                 <div class="card-body">
                     <a [routerLink]="['/page', pageID]"><h2 class="card-title">{{ page.title }}</h2></a>
                     <p class="card-text" [innerHTML]="page.content"></p>
                 </div>
                 <div class="card-footer text-muted">
-                    <!--<span i18n>Posted on {{ page.created.toMillis() | date:'medium' }} by {{ page.createdBy }}</span>-->
+                    <span i18n>Posted on {{ page.created.seconds * 1000 | date:'medium' }} by {{ page.createdBy }}</span>
                 </div>
 
             </div>
