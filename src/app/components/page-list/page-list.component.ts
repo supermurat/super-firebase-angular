@@ -30,6 +30,8 @@ export class PageListComponent implements OnInit {
     previousPageNo: number;
     /** page size */
     pageSize = 3;
+    /** max page no */
+    maxPageNo = 3;
 
     /** first page */
     firstItem: PageModel;
@@ -96,9 +98,9 @@ export class PageListComponent implements OnInit {
      * check page no properties
      */
     checkPageNo(): void {
-        const maxPageNo = Math.ceil((this.firstItemOrderNo * -1) / this.pageSize);
-        if (!this.currentPageNo || this.currentPageNo < 1 || this.currentPageNo > maxPageNo) {
-            this.currentPageNo = !this.currentPageNo ? 1 : this.currentPageNo < 1 ? 1 : maxPageNo;
+        this.maxPageNo = Math.ceil((this.firstItemOrderNo * -1) / this.pageSize);
+        if (!this.currentPageNo || this.currentPageNo < 1 || this.currentPageNo > this.maxPageNo) {
+            this.currentPageNo = !this.currentPageNo ? 1 : this.currentPageNo < 1 ? 1 : this.maxPageNo;
             this.router.navigate(['/pages', this.currentPageNo]);
 
             return;
@@ -107,7 +109,7 @@ export class PageListComponent implements OnInit {
         this.nextPageNo = this.currentPageNo + 1;
         if (this.currentPageNo === 1)
             this.previousPageNo = undefined;
-        if (this.currentPageNo >= maxPageNo)
+        if (this.currentPageNo >= this.maxPageNo)
             this.nextPageNo = undefined;
     }
 
