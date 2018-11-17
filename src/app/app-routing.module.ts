@@ -30,10 +30,10 @@ const routes: Routes = [
         path: 'pages', component: PageListComponent
     },
     {
-        path: 'pages/:id', component: PageListComponent
+        path: 'pages/:pageNo', component: PageListComponent
     },
     {
-        path: 'page', component: PageListComponent
+        path: 'page', component: PageDetailComponent
     },
     {
         path: 'page/:id', component: PageDetailComponent
@@ -55,6 +55,7 @@ const routes: Routes = [
         useHash: false,
         preloadingStrategy: PreloadAllModules,
         initialNavigation: 'enabled'
+        // enableTracing: true // debugging purposes only
     }) ],
     exports: [ RouterModule ]
 })

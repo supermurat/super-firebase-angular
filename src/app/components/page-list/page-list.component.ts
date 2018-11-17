@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
 import { PageModel } from '../../models';
@@ -45,10 +45,12 @@ export class PageListComponent implements OnInit {
      * constructor of PageListComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
+     * @param router: Router
      * @param route: ActivatedRoute
      */
     constructor(private afs: AngularFirestore,
                 private seo: SeoService,
+                private router: Router,
                 private route: ActivatedRoute) {
     }
 
@@ -57,8 +59,7 @@ export class PageListComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            if (params['id'])
-                this.currentPageNo = Number(params['id']);
+            this.currentPageNo = Number(params['pageNo']);
             this.initPages();
         });
 
@@ -92,18 +93,30 @@ export class PageListComponent implements OnInit {
     }
 
     /**
-     * get pages
+     * check page no properties
      */
-    getPages(): void {
+    checkPageNo(): void {
+        const maxPageNo = Math.ceil((this.firstItemOrderNo * -1) / this.pageSize);
+        if (!this.currentPageNo || this.currentPageNo < 1 || this.currentPageNo > maxPageNo) {
+            this.currentPageNo = !this.currentPageNo ? 1 : this.currentPageNo < 1 ? 1 : maxPageNo;
+            this.router.navigate(['/pages', this.currentPageNo]);
+
+            return;
+        }
         this.previousPageNo = this.currentPageNo - 1;
         this.nextPageNo = this.currentPageNo + 1;
         if (this.currentPageNo === 1)
             this.previousPageNo = undefined;
-        if (this.currentPageNo >= ((this.firstItemOrderNo * -1) / this.pageSize))
+        if (this.currentPageNo >= maxPageNo)
             this.nextPageNo = undefined;
+    }
 
+    /**
+     * get pages
+     */
+    getPages(): void {
+        this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.currentPageNo - 1) * this.pageSize);
-
         this.pages$ = this.afs.collection('pages',
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)

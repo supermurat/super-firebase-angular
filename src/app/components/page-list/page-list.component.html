@@ -10,9 +10,9 @@
         <div class="card my-4" *ngFor="let page of pages$ | async; trackBy:trackByPage">
             <img class="card-img-top" *ngIf="page.image" [src]="page.image" alt="Card image cap">
             <div class="card-body">
-                <a [routerLink]="page.id"><h2 class="card-title">{{ page.title }}</h2></a>
+                <a [routerLink]="['/page', page.id]"><h2 class="card-title">{{ page.title }}</h2></a>
                 <p class="card-text" [innerHTML]="page.contentSummary"></p>
-                <a [routerLink]="page.id" class="btn btn-primary" i18n>Read More &rArr;</a>
+                <a [routerLink]="['/page', page.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
             </div>
             <div class="card-footer text-muted">
                 <!--<span i18n>Posted on {{ page.created.toMillis() | date:'medium' }} by {{ page.createdBy }}</span>-->
@@ -22,10 +22,10 @@
         <!-- Pagination -->
         <ul class="pagination justify-content-center mb-4">
             <li class="page-item {{ previousPageNo ? '' : 'disabled' }}">
-                <a class="page-link" [routerLink]="['/pages/' + previousPageNo]" i18n>&larr; Newer</a>
+                <a class="page-link" [routerLink]="['/pages', previousPageNo]" i18n>&larr; Newer</a>
             </li>
             <li class="page-item {{ nextPageNo ? '' : 'disabled' }}">
-                <a class="page-link" [routerLink]="['/pages/' + nextPageNo]" i18n>Older &rarr;</a>
+                <a class="page-link" [routerLink]="['/pages', nextPageNo]" i18n>Older &rarr;</a>
             </li>
         </ul>
 

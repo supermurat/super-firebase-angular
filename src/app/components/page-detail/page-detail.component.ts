@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { SeoService } from '../../services';
 import { PageModel } from '../../models';
 import { startWith, tap } from 'rxjs/operators';
@@ -29,12 +28,14 @@ export class PageDetailComponent implements OnInit {
      * constructor of PageDetailComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
+     * @param router: Router
      * @param route: ActivatedRoute
      * @param state: TransferState
      */
     constructor(
         private afs: AngularFirestore,
         private seo: SeoService,
+        private router: Router,
         private route: ActivatedRoute,
         private state: TransferState
     ) {
@@ -45,12 +46,42 @@ export class PageDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.pageID = params['id'];
-        });
-        this.page$ = this.ssrFirestoreDoc(`pages/${this.pageID}`);
+            if (Number(params['id']) || Number(params['id']) === 0) {
+                this.afs.collection('pages',
+                    ref => ref.where('orderNo', '==', Number(params['id']))
+                        .limit(1)
+                )
+                    .snapshotChanges()
+                    .subscribe(data => {
+                        if (data && data.length > 0)
+                            data.map(pld => {
+                                this.router.navigate(['/page', pld.payload.doc.id]);
+                            });
+                        else if (Number(params['id']) === 0)
+                            this.router.navigate(['/pages']);
+                        else
+                            this.router.navigate(['/page', Number(params['id']) + 1]);
+                    })
+                    /*.forEach(user => {
+                        user.forEach(userData => {
+                            this.router.navigate(['/page', userData.payload.doc.id]);
+                        });
+                    })*/;
 
+                return;
+            }
+            this.pageID = params['id'];
+            this.initPage();
+        });
         // this will create a split second flash
         // this.page$ = this.afs.doc(`pages/${id}`).valueChanges();
+    }
+
+    /**
+     * init page
+     */
+    initPage(): void {
+        this.page$ = this.ssrFirestoreDoc(`pages/${this.pageID}`);
     }
 
     /**
