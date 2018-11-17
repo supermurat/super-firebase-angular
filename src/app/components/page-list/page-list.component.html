@@ -19,29 +19,7 @@
             </div>
         </div>
 
-        <!-- Pagination -->
-        <ul class="pagination justify-content-center mb-4">
-            <li class="page-item {{ currentPageNo > 1 ? 'd-none d-md-flex' : 'd-none' }}">
-                <a class="page-link" [routerLink]="['/pages', 1]" i18n>&larr; Newest</a>
-            </li>
-
-            <li class="page-item {{ previousPageNo ? '' : 'd-none' }}">
-                <a class="page-link" [routerLink]="['/pages', previousPageNo]">{{ previousPageNo }}</a>
-            </li>
-            <li class="page-item active">
-                <a class="page-link" [routerLink]="['/pages', currentPageNo]">
-                    {{ currentPageNo }}
-                    <span class="sr-only" i18n>(current)</span>
-                </a>
-            </li>
-            <li class="page-item {{ nextPageNo ? '' : 'd-none' }}">
-                <a class="page-link" [routerLink]="['/pages', nextPageNo + 1]">{{ nextPageNo }}</a>
-            </li>
-
-            <li class="page-item {{ currentPageNo < maxPageNo ? 'd-none d-md-flex' : 'd-none' }}">
-                <a class="page-link" [routerLink]="['/pages', maxPageNo]" i18n>Oldest &rarr;</a>
-            </li>
-        </ul>
+        <app-pager></app-pager>
 
     </div>
 

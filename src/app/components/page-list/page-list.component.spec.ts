@@ -6,11 +6,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { PageListComponent } from './page-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PagerService, SeoService } from '../../services';
 import { PageModel } from '../../models';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+import { PagerComponent } from '../pager/pager.component';
 import { ActivatedRoute, Data } from '@angular/router';
 
 const testData: any = [[
@@ -48,10 +49,11 @@ describe('PageListComponent', () => {
             declarations: [
                 PageListComponent,
                 FooterComponent,
-                SideBarComponent
+                SideBarComponent,
+                PagerComponent
             ],
             providers: [
-                AlertService, SeoService,
+                AlertService, SeoService, PagerService,
                 {
                     provide: ActivatedRoute,
                     useValue: {

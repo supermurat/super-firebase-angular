@@ -11,7 +11,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AlertService, AuthService, PaginationService, SeoService } from './services';
+import { AlertService, AuthService, PagerService, PaginationService, SeoService } from './services';
 import { ScrollableDirective } from './directives';
 import { AppComponent } from './components/app/app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +33,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { PagerComponent } from './components/pager/pager.component';
 
 /**
  * App Module
@@ -53,7 +54,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
         LoadingSpinnerComponent,
         AdminLoginComponent,
         FooterComponent,
-        SideBarComponent
+        SideBarComponent,
+        PagerComponent
     ],
     imports: [
         CommonModule,
@@ -80,7 +82,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
         AlertService,
         SeoService,
         AuthService,
-        PaginationService
+        PaginationService,
+        PagerService
     ],
     bootstrap: [AppComponent]
 })
