@@ -71,23 +71,21 @@ export class PageListComponent implements OnInit {
      * init pages and get first item
      */
     initPages(): void {
-        if (this.firstItem) {
+        if (this.firstItem) // no need to get firstItem again
             this.getPages();
-
-            return; // no need to get firstItem again
-        }
-        this.afs.collection('pages',
-            ref => ref.orderBy('orderNo')
-                .limit(1)
-        )
-            .valueChanges()
-            .subscribe(pages => {
-                if (pages.length > 0) {
-                    this.firstItem = pages[0];
-                    this.firstItemOrderNo = this.firstItem.orderNo;
-                    this.getPages();
-                }
-            });
+        else
+            this.afs.collection('pages',
+                ref => ref.orderBy('orderNo')
+                    .limit(1)
+            )
+                .valueChanges()
+                .subscribe(pages => {
+                    if (pages.length > 0) {
+                        this.firstItem = pages[0];
+                        this.firstItemOrderNo = this.firstItem.orderNo;
+                        this.getPages();
+                    }
+                });
     }
 
     /**

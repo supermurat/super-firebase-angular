@@ -7,7 +7,7 @@
 
     <div class="col-md-8">
 
-        <div class="card my-4" *ngFor="let page of pages$ | async; trackBy:trackByPage">
+        <article class="card my-4" *ngFor="let page of pages$ | async; trackBy:trackByPage">
             <img class="card-img-top" *ngIf="page.image" [src]="page.image" alt="Card image cap">
             <div class="card-body">
                 <a [routerLink]="['/page', page.id]"><h2 class="card-title">{{ page.title }}</h2></a>
@@ -17,15 +17,15 @@
             <div class="card-footer text-muted">
                 <span i18n>Posted on {{ page.created.seconds * 1000 | date:'medium' }} by {{ page.createdBy }}</span>
             </div>
-        </div>
+        </article>
 
         <app-pager></app-pager>
 
     </div>
 
     <!-- Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <aside class="col-md-4">
         <app-side-bar></app-side-bar>
-    </div>
+    </aside>
 
 </div>

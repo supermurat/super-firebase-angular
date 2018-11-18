@@ -12,7 +12,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 
 const routes: Routes = [
     {
-        path: '', component: HomeComponent // path: '', redirectTo: 'home', pathMatch: 'full'
+        path: '', redirectTo: 'home', pathMatch: 'full'
     },
     {
         path: 'home', component: HomeComponent
@@ -27,13 +27,13 @@ const routes: Routes = [
         path: 'blog/:id', component: BlogDetailComponent
     },
     {
-        path: 'pages', component: PageListComponent
+        path: 'pages', redirectTo: 'pages/1', pathMatch: 'full'
     },
     {
         path: 'pages/:pageNo', component: PageListComponent
     },
     {
-        path: 'page', component: PageDetailComponent
+        path: 'page', redirectTo: 'pages/1', pathMatch: 'full'
     },
     {
         path: 'page/:id', component: PageDetailComponent

@@ -2,7 +2,7 @@
 <app-nav-menu></app-nav-menu>
 
 <!-- Page Content -->
-<div class="container">
+<main class="container">
     <div class='row'>
         <div class='col-12'>
             <app-loading-spinner *ngIf="page.loading | async"></app-loading-spinner>
@@ -11,7 +11,7 @@
     </div>
     <!-- /.row -->
     <router-outlet></router-outlet>
-</div>
+</main>
 <!-- /.container -->
 
 <app-footer></app-footer>
