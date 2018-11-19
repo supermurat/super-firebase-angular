@@ -21,6 +21,7 @@ let indexMain;
 let indexEN;
 let indexTR;
 
+const uniqueKeyFor404 = '"doNotRemoveMe-ThisIsForOnlyGet404ErrorOnSSRWithUniqueAndHiddenKey"';
 const isI18N = !existsSync(path.resolve(__dirname, '../dist/browser/index.html'));
 
 if (isI18N) {
@@ -70,7 +71,10 @@ app.get('**', function(req, res) {
         renderModuleFactory(server.AppServerModuleNgFactory, {
             url: req.path,
             document: index
-        }).then(html => res.status(200).send(html));
+        }).then(html =>
+            // thing about redirect to 404 but maybe keeping current url is more cool
+            res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200).send(html)
+        );
     }
 });
 

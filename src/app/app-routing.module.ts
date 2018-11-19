@@ -42,7 +42,10 @@ const routes: Routes = [
         path: 'admin-login', component: AdminLoginComponent
     },
     {
-        path: '**', component: NotFoundComponent
+        path: '404', component: NotFoundComponent
+    },
+    {
+        path: '**', component: NotFoundComponent // maybe keeping current url is more cool, redirectTo: '404', pathMatch: 'full'
     }
 ];
 

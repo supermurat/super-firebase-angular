@@ -78,24 +78,49 @@ export class PageDetailComponent implements OnInit {
      * init page
      */
     initPage(): void {
-        this.page$ = this.ssrFirestoreDoc(`pages_${this.locale}/${this.pageID}`);
+        this.page$ = this.ssrFirestoreDoc(`pages_${this.locale}/${this.pageID}`, true);
+    }
+
+    /**
+     * check if there is another translation and redirect to it
+     */
+    checkTranslation(checkInLocale): void {
+        if (checkInLocale)
+            this.afs.doc<PageModel>(`pages_${checkInLocale}/${this.pageID}`)
+                .valueChanges()
+                .subscribe(page => {
+                    if (page) {
+                        const languageCode2 = checkInLocale.substring(0, 2);
+                        window.location.href = `/${languageCode2}/page/${this.pageID}`; // this.router.navigate can't work
+                        // this.router.navigate([`../${languageCode2}/page`, this.pageID]);
+                    } else
+                        this.router.navigate(['/404']);
+                });
+        else if (this.locale === 'en-US')
+            this.checkTranslation('tr-TR');
+        else if (this.locale === 'tr-TR')
+            this.checkTranslation('en-US');
     }
 
     /**
      * Get page object from firestore by path
      * @param path: page path
+     * @param checkTranslation: check translation if current page is not exist
      */
-    ssrFirestoreDoc(path: string): Observable<PageModel> {
+    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<PageModel> {
         const exists = this.state.get(BLOG_KEY, new PageModel());
 
         return this.afs.doc<PageModel>(path)
             .valueChanges()
             .pipe(tap(page => {
-                this.state.set(BLOG_KEY, page);
-                this.seo.generateTags({
-                    title: page.title,
-                    description: page.content
-                });
+                if (page) {
+                    this.state.set(BLOG_KEY, page);
+                    this.seo.generateTags({
+                        title: page.title,
+                        description: page.content
+                    });
+                } else if (checkTranslation)
+                    this.checkTranslation(undefined);
             }),
             startWith(exists)
         );
