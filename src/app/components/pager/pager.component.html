@@ -1,22 +1,22 @@
 <ul class="pagination justify-content-center mb-4">
   <li class="page-item {{ pagerModel.currentPageNo > 1 ? 'd-none d-md-flex' : 'd-none' }}">
-    <a class="page-link" [routerLink]="['/pages', 1]" i18n>&larr; Newest</a>
+    <a class="page-link" [routerLink]="[pagerModel.pagePath, 1]" i18n>&larr; Newest</a>
   </li>
 
   <li class="page-item {{ previousPageNo ? '' : 'd-none' }}">
-    <a class="page-link" [routerLink]="['/pages', previousPageNo]">{{ previousPageNo }}</a>
+    <a class="page-link" [routerLink]="[pagerModel.pagePath, previousPageNo]">{{ previousPageNo }}</a>
   </li>
   <li class="page-item active">
-    <a class="page-link" [routerLink]="['/pages', pagerModel.currentPageNo]">
+    <a class="page-link" [routerLink]="[pagerModel.pagePath, pagerModel.currentPageNo]">
       {{ pagerModel.currentPageNo }}
       <span class="sr-only" i18n>(current)</span>
     </a>
   </li>
   <li class="page-item {{ nextPageNo ? '' : 'd-none' }}">
-    <a class="page-link" [routerLink]="['/pages', nextPageNo]">{{ nextPageNo }}</a>
+    <a class="page-link" [routerLink]="[pagerModel.pagePath, nextPageNo]">{{ nextPageNo }}</a>
   </li>
 
   <li class="page-item {{ pagerModel.currentPageNo < pagerModel.maxPageNo ? 'd-none d-md-flex' : 'd-none' }}">
-    <a class="page-link" [routerLink]="['/pages', pagerModel.maxPageNo]" i18n>Oldest &rarr;</a>
+    <a class="page-link" [routerLink]="[pagerModel.pagePath, pagerModel.maxPageNo]" i18n>Oldest &rarr;</a>
   </li>
 </ul>

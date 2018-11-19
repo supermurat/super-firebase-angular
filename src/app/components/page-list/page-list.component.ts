@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PagerService, SeoService } from '../../services';
@@ -24,6 +24,7 @@ export class PageListComponent implements OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
+        pagePath: '/pages',
         pageSize: 3
     };
 
@@ -44,12 +45,14 @@ export class PageListComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
+     * @param locale: LOCALE_ID
      */
     constructor(private afs: AngularFirestore,
                 private seo: SeoService,
                 private router: Router,
                 private route: ActivatedRoute,
-                private pagerService: PagerService) {
+                private pagerService: PagerService,
+                @Inject(LOCALE_ID) public locale: string) {
     }
 
     /**
@@ -74,7 +77,7 @@ export class PageListComponent implements OnInit {
         if (this.firstItem) // no need to get firstItem again
             this.getPages();
         else
-            this.afs.collection('pages',
+            this.afs.collection(`pages_${this.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
             )
@@ -102,7 +105,7 @@ export class PageListComponent implements OnInit {
     getPages(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.pages$ = this.afs.collection('pages',
+        this.pages$ = this.afs.collection(`pages_${this.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
                 .limit(this.pagerModel.pageSize)

@@ -36,7 +36,7 @@ export class BlogListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.blogs$ = this.afs.collection('blogs', ref => ref.orderBy('created', 'desc'))
+        this.blogs$ = this.afs.collection('blogs_en-US', ref => ref.orderBy('created', 'desc'))
             .snapshotChanges()
             .pipe(map(actions => {
                 return actions.map(action => {

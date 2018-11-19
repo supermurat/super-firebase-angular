@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
@@ -31,13 +31,15 @@ export class PageDetailComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param state: TransferState
+     * @param locale: LOCALE_ID
      */
     constructor(
         private afs: AngularFirestore,
         private seo: SeoService,
         private router: Router,
         private route: ActivatedRoute,
-        private state: TransferState
+        private state: TransferState,
+        @Inject(LOCALE_ID) public locale: string
     ) {
     }
 
@@ -47,7 +49,7 @@ export class PageDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             if (Number(params['id']) || Number(params['id']) === 0) {
-                this.afs.collection('pages',
+                this.afs.collection(`pages_${this.locale}`,
                     ref => ref.where('orderNo', '==', Number(params['id']))
                         .limit(1)
                 )
@@ -69,14 +71,14 @@ export class PageDetailComponent implements OnInit {
             this.initPage();
         });
         // this will create a split second flash
-        // this.page$ = this.afs.doc(`pages/${id}`).valueChanges();
+        // this.page$ = this.afs.doc(`pages_${this.locale}/${id}`).valueChanges();
     }
 
     /**
      * init page
      */
     initPage(): void {
-        this.page$ = this.ssrFirestoreDoc(`pages/${this.pageID}`);
+        this.page$ = this.ssrFirestoreDoc(`pages_${this.locale}/${this.pageID}`);
     }
 
     /**

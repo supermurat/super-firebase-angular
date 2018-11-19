@@ -8,4 +8,6 @@ export class PagerModel {
     maxPageNo?: number;
     /** page size */
     pageSize ? = 5;
+    /** page path */
+    pagePath: string;
 }

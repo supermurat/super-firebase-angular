@@ -47,7 +47,7 @@ export class BlogDetailComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.blogID = params['id'];
         });
-        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogID}`);
+        this.blog$ = this.ssrFirestoreDoc(`blogs_en-US/${this.blogID}`);
 
         // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();

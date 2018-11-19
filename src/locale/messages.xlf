@@ -248,6 +248,10 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/pager/pager.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="013acfd8797bf5ade4a15c71fa24178f913c4cae" datatype="html">
         <source>Blog</source>
@@ -256,32 +260,39 @@
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8c109a1d72eeab6d3219c9dfb72722fe68d19431" datatype="html">
+        <source>Pages</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
         <source>Playground</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">
         <source>Coverage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fcfd4675b4c90f08d18d3abede9a9a4dff4cfdc7" datatype="html">
         <source>Documentation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search" datatype="html">
         <source>Search</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
@@ -479,6 +490,10 @@
           <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="7e09e3f6c6ea1b360e02e85184a0f4be654c2c70" datatype="html">
         <source>← Older</source>
@@ -513,6 +528,53 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
           <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="98da3dc51c657ec05c1c250fd0967f21e92c946f" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ title }}"/>
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="36c389a1eb379efe6ba44512ce6acd1d53cb7071" datatype="html">
+        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ page.created.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.createdBy }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="188e97704151eb6b735031669535f20e3e3da0b0" datatype="html">
+        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ page.changed.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.changedBy }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ef4373dd376b6e2a0e9e707566847df9211a372b" datatype="html">
+        <source>⇐ Previous Page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3cac07189290567b0b0926b4fb8dbaa21e5ccf69" datatype="html">
+        <source>Return to Page List ⇑</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d2107fb84bd1bb1f7d6ea96808a491fa48c0245e" datatype="html">
+        <source>Next Page ⇒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d106826fbee9f9e017fe78864b10259e1c4f46f9" datatype="html">
@@ -592,21 +654,34 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7d35e6d7549327f714a050ed5caae922b69b34d4" datatype="html">
-        <source>Side Widget</source>
+      <trans-unit id="f44d2ac087cf3956357c588003dc4de9ddaa111c" datatype="html">
+        <source>Comics / Fıkralar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fa39532ab0d8eba95713f31116c32d6d83d499fd" datatype="html">
+      <trans-unit id="475d3d2fab3d66392aa95c821baedb2b35ebd4ad" datatype="html">
         <source>
-        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap
-        4 card containers!
+        Random comics / Rastgele fıkralar
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d0253cb27b529666fc238fb3aa7d5733940547dd" datatype="html">
+        <source>← Newest</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/pager/pager.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ba23a90cf4e8369fd9552aecd286cdeef2b18d0f" datatype="html">
+        <source>Oldest →</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/pager/pager.component.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
     </body>

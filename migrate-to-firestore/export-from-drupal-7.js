@@ -11,9 +11,11 @@ connection.connect();
 const resultsForFirestore = {};
 
 const collectionNameOfBlogs = "blogs";
-resultsForFirestore[collectionNameOfBlogs] = {};
+resultsForFirestore[collectionNameOfBlogs + "_tr-TR"] = {};
+resultsForFirestore[collectionNameOfBlogs + "_en-US"] = {};
 const collectionNameOfPages = "pages";
-resultsForFirestore[collectionNameOfPages] = {};
+resultsForFirestore[collectionNameOfPages + "_tr-TR"] = {};
+resultsForFirestore[collectionNameOfPages + "_en-US"] = {};
 
 function fixDocID(docID) {
     docID = latinize(docID);
@@ -32,9 +34,18 @@ function getBlogs() {
 
             let i = 1;
             results.forEach(function(element) {
-                element.orderNo = i * -1;
                 const docID = fixDocID(element.alias);
-                resultsForFirestore[collectionNameOfBlogs][docID] = element;
+                element.orderNo = i * -1;
+                element.createdBy = "Murat Demir";
+                element.i18nKey = docID; // i18nKey should be matched with translations
+                if (element.language === "und") {
+                    resultsForFirestore[collectionNameOfBlogs + "_tr-TR"][docID] = element;
+                    resultsForFirestore[collectionNameOfBlogs + "_en-US"][docID] = element;
+                } else if (element.language === "tr") {
+                    resultsForFirestore[collectionNameOfBlogs + "_tr-TR"][docID] = element;
+                } else if (element.language === "en") {
+                    resultsForFirestore[collectionNameOfBlogs + "_en-US"][docID] = element;
+                }
                 i++;
             });
             getPages();
@@ -49,9 +60,18 @@ function getPages() {
 
             let i = 1;
             results.forEach(function(element) {
-                element.orderNo = i * -1;
                 const docID = fixDocID(element.alias);
-                resultsForFirestore[collectionNameOfPages][docID] = element;
+                element.orderNo = i * -1;
+                element.createdBy = "Murat Demir";
+                element.i18nKey = docID; // i18nKey should be matched with translations
+                if (element.language === "und") {
+                    resultsForFirestore[collectionNameOfPages + "_tr-TR"][docID] = element;
+                    resultsForFirestore[collectionNameOfPages + "_en-US"][docID] = element;
+                } else if (element.language === "tr") {
+                    resultsForFirestore[collectionNameOfPages + "_tr-TR"][docID] = element;
+                } else if (element.language === "en") {
+                    resultsForFirestore[collectionNameOfPages + "_en-US"][docID] = element;
+                }
                 i++;
             });
             writeResultToFile();

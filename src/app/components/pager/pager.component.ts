@@ -16,7 +16,9 @@ export class PagerComponent implements OnDestroy, OnInit {
     subscription: Subscription | undefined;
 
     /** pager model */
-    pagerModel: PagerModel = {};
+    pagerModel: PagerModel = {
+        pagePath: '/'
+    };
 
     /** next page no */
     nextPageNo?: number;
@@ -39,7 +41,7 @@ export class PagerComponent implements OnDestroy, OnInit {
             .subscribe(pagerModel => {
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {
                     pagerModel.currentPageNo = !pagerModel.currentPageNo ? 1 : pagerModel.currentPageNo < 1 ? 1 : pagerModel.maxPageNo;
-                    this.router.navigate(['/pages', pagerModel.currentPageNo]);
+                    this.router.navigate([pagerModel.pagePath, pagerModel.currentPageNo]);
                 } else {
                     this.previousPageNo = pagerModel.currentPageNo - 1;
                     this.nextPageNo = pagerModel.currentPageNo + 1;
