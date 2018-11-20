@@ -28,6 +28,7 @@
     "serve": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build && npm run server && npm run copyToPublic && firebase serve --project supermurat-com",
     "serve:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:i18n && npm run server:i18n && npm run copyToPublic && firebase serve --project supermurat-com",
     "serve:production:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:production:i18n && npm run server:production:i18n && npm run copyToPublic && firebase serve --project supermurat-com",
+    "serve:only:firebase": "npm run build:functions && firebase serve --project supermurat-com",
     "copyToPublic": "del-cli \"./public/*\" && ncp \"./functions/dist/browser\" \"./public\" && npm run deleteIndexFromPublic",
     "copyCoverageToPublic": "ncp \"./coverage\" \"./public/coverage\"",
     "copyDocumentationToPublic": "ncp \"./documentation\" \"./public/documentation\"",

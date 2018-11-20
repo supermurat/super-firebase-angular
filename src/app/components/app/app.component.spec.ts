@@ -10,6 +10,7 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FooterComponent } from '../footer/footer.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 
 describe('AppComponent', () => {
     beforeEach(async(() => {
@@ -19,7 +20,8 @@ describe('AppComponent', () => {
                 NavMenuComponent,
                 AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent
+                FooterComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
@@ -61,7 +63,8 @@ describe('AppComponentSeoService', () => {
                 NavMenuComponent,
                 AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent
+                FooterComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
@@ -178,7 +181,8 @@ describe('AppComponentAlertService', () => {
                 NavMenuComponent,
                 AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent
+                FooterComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PaginationService,

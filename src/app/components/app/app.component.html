@@ -10,7 +10,14 @@
         </div>
     </div>
     <!-- /.row -->
-    <router-outlet></router-outlet>
+    <div *ngIf="httpStatus$ | async as httpStatus; else defaultRouter">
+        <app-not-found *ngIf="httpStatus.code === 404"></app-not-found>
+        <div id="only-for-http-status" style="display: none;"
+             *ngIf="httpStatus.htmlContent" [innerHTML]="httpStatus.htmlContent"></div>
+    </div>
+    <ng-template #defaultRouter>
+        <router-outlet></router-outlet>
+    </ng-template>
 </main>
 <!-- /.container -->
 

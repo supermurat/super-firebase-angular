@@ -72,8 +72,17 @@ app.get('**', function(req, res) {
             url: req.path,
             document: index
         }).then(html =>
-            // thing about redirect to 404 but maybe keeping current url is more cool
-            res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200).send(html)
+            {
+                const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
+                if (newUrlInfo){
+                    const newUrl = newUrlInfo[0]
+                        .replace(/--end-of-http-redirect-301--/gi, "")
+                        .replace(/--http-redirect-301--/gi, "");
+                    res.redirect(301, newUrl);
+                } else
+                    // thing about redirect to 404 but maybe keeping current url is more cool
+                    res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200).send(html);
+            }
         );
     }
 });

@@ -79,6 +79,15 @@ export class PageDetailComponent implements OnInit {
      */
     initPage(): void {
         this.page$ = this.ssrFirestoreDoc(`pages_${this.locale}/${this.pageID}`, true);
+        this.page$.subscribe(page => {
+            if (page)
+                this.seo.generateTags({
+                    title: page.title,
+                    description: page.content
+                });
+            else
+                this.checkTranslation(undefined);
+        });
     }
 
     /**
@@ -91,10 +100,9 @@ export class PageDetailComponent implements OnInit {
                 .subscribe(page => {
                     if (page) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        window.location.href = `/${languageCode2}/page/${this.pageID}`; // this.router.navigate can't work
-                        // this.router.navigate([`../${languageCode2}/page`, this.pageID]);
+                        this.seo.http301(`/${languageCode2}/page/${this.pageID}`);
                     } else
-                        this.router.navigate(['/404']);
+                        this.seo.http404();
                 });
         else if (this.locale === 'en-US')
             this.checkTranslation('tr-TR');
@@ -113,14 +121,8 @@ export class PageDetailComponent implements OnInit {
         return this.afs.doc<PageModel>(path)
             .valueChanges()
             .pipe(tap(page => {
-                if (page) {
+                if (page)
                     this.state.set(BLOG_KEY, page);
-                    this.seo.generateTags({
-                        title: page.title,
-                        description: page.content
-                    });
-                } else if (checkTranslation)
-                    this.checkTranslation(undefined);
             }),
             startWith(exists)
         );
