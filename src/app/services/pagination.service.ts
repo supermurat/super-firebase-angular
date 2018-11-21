@@ -78,14 +78,16 @@ export class PaginationService {
      */
     more(): any {
         const cursor = this.getCursor();
-
-        const more = this.afs.collection(this.query.path, ref => {
-            return ref
-                .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
-                .limit(this.query.limit)
-                .startAfter(cursor);
-        });
-        this.mapAndUpdate(more);
+        if (cursor) {
+            const more = this.afs.collection(this.query.path, ref => {
+                return ref
+                    .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
+                    .limit(this.query.limit)
+                    .startAfter(cursor);
+            });
+            this.mapAndUpdate(more);
+        } else
+            this.done.next(true);
     }
 
     /**

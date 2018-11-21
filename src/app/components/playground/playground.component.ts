@@ -74,7 +74,7 @@ export class PlaygroundComponent implements OnInit {
      * ngOnDestroy
      */
     ngOnInit(): void {
-        this.page.init('blogs', 'created', { reverse: true, prepend: false });
+        this.page.init(`blogs_${this.locale}`, 'created', { reverse: true, prepend: false });
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
@@ -106,8 +106,8 @@ export class PlaygroundComponent implements OnInit {
     scrollHandler(e): void {
         if (e === 'bottom')
             this.page.more();
-        if (e === 'top')
-            this.page.more();
+        /*if (e === 'top')
+            this.page.more();*/
     }
 
     /**
