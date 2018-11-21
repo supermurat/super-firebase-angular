@@ -9,7 +9,8 @@
     "firebase-admin": "^6.1.0",
     "fs": "^0.0.1-security",
     "mysql": "^2.16.0",
-    "latinize": "0.4.0"
+    "latinize": "0.4.0",
+    "mime-types": "^2.1.21"
   },
   "private": true
 }

@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 const fs = require('fs');
+const http = require('http');
+const path = require('path');
 const latinize = require('latinize');
 
 const mysqlConfig = require("./mysql-config.json");
@@ -7,6 +9,11 @@ const mysqlConfig = require("./mysql-config.json");
 const connection = mysql.createConnection(mysqlConfig);
 
 connection.connect();
+
+const baseURLOfWebSite = "http://supermurat.com";
+const pathOfFiles = __dirname + path.sep + "files";
+if (!fs.existsSync(pathOfFiles))
+    fs.mkdir(pathOfFiles);
 
 const resultsForFirestore = {};
 
@@ -17,6 +24,19 @@ const collectionNameOfPages = "pages";
 resultsForFirestore[collectionNameOfPages + "_tr-TR"] = {};
 resultsForFirestore[collectionNameOfPages + "_en-US"] = {};
 
+function checkDirectory(directoryPath) {
+    if (!fs.existsSync(directoryPath)){
+        directoryPath.split(path.sep)
+            .reduce((currentPath, folder) => {
+                currentPath += folder + path.sep;
+                if (!fs.existsSync(currentPath)){
+                    fs.mkdirSync(currentPath);
+                }
+                return currentPath;
+            }, '');
+    }
+}
+
 function fixDocID(docID) {
     docID = latinize(docID);
     return docID.toLocaleLowerCase()
@@ -24,6 +44,29 @@ function fixDocID(docID) {
         .replace(/blog\//gi, '').replace(/gunluk\//gi, '')
         .replace(/story\//gi, '').replace(/makale\//gi, '')
         .replace(/\//gi, '-').replace(/\\/gi, '-');
+}
+
+function downloadFiles(htmlContent) {
+    const fileMatchList = htmlContent.match(/<img src=[\\]?"[\w\d\/\-_\\]*\.[\w\d]*[\\]?"/gi);
+    if (fileMatchList) {
+        fileMatchList.forEach(function (fileMatch) {
+            const filePath = fileMatch.replace(/<img src=/gi, "").replace(/[\\]?"/gi, "")
+                .replace(/\//gi, path.sep).replace(/\\/gi, path.sep);
+            checkDirectory(path.dirname(pathOfFiles + filePath));
+            if (!fs.existsSync(pathOfFiles + filePath)) {
+                const file = fs.createWriteStream(pathOfFiles + filePath); // TODO: if it starts with url, you can replace it for local file
+                const request = http.get(baseURLOfWebSite + filePath, function (response) {
+                    response.pipe(file);
+                    file.on('finish', function () {
+                        file.close();
+                        console.log("Newly Downloaded File:", filePath);
+                    });
+                });
+            } else {
+                console.log("Already Downloaded File:", filePath);
+            }
+        })
+    }
 }
 
 function getBlogs() {
@@ -38,6 +81,7 @@ function getBlogs() {
                 element.orderNo = i * -1;
                 element.createdBy = "Murat Demir";
                 element.i18nKey = docID; // i18nKey should be matched with translations
+                downloadFiles(element.content);
                 if (element.language === "und") {
                     resultsForFirestore[collectionNameOfBlogs + "_tr-TR"][docID] = element;
                     resultsForFirestore[collectionNameOfBlogs + "_en-US"][docID] = element;
@@ -64,6 +108,7 @@ function getPages() {
                 element.orderNo = i * -1;
                 element.createdBy = "Murat Demir";
                 element.i18nKey = docID; // i18nKey should be matched with translations
+                downloadFiles(element.content);
                 if (element.language === "und") {
                     resultsForFirestore[collectionNameOfPages + "_tr-TR"][docID] = element;
                     resultsForFirestore[collectionNameOfPages + "_en-US"][docID] = element;

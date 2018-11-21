@@ -111,3 +111,4 @@ dist-ssr
 /migrate-to-firestore/package-lock.json
 /migrate-to-firestore/mysql-config.json
 /migrate-to-firestore/data.json
+/migrate-to-firestore/files
