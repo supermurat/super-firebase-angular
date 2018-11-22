@@ -1,5 +1,7 @@
-# super-firebase-angular / migrate-to-firestore
-Import your data directly to Cloud Firestore.
+# super-firebase-angular / migrate-to-firebase
+* Import your data directly to Cloud Firestore
+* Upload your files directly to Firebase Storage
+* Fix file/image paths on your json data (in html, just before import) for web projects
 
 ## Install dependencies
 ```sh
@@ -21,7 +23,7 @@ Key Type: JSON
 ### Download private key file and copy to current directory
 File Name: supermurat-com-service-key.json  
 Relative Path: 
-(project root)/migrate-to-firestore/supermurat-com-service-key.json  
+(project root)/migrate-to-firebase/supermurat-com-service-key.json  
 **DO NOT COMMIT your key file to GIT!**
 
 ### Edit Data
@@ -36,7 +38,7 @@ JSON Mapping :
 **DO NOT RUN unless you are very sure about "data.json"!**  
 **!!! Matched collections/documents/fields will be OVERWRITTEN !!!**
 ```sh
-npm run json-to-firestore
+npm run migrate-to-firebase
 ```
 
 ## Thanks

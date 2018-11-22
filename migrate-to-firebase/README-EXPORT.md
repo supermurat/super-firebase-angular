@@ -1,4 +1,4 @@
-# super-firebase-angular / migrate-to-firestore
+# super-firebase-angular / migrate-to-firebase
 Export your data from MySQL.
 
 ## Install dependencies
@@ -22,6 +22,17 @@ Check out "TODO:" items in the file
 you may want to make a copy of it !!!**
 ```sh
 npm run export-from-mysql
+```
+
+### Edit export-from-drupal-7.js file 
+Edit "export-from-drupal-7.js" file and save  
+Check out "TODO:" items in the file  
+
+## Run
+**!!! "data.json" file will be OVERWRITTEN, 
+you may want to make a copy of it !!!**
+```sh
+npm run export-from-drupal-7
 ```
 
 ## Import Data into Cloud Firestore

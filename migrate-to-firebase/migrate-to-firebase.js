@@ -7,9 +7,9 @@ let data = require("./data.json");
 const storage = require('@google-cloud/storage')();
 
 // CONFIG
-const bucketName = "supermurat-com.appspot.com";
-const pathOfFiles = __dirname + path.sep + "files";
-const remoteFilePath = "/publicFiles/"; // keep undefined in order to use relative path
+// keep "remoteFilePath" undefined in order to use relative path
+// think about to give read permission for your users or public : "../firebase/storage.rules"
+const remoteFilePath = "/publicFiles/";
 // END OF CONFIG
 
 admin.initializeApp({
@@ -17,7 +17,9 @@ admin.initializeApp({
     databaseURL: "https://" + serviceAccount.project_id + ".firebaseio.com"
 });
 admin.app().firestore().settings({timestampsInSnapshots: true});
+const bucketName = serviceAccount.project_id + ".appspot.com";
 const bucket = admin.storage().bucket(bucketName);
+const pathOfFiles = __dirname + path.sep + "files";
 
 // FixFilePaths
 function getFiles(dir, files_){
@@ -90,7 +92,7 @@ function uploadFilesAndFixFilePaths(){
     return new Promise((resolve, reject) => {
         let dataString = JSON.stringify(data);
         if (!fs.existsSync(pathOfFiles))
-            fs.mkdir(pathOfFiles);
+            resolve(); // There is no directory (pathOfFiles) to upload, so let's skip to import only data.json
         const files = getFiles(pathOfFiles);
         if (files.length > 0) {
             const promises = [];

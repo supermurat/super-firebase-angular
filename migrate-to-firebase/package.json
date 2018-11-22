@@ -1,9 +1,9 @@
 {
-  "name": "migrate-to-firestore",
+  "name": "migrate-to-firebase",
   "scripts": {
     "export-from-mysql": "node export-from-mysql.js",
     "export-from-drupal-7": "node export-from-drupal-7.js",
-    "json-to-firestore": "node json-to-firestore.js"
+    "migrate-to-firebase": "node migrate-to-firebase.js"
   },
   "dependencies": {
     "firebase-admin": "^6.1.0",
