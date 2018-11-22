@@ -41,6 +41,26 @@ const routes: Routes = [
     {
         path: 'admin-login', component: AdminLoginComponent
     },
+    // tr-TR
+    {
+        path: 'gunluk', component: BlogListComponent
+    },
+    {
+        path: 'gunluk/:id', component: BlogDetailComponent
+    },
+    {
+        path: 'sayfalar', redirectTo: 'sayfalar/1', pathMatch: 'full'
+    },
+    {
+        path: 'sayfalar/:pageNo', component: PageListComponent
+    },
+    {
+        path: 'sayfa', redirectTo: 'sayfalar/1', pathMatch: 'full'
+    },
+    {
+        path: 'sayfa/:id', component: PageDetailComponent
+    },
+    // end of tr-TR
     {
         path: 'http-404', component: NotFoundComponent
     },

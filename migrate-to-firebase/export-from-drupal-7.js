@@ -23,6 +23,8 @@ resultsForFirestore[collectionNameOfBlogs + "_en-US"] = {};
 const collectionNameOfPages = "pages";
 resultsForFirestore[collectionNameOfPages + "_tr-TR"] = {};
 resultsForFirestore[collectionNameOfPages + "_en-US"] = {};
+const collectionNameOfRedirectionRecords = "redirectionRecords";
+resultsForFirestore[collectionNameOfRedirectionRecords] = {};
 
 function checkDirectory(directoryPath) {
     if (!fs.existsSync(directoryPath)){
@@ -39,11 +41,19 @@ function checkDirectory(directoryPath) {
 
 function fixDocID(docID) {
     docID = latinize(docID);
-    return docID.toLocaleLowerCase()
-        .replace(/ı\//gi, 'i')
-        .replace(/blog\//gi, '').replace(/gunluk\//gi, '')
-        .replace(/story\//gi, '').replace(/makale\//gi, '')
+    return docID//.toLocaleLowerCase()
+        //.replace(/ı\//gi, 'i')
         .replace(/\//gi, '-').replace(/\\/gi, '-');
+}
+
+function addToRedirectionRecords(lang, alias, path, docID) {
+    if (lang + alias !== lang + path + docID){
+        resultsForFirestore[collectionNameOfRedirectionRecords][(lang + alias).replace(/\//gi, '\\')]
+            = {code: 301, url: "/" + lang + path + docID};
+        if (lang === "tr/")
+            resultsForFirestore[collectionNameOfRedirectionRecords][(alias).replace(/\//gi, '\\')]
+                = {code: 301, url: "/" + lang + path + docID};
+    }
 }
 
 function downloadFiles(htmlContent) {
@@ -77,7 +87,7 @@ function getBlogs() {
 
             let i = 1;
             results.forEach(function(element) {
-                const docID = fixDocID(element.alias);
+                const docID = fixDocID(element.alias.replace(/blog\//gi, '').replace(/gunluk\//gi, ''));
                 element.orderNo = i * -1;
                 element.createdBy = "Murat Demir";
                 element.i18nKey = docID; // i18nKey should be matched with translations
@@ -85,10 +95,14 @@ function getBlogs() {
                 if (element.language === "und") {
                     resultsForFirestore[collectionNameOfBlogs + "_tr-TR"][docID] = element;
                     resultsForFirestore[collectionNameOfBlogs + "_en-US"][docID] = element;
+                    addToRedirectionRecords("tr/", element.alias, "gunluk/", docID);
+                    addToRedirectionRecords("en/", element.alias, "blog/", docID);
                 } else if (element.language === "tr") {
                     resultsForFirestore[collectionNameOfBlogs + "_tr-TR"][docID] = element;
+                    addToRedirectionRecords("tr/", element.alias, "gunluk/", docID);
                 } else if (element.language === "en") {
                     resultsForFirestore[collectionNameOfBlogs + "_en-US"][docID] = element;
+                    addToRedirectionRecords("en/", element.alias, "blog/", docID);
                 }
                 i++;
             });
@@ -104,7 +118,7 @@ function getPages() {
 
             let i = 1;
             results.forEach(function(element) {
-                const docID = fixDocID(element.alias);
+                const docID = fixDocID(element.alias.replace(/story\//gi, '').replace(/makale\//gi, ''));
                 element.orderNo = i * -1;
                 element.createdBy = "Murat Demir";
                 element.i18nKey = docID; // i18nKey should be matched with translations
@@ -112,10 +126,14 @@ function getPages() {
                 if (element.language === "und") {
                     resultsForFirestore[collectionNameOfPages + "_tr-TR"][docID] = element;
                     resultsForFirestore[collectionNameOfPages + "_en-US"][docID] = element;
+                    addToRedirectionRecords("tr/", element.alias, "sayfa/", docID);
+                    addToRedirectionRecords("en/", element.alias, "page/", docID);
                 } else if (element.language === "tr") {
                     resultsForFirestore[collectionNameOfPages + "_tr-TR"][docID] = element;
+                    addToRedirectionRecords("tr/", element.alias, "sayfa/", docID);
                 } else if (element.language === "en") {
                     resultsForFirestore[collectionNameOfPages + "_en-US"][docID] = element;
+                    addToRedirectionRecords("en/", element.alias, "page/", docID);
                 }
                 i++;
             });

@@ -144,10 +144,10 @@ function importIntoFirestore(){
                     .doc(docID)
                     .set(nestedData)
                     .then((res) => {
-                        console.log("Document successfully written!");
+                        console.log("Imported:", key, docID);
                     })
                     .catch((error) => {
-                        console.error("Error writing document: ", error);
+                        console.error("Error:", key, docID, error);
                     });
             });
         }
