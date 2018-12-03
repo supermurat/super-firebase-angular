@@ -14,7 +14,7 @@ import { SideBarComponent } from '../side-bar/side-bar.component';
 
 const testData: any = [[
     {payload: {doc: {id: 'first-blog', data(): BlogModel {
-        return { id: 'first-blog', title: 'First Blog', content: 'this is good sample'};
+        return { id: 'first-blog', title: 'First Blog', content: 'this is good sample', contentSummary: 'this is good'};
     }}}},
     {payload: {doc: {id: 'second-blog', data(): BlogModel {
         return { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'};

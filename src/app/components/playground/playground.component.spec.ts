@@ -9,31 +9,51 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { BlogModel } from '../../models';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 const testData: Array<Array<BlogModel>> = [[
     { id: 'first-blog', title: 'First Blog', content: 'this is good sample'},
-    { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'}
+    { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'},
+    { id: 'third-blog', title: 'Third Blog', content: 'this is the best sample'}
+]];
+const testDataSnapshot: any = [[
+    {payload: {doc: {id: 'first-blog', data(): BlogModel {
+                    return testData[0][0];
+                }}}},
+    {payload: {doc: {id: 'second-blog', data(): BlogModel {
+                    return testData[0][1];
+                }}}},
+    {payload: {doc: {id: 'third-blog', data(): BlogModel {
+                    return testData[0][2];
+                }}}}
 ]];
 
 const angularFirestoreStub = {
     collection(path: string, queryFn?: any): any {
+        let fieldPath: string;
+        let limitNumber: number;
+        let startAfterDoc: any;
+
         queryFn({
-            orderBy(fieldPath): any {
+            orderBy(fp): any {
+                fieldPath = fp;
+
                 return {
-                    limit(limitNumber): any {
+                    limit(ln): any {
+                        limitNumber = ln;
+
                         return {
-                            startAfter(c): any {
+                            startAfter(sad): any {
+                                startAfterDoc = sad;
+
                                 return {
                                     snapshotChanges(): any {
-                                        return {
-                                        };
+                                        return from(testDataSnapshot);
                                     }
                                 };
                             },
                             snapshotChanges(): any {
-                                return {
-                                };
+                                return from(testDataSnapshot);
                             }};
                     }
                 };
@@ -46,12 +66,51 @@ const angularFirestoreStub = {
             },
             snapshotChanges(): any {
                 return {
-                    pipe(): any {
+                    pipe(queryFnPipe?: any): any {
+                        queryFnPipe({
+                            lift(queryFnLift?: any): any {
+                                queryFnLift.call({}, {
+                                    subscribe(queryFnSubscribe): any {
+                                        queryFnSubscribe._next({
+                                            map(queryFnMap): any {
+                                                let startAfterIndex = 0;
+                                                if (startAfterDoc)
+                                                    if (startAfterDoc.id === testData[0][0].id)
+                                                        startAfterIndex = 1;
+                                                    else if (startAfterDoc.id === testData[0][1].id)
+                                                        startAfterIndex = 2;
+                                                    else if (startAfterDoc.id === testData[0][2].id)
+                                                        startAfterIndex = 3;
+
+                                                const retVal = [];
+                                                if (limitNumber > 0 && startAfterIndex < testDataSnapshot[0].length) {
+                                                    queryFnMap(testDataSnapshot[0][startAfterIndex]);
+                                                    retVal.push(testDataSnapshot[0][startAfterIndex].payload);
+                                                }
+                                                if (limitNumber > 1 && startAfterIndex + 1 < testDataSnapshot[0].length) {
+                                                    queryFnMap(testDataSnapshot[0][startAfterIndex + 1]);
+                                                    retVal.push(testDataSnapshot[0][startAfterIndex + 1].payload);
+                                                }
+                                                if (limitNumber > 2 && startAfterIndex + 2 < testDataSnapshot[0].length) {
+                                                    queryFnMap(testDataSnapshot[0][startAfterIndex + 2]);
+                                                    retVal.push(testDataSnapshot[0][startAfterIndex + 2].payload);
+                                                }
+
+                                                return retVal;
+                                            }
+                                        });
+                                    }
+                                });
+
+                                return from(testDataSnapshot);
+                            }
+                        });
+
                         return {
                             pipe(): any {
                                 return {
                                     subscribe(): any {
-                                        return {};
+                                        return from(testDataSnapshot);
                                     }};
                             }
                         };
@@ -176,6 +235,47 @@ describe('PlaygroundComponent', () => {
         });
         tick();
         fixture.detectChanges();
+    }));
+
+    it('trackByBlog(2) should return 2', async(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        expect(app.trackByBlog(2, {}))
+            .toBe(2);
+    }));
+
+    it('scrollHandler("bottom") should load more data', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(3);
+        });
+    }));
+
+    it('scrollHandler("top") should not load more data', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('top');
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(2);
+        });
     }));
 
 });

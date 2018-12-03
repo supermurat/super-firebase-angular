@@ -66,6 +66,7 @@ describe('BlogDetailComponent', () => {
     it("should render 'Blog' in an a", async(() => {
         const fixture = TestBed.createComponent(BlogDetailComponent);
         const compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
         expect(compiled.querySelector('a').textContent)
             .toContain('Blog');
     }));
