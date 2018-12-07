@@ -1,6 +1,6 @@
 
-import { from } from 'rxjs';
-import { async, TestBed } from '@angular/core/testing';
+import { BehaviorSubject, from } from 'rxjs';
+import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageListComponent } from './page-list.component';
@@ -8,18 +8,26 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { AlertService, PagerService, SeoService } from '../../services';
 import { PageModel } from '../../models';
-import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { PagerComponent } from '../pager/pager.component';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 const testData: any = [[
     {payload: {doc: {id: 'first-page', data(): PageModel {
-        return { orderNo: -2, id: 'first-page', title: 'First Page', content: 'this is good sample'};
+        return { orderNo: -2,
+            id: 'first-page',
+            title: 'First Page',
+            content: 'this is good sample',
+            created: { seconds: 1544207668 }};
     }}}},
     {payload: {doc: {id: 'second-page', data(): PageModel {
-        return { orderNo: -1, id: 'second-page', title: 'Second Page', content: 'this is better sample'};
+        return { orderNo: -1,
+            id: 'second-page',
+            title: 'Second Page',
+            content: 'this is better sample',
+            created: { seconds: 1544207669 },
+            contentSummary: 'this is better'};
     }}}}
 ]];
 
@@ -43,6 +51,10 @@ const angularFirestoreStub = {
     }
 };
 
+const activatedRouteStub = {
+    params: new BehaviorSubject<any>({ pageNo: 1 })
+};
+
 describe('PageListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -54,20 +66,14 @@ describe('PageListComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, PagerService,
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        params: {
-                            subscribe: (fn: (value: Data) => void) => fn({
-                                name: 'unit-test'
-                            })
-                        }
-                    }
-                },
+                { provide: ActivatedRoute, useValue: activatedRouteStub },
                 { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
-                RouterTestingModule.withRoutes([{path: 'page', component: PageListComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: 'pages', component: PageListComponent},
+                    {path: 'pages/:pageNo', component: PageListComponent}
+                    ])
             ]
         })
             .compileComponents();
@@ -90,13 +96,25 @@ describe('PageListComponent', () => {
     it('count of page should be 2', async(() => {
         const fixture = TestBed.createComponent(PageListComponent);
         const app = fixture.debugElement.componentInstance;
-        // TODO: fix me after development
-        /*fixture.detectChanges();
+        fixture.detectChanges();
         app.pages$.subscribe(result => {
             expect(result.length)
                 .toEqual(2);
         });
-        fixture.detectChanges();*/
+        fixture.detectChanges();
+    }));
+
+    it('should redirection to page 1 if page is not exist', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PageListComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        // app.router.navigate([ '/pages', 9]);
+        app.route.params.next({ pageNo: 9 }); // page 9 not exist
+        tick();
+        fixture.detectChanges();
+        expect(app.router.url)
+            .toEqual('/pages/1');
+        fixture.detectChanges();
     }));
 
     it('trackByPage(2) should return 2', async(() => {

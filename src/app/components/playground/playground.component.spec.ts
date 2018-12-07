@@ -261,6 +261,23 @@ describe('PlaygroundComponent', () => {
         });
     }));
 
+    it('double call scrollHandler("bottom") should load all data', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        app.page.done.subscribe(result => {
+            expect(result)
+                .toBeTruthy();
+        });
+    }));
+
     it('scrollHandler("top") should not load more data', fakeAsync(() => {
         const fixture = TestBed.createComponent(PlaygroundComponent);
         const app = fixture.debugElement.componentInstance;
@@ -275,6 +292,84 @@ describe('PlaygroundComponent', () => {
         }, undefined, () => {
             expect(countOfItem)
                 .toEqual(2);
+        });
+    }));
+
+    it('page.reset() should clear data', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.page.reset();
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(0);
+        });
+    }));
+
+    it('scrollHandler("bottom") should not load data after page.reset()', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.page.reset();
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(0);
+        });
+    }));
+
+    it('page.init() should load data with alternate options { reverse: false, prepend: true }', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        app.page.init(`blogs_${app.locale}`, 'created', { reverse: false, prepend: true });
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(3);
+        });
+    }));
+
+    it('page.init() should not load more data all data already loaded', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        app.scrollHandler('bottom');
+        fixture.detectChanges();
+        tick();
+        app.page.init(`blogs_${app.locale}`, 'created', { reverse: true, prepend: false });
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(3);
         });
     }));
 
