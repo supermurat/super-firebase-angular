@@ -5,11 +5,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { PlaygroundComponent } from './playground.component';
 
 import { AlertService, PaginationService, SeoService } from '../../services';
+import { ScrollableDirective } from '../../directives';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { BlogModel } from '../../models';
-import { from, Observable } from 'rxjs';
+import { from } from 'rxjs';
 
 const testData: Array<Array<BlogModel>> = [[
     { id: 'first-blog', title: 'First Blog', content: 'this is good sample'},
@@ -136,7 +137,8 @@ describe('PlaygroundComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PlaygroundComponent
+                PlaygroundComponent,
+                ScrollableDirective
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
@@ -362,6 +364,25 @@ describe('PlaygroundComponent', () => {
         fixture.detectChanges();
         tick();
         app.page.init(`blogs_${app.locale}`, 'created', { reverse: true, prepend: false });
+        fixture.detectChanges();
+        tick();
+        let countOfItem = 0;
+        app.page.data.subscribe(result => {
+            countOfItem += result.length;
+        }, undefined, () => {
+            expect(countOfItem)
+                .toEqual(3);
+        });
+    }));
+
+    it('.content.onScroll should load more data', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PlaygroundComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        tick();
+        const compiled = fixture.debugElement.nativeElement;
+        compiled.querySelector('.content')
+            .scrollTo(0, 200);
         fixture.detectChanges();
         tick();
         let countOfItem = 0;

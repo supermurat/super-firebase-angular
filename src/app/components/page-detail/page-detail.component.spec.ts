@@ -63,7 +63,9 @@ describe('PageDetailComponent', () => {
             imports: [
                 RouterTestingModule.withRoutes([
                     {path: 'page/:id', component: PageDetailComponent},
-                    {path: 'pages/:pageNo', component: PageDetailComponent}
+                    {path: 'pages/:pageNo', component: PageDetailComponent},
+                    {path: 'en/page/:id', component: PageDetailComponent},
+                    {path: 'tr/page/:id', component: PageDetailComponent}
                     ])
             ]
         })
@@ -77,9 +79,10 @@ describe('PageDetailComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should render 'Page' in an a", async(() => {
+    it('should load first-page', async(() => {
         const fixture = TestBed.createComponent(PageDetailComponent);
         const app = fixture.debugElement.componentInstance;
+        app.route.params.next({ id: 'first-page' });
         fixture.detectChanges();
         let lastPage = new PageModel();
         app.page$.subscribe(page => {
@@ -88,6 +91,18 @@ describe('PageDetailComponent', () => {
             expect(lastPage.id)
                 .toEqual('first-page');
         });
+    }));
+
+    it('should redirection to translation of page', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PageDetailComponent);
+        const app = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+        app.checkTranslation(undefined);
+        tick();
+        fixture.detectChanges();
+        expect(app.router.url)
+            .toEqual('/tr/page/first-page');
+        fixture.detectChanges();
     }));
 
     it("should redirection to '/page/first-page' if id is -1", fakeAsync(() => {
