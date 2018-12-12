@@ -7,11 +7,18 @@ import { BlogListComponent } from './blog-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { AlertService, SeoService } from '../../services';
-import { Blog } from '../../models';
+import { BlogModel } from '../../models';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { FooterComponent } from '../footer/footer.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 
-const testData: Array<Array<Blog>> = [[
-    { name: 'first-block', bio: 'this is good sample', imgName: 'bad, very bad angel.gif', imgURL: undefined},
-    { name: 'second-block', bio: 'this is better sample', imgName: 'bad, very bad angel.gif', imgURL: undefined}
+const testData: any = [[
+    {payload: {doc: {id: 'first-blog', data(): BlogModel {
+        return { id: 'first-blog', title: 'First Blog', content: 'this is good sample', contentSummary: 'this is good'};
+    }}}},
+    {payload: {doc: {id: 'second-blog', data(): BlogModel {
+        return { id: 'second-blog', title: 'Second Blog', content: 'this is better sample'};
+    }}}}
 ]];
 
 const angularFirestoreStub = {
@@ -19,7 +26,7 @@ const angularFirestoreStub = {
         queryFn({orderBy(fieldPath): any { return {fieldPath}; }});
 
         return {
-            valueChanges(): any {
+            snapshotChanges(): any {
                 return from(testData);
             }
         };
@@ -30,7 +37,9 @@ describe('BlogListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogListComponent
+                BlogListComponent,
+                FooterComponent,
+                SideBarComponent
             ],
             providers: [
                 AlertService, SeoService,
@@ -50,19 +59,11 @@ describe('BlogListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'Blog App'", async(() => {
+    it("should have as title 'Murat Demir's blog'", async(() => {
         const fixture = TestBed.createComponent(BlogListComponent);
         const app = fixture.debugElement.componentInstance;
         expect(app.title)
-            .toEqual('Blog App');
-    }));
-
-    it("should render 'Blog Entries' in a h2", async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('h2').textContent)
-            .toContain('Blog Entries');
+            .toEqual('Murat Demir\'s blog');
     }));
 
     it('count of blog should be 2', async(() => {

@@ -1,10 +1,40 @@
-<h1>{{ title }}</h1>
-
-<p>{{ description }}</p>
-
-<h2 i18n>Blog Entries</h2>
-<hr>
-<div class="blogsPanel" *ngFor="let blog of blogs$ | async; trackBy:trackByBlog">
-  <a [routerLink]="blog.name | lowercase">{{ blog.name }}</a>
+<div class='row'>
+    <h1 class="col-md-12" i18n>{{ title }}
+        <small>Let me make you smile <i class="far fa-grin-wink" style="color: #ffc41d;"></i></small>
+    </h1>
 </div>
-<hr>
+<div class='row'>
+    <!-- Blog Entries Column -->
+
+    <div class="col-md-8">
+
+        <div class="card my-4" *ngFor="let blog of blogs$ | async; trackBy:trackByBlog">
+            <img class="card-img-top" *ngIf="blog.image" [src]="blog.image" alt="Card image cap">
+            <div class="card-body">
+                <a [routerLink]="blog.id"><h2 class="card-title">{{ blog.title }}</h2></a>
+                <p class="card-text" [innerHTML]="blog.contentSummary"></p>
+                <a [routerLink]="blog.id" class="btn btn-primary" i18n>Read More &rArr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                <!--<span i18n>Posted on {{ blog.created.toMillis() | date:'medium' }} by {{ blog.createdBy }}</span>-->
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <ul class="pagination justify-content-center mb-4">
+            <li class="page-item">
+                <a class="page-link" href="#" i18n>&larr; Older</a>
+            </li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#" i18n>Newer &rarr;</a>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </div>
+
+</div>

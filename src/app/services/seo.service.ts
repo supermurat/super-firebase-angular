@@ -1,28 +1,36 @@
-import { Inject, Injectable, LOCALE_ID, RendererFactory2, ViewEncapsulation } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, RendererFactory2, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { DOCUMENT, PlatformLocation } from '@angular/common';
-import { LinkDefinition, TagsDefinition } from '../models';
+import { DOCUMENT, isPlatformBrowser, PlatformLocation } from '@angular/common';
+import { HtmlDocumentModel, HtmlLinkElementModel, HttpStatusModel } from '../models';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 
 /**
  * Seo Service
  */
 @Injectable()
 export class SeoService {
+    /** http status */
+    private httpStatus$ = new Subject<HttpStatusModel>();
 
     /**
      * constructor of SeoService
      * @param meta: Meta
      * @param titleService: Title
+     * @param router: Router
      * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
+     * @param platformId: PLATFORM_ID
      * @param locale: LOCALE_ID
      * @param document: DOCUMENT
      */
     constructor(private meta: Meta,
                 private titleService: Title,
+                private router: Router,
                 private rendererFactory: RendererFactory2,
                 private platformLocation: PlatformLocation,
+                @Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) private locale: string,
                 @Inject(DOCUMENT) public document) {
     }
@@ -31,8 +39,8 @@ export class SeoService {
      * Generate page tags
      * @param tags: tags of current page
      */
-    generateTags(tags: TagsDefinition): void {
-        const defaultTags = new TagsDefinition();
+    generateTags(tags: HtmlDocumentModel): void {
+        const defaultTags = new HtmlDocumentModel();
         defaultTags.cultureCode = this.locale;
         defaultTags.languageCode = this.locale.substr(0, 2);
         defaultTags.slug =
@@ -123,7 +131,7 @@ export class SeoService {
      * add or update link to head of document
      * @param linkObject: tags of link
      */
-    updateLink(linkObject: LinkDefinition): void {
+    updateLink(linkObject: HtmlLinkElementModel): void {
         try {
             const renderer = this.rendererFactory.createRenderer(this.document, {
                 id: '-1',
@@ -169,5 +177,42 @@ export class SeoService {
      */
     getMeta(): Meta {
         return this.meta;
+    }
+
+    /**
+     * http 301 redirection
+     * @param destinationURL: destination URL
+     * @param isExternal: is this url external?
+     */
+    http301(destinationURL: string, isExternal = false): void {
+        if (isPlatformBrowser(this.platformId))
+            if (isExternal)
+                window.location.href = destinationURL; // this.router.navigate can't work because it is out of base url
+            else
+                this.router.navigate([destinationURL]);
+        else
+            this.httpStatus$.next({
+                code: 301,
+                htmlContent: `--http-redirect-301--${destinationURL}--end-of-http-redirect-301--`
+            });
+    }
+
+    /**
+     * http 404 not found
+     */
+    http404(): void {
+        if (isPlatformBrowser(this.platformId))
+            this.router.navigate([this.router.url, 'http-404']);
+        else
+            this.httpStatus$.next({
+                code: 404
+            });
+    }
+
+    /**
+     * get http status
+     */
+    getHttpStatus(): Observable<HttpStatusModel> {
+        return this.httpStatus$.asObservable();
     }
 }

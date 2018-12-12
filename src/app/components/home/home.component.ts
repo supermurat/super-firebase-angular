@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
      * @param alert: AlertService
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
-                public seo: SeoService, public alert: AlertService) {}
+                public seo: SeoService,
+                public alert: AlertService) {}
 
     /**
      * ngOnInit

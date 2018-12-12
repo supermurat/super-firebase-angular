@@ -11,6 +11,6 @@
     "**/*.spec.ts"
   ],
   "angularCompilerOptions": {
-    "entryModule": "app/app.server.module#AppServerModule"
+    "entryModule": "app/modules/app.server.module#AppServerModule"
   }
 }

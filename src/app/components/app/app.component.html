@@ -1,14 +1,24 @@
 
 <app-nav-menu></app-nav-menu>
 
-<div id="content-wrapper">
-    <div class='container-fluid'>
-        <div class='row'>
-            <div class='col-12 body-content'>
-                <h3 *ngIf="$isLoading" i18n>(Loading ...)</h3>
-                <app-alert></app-alert>
-                <router-outlet></router-outlet>
-            </div>
+<!-- Page Content -->
+<main class="container">
+    <div class='row'>
+        <div class='col-12'>
+            <app-loading-spinner *ngIf="page.loading | async"></app-loading-spinner>
+            <app-alert></app-alert>
         </div>
     </div>
-</div>
+    <!-- /.row -->
+    <div *ngIf="httpStatus$ | async as httpStatus; else defaultRouter">
+        <app-not-found *ngIf="httpStatus.code === 404"></app-not-found>
+        <div id="only-for-http-status" style="display: none;"
+             *ngIf="httpStatus.htmlContent" [innerHTML]="httpStatus.htmlContent"></div>
+    </div>
+    <ng-template #defaultRouter>
+        <router-outlet></router-outlet>
+    </ng-template>
+</main>
+<!-- /.container -->
+
+<app-footer></app-footer>

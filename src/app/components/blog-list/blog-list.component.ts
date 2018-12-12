@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
+import { BlogModel } from '../../models';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * Blog List Component
@@ -12,11 +15,13 @@ import { SeoService } from '../../services';
 })
 export class BlogListComponent implements OnInit {
     /** blog object array */
-    blogs$;
+    blogs$: Observable<Array<BlogModel>>;
     /** current page`s title */
-    title = 'Blog App';
+    title = 'Murat Demir\'s blog';
     /** current page`s description */
     description = 'This App is in development!';
+    /** count of blogs */
+    countItems: number;
 
     /**
      * constructor of BlogListComponent
@@ -31,8 +36,19 @@ export class BlogListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.blogs$ = this.afs.collection('blogs', ref => ref.orderBy('imgName'))
-            .valueChanges();
+        this.blogs$ = this.afs.collection('blogs_en-US', ref => ref.orderBy('created', 'desc'))
+            .snapshotChanges()
+            .pipe(map(actions => {
+                return actions.map(action => {
+                    this.countItems = actions.length;
+                    const id = action.payload.doc.id;
+                    const data = action.payload.doc.data();
+                    if (!data.hasOwnProperty('contentSummary'))
+                        data['contentSummary'] = data['content'];
+
+                    return { id, ...data as BlogModel };
+                });
+            }));
 
         this.seo.generateTags({
             title: this.title,

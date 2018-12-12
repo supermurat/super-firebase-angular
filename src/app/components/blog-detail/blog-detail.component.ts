@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { SeoService } from '../../services';
-import { Blog } from '../../models/blog';
+import { BlogModel } from '../../models/blog-model';
 import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
@@ -21,23 +21,19 @@ const BLOG_KEY = makeStateKey<any>('blog');
 })
 export class BlogDetailComponent implements OnInit {
     /** current blog object */
-    blog$;
+    blog$: Observable<BlogModel>;
     /** current blog name */
-    blogName = '';
-    /** current blog`s image url */
-    imgURL;
+    blogID = '';
 
     /**
      * constructor of BlogDetailComponent
      * @param afs: AngularFirestore
-     * @param storage: AngularFireStorage
      * @param seo: SeoService
      * @param route: ActivatedRoute
      * @param state: TransferState
      */
     constructor(
         private afs: AngularFirestore,
-        private storage: AngularFireStorage,
         private seo: SeoService,
         private route: ActivatedRoute,
         private state: TransferState
@@ -49,9 +45,9 @@ export class BlogDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.blogName = params['name'].toLowerCase();
+            this.blogID = params['id'];
         });
-        this.blog$ = this.ssrFirestoreDoc(`blogs/${this.blogName}`);
+        this.blog$ = this.ssrFirestoreDoc(`blogs_en-US/${this.blogID}`);
 
         // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
@@ -61,25 +57,17 @@ export class BlogDetailComponent implements OnInit {
      * Get blog object from firestore by path
      * @param path: blog path
      */
-    ssrFirestoreDoc(path: string): Observable<Blog> {
-        const exists = this.state.get(BLOG_KEY, new Blog());
+    ssrFirestoreDoc(path: string): Observable<BlogModel> {
+        const exists = this.state.get(BLOG_KEY, new BlogModel());
 
-        return this.afs.doc<Blog>(path)
+        return this.afs.doc<BlogModel>(path)
             .valueChanges()
             .pipe(
             tap(blog => {
-                const ref = this.storage.ref(`blogs/${blog.imgName}`);
-                blog.imgURL = ref.getDownloadURL();
-
-                blog.imgURL.subscribe(result => {
-                    this.imgURL = result;
-                });
-
                 this.state.set(BLOG_KEY, blog);
                 this.seo.generateTags({
-                    title: blog.name,
-                    description: blog.bio,
-                    image: blog.imgName
+                    title: blog.title,
+                    description: blog.content
                 });
             }),
             startWith(exists)

@@ -1,0 +1,16 @@
+{
+  "name": "migrate-to-firebase",
+  "scripts": {
+    "export-from-mysql": "node export-from-mysql.js",
+    "export-from-drupal-7": "node export-from-drupal-7.js",
+    "migrate-to-firebase": "node migrate-to-firebase.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^6.3.0",
+    "fs": "^0.0.1-security",
+    "mysql": "^2.16.0",
+    "latinize": "0.4.0",
+    "mime-types": "^2.1.21"
+  },
+  "private": true
+}

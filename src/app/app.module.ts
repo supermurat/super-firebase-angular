@@ -11,19 +11,52 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { AlertService, SeoService } from './services';
+import { AlertService, AuthService, PagerService, PaginationService, SeoService } from './services';
+import { ScrollableDirective } from './directives';
 import { AppComponent } from './components/app/app.component';
-import { appDeclarations, appRoutes } from './app.module.routes';
+import { AppRoutingModule } from './app-routing.module';
 
 import { firebaseConfig } from '../environments/firebase.config';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { PlaygroundComponent } from './components/playground/playground.component';
+import { BlogListComponent } from './components/blog-list/blog-list.component';
+import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
+import { PageListComponent } from './components/page-list/page-list.component';
+import { PageDetailComponent } from './components/page-detail/page-detail.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { PagerComponent } from './components/pager/pager.component';
+
 /**
  * App Module
  */
 @NgModule({
-    declarations: appDeclarations,
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        AlertComponent,
+        NotFoundComponent,
+        HomeComponent,
+        PlaygroundComponent,
+        BlogListComponent,
+        BlogDetailComponent,
+        PageListComponent,
+        PageDetailComponent,
+        ScrollableDirective,
+        LoadingSpinnerComponent,
+        AdminLoginComponent,
+        FooterComponent,
+        SideBarComponent,
+        PagerComponent
+    ],
     imports: [
         CommonModule,
         BrowserModule.withServerTransition({
@@ -36,17 +69,21 @@ import { environment } from '../environments/environment';
         NgbModule,
 
         AngularFireModule.initializeApp(firebaseConfig),
+        AngularFirestoreModule.enablePersistence(),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
 
-        appRoutes,
+        AppRoutingModule,
 
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         AlertService,
-        SeoService
+        SeoService,
+        AuthService,
+        PaginationService,
+        PagerService
     ],
     bootstrap: [AppComponent]
 })

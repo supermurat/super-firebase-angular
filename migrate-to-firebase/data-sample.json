@@ -1,0 +1,43 @@
+{
+  "myCollection1": {
+    "myDocID1-1": {
+      "myField1-1": "string data sample 1",
+      "myField1-2": "string data sample 2"
+    },
+    "myDocID1-2": {
+      "myField2-3": 100,
+      "myField2-4": 200
+    }
+  },
+  "myCollection2": {
+    "myDocID2-3": {
+      "myField3-5": "string data sample 3",
+      "myField3-6": "string data sample 4"
+    },
+    "myDocID2-4": {
+      "myField4-7": {
+        "myField4-7-10": "string data sample 10",
+        "myField4-7-11": "string data sample 11"
+      },
+      "myField4-8": {
+        "stringExample": "Hello world!",
+        "booleanExample": true,
+        "numberExample": 3.14159265,
+        "dateExample": "2018-11-21T18:19:20.500Z",
+        "arrayExample": [5, true, "hello"],
+        "nullExample": null,
+        "objectExample": {
+          "a": 5,
+          "b": {
+            "nested": "foo"
+          }
+        },
+        "geoPointExample": {
+          "latitude": 37.773972,
+          "longitude": -122.431297
+        },
+        "blobExample": "RmlyZXN0b3JlIGlzIGF3ZXNvbWUh"
+      }
+    }
+  }
+}
