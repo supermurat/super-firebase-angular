@@ -42,7 +42,8 @@
     "install:dependencies:global": "npm install -g firebase-tools @angular/cli ncp del-cli opn-cli webpack-bundle-analyzer @compodoc/compodoc selenium-webdriver @commitlint/cli",
     "install:dependencies": "npm install && cd functions && npm install",
     "browserslist": "npx browserslist --config=\"./src/browserslist\"",
-    "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json && opn \"./documentation/index.html\"",
+    "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json",
+    "compodoc:open": "npm run compodoc && opn \"./documentation/index.html\"",
     "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
     "commit": "commit-wizard"
   },
