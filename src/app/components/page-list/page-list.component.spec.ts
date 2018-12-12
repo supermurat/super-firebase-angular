@@ -12,8 +12,9 @@ import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { PagerComponent } from '../pager/pager.component';
 import { ActivatedRoute } from '@angular/router';
+import { forEach } from '@angular/router/src/utils/collection';
 
-const testData: any = [[
+const testDataPL: any = [[
     {payload: {doc: {id: 'first-page', data(): PageModel {
         return { orderNo: -2,
             id: 'first-page',
@@ -42,10 +43,15 @@ const angularFirestoreStub = {
 
         return {
             snapshotChanges(): any {
-                return from(testData);
+                return from(testDataPL);
             },
             valueChanges(): any {
-                return from([[testData[0][0].payload.doc.data(), testData[0][1].payload.doc.data()]]);
+                const retVal = [];
+                testDataPL[0].forEach(element => {
+                    retVal.push(element.payload.doc.data());
+                });
+
+                return from([retVal]);
             }
         };
     }
@@ -122,6 +128,45 @@ describe('PageListComponent', () => {
         const app = fixture.debugElement.componentInstance;
         expect(app.trackByPage(2, {}))
             .toBe(2);
+    }));
+
+    it('count of page should be 5', fakeAsync(() => {
+        const fixture = TestBed.createComponent(PageListComponent);
+        const app = fixture.debugElement.componentInstance;
+        testDataPL[0].unshift({payload: {doc: {id: 'fifth-page', data(): PageModel {
+                            return { orderNo: -5,
+                                id: 'fifth-page',
+                                title: 'Fifth Page',
+                                content: 'this is better sample 5',
+                                created: { seconds: 1544207665 }};
+                        }}}},
+            {payload: {doc: {id: 'fourth-page', data(): PageModel {
+                            return { orderNo: -4,
+                                id: 'fourth-page',
+                                title: 'Fourth Page',
+                                content: 'this is better sample 4',
+                                created: { seconds: 1544207666 },
+                                contentSummary: 'this is better'};
+                        }}}},
+            {payload: {doc: {id: 'third-page', data(): PageModel {
+                            return { orderNo: -3,
+                                id: 'third-page',
+                                title: 'Third Page',
+                                content: 'this is better sample 3',
+                                created: { seconds: 1544207667 },
+                                contentSummary: 'this is better'};
+                        }}}});
+        fixture.detectChanges();
+        app.route.params.next({ pageNo: 1 });
+        tick();
+        fixture.detectChanges();
+        app.pages$.subscribe(result => {
+            expect(result.length)
+                .toEqual(5);
+            testDataPL[0].splice(0, 3);
+        });
+        fixture.detectChanges();
+        tick();
     }));
 
 });

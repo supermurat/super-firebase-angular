@@ -90,19 +90,23 @@ function getSSR(req, res){
 function checkRedirection(req, res){
     return new Promise((resolve, reject) => {
         const url = req.url.substring(1).replace(/\//gi, "\\"); // firestore doesn't allow "/" to be in document ID
-        db.collection('redirectionRecords').doc(decodeURIComponent(url)).get()
-            .then((snapshot) => {
-                if (!snapshot.exists) {
-                    console.log('!snapshot.exists:', decodeURIComponent(url));
-                    resolve();
-                } else {
-                    resolve(snapshot.data());
-                }
-            })
-            .catch((err) => {
-                console.log('Error in checkRedirection:', err);
-                resolve(); // let's handle this error with SSR
-            });
+        const documentID = decodeURIComponent(url);
+        if (documentID)
+            db.collection('redirectionRecords').doc(documentID).get()
+                .then((snapshot) => {
+                    if (!snapshot.exists) {
+                        console.log('!snapshot.exists:', documentID);
+                        resolve();
+                    } else {
+                        resolve(snapshot.data());
+                    }
+                })
+                .catch((err) => {
+                    console.log('Error in checkRedirection:', err);
+                    resolve(); // let's handle this error with SSR
+                });
+        else
+            resolve();
     });
 }
 

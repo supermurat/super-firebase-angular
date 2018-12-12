@@ -65,7 +65,9 @@ describe('PageDetailComponent', () => {
                     {path: 'page/:id', component: PageDetailComponent},
                     {path: 'pages/:pageNo', component: PageDetailComponent},
                     {path: 'en/page/:id', component: PageDetailComponent},
-                    {path: 'tr/page/:id', component: PageDetailComponent}
+                    {path: 'tr/page/:id', component: PageDetailComponent},
+                    {path: 'en/page', component: PageDetailComponent},
+                    {path: 'tr/page', component: PageDetailComponent}
                     ])
             ]
         })
