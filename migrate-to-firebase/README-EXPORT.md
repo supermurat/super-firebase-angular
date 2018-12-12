@@ -17,7 +17,7 @@ Check out result in "data.json"
 Edit "export-from-mysql.js" file and save  
 Check out "TODO:" items in the file  
 
-## Run
+## Run export-from-mysql
 **!!! "data.json" file will be OVERWRITTEN, 
 you may want to make a copy of it !!!**
 ```sh
@@ -28,7 +28,7 @@ npm run export-from-mysql
 Edit "export-from-drupal-7.js" file and save  
 Check out "TODO:" items in the file  
 
-## Run
+## Run export-from-drupal-7
 **!!! "data.json" file will be OVERWRITTEN, 
 you may want to make a copy of it !!!**
 ```sh

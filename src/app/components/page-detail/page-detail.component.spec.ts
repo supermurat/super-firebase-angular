@@ -98,6 +98,7 @@ describe('PageDetailComponent', () => {
     it('should redirection to translation of page', fakeAsync(() => {
         const fixture = TestBed.createComponent(PageDetailComponent);
         const app = fixture.debugElement.componentInstance;
+        app.route.params.next({ id: 'first-page' });
         fixture.detectChanges();
         app.checkTranslation(undefined);
         tick();
