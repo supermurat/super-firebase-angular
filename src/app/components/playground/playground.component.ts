@@ -84,10 +84,13 @@ export class PlaygroundComponent implements OnInit {
         });
 
         const ref = this.storage.ref('blogs/bad, very bad angel.gif');
-        this.imgURL$ = ref.getDownloadURL();
-        this.imgURL$.subscribe(result => {
-            this.imgURL = result;
-        });
+        if (isPlatformBrowser(this.platformId)) {
+            // following lines are not working on server side because of undefined XMLHttpRequest
+            this.imgURL$ = ref.getDownloadURL();
+            this.imgURL$.subscribe(result => {
+                this.imgURL = result;
+            });
+        }
     }
 
     /**
