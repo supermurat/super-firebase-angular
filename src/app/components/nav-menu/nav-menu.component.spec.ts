@@ -36,7 +36,7 @@ describe('NavMenuComponent', () => {
         const fixture = TestBed.createComponent(NavMenuComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('a.navbar-brand').textContent)
+        expect(fixture.nativeElement.querySelector('a.navbar-brand').textContent)
             .toContain('Navbar');
     }));
 

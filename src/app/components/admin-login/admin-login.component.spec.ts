@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { AdminLoginComponent } from './admin-login.component';
 import { AuthService, SeoService } from '../../services';
@@ -125,14 +125,17 @@ describe('AdminLoginComponentAuthService', () => {
             .toBeTruthy();
     });
 
-    it('should not be initially authenticated', () => {
+    it('should not be initially authenticated', fakeAsync(() => {
         const fixture = TestBed.createComponent(AdminLoginComponent);
         const app = fixture.debugElement.componentInstance;
+        let lastUser;
         app.auth.user$.subscribe(user => {
-            expect(user)
-                .toBe(undefined);
+            lastUser = user;
         });
-    });
+        tick();
+        expect(lastUser)
+            .toBe(undefined);
+    }));
 
     it('should be authenticated after register', () => {
         const fixture = TestBed.createComponent(AdminLoginComponent);
@@ -150,25 +153,31 @@ describe('AdminLoginComponentAuthService', () => {
         });
     });
 
-    it('should be authenticated after logging in', () => {
+    it('should be authenticated after logging in', fakeAsync(() => {
         const fixture = TestBed.createComponent(AdminLoginComponent);
         const app = fixture.debugElement.componentInstance;
+        let lastUser;
+        app.auth.user$.subscribe(user => {
+            lastUser = user;
+        });
         app.auth.logIn(credentialsMock);
+        tick();
 
         expect(afAuth.auth.signInWithEmailAndPassword)
             .toHaveBeenCalledWith(credentialsMock.email, credentialsMock.password);
+        expect(lastUser)
+            .toBeDefined();
+        expect(lastUser.email)
+            .toEqual(credentialsMock.email);
+    }));
 
-        app.auth.user$.subscribe(user => {
-            expect(user)
-                .toBeDefined();
-            expect(user.email)
-                .toEqual(credentialsMock.email);
-        });
-    });
-
-    it('should not be authenticated after logging out', () => {
+    it('should not be authenticated after logging out', fakeAsync(() => {
         const fixture = TestBed.createComponent(AdminLoginComponent);
         const app = fixture.debugElement.componentInstance;
+        let lastUser;
+        app.auth.user$.subscribe(user => {
+            lastUser = user;
+        });
         fakeAuthState.next(userMock);
         // fixing this would be better
         /*app.auth.user$.subscribe(user => {
@@ -179,10 +188,8 @@ describe('AdminLoginComponentAuthService', () => {
         });*/
 
         app.auth.signOut();
-
-        app.auth.user$.subscribe(user => {
-            expect(user)
-                .toBe(undefined);
-        });
-    });
+        tick();
+        expect(lastUser)
+            .toBe(undefined);
+    }));
 });

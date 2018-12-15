@@ -49,7 +49,7 @@ describe('AppComponent', () => {
         const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('nav a').textContent)
+        expect(fixture.nativeElement.querySelector('nav a').textContent)
             .toContain('Navbar');
     }));
 
@@ -217,7 +217,7 @@ describe('AppComponentAlertService', () => {
         app.alert.success('My success message', false);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success').textContent)
             .toContain('My success message');
     }));
 
@@ -235,7 +235,7 @@ describe('AppComponentAlertService', () => {
         fixture.detectChanges();
         tick();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success'))
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success'))
             .toBeNull();
     }));
 
@@ -253,7 +253,7 @@ describe('AppComponentAlertService', () => {
         fixture.detectChanges();
         tick();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success').textContent)
             .toBe('My success message');
     }));
 
@@ -275,7 +275,7 @@ describe('AppComponentAlertService', () => {
         app.alert.error('My error message', false);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger').textContent)
             .toContain('My error message');
     }));
 
@@ -293,7 +293,7 @@ describe('AppComponentAlertService', () => {
         fixture.detectChanges();
         tick();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger'))
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger'))
             .toBeNull();
     }));
 
@@ -311,7 +311,7 @@ describe('AppComponentAlertService', () => {
         fixture.detectChanges();
         tick();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger').textContent)
             .toBe('My error message');
     }));
 

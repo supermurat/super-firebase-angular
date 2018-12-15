@@ -31,7 +31,7 @@ describe('NotFoundComponent', () => {
         const fixture = TestBed.createComponent(NotFoundComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('h1').textContent)
+        expect(fixture.nativeElement.querySelector('h1').textContent)
             .toContain('Page not found');
     }));
 

@@ -67,7 +67,7 @@ describe('BlogDetailComponent', () => {
         const fixture = TestBed.createComponent(BlogDetailComponent);
         const compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
-        expect(compiled.querySelector('a').textContent)
+        expect(fixture.nativeElement.querySelector('a').textContent)
             .toContain('Blog');
     }));
 
