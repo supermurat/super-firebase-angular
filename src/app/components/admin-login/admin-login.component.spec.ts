@@ -26,7 +26,7 @@ const angularFirestoreStub = {
             })
 };
 
-let fakeAuthState = new Subject();
+const fakeAuthState = new Subject();
 
 const fakeSignInHandler = (email, password): Promise<any> => {
     fakeAuthState.next(userMock);
@@ -63,8 +63,8 @@ const angularFireAuthStub = {
 };
 
 describe('AdminLoginComponent', () => {
-    let component: AdminLoginComponent;
     let fixture: ComponentFixture<AdminLoginComponent>;
+    let comp: AdminLoginComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -80,25 +80,26 @@ describe('AdminLoginComponent', () => {
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AdminLoginComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AdminLoginComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-    it('should create', () => {
-        expect(component)
+    it('should create', async(() => {
+        expect(comp)
             .toBeTruthy();
-    });
+    }));
 });
 
 describe('AdminLoginComponentAuthService', () => {
+    let fixture: ComponentFixture<AdminLoginComponent>;
+    let comp: AdminLoginComponent;
     let afAuth: AngularFireAuth;
 
-    beforeEach(() => {
+    beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
                 AdminLoginComponent
@@ -112,24 +113,24 @@ describe('AdminLoginComponentAuthService', () => {
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AdminLoginComponent);
+                comp = fixture.componentInstance;
+                afAuth = TestBed.get(AngularFireAuth);
+                fakeAuthState.next(undefined);
+                fixture.detectChanges();
+            });
+    }));
 
-        afAuth = TestBed.get(AngularFireAuth);
-        fakeAuthState = new Subject();
-    });
-
-    it('should be created', () => {
-        const fixture = TestBed.createComponent(AdminLoginComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app.auth)
+    it('should be created', fakeAsync(() => {
+        expect(comp.auth)
             .toBeTruthy();
-    });
+    }));
 
     it('should not be initially authenticated', fakeAsync(() => {
-        const fixture = TestBed.createComponent(AdminLoginComponent);
-        const app = fixture.debugElement.componentInstance;
         let lastUser;
-        app.auth.user$.subscribe(user => {
+        comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
         tick();
@@ -137,30 +138,28 @@ describe('AdminLoginComponentAuthService', () => {
             .toBe(undefined);
     }));
 
-    it('should be authenticated after register', () => {
-        const fixture = TestBed.createComponent(AdminLoginComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.auth.register(credentialsMock);
+    it('should be authenticated after register', fakeAsync(() => {
+        let lastUser;
+        comp.auth.user$.subscribe(user => {
+            lastUser = user;
+        });
+        comp.auth.register(credentialsMock);
+        tick();
 
         expect(afAuth.auth.createUserWithEmailAndPassword)
             .toHaveBeenCalledWith(credentialsMock.email, credentialsMock.password);
-
-        app.auth.user$.subscribe(user => {
-            expect(user)
-                .toBeDefined();
-            expect(user.email)
-                .toEqual(credentialsMock.email);
-        });
-    });
+        expect(lastUser)
+            .toBeDefined();
+        expect(lastUser.email)
+            .toEqual(credentialsMock.email);
+    }));
 
     it('should be authenticated after logging in', fakeAsync(() => {
-        const fixture = TestBed.createComponent(AdminLoginComponent);
-        const app = fixture.debugElement.componentInstance;
         let lastUser;
-        app.auth.user$.subscribe(user => {
+        comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
-        app.auth.logIn(credentialsMock);
+        comp.auth.logIn(credentialsMock);
         tick();
 
         expect(afAuth.auth.signInWithEmailAndPassword)
@@ -172,22 +171,12 @@ describe('AdminLoginComponentAuthService', () => {
     }));
 
     it('should not be authenticated after logging out', fakeAsync(() => {
-        const fixture = TestBed.createComponent(AdminLoginComponent);
-        const app = fixture.debugElement.componentInstance;
         let lastUser;
-        app.auth.user$.subscribe(user => {
+        comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
         fakeAuthState.next(userMock);
-        // fixing this would be better
-        /*app.auth.user$.subscribe(user => {
-            expect(user)
-                .toBeDefined();
-            expect(user.email)
-                .toEqual(credentialsMock.email);
-        });*/
-
-        app.auth.signOut();
+        comp.auth.signOut();
         tick();
         expect(lastUser)
             .toBe(undefined);

@@ -1,6 +1,6 @@
 
-import { BehaviorSubject, from } from 'rxjs';
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { from } from 'rxjs';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageDetailComponent } from './page-detail.component';
@@ -8,10 +8,11 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
 
 import { AlertService, SeoService } from '../../services';
-import { ActivatedRoute, Data } from '@angular/router';
 import { PageModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+
+import { ActivatedRoute, ActivatedRouteStub } from '../../testing/activated-route-stub';
 
 const testData: any = [[
     {payload: {doc: {id: 'first-page', data(): PageModel {
@@ -42,11 +43,11 @@ const angularFirestoreStub = {
     }
 };
 
-const activatedRouteStub = {
-    params: new BehaviorSubject<any>({ id: 'first-page' })
-};
+const activatedRouteStub = new ActivatedRouteStub();
 
 describe('PageDetailComponent', () => {
+    let fixture: ComponentFixture<PageDetailComponent>;
+    let comp: PageDetailComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -71,23 +72,24 @@ describe('PageDetailComponent', () => {
                     ])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(PageDetailComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(PageDetailComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
+        expect(comp)
             .toBeTruthy();
     }));
 
     it('should load first-page', async(() => {
-        const fixture = TestBed.createComponent(PageDetailComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.route.params.next({ id: 'first-page' });
+        activatedRouteStub.setParamMap({ id: 'first-page' });
         fixture.detectChanges();
         let lastPage = new PageModel();
-        app.page$.subscribe(page => {
+        comp.page$.subscribe(page => {
             lastPage = page;
         }, undefined, () => {
             expect(lastPage.id)
@@ -96,26 +98,22 @@ describe('PageDetailComponent', () => {
     }));
 
     it('should redirection to translation of page', fakeAsync(() => {
-        const fixture = TestBed.createComponent(PageDetailComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.route.params.next({ id: 'first-page' });
+        activatedRouteStub.setParamMap({ id: 'first-page' });
         fixture.detectChanges();
-        app.checkTranslation(undefined);
+        comp.checkTranslation(undefined);
         tick();
         fixture.detectChanges();
-        expect(app.router.url)
+        expect(comp.router.url)
             .toEqual('/tr/page/first-page');
         fixture.detectChanges();
     }));
 
     it("should redirection to '/page/first-page' if id is -1", fakeAsync(() => {
-        const fixture = TestBed.createComponent(PageDetailComponent);
-        const app = fixture.debugElement.componentInstance;
         fixture.detectChanges();
-        app.route.params.next({ id: '-1' });
+        activatedRouteStub.setParamMap({ id: '-1' });
         tick();
         fixture.detectChanges();
-        expect(app.router.url)
+        expect(comp.router.url)
             .toEqual('/page/first-page');
         fixture.detectChanges();
     }));

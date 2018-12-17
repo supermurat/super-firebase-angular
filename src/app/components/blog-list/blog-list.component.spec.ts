@@ -1,6 +1,6 @@
 
 import { from } from 'rxjs';
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlogListComponent } from './blog-list.component';
@@ -34,6 +34,9 @@ const angularFirestoreStub = {
 };
 
 describe('BlogListComponent', () => {
+    let fixture: ComponentFixture<BlogListComponent>;
+    let comp: BlogListComponent;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -49,28 +52,26 @@ describe('BlogListComponent', () => {
                 RouterTestingModule.withRoutes([{path: 'blog', component: BlogListComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(BlogListComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
+        expect(comp)
             .toBeTruthy();
     }));
 
     it("should have as title 'Murat Demir's blog'", async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app.title)
+        expect(comp.title)
             .toEqual('Murat Demir\'s blog');
     }));
 
     it('count of blog should be 2', async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        const app = fixture.debugElement.componentInstance;
-        fixture.detectChanges();
-        app.blogs$.subscribe(result => {
+        comp.blogs$.subscribe(result => {
             expect(result.length)
                 .toEqual(2);
         });
@@ -78,10 +79,7 @@ describe('BlogListComponent', () => {
     }));
 
     it('trackByBlog(2) should return 2', async(() => {
-        const fixture = TestBed.createComponent(BlogListComponent);
-        fixture.detectChanges();
-        const app = fixture.debugElement.componentInstance;
-        expect(app.trackByBlog(2, {}))
+        expect(comp.trackByBlog(2, {}))
             .toBe(2);
     }));
 

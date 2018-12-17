@@ -5,8 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { PagerService } from '../../services';
 
 describe('PagerComponent', () => {
-    let component: PagerComponent;
     let fixture: ComponentFixture<PagerComponent>;
+    let comp: PagerComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -16,17 +16,16 @@ describe('PagerComponent', () => {
                 RouterTestingModule.withRoutes([{path: '', component: PagerComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(PagerComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(PagerComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
     it('should create', () => {
-        expect(component)
+        expect(comp)
             .toBeTruthy();
     });
 });

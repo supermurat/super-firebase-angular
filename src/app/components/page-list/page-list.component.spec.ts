@@ -1,6 +1,6 @@
 
 import { BehaviorSubject, from } from 'rxjs';
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageListComponent } from './page-list.component';
@@ -11,8 +11,8 @@ import { PageModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { PagerComponent } from '../pager/pager.component';
-import { ActivatedRoute } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
+
+import { ActivatedRoute, ActivatedRouteStub } from '../../testing/activated-route-stub';
 
 const testDataPL: any = [[
     {payload: {doc: {id: 'first-page', data(): PageModel {
@@ -57,11 +57,12 @@ const angularFirestoreStub = {
     }
 };
 
-const activatedRouteStub = {
-    params: new BehaviorSubject<any>({ pageNo: 1 })
-};
+const activatedRouteStub = new ActivatedRouteStub();
 
 describe('PageListComponent', () => {
+    let fixture: ComponentFixture<PageListComponent>;
+    let comp: PageListComponent;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -82,28 +83,26 @@ describe('PageListComponent', () => {
                     ])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(PageListComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
+        expect(comp)
             .toBeTruthy();
     }));
 
     it("should have as title 'This is temporary page list'", async(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app.title)
+        expect(comp.title)
             .toEqual('This is temporary page list');
     }));
 
     it('count of page should be 2', async(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
-        fixture.detectChanges();
-        app.pages$.subscribe(result => {
+        comp.pages$.subscribe(result => {
             expect(result.length)
                 .toEqual(2);
         });
@@ -111,28 +110,21 @@ describe('PageListComponent', () => {
     }));
 
     it('should redirection to page 1 if page is not exist', fakeAsync(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
-        fixture.detectChanges();
         // app.router.navigate([ '/pages', 9]);
-        app.route.params.next({ pageNo: 9 }); // page 9 not exist
+        activatedRouteStub.setParamMap({ pageNo: 9 }); // page 9 not exist
         tick();
         fixture.detectChanges();
-        expect(app.router.url)
+        expect(comp.router.url)
             .toEqual('/pages/1');
         fixture.detectChanges();
     }));
 
     it('trackByPage(2) should return 2', async(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app.trackByPage(2, {}))
+        expect(comp.trackByPage(2, {}))
             .toBe(2);
     }));
 
     it('count of page should be 5', fakeAsync(() => {
-        const fixture = TestBed.createComponent(PageListComponent);
-        const app = fixture.debugElement.componentInstance;
         testDataPL[0].unshift({payload: {doc: {id: 'fifth-page', data(): PageModel {
                             return { orderNo: -5,
                                 id: 'fifth-page',
@@ -157,10 +149,10 @@ describe('PageListComponent', () => {
                                 contentSummary: 'this is better'};
                         }}}});
         fixture.detectChanges();
-        app.route.params.next({ pageNo: 1 });
+        activatedRouteStub.setParamMap({ pageNo: 1 });
         tick();
         fixture.detectChanges();
-        app.pages$.subscribe(result => {
+        comp.pages$.subscribe(result => {
             expect(result.length)
                 .toEqual(5);
             testDataPL[0].splice(0, 3);

@@ -36,7 +36,7 @@ export class PageDetailComponent implements OnInit {
     constructor(
         private afs: AngularFirestore,
         private seo: SeoService,
-        private router: Router,
+        public router: Router,
         private route: ActivatedRoute,
         private state: TransferState,
         @Inject(LOCALE_ID) public locale: string
@@ -47,10 +47,11 @@ export class PageDetailComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            if (Number(params['id']) || Number(params['id']) === 0) {
+        this.route.paramMap.subscribe(pmap => {
+            const pID = Number(pmap.get('id'));
+            if (pID || pID === 0) {
                 this.afs.collection(`pages_${this.locale}`,
-                    ref => ref.where('orderNo', '==', Number(params['id']))
+                    ref => ref.where('orderNo', '==', pID)
                         .limit(1)
                 )
                     .snapshotChanges()
@@ -59,15 +60,15 @@ export class PageDetailComponent implements OnInit {
                             data.map(pld => {
                                 this.router.navigate(['/page', pld.payload.doc.id]);
                             });
-                        else if (Number(params['id']) === 0)
+                        else if (pID === 0)
                             this.router.navigate(['/pages']);
                         else
-                            this.router.navigate(['/page', Number(params['id']) + 1]);
+                            this.router.navigate(['/page', pID + 1]);
                     });
 
                 return;
             }
-            this.pageID = params['id'];
+            this.pageID = pmap.get('id');
             this.initPage();
         });
         // this will create a split second flash

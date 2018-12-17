@@ -49,7 +49,7 @@ export class PageListComponent implements OnInit {
      */
     constructor(private afs: AngularFirestore,
                 private seo: SeoService,
-                private router: Router,
+                public router: Router,
                 private route: ActivatedRoute,
                 private pagerService: PagerService,
                 @Inject(LOCALE_ID) public locale: string) {
@@ -59,8 +59,8 @@ export class PageListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            this.pagerModel.currentPageNo = Number(params['pageNo']);
+        this.route.paramMap.subscribe(pmap => {
+            this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initPages();
         });
 

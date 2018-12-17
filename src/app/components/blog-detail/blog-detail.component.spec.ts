@@ -1,6 +1,6 @@
 
 import { from } from 'rxjs';
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlogDetailComponent } from './blog-detail.component';
@@ -27,6 +27,8 @@ const angularFirestoreStub = {
 };
 
 describe('BlogDetailComponent', () => {
+    let fixture: ComponentFixture<BlogDetailComponent>;
+    let comp: BlogDetailComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -53,20 +55,20 @@ describe('BlogDetailComponent', () => {
                 RouterTestingModule.withRoutes([{path: 'blog/:name', component: BlogDetailComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(BlogDetailComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            });
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(BlogDetailComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
+        expect(comp)
             .toBeTruthy();
     }));
 
     it("should render 'Blog' in an a", async(() => {
-        const fixture = TestBed.createComponent(BlogDetailComponent);
-        const compiled = fixture.debugElement.nativeElement;
-        fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('a').textContent)
             .toContain('Blog');
     }));
