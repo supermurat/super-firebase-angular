@@ -1,0 +1,32 @@
+<div class='row'>
+    <!-- Article Column -->
+    <div class="col-md-8">
+        <div *ngIf="article$ | async as article">
+            <article class="card my-4">
+                <img class="card-img-top" *ngIf="article.image" [src]="article.image">
+                <div class="card-body">
+                    <h2 class="card-title"><a [routerLink]="['/article', articleID]">{{ article.title }}</a></h2>
+                    <p class="card-text" [innerHTML]="article.content"></p>
+                </div>
+                <div class="card-footer text-muted">
+                    <span i18n>Posted on {{ article.created.seconds * 1000 | date:'medium' }} by {{ article.createdBy }}</span>
+                    <br>
+                    <span *ngIf="article.changed && article.created.seconds !== article.changed.seconds" i18n>Updated on {{ article.changed.seconds * 1000 | date:'medium' }} by {{ article.changedBy }}</span>
+                </div>
+
+            </article>
+
+            <div class="col-md-12 text-center mb-4">
+                <a [routerLink]="['/article', article.orderNo + 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>&lArr; Previous Article</a>
+                <a [routerLink]="['/articles']" class="btn btn-primary btn-sm mr-2" role="button" i18n>Return to Article List &uArr;</a>
+                <a [routerLink]="['/article', article.orderNo - 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>Next Article &rArr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+
+</div>

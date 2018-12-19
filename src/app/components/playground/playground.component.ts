@@ -60,21 +60,21 @@ export class PlaygroundComponent implements OnInit {
      * @param locale: LOCALE_ID
      * @param seo: SeoService
      * @param alert: AlertService
-     * @param page: PaginationService
+     * @param pagination: PaginationService
      * @param storage: AngularFireStorage
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
                 private seo: SeoService,
                 public alert: AlertService,
-                public page: PaginationService,
+                public pagination: PaginationService,
                 private storage: AngularFireStorage) {}
 
     /**
      * ngOnDestroy
      */
     ngOnInit(): void {
-        this.page.init(`blogs_${this.locale}`, 'created', { reverse: true, prepend: false });
+        this.pagination.init(`blogs_${this.locale}`, 'created', { reverse: true, prepend: false });
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
@@ -108,9 +108,9 @@ export class PlaygroundComponent implements OnInit {
      */
     scrollHandler(e): void {
         if (e === 'bottom')
-            this.page.more();
+            this.pagination.more();
         /*if (e === 'top')
-            this.page.more();*/
+            this.pagination.more();*/
     }
 
     /**

@@ -27,8 +27,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
-import { PageListComponent } from './components/page-list/page-list.component';
-import { PageDetailComponent } from './components/page-detail/page-detail.component';
+import { ArticleListComponent } from './components/article-list/article-list.component';
+import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -48,8 +48,8 @@ import { PagerComponent } from './components/pager/pager.component';
         PlaygroundComponent,
         BlogListComponent,
         BlogDetailComponent,
-        PageListComponent,
-        PageDetailComponent,
+        ArticleListComponent,
+        ArticleDetailComponent,
         ScrollableDirective,
         LoadingSpinnerComponent,
         AdminLoginComponent,

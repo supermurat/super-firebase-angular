@@ -91,7 +91,7 @@ export class PaginationService {
     }
 
     /**
-     * Reset the page
+     * Reset the pagination
      */
     reset(): void {
         this._data.next([]);

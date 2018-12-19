@@ -1,3 +1,4 @@
+export * from './article-model';
 export * from './blog-model';
 export * from './html-link-element-model';
 export * from './html-document-model';

@@ -3,11 +3,11 @@ import { BehaviorSubject, from } from 'rxjs';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { PageListComponent } from './page-list.component';
+import { ArticleListComponent } from './article-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { AlertService, PagerService, SeoService } from '../../services';
-import { PageModel } from '../../models';
+import { ArticleModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { PagerComponent } from '../pager/pager.component';
@@ -15,17 +15,17 @@ import { PagerComponent } from '../pager/pager.component';
 import { ActivatedRoute, ActivatedRouteStub } from '../../testing/activated-route-stub';
 
 const testDataPL: any = [[
-    {payload: {doc: {id: 'first-page', data(): PageModel {
+    {payload: {doc: {id: 'first-article', data(): ArticleModel {
         return { orderNo: -2,
-            id: 'first-page',
-            title: 'First Page',
+            id: 'first-article',
+            title: 'First Article',
             content: 'this is good sample',
             created: { seconds: 1544207668 }};
     }}}},
-    {payload: {doc: {id: 'second-page', data(): PageModel {
+    {payload: {doc: {id: 'second-article', data(): ArticleModel {
         return { orderNo: -1,
-            id: 'second-page',
-            title: 'Second Page',
+            id: 'second-article',
+            title: 'Second Article',
             content: 'this is better sample',
             created: { seconds: 1544207669 },
             contentSummary: 'this is better'};
@@ -59,14 +59,14 @@ const angularFirestoreStub = {
 
 const activatedRouteStub = new ActivatedRouteStub();
 
-describe('PageListComponent', () => {
-    let fixture: ComponentFixture<PageListComponent>;
-    let comp: PageListComponent;
+describe('ArticleListComponent', () => {
+    let fixture: ComponentFixture<ArticleListComponent>;
+    let comp: ArticleListComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PageListComponent,
+                ArticleListComponent,
                 FooterComponent,
                 SideBarComponent,
                 PagerComponent
@@ -78,14 +78,14 @@ describe('PageListComponent', () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    {path: 'pages', component: PageListComponent},
-                    {path: 'pages/:pageNo', component: PageListComponent}
+                    {path: 'articles', component: ArticleListComponent},
+                    {path: 'articles/:pageNo', component: ArticleListComponent}
                     ])
             ]
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(PageListComponent);
+                fixture = TestBed.createComponent(ArticleListComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             });
@@ -96,13 +96,13 @@ describe('PageListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'This is temporary page list'", async(() => {
+    it("should have as title 'Articles'", async(() => {
         expect(comp.title)
-            .toEqual('This is temporary page list');
+            .toEqual('My Articles');
     }));
 
     it('count of page should be 2', async(() => {
-        comp.pages$.subscribe(result => {
+        comp.articles$.subscribe(result => {
             expect(result.length)
                 .toEqual(2);
         });
@@ -110,40 +110,40 @@ describe('PageListComponent', () => {
     }));
 
     it('should redirection to page 1 if page is not exist', fakeAsync(() => {
-        // app.router.navigate([ '/pages', 9]);
+        // app.router.navigate([ '/articles', 9]);
         activatedRouteStub.setParamMap({ pageNo: 9 }); // page 9 not exist
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/pages/1');
+            .toEqual('/articles/1');
         fixture.detectChanges();
     }));
 
-    it('trackByPage(2) should return 2', async(() => {
-        expect(comp.trackByPage(2, {}))
+    it('trackByArticle(2) should return 2', async(() => {
+        expect(comp.trackByArticle(2, {}))
             .toBe(2);
     }));
 
     it('count of page should be 5', fakeAsync(() => {
-        testDataPL[0].unshift({payload: {doc: {id: 'fifth-page', data(): PageModel {
+        testDataPL[0].unshift({payload: {doc: {id: 'fifth-article', data(): ArticleModel {
                             return { orderNo: -5,
-                                id: 'fifth-page',
-                                title: 'Fifth Page',
+                                id: 'fifth-article',
+                                title: 'Fifth Article',
                                 content: 'this is better sample 5',
                                 created: { seconds: 1544207665 }};
                         }}}},
-            {payload: {doc: {id: 'fourth-page', data(): PageModel {
+            {payload: {doc: {id: 'fourth-article', data(): ArticleModel {
                             return { orderNo: -4,
-                                id: 'fourth-page',
-                                title: 'Fourth Page',
+                                id: 'fourth-article',
+                                title: 'Fourth Article',
                                 content: 'this is better sample 4',
                                 created: { seconds: 1544207666 },
                                 contentSummary: 'this is better'};
                         }}}},
-            {payload: {doc: {id: 'third-page', data(): PageModel {
+            {payload: {doc: {id: 'third-article', data(): ArticleModel {
                             return { orderNo: -3,
-                                id: 'third-page',
-                                title: 'Third Page',
+                                id: 'third-article',
+                                title: 'Third Article',
                                 content: 'this is better sample 3',
                                 created: { seconds: 1544207667 },
                                 contentSummary: 'this is better'};
@@ -152,7 +152,7 @@ describe('PageListComponent', () => {
         activatedRouteStub.setParamMap({ pageNo: 1 });
         tick();
         fixture.detectChanges();
-        comp.pages$.subscribe(result => {
+        comp.articles$.subscribe(result => {
             expect(result.length)
                 .toEqual(5);
             testDataPL[0].splice(0, 3);

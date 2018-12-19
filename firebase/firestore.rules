@@ -4,6 +4,14 @@ service cloud.firestore {
       allow read, update, delete: if request.auth.uid == resource.data.uid;
       allow create: if request.auth.uid != null;
     }
+    match /articles_en-US/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /articles_tr-TR/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /blogs_en-US/{document=**} {
       allow read: if true;
       allow write: if false;

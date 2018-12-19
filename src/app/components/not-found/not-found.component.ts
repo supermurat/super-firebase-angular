@@ -11,7 +11,7 @@ import { SeoService } from '../../services';
 })
 export class NotFoundComponent {
     /**
-     * constructor of PageDetailComponent
+     * constructor of ArticleDetailComponent
      * @param seo: SeoService
      */
     constructor(

@@ -178,7 +178,7 @@ describe('PlaygroundComponent', () => {
     it('scrollHandler("bottom") should load more data', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
         comp.scrollHandler('bottom');
@@ -190,7 +190,7 @@ describe('PlaygroundComponent', () => {
     it('double call scrollHandler("bottom") should load all data', fakeAsync(() => {
         tick();
         let lastResult = false;
-        comp.page.done.subscribe(result => {
+        comp.pagination.done.subscribe(result => {
             lastResult = result;
         });
         comp.scrollHandler('bottom');
@@ -204,7 +204,7 @@ describe('PlaygroundComponent', () => {
     it('scrollHandler("top") should not load more data', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
         comp.scrollHandler('top');
@@ -213,25 +213,25 @@ describe('PlaygroundComponent', () => {
             .toEqual(2);
     }));
 
-    it('page.reset() should not clear data', fakeAsync(() => {
+    it('pagination.reset() should not clear data', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
-        comp.page.reset();
+        comp.pagination.reset();
         tick();
         expect(countOfItem)
             .toEqual(2);
     }));
 
-    it('scrollHandler("bottom") should not load data after page.reset()', fakeAsync(() => {
+    it('scrollHandler("bottom") should not load data after pagination.reset()', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
-        comp.page.reset();
+        comp.pagination.reset();
         tick();
         comp.scrollHandler('bottom');
         tick();
@@ -239,11 +239,11 @@ describe('PlaygroundComponent', () => {
             .toEqual(2);
     }));
 
-    it('page.init() should load data with alternate options { reverse: false, prepend: true }', fakeAsync(() => {
-        comp.page.init(`blogs_${comp.locale}`, 'created', { reverse: false, prepend: true });
+    it('pagination.init() should load data with alternate options { reverse: false, prepend: true }', fakeAsync(() => {
+        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: false, prepend: true });
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
         comp.scrollHandler('bottom');
@@ -252,17 +252,17 @@ describe('PlaygroundComponent', () => {
             .toEqual(3);
     }));
 
-    it('page.init() should not load more data all data already loaded', fakeAsync(() => {
+    it('pagination.init() should not load more data all data already loaded', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
         comp.scrollHandler('bottom');
         tick();
         comp.scrollHandler('bottom');
         tick();
-        comp.page.init(`blogs_${comp.locale}`, 'created', { reverse: true, prepend: false });
+        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: true, prepend: false });
         tick();
         expect(countOfItem)
             .toEqual(3);
@@ -271,7 +271,7 @@ describe('PlaygroundComponent', () => {
     it('.content.onScroll should load more data', fakeAsync(() => {
         tick();
         let countOfItem = 0;
-        comp.page.data.subscribe(result => {
+        comp.pagination.data.subscribe(result => {
             countOfItem = result.length;
         });
         const div = fixture.debugElement.query(By.css('.content'));

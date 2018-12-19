@@ -2,30 +2,30 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SeoService } from '../../services';
-import { PageModel } from '../../models';
+import { ArticleModel } from '../../models';
 import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
-/** State key of current page */
-const BLOG_KEY = makeStateKey<any>('page');
+/** State key of current article */
+const ARTICLE_KEY = makeStateKey<any>('article');
 
 /**
- * Page Detail Component
+ * Article Detail Component
  */
 @Component({
-    selector: 'app-page-detail',
-    templateUrl: './page-detail.component.html',
-    styleUrls: ['./page-detail.component.scss']
+    selector: 'app-article-detail',
+    templateUrl: './article-detail.component.html',
+    styleUrls: ['./article-detail.component.scss']
 })
-export class PageDetailComponent implements OnInit {
-    /** current page object */
-    page$: Observable<PageModel>;
-    /** current page name */
-    pageID = '';
+export class ArticleDetailComponent implements OnInit {
+    /** current article object */
+    article$: Observable<ArticleModel>;
+    /** current article id */
+    articleID = '';
 
     /**
-     * constructor of PageDetailComponent
+     * constructor of ArticleDetailComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
      * @param router: Router
@@ -50,7 +50,7 @@ export class PageDetailComponent implements OnInit {
         this.route.paramMap.subscribe(pmap => {
             const pID = Number(pmap.get('id'));
             if (pID || pID === 0) {
-                this.afs.collection(`pages_${this.locale}`,
+                this.afs.collection(`articles_${this.locale}`,
                     ref => ref.where('orderNo', '==', pID)
                         .limit(1)
                 )
@@ -58,33 +58,33 @@ export class PageDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0)
                             data.map(pld => {
-                                this.router.navigate(['/page', pld.payload.doc.id]);
+                                this.router.navigate(['/article', pld.payload.doc.id]);
                             });
                         else if (pID === 0)
-                            this.router.navigate(['/pages']);
+                            this.router.navigate(['/articles']);
                         else
-                            this.router.navigate(['/page', pID + 1]);
+                            this.router.navigate(['/article', pID + 1]);
                     });
 
                 return;
             }
-            this.pageID = pmap.get('id');
-            this.initPage();
+            this.articleID = pmap.get('id');
+            this.initArticle();
         });
         // this will create a split second flash
-        // this.page$ = this.afs.doc(`pages_${this.locale}/${id}`).valueChanges();
+        // this.page$ = this.afs.doc(`articles_${this.locale}/${id}`).valueChanges();
     }
 
     /**
-     * init page
+     * init article
      */
-    initPage(): void {
-        this.page$ = this.ssrFirestoreDoc(`pages_${this.locale}/${this.pageID}`, true);
-        this.page$.subscribe(page => {
-            if (page)
+    initArticle(): void {
+        this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`, true);
+        this.article$.subscribe(article => {
+            if (article)
                 this.seo.generateTags({
-                    title: page.title,
-                    description: page.content
+                    title: article.title,
+                    description: article.content
                 });
             else
                 this.checkTranslation(undefined);
@@ -96,12 +96,12 @@ export class PageDetailComponent implements OnInit {
      */
     checkTranslation(checkInLocale): void {
         if (checkInLocale)
-            this.afs.doc<PageModel>(`pages_${checkInLocale}/${this.pageID}`)
+            this.afs.doc<ArticleModel>(`articles_${checkInLocale}/${this.articleID}`)
                 .valueChanges()
-                .subscribe(page => {
-                    if (page) {
+                .subscribe(article => {
+                    if (article) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/page/${this.pageID}`);
+                        this.seo.http301(`/${languageCode2}/article/${this.articleID}`);
                     } else
                         this.seo.http404();
                 });
@@ -112,18 +112,18 @@ export class PageDetailComponent implements OnInit {
     }
 
     /**
-     * Get page object from firestore by path
-     * @param path: page path
-     * @param checkTranslation: check translation if current page is not exist
+     * Get article object from firestore by path
+     * @param path: article path
+     * @param checkTranslation: check translation if current article is not exist
      */
-    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<PageModel> {
-        const exists = this.state.get(BLOG_KEY, new PageModel());
+    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<ArticleModel> {
+        const exists = this.state.get(ARTICLE_KEY, new ArticleModel());
 
-        return this.afs.doc<PageModel>(path)
+        return this.afs.doc<ArticleModel>(path)
             .valueChanges()
-            .pipe(tap(page => {
-                if (page)
-                    this.state.set(BLOG_KEY, page);
+            .pipe(tap(article => {
+                if (article)
+                    this.state.set(ARTICLE_KEY, article);
             }),
             startWith(exists)
         );

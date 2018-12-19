@@ -5,8 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
-import { PageListComponent } from './components/page-list/page-list.component';
-import { PageDetailComponent } from './components/page-detail/page-detail.component';
+import { ArticleListComponent } from './components/article-list/article-list.component';
+import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
@@ -27,16 +27,16 @@ const routes: Routes = [
         path: 'blog/:id', component: BlogDetailComponent
     },
     {
-        path: 'pages', redirectTo: 'pages/1', pathMatch: 'full'
+        path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'
     },
     {
-        path: 'pages/:pageNo', component: PageListComponent
+        path: 'articles/:pageNo', component: ArticleListComponent
     },
     {
-        path: 'page', redirectTo: 'pages/1', pathMatch: 'full'
+        path: 'article', redirectTo: 'articles/1', pathMatch: 'full'
     },
     {
-        path: 'page/:id', component: PageDetailComponent
+        path: 'article/:id', component: ArticleDetailComponent
     },
     {
         path: 'admin-login', component: AdminLoginComponent
@@ -49,16 +49,16 @@ const routes: Routes = [
         path: 'gunluk/:id', component: BlogDetailComponent
     },
     {
-        path: 'sayfalar', redirectTo: 'sayfalar/1', pathMatch: 'full'
+        path: 'makaleler', redirectTo: 'makaleler/1', pathMatch: 'full'
     },
     {
-        path: 'sayfalar/:pageNo', component: PageListComponent
+        path: 'makaleler/:pageNo', component: ArticleListComponent
     },
     {
-        path: 'sayfa', redirectTo: 'sayfalar/1', pathMatch: 'full'
+        path: 'makale', redirectTo: 'makaleler/1', pathMatch: 'full'
     },
     {
-        path: 'sayfa/:id', component: PageDetailComponent
+        path: 'makale/:id', component: ArticleDetailComponent
     },
     // end of tr-TR
     {

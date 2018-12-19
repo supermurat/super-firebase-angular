@@ -20,9 +20,9 @@ const resultsForFirestore = {};
 const collectionNameOfBlogs = "blogs";
 resultsForFirestore[collectionNameOfBlogs + "_tr-TR"] = {};
 resultsForFirestore[collectionNameOfBlogs + "_en-US"] = {};
-const collectionNameOfPages = "pages";
-resultsForFirestore[collectionNameOfPages + "_tr-TR"] = {};
-resultsForFirestore[collectionNameOfPages + "_en-US"] = {};
+const collectionNameOfArticles = "articles";
+resultsForFirestore[collectionNameOfArticles + "_tr-TR"] = {};
+resultsForFirestore[collectionNameOfArticles + "_en-US"] = {};
 const collectionNameOfRedirectionRecords = "redirectionRecords";
 resultsForFirestore[collectionNameOfRedirectionRecords] = {};
 
@@ -49,10 +49,10 @@ function addToBlogs(lang, docID, element) {
         = (Object.keys(resultsForFirestore[collectionNameOfBlogs + lang]).length) * -1;
 }
 
-function addToPages(lang, docID, element) {
-    resultsForFirestore[collectionNameOfPages + lang][docID] = { ...element };
-    resultsForFirestore[collectionNameOfPages + lang][docID].orderNo
-        = (Object.keys(resultsForFirestore[collectionNameOfPages + lang]).length) * -1;
+function addToArticles(lang, docID, element) {
+    resultsForFirestore[collectionNameOfArticles + lang][docID] = { ...element };
+    resultsForFirestore[collectionNameOfArticles + lang][docID].orderNo
+        = (Object.keys(resultsForFirestore[collectionNameOfArticles + lang]).length) * -1;
 }
 
 function addToRedirectionRecords(lang, alias, path, docID) {
@@ -112,11 +112,11 @@ function getBlogs() {
                     addToRedirectionRecords("en/", element.alias, "blog/", docID);
                 }
             });
-            getPages();
+            getArticles();
         });
 }
 
-function getPages() {
+function getArticles() {
     connection.query(
         "SELECT u.language, u.alias, n.nid, n.type, n.status, FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', n.title, fdb.body_value AS 'content' FROM node n LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid WHERE n.type IN ('page', 'story') AND n.status='1' ORDER BY n.created ASC",
         function (error, results, fields) {
@@ -128,16 +128,16 @@ function getPages() {
                 element.i18nKey = docID; // i18nKey should be matched with translations
                 downloadFiles(element.content);
                 if (element.language === "und") {
-                    addToPages("_tr-TR", docID, element);
-                    addToPages("_en-US", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "sayfa/", docID);
-                    addToRedirectionRecords("en/", element.alias, "page/", docID);
+                    addToArticles("_tr-TR", docID, element);
+                    addToArticles("_en-US", docID, element);
+                    addToRedirectionRecords("tr/", element.alias, "makale/", docID);
+                    addToRedirectionRecords("en/", element.alias, "article/", docID);
                 } else if (element.language === "tr") {
-                    addToPages("_tr-TR", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "sayfa/", docID);
+                    addToArticles("_tr-TR", docID, element);
+                    addToRedirectionRecords("tr/", element.alias, "makale/", docID);
                 } else if (element.language === "en") {
-                    addToPages("_en-US", docID, element);
-                    addToRedirectionRecords("en/", element.alias, "page/", docID);
+                    addToArticles("_en-US", docID, element);
+                    addToRedirectionRecords("en/", element.alias, "article/", docID);
                 }
             });
             writeResultToFile();

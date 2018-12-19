@@ -43,11 +43,11 @@
 </div>
 <hr>
 <div class="content" appScrollable (scrollPosition)="scrollHandler($event)">
-    <div class="contentItem2" *ngFor="let blog of page.data | async; trackBy:trackByBlog">
+    <div class="contentItem2" *ngFor="let blog of pagination.data | async; trackBy:trackByBlog">
         <hr>
         <a [routerLink]="blog.title | lowercase">{{ blog.title }}</a>
     </div>
-    <p class="tag is-warning" *ngIf="page.done | async" i18n>I ran out of blogs!</p>
+    <p class="tag is-warning" *ngIf="pagination.done | async" i18n>I ran out of blogs!</p>
 </div>
 <hr>
 <br/>

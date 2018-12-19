@@ -3,22 +3,22 @@ import { from } from 'rxjs';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { PageDetailComponent } from './page-detail.component';
+import { ArticleDetailComponent } from './article-detail.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
 
 import { AlertService, SeoService } from '../../services';
-import { PageModel } from '../../models';
+import { ArticleModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 
 import { ActivatedRoute, ActivatedRouteStub } from '../../testing/activated-route-stub';
 
 const testData: any = [[
-    {payload: {doc: {id: 'first-page', data(): PageModel {
+    {payload: {doc: {id: 'first-article', data(): ArticleModel {
                     return { orderNo: -1,
-                        id: 'first-page',
-                        title: 'First Page',
+                        id: 'first-article',
+                        title: 'First Article',
                         content: 'this is good sample',
                         created: { seconds: 1544207668 }};
                 }}}}
@@ -45,14 +45,14 @@ const angularFirestoreStub = {
 
 const activatedRouteStub = new ActivatedRouteStub();
 
-describe('PageDetailComponent', () => {
-    let fixture: ComponentFixture<PageDetailComponent>;
-    let comp: PageDetailComponent;
+describe('ArticleDetailComponent', () => {
+    let fixture: ComponentFixture<ArticleDetailComponent>;
+    let comp: ArticleDetailComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PageDetailComponent,
+                ArticleDetailComponent,
                 FooterComponent,
                 SideBarComponent
             ],
@@ -63,18 +63,18 @@ describe('PageDetailComponent', () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    {path: 'page/:id', component: PageDetailComponent},
-                    {path: 'pages/:pageNo', component: PageDetailComponent},
-                    {path: 'en/page/:id', component: PageDetailComponent},
-                    {path: 'tr/page/:id', component: PageDetailComponent},
-                    {path: 'en/page', component: PageDetailComponent},
-                    {path: 'tr/page', component: PageDetailComponent}
+                    {path: 'article/:id', component: ArticleDetailComponent},
+                    {path: 'articles/:pageNo', component: ArticleDetailComponent},
+                    {path: 'en/article/:id', component: ArticleDetailComponent},
+                    {path: 'tr/article/:id', component: ArticleDetailComponent},
+                    {path: 'en/article', component: ArticleDetailComponent},
+                    {path: 'tr/article', component: ArticleDetailComponent}
                     ])
             ]
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(PageDetailComponent);
+                fixture = TestBed.createComponent(ArticleDetailComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             });
@@ -85,36 +85,36 @@ describe('PageDetailComponent', () => {
             .toBeTruthy();
     }));
 
-    it('should load first-page', async(() => {
-        activatedRouteStub.setParamMap({ id: 'first-page' });
+    it('should load first-article', async(() => {
+        activatedRouteStub.setParamMap({ id: 'first-article' });
         fixture.detectChanges();
-        let lastPage = new PageModel();
-        comp.page$.subscribe(page => {
-            lastPage = page;
+        let lastArticle = new ArticleModel();
+        comp.article$.subscribe(article => {
+            lastArticle = article;
         }, undefined, () => {
-            expect(lastPage.id)
-                .toEqual('first-page');
+            expect(lastArticle.id)
+                .toEqual('first-article');
         });
     }));
 
     it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: 'first-page' });
+        activatedRouteStub.setParamMap({ id: 'first-article' });
         fixture.detectChanges();
         comp.checkTranslation(undefined);
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/tr/page/first-page');
+            .toEqual('/tr/article/first-article');
         fixture.detectChanges();
     }));
 
-    it("should redirection to '/page/first-page' if id is -1", fakeAsync(() => {
+    it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
         fixture.detectChanges();
         activatedRouteStub.setParamMap({ id: '-1' });
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/page/first-page');
+            .toEqual('/article/first-article');
         fixture.detectChanges();
     }));
 

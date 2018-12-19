@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
      * @param renderer: Renderer2
      * @param seo: SeoService
      * @param alert: AlertService
-     * @param page: PaginationService
+     * @param pagination: PaginationService
      */
     constructor(@Inject(PLATFORM_ID) private platformId: string,
                 @Inject(DOCUMENT) doc: Document,
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
                 renderer: Renderer2,
                 public seo: SeoService,
                 public alert: AlertService,
-                public page: PaginationService) {
+                public pagination: PaginationService) {
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
     }
 

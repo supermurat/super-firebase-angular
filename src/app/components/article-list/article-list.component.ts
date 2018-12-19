@@ -2,44 +2,44 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PagerService, SeoService } from '../../services';
-import { PageModel, PagerModel } from '../../models';
+import { ArticleModel, PagerModel } from '../../models';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**
- * Page List Component
+ * Article List Component
  */
 @Component({
-    selector: 'app-page-list',
-    templateUrl: './page-list.component.html',
-    styleUrls: ['./page-list.component.scss']
+    selector: 'app-article-list',
+    templateUrl: './article-list.component.html',
+    styleUrls: ['./article-list.component.scss']
 })
-export class PageListComponent implements OnInit {
-    /** page object array */
-    pages$: Observable<Array<PageModel>>;
+export class ArticleListComponent implements OnInit {
+    /** article object array */
+    articles$: Observable<Array<ArticleModel>>;
     /** current page`s title */
-    title = 'This is temporary page list';
+    title = 'My Articles';
     /** current page`s description */
-    description = 'This App is in development!';
+    description = 'List of My Articles';
 
     /** pager model */
     pagerModel: PagerModel = {
-        pagePath: '/pages',
+        pagePath: '/articles',
         pageSize: 3
     };
 
-    /** first page */
-    firstItem: PageModel;
-    /** order no of first page, also it means (count of items * -1) */
+    /** first article */
+    firstItem: ArticleModel;
+    /** order no of first article, also it means (count of items * -1) */
     firstItemOrderNo: number;
 
     /** last item of current page */
-    lastItemOfCurrentPage: PageModel;
+    lastItemOfCurrentPage: ArticleModel;
     /** last item order no of current page */
     lastItemOrderNoOfCurrentPage: number;
 
     /**
-     * constructor of PageListComponent
+     * constructor of ArticleListComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
      * @param router: Router
@@ -61,7 +61,7 @@ export class PageListComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
-            this.initPages();
+            this.initArticles();
         });
 
         this.seo.generateTags({
@@ -71,22 +71,22 @@ export class PageListComponent implements OnInit {
     }
 
     /**
-     * init pages and get first item
+     * init articles and get first item
      */
-    initPages(): void {
+    initArticles(): void {
         if (this.firstItem) // no need to get firstItem again
-            this.getPages();
+            this.getArticles();
         else
-            this.afs.collection(`pages_${this.locale}`,
+            this.afs.collection(`articles_${this.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
             )
                 .valueChanges()
-                .subscribe(pages => {
-                    if (pages.length > 0) {
-                        this.firstItem = pages[0];
+                .subscribe(articles => {
+                    if (articles.length > 0) {
+                        this.firstItem = articles[0];
                         this.firstItemOrderNo = this.firstItem.orderNo;
-                        this.getPages();
+                        this.getArticles();
                     }
                 });
     }
@@ -100,12 +100,12 @@ export class PageListComponent implements OnInit {
     }
 
     /**
-     * get pages
+     * get articles
      */
-    getPages(): void {
+    getArticles(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.pages$ = this.afs.collection(`pages_${this.locale}`,
+        this.articles$ = this.afs.collection(`articles_${this.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
                 .limit(this.pagerModel.pageSize)
@@ -118,23 +118,23 @@ export class PageListComponent implements OnInit {
                     if (!data.hasOwnProperty('contentSummary'))
                         data['contentSummary'] = data['content'];
 
-                    return { id, ...data as PageModel };
+                    return { id, ...data as ArticleModel };
                 });
             }));
-        this.pages$.subscribe(pages => {
-            if (pages.length > 0) {
-                this.lastItemOfCurrentPage = pages[pages.length - 1];
+        this.articles$.subscribe(articles => {
+            if (articles.length > 0) {
+                this.lastItemOfCurrentPage = articles[articles.length - 1];
                 this.lastItemOrderNoOfCurrentPage = this.lastItemOfCurrentPage.orderNo;
             }
         });
     }
 
     /**
-     * track page object array by page
-     * @param index: page index no
-     * @param item: page object
+     * track article object array by article
+     * @param index: article index no
+     * @param item: article object
      */
-    trackByPage(index, item): number {
+    trackByArticle(index, item): number {
         return index;
     }
 }

@@ -286,8 +286,14 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
+      </trans-unit><trans-unit id="3b6143a528c6f4586e60e9af4ced8ac0fbe08251" datatype="html">
+        <source>Articles</source><target state="new">Articles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
       </trans-unit><trans-unit id="8c109a1d72eeab6d3219c9dfb72722fe68d19431" datatype="html">
-        <source>Pages</source><target state="new">Pages</target>
+        <source>Articles</source><target state="new">Articles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">22</context>
@@ -557,7 +563,7 @@
       </trans-unit><trans-unit id="6bbfc6a91008949626b70d5bacaca91822e1f575" datatype="html">
         <source>Read More ⇒</source><target state="new">Read More ⇒</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/page-list/page-list.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="7e09e3f6c6ea1b360e02e85184a0f4be654c2c70" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/article-list/article-list.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="7e09e3f6c6ea1b360e02e85184a0f4be654c2c70" datatype="html">
         <source>← Older</source><target state="new">← Older</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
@@ -602,41 +608,75 @@
     </source><target state="new"><x id="INTERPOLATION" equiv-text="{{ title }}"/>
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-      </trans-unit><trans-unit id="36c389a1eb379efe6ba44512ce6acd1d53cb7071" datatype="html">
-        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ page.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.createdBy }}"/></source><target state="new">Posted on <x id="INTERPOLATION" equiv-text="{{ page.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.createdBy }}"/></target>
+      </trans-unit><trans-unit id="a3983abb71917d60a8471a9f8bc2f04e2efb3b69" datatype="html">
+        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ article.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.createdBy }}"/></source><target state="new">Posted on <x id="INTERPOLATION" equiv-text="{{ article.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.createdBy }}"/></target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit><trans-unit id="6adf2781951072d28e67b80321468bb494003196" datatype="html">
+        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ article.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.changedBy }}"/></source><target state="new">Updated on <x id="INTERPOLATION" equiv-text="{{ article.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.changedBy }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit><trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
+        <source>⇐ Previous Article</source><target state="new">⇐ Previous Article</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit><trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
+        <source>Return to Article List ⇑</source><target state="new">Return to Article List ⇑</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit><trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
+        <source>Next Article ⇒</source><target state="new">Next Article ⇒</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit><trans-unit id="36c389a1eb379efe6ba44512ce6acd1d53cb7071" datatype="html">
+        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ article.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.createdBy }}"/></source><target state="new">Posted on <x id="INTERPOLATION" equiv-text="{{ article.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.createdBy }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit><trans-unit id="188e97704151eb6b735031669535f20e3e3da0b0" datatype="html">
-        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ page.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.changedBy }}"/></source><target state="new">Updated on <x id="INTERPOLATION" equiv-text="{{ page.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.changedBy }}"/></target>
+        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ article.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.changedBy }}"/></source><target state="new">Updated on <x id="INTERPOLATION" equiv-text="{{ article.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ article.changedBy }}"/></target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit><trans-unit id="ef4373dd376b6e2a0e9e707566847df9211a372b" datatype="html">
-        <source>⇐ Previous Page</source><target state="new">⇐ Previous Page</target>
+        <source>⇐ Previous Article</source><target state="new">⇐ Previous Article</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit><trans-unit id="3cac07189290567b0b0926b4fb8dbaa21e5ccf69" datatype="html">
-        <source>Return to Page List ⇑</source><target state="new">Return to Page List ⇑</target>
+        <source>Return to Article List ⇑</source><target state="new">Return to Article List ⇑</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit><trans-unit id="d2107fb84bd1bb1f7d6ea96808a491fa48c0245e" datatype="html">
-        <source>Next Page ⇒</source><target state="new">Next Page ⇒</target>
+        <source>Next Article ⇒</source><target state="new">Next Article ⇒</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit><trans-unit id="9d2c08f67d083d95f0085db3939afdf70efe6889" datatype="html">
