@@ -11,7 +11,7 @@
         <div class="card my-4" *ngFor="let blog of blogs$ | async; trackBy:trackByBlog">
             <img class="card-img-top" *ngIf="blog.image" [src]="blog.image" alt="Card image cap">
             <div class="card-body">
-                <a [routerLink]="blog.id"><h2 class="card-title">{{ blog.title }}</h2></a>
+                <h2 class="card-title"><a [routerLink]="blog.id">{{ blog.title }}</a></h2>
                 <p class="card-text" [innerHTML]="blog.contentSummary"></p>
                 <a [routerLink]="blog.id" class="btn btn-primary" i18n>Read More &rArr;</a>
             </div>

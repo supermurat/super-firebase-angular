@@ -76,3 +76,7 @@ body {
   animation-duration: 1s;
   animation-fill-mode: both;
 }
+
+.card-title a:hover {
+  text-decoration: none;
+}

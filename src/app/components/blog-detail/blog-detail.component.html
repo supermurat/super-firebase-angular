@@ -5,7 +5,7 @@
         <div class="card my-4" *ngIf="blog$ | async as blog">
             <img class="card-img-top" *ngIf="blog.image" [src]="blog.image" alt="Card image cap">
             <div class="card-body">
-                <a [routerLink]="['/blog', blog.id]"><h2 class="card-title">{{ blog.title }}</h2></a>
+                <h2 class="card-title"><a [routerLink]="['/blog', blog.id]">{{ blog.title }}</a></h2>
                 <p class="card-text" [innerHTML]="blog.content"></p>
             </div>
             <div class="card-footer text-muted">
