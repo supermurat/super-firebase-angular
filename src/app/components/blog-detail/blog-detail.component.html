@@ -5,11 +5,12 @@
         <div class="card my-4" *ngIf="blog$ | async as blog">
             <img class="card-img-top" *ngIf="blog.image" [src]="blog.image" alt="Card image cap">
             <div class="card-body">
-                <h2 class="card-title"><a [routerLink]="['/blog', blog.id]">{{ blog.title }}</a></h2>
+                <h2 class="card-title"><a [routerLink]="['/blog', blogID]">{{ blog.title }}</a></h2>
                 <p class="card-text" [innerHTML]="blog.content"></p>
             </div>
             <div class="card-footer text-muted">
                 <!--<span i18n>Posted on {{ blog.created.toMillis() | date:'medium' }} by {{ blog.createdBy }}</span>-->
+                <div *ngFor="let tag of blog.taxonomy | keyvalue; trackBy:trackByIndex"><a [routerLink]="['/tag', tag.key]">{{ tag.value }}</a></div>
             </div>
         </div>
 

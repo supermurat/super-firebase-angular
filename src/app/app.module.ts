@@ -34,6 +34,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { FooterComponent } from './components/footer/footer.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { PagerComponent } from './components/pager/pager.component';
+import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 
 /**
  * App Module
@@ -55,7 +56,8 @@ import { PagerComponent } from './components/pager/pager.component';
         AdminLoginComponent,
         FooterComponent,
         SideBarComponent,
-        PagerComponent
+        PagerComponent,
+        TaxonomyComponent
     ],
     imports: [
         CommonModule,

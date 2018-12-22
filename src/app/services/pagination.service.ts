@@ -55,6 +55,7 @@ export class PaginationService {
             prepend: false,
             ...opts
         };
+        this.reset();
 
         setTimeout(() => {
             const first = this.afs.collection(this.query.path, ref => {
@@ -126,10 +127,11 @@ export class PaginationService {
         return col.snapshotChanges()
             .pipe(tap(arr => {
                 let values = arr.map(snap => {
+                    const id = snap.payload.doc.id;
                     const data = snap.payload.doc.data();
                     const doc = snap.payload.doc;
 
-                    return {...data, doc};
+                    return {id, ...data, doc};
                 });
 
                 // if prepending, reverse array

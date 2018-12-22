@@ -22,7 +22,7 @@ const BLOG_KEY = makeStateKey<any>('blog');
 export class BlogDetailComponent implements OnInit {
     /** current blog object */
     blog$: Observable<BlogModel>;
-    /** current blog name */
+    /** current blog ID */
     blogID = '';
 
     /**
@@ -46,8 +46,8 @@ export class BlogDetailComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.blogID = params['id'];
+            this.blog$ = this.ssrFirestoreDoc(`blogs_en-US/${this.blogID}`);
         });
-        this.blog$ = this.ssrFirestoreDoc(`blogs_en-US/${this.blogID}`);
 
         // this will create a split second flash
         // this.blog$ = this.afs.doc(`blogs/${id}`).valueChanges();
@@ -65,13 +65,19 @@ export class BlogDetailComponent implements OnInit {
             .pipe(
             tap(blog => {
                 this.state.set(BLOG_KEY, blog);
-                this.seo.setHtmlTags({
-                    title: blog.title,
-                    description: blog.content
-                });
+                this.seo.setHtmlTags(blog);
             }),
             startWith(exists)
         );
+    }
+
+    /**
+     * track content object array by index
+     * @param index: index no
+     * @param item: object
+     */
+    trackByIndex(index, item): number {
+        return index;
     }
 
 }

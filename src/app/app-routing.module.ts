@@ -9,6 +9,7 @@ import { ArticleListComponent } from './components/article-list/article-list.com
 import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 
 const routes: Routes = [
     {
@@ -20,6 +21,7 @@ const routes: Routes = [
     {
         path: 'playground', component: PlaygroundComponent
     },
+    // en-US
     {
         path: 'blog', component: BlogListComponent
     },
@@ -39,8 +41,9 @@ const routes: Routes = [
         path: 'article/:id', component: ArticleDetailComponent
     },
     {
-        path: 'admin-login', component: AdminLoginComponent
+        path: 'tag/:id', component: TaxonomyComponent
     },
+    // end of en-US
     // tr-TR
     {
         path: 'gunluk', component: BlogListComponent
@@ -60,7 +63,13 @@ const routes: Routes = [
     {
         path: 'makale/:id', component: ArticleDetailComponent
     },
+    {
+        path: 'etiket/:id', component: TaxonomyComponent
+    },
     // end of tr-TR
+    {
+        path: 'admin-login', component: AdminLoginComponent
+    },
     {
         path: 'http-404', component: NotFoundComponent
     },

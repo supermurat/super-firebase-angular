@@ -47,12 +47,20 @@ function addToBlogs(lang, docID, element) {
     resultsForFirestore[collectionNameOfBlogs + lang][docID] = { ...element };
     resultsForFirestore[collectionNameOfBlogs + lang][docID].orderNo
         = (Object.keys(resultsForFirestore[collectionNameOfBlogs + lang]).length) * -1;
+    if (lang === "_en-US")
+        resultsForFirestore[collectionNameOfBlogs + lang][docID].routePath = "/blog";
+    else if (lang === "_tr-TR")
+        resultsForFirestore[collectionNameOfBlogs + lang][docID].routePath = "/gunluk";
 }
 
 function addToArticles(lang, docID, element) {
     resultsForFirestore[collectionNameOfArticles + lang][docID] = { ...element };
     resultsForFirestore[collectionNameOfArticles + lang][docID].orderNo
         = (Object.keys(resultsForFirestore[collectionNameOfArticles + lang]).length) * -1;
+    if (lang === "_en-US")
+        resultsForFirestore[collectionNameOfArticles + lang][docID].routePath = "/article";
+    else if (lang === "_tr-TR")
+        resultsForFirestore[collectionNameOfArticles + lang][docID].routePath = "/makale";
 }
 
 function addToRedirectionRecords(lang, alias, path, docID) {
