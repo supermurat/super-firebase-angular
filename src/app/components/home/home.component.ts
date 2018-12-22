@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: this.title,
             description: this.title
         });

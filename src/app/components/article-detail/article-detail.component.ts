@@ -82,7 +82,7 @@ export class ArticleDetailComponent implements OnInit {
         this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`, true);
         this.article$.subscribe(article => {
             if (article)
-                this.seo.generateTags({
+                this.seo.setHtmlTags({
                     title: article.title,
                     description: article.content
                 });

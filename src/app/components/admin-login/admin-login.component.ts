@@ -24,7 +24,7 @@ export class AdminLoginComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: 'Admin Login',
             description: 'Admin login page'
         });

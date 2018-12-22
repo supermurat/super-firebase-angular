@@ -65,7 +65,7 @@ export class BlogDetailComponent implements OnInit {
             .pipe(
             tap(blog => {
                 this.state.set(BLOG_KEY, blog);
-                this.seo.generateTags({
+                this.seo.setHtmlTags({
                     title: blog.title,
                     description: blog.content
                 });

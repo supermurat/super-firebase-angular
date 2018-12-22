@@ -64,7 +64,7 @@ export class ArticleListComponent implements OnInit {
             this.initArticles();
         });
 
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: this.title,
             description: this.description
         });

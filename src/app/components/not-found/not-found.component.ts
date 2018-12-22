@@ -17,7 +17,7 @@ export class NotFoundComponent {
     constructor(
         private seo: SeoService
     ) {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: '404 - Page not found',
             description: '404 - Page not found'
         });

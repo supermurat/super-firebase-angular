@@ -93,7 +93,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set title as 'My Unit Test Title'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title'
         });
         fixture.detectChanges();
@@ -102,7 +102,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta og:type as 'article'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             ogType: 'article'
         });
@@ -113,7 +113,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta og:title as 'My Unit Test Title'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             ogType: 'article',
             image: '/favicon.ico',
@@ -127,7 +127,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta twitter:card as 'summary'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             twitterCard: 'summary'
         });
@@ -138,7 +138,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta twitter:title as 'My Unit Test Title'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             twitterCard: 'summary',
             image: '/favicon.ico',
@@ -152,7 +152,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta robots as 'index,follow'", async(() => {
-        comp.seo.generateTags({
+        comp.seo.setHtmlTags({
             robots: 'index,follow',
             author: 'unit-test',
             owner: 'unit-test',

@@ -1,7 +1,7 @@
 import { environment } from '../../environments/environment';
 
 /**
- * Tags Definition of Page
+ * HTML Tags of Page
  *
  * Contains all kind of data for seo and html
  */
@@ -64,4 +64,7 @@ export class HtmlDocumentModel {
     articleAuthorURL?: string;
     /** article:publisher tag of page */
     articlePublisherURL?: string;
+
+    /** taxonomy */
+    taxonomy?: Array<string>;
 }

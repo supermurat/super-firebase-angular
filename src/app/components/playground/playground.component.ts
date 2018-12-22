@@ -78,7 +78,7 @@ export class PlaygroundComponent implements OnInit {
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: this.title,
             description: this.title
         });
