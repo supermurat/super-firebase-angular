@@ -85,18 +85,12 @@ const angularFirestoreStub = {
                                                         startAfterIndex = 3;
 
                                                 const retVal = [];
-                                                if (limitNumber > 0 && startAfterIndex < testDataSnapshot[0].length) {
-                                                    queryFnMap(testDataSnapshot[0][startAfterIndex]);
-                                                    retVal.push(testDataSnapshot[0][startAfterIndex].payload);
-                                                }
-                                                if (limitNumber > 1 && startAfterIndex + 1 < testDataSnapshot[0].length) {
-                                                    queryFnMap(testDataSnapshot[0][startAfterIndex + 1]);
-                                                    retVal.push(testDataSnapshot[0][startAfterIndex + 1].payload);
-                                                }
-                                                if (limitNumber > 2 && startAfterIndex + 2 < testDataSnapshot[0].length) {
-                                                    queryFnMap(testDataSnapshot[0][startAfterIndex + 2]);
-                                                    retVal.push(testDataSnapshot[0][startAfterIndex + 2].payload);
-                                                }
+                                                if (limitNumber > 0 && startAfterIndex < testDataSnapshot[0].length)
+                                                    retVal.push(queryFnMap(testDataSnapshot[0][startAfterIndex]));
+                                                if (limitNumber > 1 && startAfterIndex + 1 < testDataSnapshot[0].length)
+                                                    retVal.push(queryFnMap(testDataSnapshot[0][startAfterIndex + 1]));
+                                                if (limitNumber > 2 && startAfterIndex + 2 < testDataSnapshot[0].length)
+                                                    retVal.push(queryFnMap(testDataSnapshot[0][startAfterIndex + 2]));
 
                                                 return retVal;
                                             }
