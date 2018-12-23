@@ -45,8 +45,9 @@ export class PaginationService {
      * @param path: path to collection
      * @param field: field to orderBy
      * @param opts: options
+     * @param isReset: do you want to reset before init?
      */
-    init(path, field, opts?): void {
+    init(path, field, opts?, isReset?): void {
         this.query = {
             path,
             field,
@@ -55,7 +56,8 @@ export class PaginationService {
             prepend: false,
             ...opts
         };
-        this.reset();
+        if (isReset || isReset === undefined)
+            this.reset();
 
         setTimeout(() => {
             const first = this.afs.collection(this.query.path, ref => {

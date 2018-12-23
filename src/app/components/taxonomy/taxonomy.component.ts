@@ -2,7 +2,6 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { PaginationService, SeoService } from '../../services';
-import { ArticleModel } from '../../models';
 
 /**
  * Taxonomy Component
@@ -31,7 +30,7 @@ export class TaxonomyComponent implements OnInit {
                 private seo: SeoService,
                 public router: Router,
                 private route: ActivatedRoute,
-                private pagination: PaginationService,
+                public pagination: PaginationService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -42,7 +41,7 @@ export class TaxonomyComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.tagID = params['id'];
 
-            this.afs.doc<ArticleModel>(`taxonomy_${this.locale}/${this.tagID}`)
+            this.afs.doc<any>(`taxonomy_${this.locale}/${this.tagID}`)
                 .valueChanges()
                 .subscribe(tag => {
                     if (tag) {
@@ -52,6 +51,7 @@ export class TaxonomyComponent implements OnInit {
                 });
 
             this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents/`, 'created', { reverse: true, prepend: false, limit: 5 });
+
         });
     }
 

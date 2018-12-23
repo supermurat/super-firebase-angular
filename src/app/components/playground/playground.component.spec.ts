@@ -262,7 +262,7 @@ describe('PlaygroundComponent', () => {
         tick();
         comp.scrollHandler('bottom');
         tick();
-        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: true, prepend: false });
+        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: true, prepend: false }, false);
         tick();
         expect(countOfItem)
             .toEqual(3);
