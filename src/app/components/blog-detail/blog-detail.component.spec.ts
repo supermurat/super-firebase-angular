@@ -1,5 +1,4 @@
 
-import { from } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -9,22 +8,9 @@ import { TransferState } from '@angular/platform-browser';
 
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, Data } from '@angular/router';
-import { BlogModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-
-const testData: Array<BlogModel> = [
-    { id: 'first-blog', title: 'First Blog', content: 'this is good sample'}
-];
-
-const angularFirestoreStub = {
-    doc: jasmine.createSpy('doc').and
-        .returnValue(
-        {
-            valueChanges: jasmine.createSpy('valueChanges').and
-                .returnValue(from(testData))
-        })
-};
+import { angularFirestoreStub } from '../../testing';
 
 describe('BlogDetailComponent', () => {
     let fixture: ComponentFixture<BlogDetailComponent>;
