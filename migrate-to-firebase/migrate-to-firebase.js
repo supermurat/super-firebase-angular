@@ -138,17 +138,45 @@ function importIntoFirestore(){
         if (typeof nestedContent === "object") {
             Object.keys(nestedContent).forEach(docID => {
                 const nestedData = fixTimestamps(nestedContent[docID]);
-                // console.log("nestedData:", nestedData);
+                const docData = {...nestedData};
+                Object.keys(nestedData).forEach(key => {
+                    if (key.startsWith("__collection__")) {
+                        delete docData[key];
+                    }
+                });
+
                 admin.firestore()
                     .collection(key)
                     .doc(docID)
-                    .set(nestedData)
+                    .set(docData)
                     .then((res) => {
+                        Object.keys(nestedData).forEach(subKey => {
+                            if (subKey.startsWith("__collection__")) {
+                                console.log("Importing sub collections:", key, docID, subKey);
+                                const subNestedContent = nestedData[subKey];
+                                Object.keys(subNestedContent).forEach(subDocID => {
+                                    const subDocData = {...subNestedContent[subDocID]};
+                                    admin.firestore()
+                                        .collection(key)
+                                        .doc(docID)
+                                        .collection(subKey.replace("__collection__", ""))
+                                        .doc(subDocID)
+                                        .set(subDocData)
+                                        .then((res) => {
+                                            console.log("Imported:", key, docID, subKey, subDocID);
+                                        })
+                                        .catch((error) => {
+                                            console.error("Error:", key, docID, subKey, subDocID, error);
+                                        });
+                                });
+                            }
+                        });
                         console.log("Imported:", key, docID);
                     })
                     .catch((error) => {
                         console.error("Error:", key, docID, error);
                     });
+
             });
         }
     });

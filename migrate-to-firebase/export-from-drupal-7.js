@@ -29,18 +29,7 @@ resultsForFirestore[collectionNameOfArticles + "_en-US"] = {};
 const collectionNameOfRedirectionRecords = "redirectionRecords";
 resultsForFirestore[collectionNameOfRedirectionRecords] = {};
 
-function checkDirectory(directoryPath) {
-    if (!fs.existsSync(directoryPath)){
-        directoryPath.split(path.sep)
-            .reduce((currentPath, folder) => {
-                currentPath += folder + path.sep;
-                if (!fs.existsSync(currentPath)){
-                    fs.mkdirSync(currentPath);
-                }
-                return currentPath;
-            }, '');
-    }
-}
+/* region Fix Data */
 
 function fixDocID(docID) {
     return latinize(docID).replace(/\//gi, '-').replace(/\\/gi, '-');
@@ -55,50 +44,109 @@ function removeUnneededFields(newData) {
     delete newData['tid'];
     delete newData['tagTitles'];
     delete newData['tagLinks'];
+    delete newData['documentID'];
 
     return newData;
 }
 
-function addToTaxonomy(lang, docID, element) {
+function generateTaxonomy(lang, newData) {
+    let taxonomy = {};
+    const tagTitleList = newData.tagTitles.split("|");
+    const tagLinkList = newData.tagLinks.split("|");
+    if (tagTitleList.length === tagLinkList.length) {
+        for (let i = 0; i < tagLinkList.length; i++) {
+            const docID = fixDocID(tagLinkList[i].replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
+            taxonomy[docID] = tagTitleList[i].trim();
+
+            addToTaxonomyContentsCollection(lang, docID, newData)
+        }
+    } else {
+        console.log("Taxonomy list is invalid:", tagTitleList, tagLinkList);
+    }
+    newData.taxonomy = taxonomy;
+}
+
+/* endregion */
+
+/* region Add to Export Object */
+
+function addToTaxonomy(lang, element) {
     const newData = { ...element };
     if (lang === "_en-US")
         newData.routePath = "/tag";
     else if (lang === "_tr-TR")
         newData.routePath = "/etiket";
-    resultsForFirestore[collectionNameOfTaxonomy + lang][docID] = removeUnneededFields(newData);
-    resultsForFirestore[collectionNameOfTaxonomy + lang][docID].orderNo
+    newData.__collection__contents = {};
+    resultsForFirestore[collectionNameOfTaxonomy + lang][element.documentID] = removeUnneededFields(newData);
+    resultsForFirestore[collectionNameOfTaxonomy + lang][element.documentID].orderNo
         = (Object.keys(resultsForFirestore[collectionNameOfTaxonomy + lang]).length) * -1;
 }
 
-function addToBlogs(lang, docID, element) {
+function addToTaxonomyContentsCollection(lang, taxonomyDocID, element) {
+    let newData = removeUnneededFields({ ...element });
+    const docID = newData.routePath.replace("/", "_") + "_" + element.documentID;
+    newData.path = element.documentID;
+
+    delete newData['content'];
+    resultsForFirestore[collectionNameOfTaxonomy + lang][taxonomyDocID].__collection__contents[docID] = newData;
+    resultsForFirestore[collectionNameOfTaxonomy + lang][taxonomyDocID].__collection__contents[docID].orderNo
+        = (Object.keys(resultsForFirestore[collectionNameOfTaxonomy + lang][taxonomyDocID].__collection__contents).length) * -1;
+}
+
+function addToBlogs(lang, element) {
     const newData = { ...element };
     if (lang === "_en-US")
         newData.routePath = "/blog";
     else if (lang === "_tr-TR")
         newData.routePath = "/gunluk";
-    resultsForFirestore[collectionNameOfBlogs + lang][docID] = removeUnneededFields(newData);
-    resultsForFirestore[collectionNameOfBlogs + lang][docID].orderNo
+    if (newData.contentSummary === undefined || newData.contentSummary === null || newData.contentSummary.trim() === "") {
+        newData.contentSummary = newData.content;
+    }
+    generateTaxonomy(lang, newData);
+    resultsForFirestore[collectionNameOfBlogs + lang][element.documentID] = removeUnneededFields(newData);
+    resultsForFirestore[collectionNameOfBlogs + lang][element.documentID].orderNo
         = (Object.keys(resultsForFirestore[collectionNameOfBlogs + lang]).length) * -1;
 }
 
-function addToArticles(lang, docID, element) {
+function addToArticles(lang, element) {
     const newData = { ...element };
     if (lang === "_en-US")
         newData.routePath = "/article";
     else if (lang === "_tr-TR")
         newData.routePath = "/makale";
-    resultsForFirestore[collectionNameOfArticles + lang][docID] = removeUnneededFields(newData);
-    resultsForFirestore[collectionNameOfArticles + lang][docID].orderNo
+    if (newData.contentSummary === undefined || newData.contentSummary === null || newData.contentSummary.trim() === "") {
+        newData.contentSummary = newData.content;
+    }
+    generateTaxonomy(lang, newData);
+    resultsForFirestore[collectionNameOfArticles + lang][element.documentID] = removeUnneededFields(newData);
+    resultsForFirestore[collectionNameOfArticles + lang][element.documentID].orderNo
         = (Object.keys(resultsForFirestore[collectionNameOfArticles + lang]).length) * -1;
 }
 
-function addToRedirectionRecords(lang, alias, path, docID) {
-    if (lang + alias !== lang + path + docID){
-        resultsForFirestore[collectionNameOfRedirectionRecords][(lang + alias).replace(/\//gi, '\\')]
-            = {code: 301, url: "/" + lang + path + docID};
+function addToRedirectionRecords(lang, element, path) {
+    if (lang + element.alias !== lang + path + element.documentID){
+        resultsForFirestore[collectionNameOfRedirectionRecords][(lang + element.alias).replace(/\//gi, '\\')]
+            = {code: 301, url: "/" + lang + path + element.documentID};
         if (lang === "tr/")
-            resultsForFirestore[collectionNameOfRedirectionRecords][(alias).replace(/\//gi, '\\')]
-                = {code: 301, url: "/" + lang + path + docID};
+            resultsForFirestore[collectionNameOfRedirectionRecords][(element.alias).replace(/\//gi, '\\')]
+                = {code: 301, url: "/" + lang + path + element.documentID};
+    }
+}
+
+/* endregion */
+
+/* region Files */
+
+function checkDirectory(directoryPath) {
+    if (!fs.existsSync(directoryPath)){
+        directoryPath.split(path.sep)
+            .reduce((currentPath, folder) => {
+                currentPath += folder + path.sep;
+                if (!fs.existsSync(currentPath)){
+                    fs.mkdirSync(currentPath);
+                }
+                return currentPath;
+            }, '');
     }
 }
 
@@ -125,20 +173,9 @@ function downloadFiles(htmlContent) {
     }
 }
 
-function generateTaxonomy(tagTitles, tagLinks) {
-    let taxonomy = {};
-    const tagTitleList = tagTitles.split(",");
-    const tagLinkList = tagLinks.split(",");
-    if (tagTitleList.length === tagLinkList.length) {
-        for (let i = 0; i < tagLinkList.length; i++) {
-            const docID = fixDocID(tagLinkList[i].replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
-            taxonomy[docID] = tagTitleList[i];
-        }
-    } else {
-        console.log("Taxonomy list is invalid:", tagTitleList, tagLinkList);
-    }
-    return taxonomy;
-}
+/* endregion */
+
+/* region Get From Database */
 
 function getTaxonomy() {
     connection.query(
@@ -147,19 +184,19 @@ function getTaxonomy() {
             if (error) throw error;
 
             results.forEach(function(element) {
-                const docID = fixDocID(element.alias.replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
-                element.i18nKey = docID; // i18nKey should be matched with translations
+                element.documentID = fixDocID(element.alias.replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
+                element.i18nKey = element.documentID; // i18nKey should be matched with translations
                 if (element.language === "und") {
-                    addToTaxonomy("_tr-TR", docID, element);
-                    addToTaxonomy("_en-US", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "etiket/", docID);
-                    addToRedirectionRecords("en/", element.alias, "tag/", docID);
+                    addToTaxonomy("_tr-TR", element);
+                    addToTaxonomy("_en-US", element);
+                    addToRedirectionRecords("tr/", element, "etiket/");
+                    addToRedirectionRecords("en/", element, "tag/");
                 } else if (element.language === "tr") {
-                    addToTaxonomy("_tr-TR", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "etiket/", docID);
+                    addToTaxonomy("_tr-TR", element);
+                    addToRedirectionRecords("tr/", element, "etiket/");
                 } else if (element.language === "en") {
-                    addToTaxonomy("_en-US", docID, element);
-                    addToRedirectionRecords("en/", element.alias, "tag/", docID);
+                    addToTaxonomy("_en-US", element);
+                    addToRedirectionRecords("en/", element, "tag/");
                 }
             });
             getBlogs();
@@ -168,27 +205,26 @@ function getTaxonomy() {
 
 function getBlogs() {
     connection.query(
-        "SELECT u.language, u.alias, n.nid, n.type, n.status, FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', n.title, fdb.body_value AS 'content', GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR ',' ) AS 'tagTitles', GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR ',' ) AS 'tagLinks' FROM node n LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid LEFT JOIN taxonomy_index ti ON ti.nid = n.nid LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) WHERE n.type='blog' AND n.status='1' GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value ORDER BY n.created ASC",
+        "SELECT u.language, u.alias, n.nid, n.type, n.status, FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', n.title, fdb.body_value AS 'content', fdb.body_summary AS 'contentSummary', GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagTitles', GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagLinks' FROM node n LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid LEFT JOIN taxonomy_index ti ON ti.nid = n.nid LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) WHERE n.type='blog' AND n.status='1' GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value, fdb.body_summary ORDER BY n.created ASC",
         function (error, results, fields) {
             if (error) throw error;
 
             results.forEach(function(element) {
-                const docID = fixDocID(element.alias.replace(/blog\//gi, '').replace(/gunluk\//gi, ''));
+                element.documentID = fixDocID(element.alias.replace(/blog\//gi, '').replace(/gunluk\//gi, ''));
                 element.createdBy = "Murat Demir";
-                element.i18nKey = docID; // i18nKey should be matched with translations
-                element.taxonomy = generateTaxonomy(element.tagTitles, element.tagLinks);
+                element.i18nKey = element.documentID; // i18nKey should be matched with translations
                 downloadFiles(element.content);
                 if (element.language === "und") {
-                    addToBlogs("_tr-TR", docID, element);
-                    addToBlogs("_en-US", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "gunluk/", docID);
-                    addToRedirectionRecords("en/", element.alias, "blog/", docID);
+                    addToBlogs("_tr-TR", element);
+                    addToBlogs("_en-US", element);
+                    addToRedirectionRecords("tr/", element, "gunluk/");
+                    addToRedirectionRecords("en/", element, "blog/");
                 } else if (element.language === "tr") {
-                    addToBlogs("_tr-TR", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "gunluk/", docID);
+                    addToBlogs("_tr-TR", element);
+                    addToRedirectionRecords("tr/", element, "gunluk/");
                 } else if (element.language === "en") {
-                    addToBlogs("_en-US", docID, element);
-                    addToRedirectionRecords("en/", element.alias, "blog/", docID);
+                    addToBlogs("_en-US", element);
+                    addToRedirectionRecords("en/", element, "blog/");
                 }
             });
             getArticles();
@@ -197,32 +233,33 @@ function getBlogs() {
 
 function getArticles() {
     connection.query(
-        "SELECT u.language, u.alias, n.nid, n.type, n.status, FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', n.title, fdb.body_value AS 'content', GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR ',' ) AS 'tagTitles', GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR ',' ) AS 'tagLinks' FROM node n LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid LEFT JOIN taxonomy_index ti ON ti.nid = n.nid LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) WHERE n.type IN ('page', 'story') AND n.status='1' GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value ORDER BY n.created ASC",
+        "SELECT u.language, u.alias, n.nid, n.type, n.status, FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', n.title, fdb.body_value AS 'content', fdb.body_summary AS 'contentSummary', GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagTitles', GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagLinks' FROM node n LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid LEFT JOIN taxonomy_index ti ON ti.nid = n.nid LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source) WHERE n.type IN ('page', 'story') AND n.status='1' GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value, fdb.body_summary ORDER BY n.created ASC",
         function (error, results, fields) {
             if (error) throw error;
 
             results.forEach(function(element) {
-                const docID = fixDocID(element.alias.replace(/story\//gi, '').replace(/makale\//gi, ''));
+                element.documentID = fixDocID(element.alias.replace(/story\//gi, '').replace(/makale\//gi, ''));
                 element.createdBy = "Murat Demir";
-                element.i18nKey = docID; // i18nKey should be matched with translations
-                element.taxonomy = generateTaxonomy(element.tagTitles, element.tagLinks);
+                element.i18nKey = element.documentID; // i18nKey should be matched with translations
                 downloadFiles(element.content);
                 if (element.language === "und") {
-                    addToArticles("_tr-TR", docID, element);
-                    addToArticles("_en-US", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "makale/", docID);
-                    addToRedirectionRecords("en/", element.alias, "article/", docID);
+                    addToArticles("_tr-TR", element);
+                    addToArticles("_en-US", element);
+                    addToRedirectionRecords("tr/", element, "makale/");
+                    addToRedirectionRecords("en/", element, "article/");
                 } else if (element.language === "tr") {
-                    addToArticles("_tr-TR", docID, element);
-                    addToRedirectionRecords("tr/", element.alias, "makale/", docID);
+                    addToArticles("_tr-TR", element);
+                    addToRedirectionRecords("tr/", element, "makale/");
                 } else if (element.language === "en") {
-                    addToArticles("_en-US", docID, element);
-                    addToRedirectionRecords("en/", element.alias, "article/", docID);
+                    addToArticles("_en-US", element);
+                    addToRedirectionRecords("en/", element, "article/");
                 }
             });
             writeResultToFile();
         });
 }
+
+/* endregion */
 
 getTaxonomy();
 
