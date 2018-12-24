@@ -66,5 +66,5 @@ export class HtmlDocumentModel {
     articlePublisherURL?: string;
 
     /** taxonomy */
-    taxonomy?: Array<string>;
+    taxonomy?: any; // key: link, value: title
 }
