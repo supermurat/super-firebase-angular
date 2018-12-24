@@ -6,6 +6,8 @@ import { HtmlDocumentModel } from './html-document-model';
 export class PageModel extends HtmlDocumentModel {
     /** id of record */
     id?: string;
+    /** path of record */
+    path?: string;
     /** route path without id */
     routePath?: string;
     /** order number of record */

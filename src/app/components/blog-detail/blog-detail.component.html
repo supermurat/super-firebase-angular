@@ -7,10 +7,17 @@
             <div class="card-body">
                 <h2 class="card-title"><a [routerLink]="['/blog', blogID]">{{ blog.title }}</a></h2>
                 <p class="card-text" [innerHTML]="blog.content"></p>
+                <hr />
+                <div class="text-center">
+                    <div class="d-inline p-1" *ngFor="let tag of blog.taxonomy | keyvalue; trackBy:trackByIndex">
+                        <a class="badge badge-secondary" [routerLink]="['/tag', tag.key]">{{ tag.value }}</a>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-muted">
-                <!--<span i18n>Posted on {{ blog.created.toMillis() | date:'medium' }} by {{ blog.createdBy }}</span>-->
-                <div *ngFor="let tag of blog.taxonomy | keyvalue; trackBy:trackByIndex"><a [routerLink]="['/tag', tag.key]">{{ tag.value }}</a></div>
+                <span i18n>Posted on {{ blog.created.seconds * 1000 | date:'medium' }} by {{ blog.createdBy }}</span>
+                <br>
+                <span *ngIf="blog.changed && blog.created.seconds !== blog.changed.seconds" i18n>Updated on {{ blog.changed.seconds * 1000 | date:'medium' }} by {{ blog.changedBy }}</span>
             </div>
         </div>
 

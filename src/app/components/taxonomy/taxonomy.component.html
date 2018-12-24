@@ -10,9 +10,9 @@
         <article class="card my-4" *ngFor="let content of pagination.data | async; trackBy:trackByIndex">
             <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="Card image cap">
             <div class="card-body">
-                <h2 class="card-title"><a [routerLink]="[content.routePath, content.id]">{{ content.title }}</a></h2>
+                <h2 class="card-title"><a [routerLink]="[content.routePath, content.path]">{{ content.title }}</a></h2>
                 <p class="card-text" [innerHTML]="content.contentSummary"></p>
-                <a [routerLink]="[content.routePath, content.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
+                <a [routerLink]="[content.routePath, content.path]" class="btn btn-primary" i18n>Read More &rArr;</a>
             </div>
             <div class="card-footer text-muted">
                 <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>

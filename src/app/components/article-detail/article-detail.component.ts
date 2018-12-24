@@ -126,4 +126,13 @@ export class ArticleDetailComponent implements OnInit {
         );
     }
 
+    /**
+     * track content object array by index
+     * @param index: index no
+     * @param item: object
+     */
+    trackByIndex(index, item): number {
+        return index;
+    }
+
 }

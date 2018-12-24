@@ -7,6 +7,12 @@
                 <div class="card-body">
                     <h2 class="card-title"><a [routerLink]="['/article', articleID]">{{ article.title }}</a></h2>
                     <p class="card-text" [innerHTML]="article.content"></p>
+                    <hr />
+                    <div class="text-center">
+                        <div class="d-inline p-1" *ngFor="let tag of article.taxonomy | keyvalue; trackBy:trackByIndex">
+                            <a class="badge badge-secondary" [routerLink]="['/tag', tag.key]">{{ tag.value }}</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer text-muted">
                     <span i18n>Posted on {{ article.created.seconds * 1000 | date:'medium' }} by {{ article.createdBy }}</span>
