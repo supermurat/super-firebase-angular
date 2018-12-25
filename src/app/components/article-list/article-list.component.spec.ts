@@ -32,7 +32,7 @@ describe('ArticleListComponent', () => {
             ],
             imports: [
                 RouterTestingModule.withRoutes([
-                    {path: 'articles', component: ArticleListComponent},
+                    {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
                     {path: 'articles/:pageNo', component: ArticleListComponent}
                     ])
             ]
@@ -55,7 +55,8 @@ describe('ArticleListComponent', () => {
             .toEqual('My Articles');
     }));
 
-    it('count of page should be 3', async(() => {
+    it('count of record should be 3', async(() => {
+        activatedRouteStub.setParamMap({ pageNo: 1 });
         comp.articles$.subscribe(result => {
             expect(result.length)
                 .toEqual(3);
@@ -68,50 +69,25 @@ describe('ArticleListComponent', () => {
             .toBe(2);
     }));
 
-    it('should redirect to page 1 if page is not exist', fakeAsync(() => {
+    it('should redirect to page 2 if page is not exist', fakeAsync(() => {
         activatedRouteStub.setParamMap({ pageNo: 9 }); // page 9 not exist
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/articles/1');
+            .toEqual('/articles/2');
         fixture.detectChanges();
     }));
 
-    /*it('count of page should be 5', fakeAsync(() => {
-        testDataPL[0].unshift({payload: {doc: {id: 'fifth-article', data(): ArticleModel {
-                            return { orderNo: -5,
-                                id: 'fifth-article',
-                                title: 'Fifth Article',
-                                content: 'this is better sample 5',
-                                created: { seconds: 1544207665 }};
-                        }}}},
-            {payload: {doc: {id: 'fourth-article', data(): ArticleModel {
-                            return { orderNo: -4,
-                                id: 'fourth-article',
-                                title: 'Fourth Article',
-                                content: 'this is better sample 4',
-                                created: { seconds: 1544207666 },
-                                contentSummary: 'this is better'};
-                        }}}},
-            {payload: {doc: {id: 'third-article', data(): ArticleModel {
-                            return { orderNo: -3,
-                                id: 'third-article',
-                                title: 'Third Article',
-                                content: 'this is better sample 3',
-                                created: { seconds: 1544207667 },
-                                contentSummary: 'this is better'};
-                        }}}});
-        fixture.detectChanges();
-        activatedRouteStub.setParamMap({ pageNo: 1 });
+    it('count of records should be 2 on page 2', fakeAsync(() => {
+        activatedRouteStub.setParamMap({ pageNo: 2 });
         tick();
         fixture.detectChanges();
         comp.articles$.subscribe(result => {
             expect(result.length)
-                .toEqual(5);
-            testDataPL[0].splice(0, 3);
+                .toEqual(2);
         });
         fixture.detectChanges();
         tick();
-    }));*/
+    }));
 
 });

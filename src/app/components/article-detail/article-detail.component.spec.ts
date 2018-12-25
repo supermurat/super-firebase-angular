@@ -33,6 +33,7 @@ describe('ArticleDetailComponent', () => {
             imports: [
                 RouterTestingModule.withRoutes([
                     {path: 'article/:id', component: ArticleDetailComponent},
+                    {path: 'articles', component: ArticleDetailComponent},
                     {path: 'articles/:pageNo', component: ArticleDetailComponent},
                     {path: 'en/article/:id', component: ArticleDetailComponent},
                     {path: 'tr/article/:id', component: ArticleDetailComponent},
@@ -77,8 +78,8 @@ describe('ArticleDetailComponent', () => {
         fixture.detectChanges();
     }));
 
-    it("should redirection to '/article/first-article' if id is -3", fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: '-3' });
+    it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
+        activatedRouteStub.setParamMap({ id: '-1' });
         fixture.detectChanges();
         tick();
         fixture.detectChanges();

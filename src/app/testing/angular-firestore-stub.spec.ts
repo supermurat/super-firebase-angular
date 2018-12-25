@@ -1,96 +1,17 @@
 
 import { from } from 'rxjs';
-
-// test data
-const tDataBlog: Array<any> = [
-    { id: 'first-blog', routePath: '/blog', orderNo: -3,
-        title: 'First Blog', content: 'this is good sample', contentSummary: 'this is good',
-        created: { seconds: 1544207666 }, changed: { seconds: 1544207666 }},
-    { id: 'second-blog', routePath: '/blog', orderNo: -2,
-        title: 'Second Blog', content: 'this is better sample',
-        created: { seconds: 1544207667 }, changed: { seconds: 1544207666 }},
-    { id: 'third-blog', routePath: '/blog', orderNo: -1,
-        title: 'Third Blog', content: 'this is the best sample',
-        created: { seconds: 1544207668 }, changed: { seconds: 1544207666 }}
-];
-const tDataArticle: Array<any> = [
-    { id: 'first-article', routePath: '/article', orderNo: -3,
-        title: 'First article', content: 'this is good sample', contentSummary: 'this is good',
-        created: { seconds: 1544207666 }, changed: { seconds: 1544207666 }},
-    { id: 'second-article', routePath: '/article', orderNo: -2,
-        title: 'Second article', content: 'this is better sample',
-        created: { seconds: 1544207667 }, changed: { seconds: 1544207666 }},
-    { id: 'third-article', routePath: '/article', orderNo: -1,
-        title: 'Third article', content: 'this is the best sample',
-        created: { seconds: 1544207668 }, changed: { seconds: 1544207666 }}
-];
-const tDataTaxonomy: Array<any> = [
-    { id: 'first-tag', routePath: '/tag', orderNo: -3,
-        title: 'First tag',
-        created: { seconds: 1544207666 }},
-    { id: 'second-tag', routePath: '/tag', orderNo: -2,
-        title: 'Second tag',
-        created: { seconds: 1544207667 }},
-    { id: 'third-tag', routePath: '/tag', orderNo: -1,
-        title: 'Third tag',
-        created: { seconds: 1544207668 }}
-];
-
-// test data snap
-const tDataSnapBlog: Array<any> = [];
-tDataBlog.forEach(value => {
-    tDataSnapBlog.push({
-        payload: {
-            doc: {
-                id: value.id,
-                data(): any {
-                    return value;
-                }
-            }
-        }
-    });
-});
-const tDataSnapArticle: Array<any> = [];
-tDataArticle.forEach(value => {
-    tDataSnapArticle.push({
-        payload: {
-            doc: {
-                id: value.id,
-                data(): any {
-                    return value;
-                }
-            }
-        }
-    });
-});
-const tDataSnapTaxonomy: Array<any> = [];
-tDataTaxonomy.forEach(value => {
-    tDataSnapTaxonomy.push({
-        payload: {
-            doc: {
-                id: value.id,
-                data(): any {
-                    return value;
-                }
-            }
-        }
-    });
-});
+import {
+    getArrayStartAfterByDocument,
+    getArrayStartByNumberField, getArrayWhereByField,
+    getDataByPath,
+    getFirestoreSnap,
+    getSortedArrayByNumberKey
+} from './helpers.spec';
 
 export const angularFirestoreStub = {
     doc(path: string): any {
-        let tData: Array<any>;
-        let tDataSnap: Array<any>;
-        if (path.startsWith('articles_')) {
-            tData = tDataArticle;
-            tDataSnap = tDataSnapArticle;
-        } else if (path.startsWith('blogs_')) {
-            tData = tDataBlog;
-            tDataSnap = tDataSnapBlog;
-        } else if (path.startsWith('taxonomy_')) {
-            tData = tDataTaxonomy;
-            tDataSnap = tDataSnapTaxonomy;
-        }
+        const tData = getDataByPath(path);
+        const tDataSnap = getFirestoreSnap(tData);
 
         return {
             valueChanges(): any {
@@ -99,33 +20,28 @@ export const angularFirestoreStub = {
         };
     },
     collection(path: string, queryFn?: any): any {
-        let fieldPath: string;
-        let limitNumber: number;
-        let startAfterDoc: any;
-        let tData: Array<any>;
-        let tDataSnap: Array<any>;
-        if (path.startsWith('articles_')) {
-            tData = tDataArticle;
-            tDataSnap = tDataSnapArticle;
-        } else if (path.startsWith('blogs_')) {
-            tData = tDataBlog;
-            tDataSnap = tDataSnapBlog;
-        } else if (path.startsWith('taxonomy_')) {
-            tData = tDataTaxonomy;
-            tDataSnap = tDataSnapTaxonomy;
-        }
+        let limitNumberValue = -1;
+
+        const tDataFull = getDataByPath(path);
+        const tDataSnapFull = getFirestoreSnap(tDataFull);
+
+        let tData = tDataFull.slice();
+        let tDataSnap = getFirestoreSnap(tData);
 
         queryFn({
-            orderBy(fp): any {
-                fieldPath = fp;
+            orderBy(fieldPath): any {
+                tData = getSortedArrayByNumberKey(tData, fieldPath);
+                tDataSnap = getFirestoreSnap(tData);
 
                 return {
-                    limit(ln): any {
-                        limitNumber = ln;
+                    limit(limitNumber): any {
+                        limitNumberValue = limitNumber;
 
                         return {
-                            startAfter(sad): any {
-                                startAfterDoc = sad;
+                            startAfter(startAfterDoc): any {
+                                tData = getArrayStartAfterByDocument(tData, startAfterDoc);
+                                tData = tData.slice(0, limitNumber);
+                                tDataSnap = getFirestoreSnap(tData);
 
                                 return {
                                     snapshotChanges(): any {
@@ -134,28 +50,41 @@ export const angularFirestoreStub = {
                                 };
                             },
                             snapshotChanges(): any {
+                                tData = tData.slice(0, limitNumber);
+                                tDataSnap = getFirestoreSnap(tData);
+
                                 return from([tDataSnap]);
                             }};
                     },
-                    startAt(sat): any {
+                    startAt(startAtValue): any {
+                        tData = getArrayStartByNumberField(tData, fieldPath, startAtValue);
+                        tDataSnap = getFirestoreSnap(tData);
+
                         return {
-                            limit(size): any {
+                            limit(limitNumber): any {
+                                limitNumberValue = limitNumber;
+                                tData = tData.slice(0, limitNumber);
+                                tDataSnap = getFirestoreSnap(tData);
+
                                 return {fieldPath};
                             }
                         };
                     }
                 };
             },
-            where(fp, opStr, value): any {
-                fieldPath = fp;
+            where(fieldPath, opStr, value): any {
+                tData = getArrayWhereByField(tData, fieldPath, opStr, value);
+                tDataSnap = getFirestoreSnap(tData);
 
                 return {
-                    limit(ln): any {
-                        limitNumber = ln;
+                    limit(limitNumber): any {
+                        limitNumberValue = limitNumber;
 
                         return {
-                            startAfter(sad): any {
-                                startAfterDoc = sad;
+                            startAfter(startAfterDoc): any {
+                                tData = getArrayStartAfterByDocument(tData, startAfterDoc);
+                                tData = tData.slice(0, limitNumber);
+                                tDataSnap = getFirestoreSnap(tData);
 
                                 return {
                                     snapshotChanges(): any {
@@ -164,12 +93,19 @@ export const angularFirestoreStub = {
                                 };
                             },
                             snapshotChanges(): any {
+                                tData = tData.slice(0, limitNumber);
+                                tDataSnap = getFirestoreSnap(tData);
+
                                 return from([tDataSnap]);
                             }};
                     }
                 };
             }
         });
+        if (limitNumberValue > -1) {
+            tData = tData.slice(0, limitNumberValue);
+            tDataSnap = getFirestoreSnap(tData);
+        }
 
         return {
             valueChanges(): any {
@@ -184,25 +120,10 @@ export const angularFirestoreStub = {
                                     subscribe(queryFnSubscribe): any {
                                         queryFnSubscribe._next({
                                             map(queryFnMap): any {
-                                                let startAfterIndex = 0;
-                                                if (startAfterDoc)
-                                                    if (startAfterDoc.id === tData[0].id)
-                                                        startAfterIndex = 1;
-                                                    else if (startAfterDoc.id === tData[1].id)
-                                                        startAfterIndex = 2;
-                                                    else if (startAfterDoc.id === tData[2].id)
-                                                        startAfterIndex = 3;
-
-                                                const retVal = [];
-                                                if (limitNumber === undefined ||
-                                                    (limitNumber > 0 && startAfterIndex < tDataSnap.length))
-                                                    retVal.push(queryFnMap(tDataSnap[startAfterIndex]));
-                                                if (limitNumber === undefined ||
-                                                    (limitNumber > 1 && startAfterIndex + 1 < tDataSnap.length))
-                                                    retVal.push(queryFnMap(tDataSnap[startAfterIndex + 1]));
-                                                if (limitNumber === undefined ||
-                                                    (limitNumber > 2 && startAfterIndex + 2 < tDataSnap.length))
-                                                    retVal.push(queryFnMap(tDataSnap[startAfterIndex + 2]));
+                                                const retVal: Array<any> = [];
+                                                tDataSnap.forEach(item => {
+                                                    retVal.push(queryFnMap(item));
+                                                });
 
                                                 return retVal;
                                             }
@@ -217,27 +138,7 @@ export const angularFirestoreStub = {
                         return from([tData]);
                     },
                     subscribe(queryFnSubscribe): any {
-                        const retVal: Array<any> = [];
-                        let startAfterIndex = 0;
-                        if (startAfterDoc)
-                            if (startAfterDoc.id === tData[0].id)
-                                startAfterIndex = 1;
-                            else if (startAfterDoc.id === tData[1].id)
-                                startAfterIndex = 2;
-                            else if (startAfterDoc.id === tData[2].id)
-                                startAfterIndex = 3;
-
-                        if (limitNumber === undefined ||
-                            (limitNumber > 0 && startAfterIndex < tDataSnap.length))
-                            retVal.push(tDataSnap[startAfterIndex]);
-                        if (limitNumber === undefined ||
-                            (limitNumber > 1 && startAfterIndex + 1 < tDataSnap.length))
-                            retVal.push(tDataSnap[startAfterIndex + 1]);
-                        if (limitNumber === undefined ||
-                            (limitNumber > 2 && startAfterIndex + 2 < tDataSnap.length))
-                            retVal.push(tDataSnap[startAfterIndex + 2]);
-
-                        queryFnSubscribe(retVal);
+                        queryFnSubscribe(tDataSnap);
 
                         return from([tDataSnap]);
                     }

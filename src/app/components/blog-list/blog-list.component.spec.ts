@@ -56,6 +56,7 @@ describe('BlogListComponent', () => {
     }));
 
     it('count of blog should be 3', async(() => {
+        activatedRouteStub.setParamMap({ pageNo: 1 });
         comp.blogs$.subscribe(result => {
             expect(result.length)
                 .toEqual(3);

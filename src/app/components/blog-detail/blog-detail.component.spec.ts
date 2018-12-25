@@ -33,6 +33,7 @@ describe('BlogDetailComponent', () => {
             imports: [
                 RouterTestingModule.withRoutes([
                     {path: 'blog/:id', component: BlogDetailComponent},
+                    {path: 'blogs', component: BlogDetailComponent},
                     {path: 'blogs/:pageNo', component: BlogDetailComponent},
                     {path: 'en/blog/:id', component: BlogDetailComponent},
                     {path: 'tr/blog/:id', component: BlogDetailComponent},
@@ -77,8 +78,8 @@ describe('BlogDetailComponent', () => {
         fixture.detectChanges();
     }));
 
-    it("should redirection to '/blog/first-blog' if id is -3", fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: '-3' });
+    it("should redirection to '/blog/first-blog' if id is -1", fakeAsync(() => {
+        activatedRouteStub.setParamMap({ id: '-1' });
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
