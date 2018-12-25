@@ -10,7 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { By } from '@angular/platform-browser';
-import { angularFireStorageStub, angularFirestoreStub } from '../../testing';
+import { angularFireStorageStub, angularFirestoreStub } from '../../testing/index.spec';
 
 describe('PlaygroundComponent', () => {
     let fixture: ComponentFixture<PlaygroundComponent>;

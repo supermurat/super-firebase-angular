@@ -1,14 +1,17 @@
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlogListComponent } from './blog-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PagerService, SeoService } from '../../services';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-import { angularFirestoreStub } from '../../testing';
+import { PagerComponent } from '../pager/pager.component';
+import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+
+const activatedRouteStub = new ActivatedRouteStub();
 
 describe('BlogListComponent', () => {
     let fixture: ComponentFixture<BlogListComponent>;
@@ -19,14 +22,19 @@ describe('BlogListComponent', () => {
             declarations: [
                 BlogListComponent,
                 FooterComponent,
-                SideBarComponent
+                SideBarComponent,
+                PagerComponent
             ],
             providers: [
-                AlertService, SeoService,
+                AlertService, SeoService, PagerService,
+                { provide: ActivatedRoute, useValue: activatedRouteStub },
                 { provide: AngularFirestore, useValue: angularFirestoreStub }
             ],
             imports: [
-                RouterTestingModule.withRoutes([{path: 'blog', component: BlogListComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
+                    {path: 'blogs/:pageNo', component: BlogListComponent}
+                ])
             ]
         })
             .compileComponents()
@@ -55,9 +63,18 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
     }));
 
-    it('trackByBlog(2) should return 2', async(() => {
-        expect(comp.trackByBlog(2, {}))
+    it('trackByIndex(2) should return 2', async(() => {
+        expect(comp.trackByIndex(2, {}))
             .toBe(2);
+    }));
+
+    it('should redirect to page 1 if page is not exist', fakeAsync(() => {
+        activatedRouteStub.setParamMap({ pageNo: 9 }); // page 9 not exist
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/blogs/1');
+        fixture.detectChanges();
     }));
 
 });

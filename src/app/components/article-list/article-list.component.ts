@@ -130,11 +130,11 @@ export class ArticleListComponent implements OnInit {
     }
 
     /**
-     * track article object array by article
-     * @param index: article index no
-     * @param item: article object
+     * track content object array by index
+     * @param index: index no
+     * @param item: object
      */
-    trackByArticle(index, item): number {
+    trackByIndex(index, item): number {
         return index;
     }
 }

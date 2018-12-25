@@ -12,18 +12,23 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 
 const routes: Routes = [
+    /* region home paths */
     {
         path: '', redirectTo: 'home', pathMatch: 'full'
     },
     {
         path: 'home', component: HomeComponent
     },
+    /* endregion */
+    /* region en-US paths */
     {
-        path: 'playground', component: PlaygroundComponent
+        path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'
     },
-    // en-US
     {
-        path: 'blog', component: BlogListComponent
+        path: 'blogs/:pageNo', component: BlogListComponent
+    },
+    {
+        path: 'blog', redirectTo: 'blogs/1', pathMatch: 'full'
     },
     {
         path: 'blog/:id', component: BlogDetailComponent
@@ -43,10 +48,16 @@ const routes: Routes = [
     {
         path: 'tag/:id', component: TaxonomyComponent
     },
-    // end of en-US
-    // tr-TR
+    /* endregion */
+    /* region tr-TR paths */
     {
-        path: 'gunluk', component: BlogListComponent
+        path: 'gunlukler', redirectTo: 'gunlukler/1', pathMatch: 'full'
+    },
+    {
+        path: 'gunlukler/:pageNo', component: BlogListComponent
+    },
+    {
+        path: 'gunluk', redirectTo: 'gunlukler/1', pathMatch: 'full'
     },
     {
         path: 'gunluk/:id', component: BlogDetailComponent
@@ -66,7 +77,11 @@ const routes: Routes = [
     {
         path: 'etiket/:id', component: TaxonomyComponent
     },
-    // end of tr-TR
+    /* endregion */
+    /* region system-admin paths */
+    {
+        path: 'playground', component: PlaygroundComponent
+    },
     {
         path: 'admin-login', component: AdminLoginComponent
     },
@@ -76,6 +91,7 @@ const routes: Routes = [
     {
         path: '**', component: NotFoundComponent // maybe keeping current url is more cool, redirectTo: '404', pathMatch: 'full'
     }
+    /* endregion */
 ];
 
 /**

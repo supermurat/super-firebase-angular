@@ -1,5 +1,4 @@
 
-import { from } from 'rxjs';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,37 +10,7 @@ import { AlertService, SeoService } from '../../services';
 import { ArticleModel } from '../../models';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-
-import { ActivatedRoute, ActivatedRouteStub } from '../../testing/activated-route-stub';
-
-const testData: any = [[
-    {payload: {doc: {id: 'first-article', data(): ArticleModel {
-                    return { orderNo: -1,
-                        id: 'first-article',
-                        title: 'First Article',
-                        content: 'this is good sample',
-                        created: { seconds: 1544207668 }};
-                }}}}
-]];
-
-const angularFirestoreStub = {
-    doc: jasmine.createSpy('doc').and
-        .returnValue(
-        {
-            valueChanges: jasmine.createSpy('valueChanges').and
-                .returnValue(from([testData[0][0].payload.doc.data()]))
-        }),
-    collection(path: string, queryFn?: any): any {
-        return {
-            snapshotChanges(): any {
-                return from(testData);
-            },
-            valueChanges(): any {
-                return from([testData[0][0].payload.doc.data()]);
-            }
-        };
-    }
-};
+import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
@@ -85,16 +54,16 @@ describe('ArticleDetailComponent', () => {
             .toBeTruthy();
     }));
 
-    it('should load first-article', async(() => {
+    it('should load first-article', fakeAsync(() => {
         activatedRouteStub.setParamMap({ id: 'first-article' });
         fixture.detectChanges();
         let lastArticle = new ArticleModel();
         comp.article$.subscribe(article => {
             lastArticle = article;
-        }, undefined, () => {
-            expect(lastArticle.id)
-                .toEqual('first-article');
         });
+        tick();
+        expect(lastArticle.id)
+            .toEqual('first-article');
     }));
 
     it('should redirection to translation of page', fakeAsync(() => {
@@ -108,9 +77,9 @@ describe('ArticleDetailComponent', () => {
         fixture.detectChanges();
     }));
 
-    it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
+    it("should redirection to '/article/first-article' if id is -3", fakeAsync(() => {
+        activatedRouteStub.setParamMap({ id: '-3' });
         fixture.detectChanges();
-        activatedRouteStub.setParamMap({ id: '-1' });
         tick();
         fixture.detectChanges();
         expect(comp.router.url)

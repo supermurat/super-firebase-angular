@@ -9,7 +9,7 @@ import { AlertService, PaginationService, SeoService } from '../../services';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 
 import { ScrollableDirective } from '../../directives';
-import { angularFirestoreStub } from '../../testing';
+import { angularFirestoreStub } from '../../testing/index.spec';
 
 describe('TaxonomyComponent', () => {
     let fixture: ComponentFixture<TaxonomyComponent>;

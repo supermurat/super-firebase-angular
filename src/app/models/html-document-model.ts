@@ -10,8 +10,10 @@ export class HtmlDocumentModel {
     title ? = environment.defaultTitle;
     /** description of page */
     description ? = environment.defaultDescription;
-    /** image url of page */
+    /** image url of content */
     image?: string;
+    /** image alternate text */
+    imageAltText?: string;
 
     /** slug of page */
     slug?: string;
