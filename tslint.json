@@ -26,13 +26,9 @@
       true
     ],
     "label-position": true,
-    "no-string-literal": false,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "completed-docs": true,
-
-    // following rules are temporary, will be fixed in next commit
-    "template-cyclomatic-complexity": [false, 5]
+    "completed-docs": true
   }
 }

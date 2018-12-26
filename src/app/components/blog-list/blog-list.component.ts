@@ -116,12 +116,12 @@ export class BlogListComponent implements OnInit {
             .pipe(map(actions =>
                 actions.map(action => {
                     const id = action.payload.doc.id;
-                    const data = action.payload.doc.data();
+                    const data = action.payload.doc.data() as BlogModel;
                     if (!data.hasOwnProperty('contentSummary')) {
-                        data['contentSummary'] = data['content'];
+                        data.contentSummary = data.content;
                     }
 
-                    return {id, ...data as BlogModel};
+                    return {id, ...data};
                 })));
         this.blogs$.subscribe(articles => {
             if (articles.length > 0) {

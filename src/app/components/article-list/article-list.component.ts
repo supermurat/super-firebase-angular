@@ -115,12 +115,12 @@ export class ArticleListComponent implements OnInit {
             .pipe(map(actions =>
                 actions.map(action => {
                     const id = action.payload.doc.id;
-                    const data = action.payload.doc.data();
+                    const data = action.payload.doc.data() as ArticleModel;
                     if (!data.hasOwnProperty('contentSummary')) {
-                        data['contentSummary'] = data['content'];
+                        data.contentSummary = data.content;
                     }
 
-                    return { id, ...data as ArticleModel };
+                    return { id, ...data };
                 })));
         this.articles$.subscribe(articles => {
             if (articles.length > 0) {

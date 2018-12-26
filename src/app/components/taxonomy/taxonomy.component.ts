@@ -38,8 +38,8 @@ export class TaxonomyComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            this.tagID = params['id'];
+        this.route.paramMap.subscribe(pmap => {
+            this.tagID = pmap.get('id');
 
             this.afs.doc<any>(`taxonomy_${this.locale}/${this.tagID}`)
                 .valueChanges()
