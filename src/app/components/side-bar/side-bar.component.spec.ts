@@ -14,6 +14,10 @@ describe('SideBarComponent', () => {
                 fixture = TestBed.createComponent(SideBarComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

@@ -36,6 +36,10 @@ describe('PlaygroundComponent', () => {
                 fixture = TestBed.createComponent(PlaygroundComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -185,6 +189,10 @@ describe('PlaygroundComponentAsync', () => {
             .then(() => {
                 fixture = TestBed.createComponent(PlaygroundComponent);
                 comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -273,6 +281,10 @@ describe('PlaygroundComponentServer', () => {
             .then(() => {
                 fixture = TestBed.createComponent(PlaygroundComponent);
                 comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

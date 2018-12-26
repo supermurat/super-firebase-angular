@@ -32,6 +32,10 @@ describe('TaxonomyComponent', () => {
                 fixture = TestBed.createComponent(TaxonomyComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

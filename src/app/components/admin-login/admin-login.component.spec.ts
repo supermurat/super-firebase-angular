@@ -84,6 +84,10 @@ describe('AdminLoginComponent', () => {
                 fixture = TestBed.createComponent(AdminLoginComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -119,6 +123,10 @@ describe('AdminLoginComponentAuthService', () => {
                 afAuth = TestBed.get(AngularFireAuth);
                 fakeAuthState.next(undefined);
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -142,7 +150,11 @@ describe('AdminLoginComponentAuthService', () => {
         comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
-        comp.auth.register(credentialsMock);
+        comp.auth.register(credentialsMock)
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
 
         expect(afAuth.auth.createUserWithEmailAndPassword)
@@ -158,7 +170,11 @@ describe('AdminLoginComponentAuthService', () => {
         comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
-        comp.auth.logIn(credentialsMock);
+        comp.auth.logIn(credentialsMock)
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
 
         expect(afAuth.auth.signInWithEmailAndPassword)
@@ -175,7 +191,11 @@ describe('AdminLoginComponentAuthService', () => {
             lastUser = user;
         });
         fakeAuthState.next(userMock);
-        comp.auth.signOut();
+        comp.auth.signOut()
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         expect(lastUser)
             .toBe(undefined);

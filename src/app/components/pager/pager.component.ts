@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PagerModel } from '../../models';
-import { PagerService } from '../../services';
+import { AlertService, PagerService } from '../../services';
 
 /**
  * Pager Component
@@ -29,9 +29,11 @@ export class PagerComponent implements OnDestroy, OnInit {
      * constructor of PagerComponent
      * @param pagerService: PagerService
      * @param router: Router
+     * @param alert: AlertService
      */
     constructor(private readonly pagerService: PagerService,
-                private readonly router: Router) {
+                private readonly router: Router,
+                private readonly alert: AlertService) {
     }
 
     /**
@@ -42,7 +44,10 @@ export class PagerComponent implements OnDestroy, OnInit {
             .subscribe(pagerModel => {
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {
                     pagerModel.currentPageNo = !pagerModel.currentPageNo ? 1 : pagerModel.currentPageNo < 1 ? 1 : pagerModel.maxPageNo;
-                    this.router.navigate([pagerModel.pagePath, pagerModel.currentPageNo]);
+                    this.router.navigate([pagerModel.pagePath, pagerModel.currentPageNo])
+                        .catch(reason => {
+                            this.alert.error(reason);
+                        });
                 } else {
                     this.previousPageNo = pagerModel.currentPageNo - 1;
                     this.nextPageNo = pagerModel.currentPageNo + 1;

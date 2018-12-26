@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ArticleModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { ArticleDetailComponent } from './article-detail.component';
@@ -21,7 +22,8 @@ describe('ArticleDetailComponent', () => {
             declarations: [
                 ArticleDetailComponent,
                 FooterComponent,
-                SideBarComponent
+                SideBarComponent,
+                AlertComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -45,6 +47,10 @@ describe('ArticleDetailComponent', () => {
                 fixture = TestBed.createComponent(ArticleDetailComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -73,7 +79,6 @@ describe('ArticleDetailComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/tr/article/first-article');
-        fixture.detectChanges();
     }));
 
     it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
@@ -83,7 +88,6 @@ describe('ArticleDetailComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/article/first-article');
-        fixture.detectChanges();
     }));
 
 });

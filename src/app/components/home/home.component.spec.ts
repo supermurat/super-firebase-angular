@@ -24,6 +24,10 @@ describe('HomeComponent', () => {
                 fixture = TestBed.createComponent(HomeComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

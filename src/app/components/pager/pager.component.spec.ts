@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PagerService } from '../../services';
+import { AlertService, PagerService, SeoService } from '../../services';
+import { AlertComponent } from '../alert/alert.component';
 import { PagerComponent } from './pager.component';
 
 describe('PagerComponent', () => {
@@ -9,8 +10,13 @@ describe('PagerComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [PagerComponent],
-            providers: [PagerService],
+            declarations: [
+                PagerComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService, PagerService
+            ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PagerComponent}])
             ]
@@ -20,6 +26,10 @@ describe('PagerComponent', () => {
                 fixture = TestBed.createComponent(PagerComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

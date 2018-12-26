@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BlogModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { BlogDetailComponent } from './blog-detail.component';
@@ -20,7 +21,8 @@ describe('BlogDetailComponent', () => {
             declarations: [
                 BlogDetailComponent,
                 FooterComponent,
-                SideBarComponent
+                SideBarComponent,
+                AlertComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -44,6 +46,10 @@ describe('BlogDetailComponent', () => {
                 fixture = TestBed.createComponent(BlogDetailComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -72,7 +78,6 @@ describe('BlogDetailComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/tr/blog/first-blog');
-        fixture.detectChanges();
     }));
 
     it("should redirection to '/blog/first-blog' if id is -1", fakeAsync(() => {
@@ -82,7 +87,6 @@ describe('BlogDetailComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/blog/first-blog');
-        fixture.detectChanges();
     }));
 
 });

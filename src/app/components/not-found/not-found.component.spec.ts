@@ -24,6 +24,10 @@ describe('NotFoundComponent', () => {
                 fixture = TestBed.createComponent(NotFoundComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

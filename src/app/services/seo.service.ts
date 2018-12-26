@@ -211,7 +211,10 @@ export class SeoService {
                 // this.router.navigate can't work because it is out of base url
                 window.location.href = destinationURL;
             } else {
-                this.router.navigate([destinationURL]);
+                this.router.navigate([destinationURL])
+                    .catch(reason => {
+                        console.error(reason);
+                    });
             }
         } else {
             this.httpStatus$.next({
@@ -226,7 +229,10 @@ export class SeoService {
      */
     http404(): void {
         if (isPlatformBrowser(this.platformId)) {
-            this.router.navigate([this.router.url, 'http-404']);
+            this.router.navigate([this.router.url, 'http-404'])
+                .catch(reason => {
+                    console.error(reason);
+                });
         } else {
             this.httpStatus$.next({
                 code: 404

@@ -28,6 +28,10 @@ describe('NavMenuComponent', () => {
                 fixture = TestBed.createComponent(NavMenuComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -56,7 +60,11 @@ describe('NavMenuComponent', () => {
         const location = injector.get(Location);
         const router = injector.get(Router);
         router.initialNavigation();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();

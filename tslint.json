@@ -33,7 +33,6 @@
     "completed-docs": true,
 
     // following rules are temporary, will be fixed in next commit
-    "no-floating-promises": false,
     "promise-function-async": false,
     "no-unbound-method": false,
     "comment-type": false,

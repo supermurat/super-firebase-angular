@@ -12,4 +12,7 @@ if (environment.production) {
 }
 
 platformBrowserDynamic()
-    .bootstrapModule(AppModule);
+    .bootstrapModule(AppModule)
+    .catch(reason => {
+        console.error(reason);
+    });

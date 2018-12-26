@@ -1,15 +1,19 @@
 import { AppPage } from './app.po';
 
 describe('super-firebase-angular App', () => {
-  let page: AppPage;
+    let page: AppPage;
 
-  beforeEach(() => {
-    page = new AppPage();
-  });
+    beforeEach(() => {
+        page = new AppPage();
+    });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText())
-        .toEqual('Welcome!');
-  });
+    it('should display welcome message', () => {
+        page.navigateTo()
+            .catch(reason => {
+                console.error(reason);
+            });
+
+        return expect(page.getParagraphText())
+            .toEqual('Welcome!');
+    });
 });

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import { ArticleModel } from '../../models';
-import { SeoService } from '../../services';
+import { AlertService, SeoService } from '../../services';
 
 /** State key of current article */
 const ARTICLE_KEY = makeStateKey<any>('article');
@@ -28,6 +28,7 @@ export class ArticleDetailComponent implements OnInit {
      * constructor of ArticleDetailComponent
      * @param afs: AngularFirestore
      * @param seo: SeoService
+     * @param alert: AlertService
      * @param router: Router
      * @param route: ActivatedRoute
      * @param state: TransferState
@@ -36,6 +37,7 @@ export class ArticleDetailComponent implements OnInit {
     constructor(
         private readonly afs: AngularFirestore,
         private readonly seo: SeoService,
+        private readonly alert: AlertService,
         public router: Router,
         private readonly route: ActivatedRoute,
         private readonly state: TransferState,
@@ -58,12 +60,21 @@ export class ArticleDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0) {
                             data.map(pld => {
-                                this.router.navigate(['/article', pld.payload.doc.id]);
+                                this.router.navigate(['/article', pld.payload.doc.id])
+                                    .catch(reason => {
+                                        this.alert.error(reason);
+                                    });
                             });
                         } else if (pID === 0) {
-                            this.router.navigate(['/articles']);
+                            this.router.navigate(['/articles'])
+                                .catch(reason => {
+                                    this.alert.error(reason);
+                                });
                         } else {
-                            this.router.navigate(['/article', pID + 1]);
+                            this.router.navigate(['/article', pID + 1])
+                                .catch(reason => {
+                                    this.alert.error(reason);
+                                });
                         }
                     });
 

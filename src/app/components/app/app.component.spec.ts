@@ -41,6 +41,10 @@ describe('AppComponent', () => {
                 fixture = TestBed.createComponent(AppComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -87,6 +91,10 @@ describe('AppComponentSeoService', () => {
                 fixture = TestBed.createComponent(AppComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -201,6 +209,10 @@ describe('AppComponentAlertService', () => {
                 fixture = TestBed.createComponent(AppComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
@@ -227,7 +239,11 @@ describe('AppComponentAlertService', () => {
         router.initialNavigation();
         comp.alert.success('My success message', false);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
@@ -241,7 +257,11 @@ describe('AppComponentAlertService', () => {
         router.initialNavigation();
         comp.alert.success('My success message', true);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
@@ -272,7 +292,11 @@ describe('AppComponentAlertService', () => {
         router.initialNavigation();
         comp.alert.error('My error message', false);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
@@ -286,7 +310,11 @@ describe('AppComponentAlertService', () => {
         router.initialNavigation();
         comp.alert.error('My error message', true);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();

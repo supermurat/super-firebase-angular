@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, PagerService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PagerComponent } from '../pager/pager.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
@@ -20,7 +21,8 @@ describe('ArticleListComponent', () => {
                 ArticleListComponent,
                 FooterComponent,
                 SideBarComponent,
-                PagerComponent
+                PagerComponent,
+                AlertComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService,
@@ -39,6 +41,10 @@ describe('ArticleListComponent', () => {
                 fixture = TestBed.createComponent(ArticleListComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

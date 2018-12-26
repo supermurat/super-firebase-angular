@@ -26,6 +26,10 @@ describe('AlertComponent', () => {
                 fixture = TestBed.createComponent(AlertComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 

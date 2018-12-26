@@ -14,6 +14,10 @@ describe('FooterComponent', () => {
                 fixture = TestBed.createComponent(FooterComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
             });
     }));
 
