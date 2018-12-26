@@ -8,7 +8,7 @@
     "encoding": "UTF-8",
     "defaultLanguage": "en",
     "languages": ["en", "tr"],
-    "removeUnusedIds": false,
+    "removeUnusedIds": true,
     "supportNgxTranslate": false,
     "ngxTranslateExtractionPattern": "@@|ngx-translate",
     "useSourceAsTarget": true,
