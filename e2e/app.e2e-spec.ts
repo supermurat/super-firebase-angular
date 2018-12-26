@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { AppPage } from './app.po';
 
 describe('super-firebase-angular App', () => {
@@ -7,7 +8,7 @@ describe('super-firebase-angular App', () => {
         page = new AppPage();
     });
 
-    it('should display welcome message', () => {
+    it('should display welcome message', async(async () => {
         page.navigateTo()
             .catch(reason => {
                 console.error(reason);
@@ -15,5 +16,5 @@ describe('super-firebase-angular App', () => {
 
         return expect(page.getParagraphText())
             .toEqual('Welcome!');
-    });
+    }));
 });

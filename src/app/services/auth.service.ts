@@ -45,7 +45,7 @@ export class AuthService {
      * register user
      * @param credentials: user credentials
      */
-    register(credentials: UserCredentialsModel): Promise<any> {
+    async register(credentials: UserCredentialsModel): Promise<any> {
         return this.afAuth.auth
             .createUserWithEmailAndPassword(
                 credentials.email,
@@ -57,7 +57,7 @@ export class AuthService {
      * log in with credentials
      * @param credentials: user credentials
      */
-    logIn(credentials: UserCredentialsModel): Promise<any> {
+    async logIn(credentials: UserCredentialsModel): Promise<any> {
         return this.afAuth.auth
             .signInWithEmailAndPassword(
                 credentials.email,
@@ -68,7 +68,7 @@ export class AuthService {
     /**
      * sign in with google
      */
-    googleSignIn(): Promise<void> {
+    async googleSignIn(): Promise<void> {
         const provider = new auth.GoogleAuthProvider();
 
         return this.oAuthLogin(provider);
@@ -100,7 +100,7 @@ export class AuthService {
      * @param displayName: display name
      * @param photoURL: photo URL
      */
-    private updateUserData({uid, email, displayName, photoURL}): Promise<void> {
+    private async updateUserData({uid, email, displayName, photoURL}): Promise<void> {
         const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
 
         const data = {

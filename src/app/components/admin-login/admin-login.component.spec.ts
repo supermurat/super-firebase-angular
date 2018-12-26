@@ -27,13 +27,13 @@ const angularFirestoreStub = {
 
 const fakeAuthState = new Subject();
 
-const fakeSignInHandler = (email, password): Promise<any> => {
+const fakeSignInHandler = async (email, password): Promise<any> => {
     fakeAuthState.next(userMock);
 
     return Promise.resolve(userMock);
 };
 
-const fakeSignOutHandler = (): Promise<any> => {
+const fakeSignOutHandler = async (): Promise<any> => {
     fakeAuthState.next(undefined);
 
     return Promise.resolve();

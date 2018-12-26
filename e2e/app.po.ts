@@ -7,14 +7,14 @@ export class AppPage {
     /**
      * go to home page
      */
-    navigateTo(): wdpromise.Promise<any> {
+    async navigateTo(): wdpromise.Promise<any> {
         return browser.get('/');
     }
 
     /**
      * get text of first h1 element in app-root
      */
-    getParagraphText(): wdpromise.Promise<string> {
+    async getParagraphText(): wdpromise.Promise<string> {
         return element(by.css('app-root h1'))
             .getText();
     }
