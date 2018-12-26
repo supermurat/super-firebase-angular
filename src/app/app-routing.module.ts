@@ -12,6 +12,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { QuoteDetailComponent } from './components/quote-detail/quote-detail.component';
 import { QuoteListComponent } from './components/quote-list/quote-list.component';
+import { SearchComponent } from './components/search/search.component';
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 
 const routes: Routes = [
@@ -166,6 +167,9 @@ const routes: Routes = [
     },
     // endregion
     // region system-admin paths
+    {
+        path: 'search', component: SearchComponent
+    },
     {
         path: 'playground', component: PlaygroundComponent
     },

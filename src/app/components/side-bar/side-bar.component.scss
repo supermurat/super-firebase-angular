@@ -1,0 +1,36 @@
+
+.gsc-search-box input {
+  width: 100%;
+  padding: 0 2px 0 0;
+  background: url('http://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png') left center no-repeat rgb(255, 255, 255);
+  text-indent: 48px;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+.gsc-search-button-v2 {
+  font-size: 0;
+  padding: 6px 27px;
+  width: auto;
+  vertical-align: middle;
+  border: 1px solid #3079ed;
+  border-radius: 2px;
+  background-color: #4d90fe;
+  background-image: linear-gradient(to top, #4d90fe, #4787ed);
+}
+
+.gsc-search-button-v2:hover,
+.gsc-search-button-v2:focus {
+  border-color: #666;
+  background-color: #4d90fe;
+  background-image: none;
+  filter: none;
+}
+
+.gsc-search-button-v2 svg {
+  fill: #fff;
+}
+
+.gsc-search-button {
+  margin-left: 2px;
+}

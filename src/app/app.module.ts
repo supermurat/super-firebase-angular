@@ -30,6 +30,7 @@ import { PagerComponent } from './components/pager/pager.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { QuoteDetailComponent } from './components/quote-detail/quote-detail.component';
 import { QuoteListComponent } from './components/quote-list/quote-list.component';
+import { SearchComponent } from './components/search/search.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 import { ScrollableDirective } from './directives';
@@ -60,7 +61,8 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         JokeListComponent,
         JokeDetailComponent,
         QuoteListComponent,
-        QuoteDetailComponent
+        QuoteDetailComponent,
+        SearchComponent
     ],
     imports: [
         CommonModule,
