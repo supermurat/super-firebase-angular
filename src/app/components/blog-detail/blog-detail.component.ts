@@ -61,20 +61,23 @@ export class BlogDetailComponent implements OnInit {
                         if (data && data.length > 0) {
                             data.map(pld => {
                                 this.router.navigate(['/blog', pld.payload.doc.id])
-                                    .catch(reason => {
-                                        this.alert.error(reason);
-                                    });
+                                    .catch(// istanbul ignore next
+                                        reason => {
+                                            this.alert.error(reason);
+                                        });
                             });
                         } else if (pID === 0) {
                             this.router.navigate(['/blogs'])
-                                .catch(reason => {
-                                    this.alert.error(reason);
-                                });
+                                .catch(// istanbul ignore next
+                                    reason => {
+                                        this.alert.error(reason);
+                                    });
                         } else {
                             this.router.navigate(['/blog', pID + 1])
-                                .catch(reason => {
-                                    this.alert.error(reason);
-                                });
+                                .catch(// istanbul ignore next
+                                    reason => {
+                                        this.alert.error(reason);
+                                    });
                         }
                     });
 

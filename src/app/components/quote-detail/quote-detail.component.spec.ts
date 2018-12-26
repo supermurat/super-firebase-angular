@@ -90,4 +90,9 @@ describe('QuoteDetailComponent', () => {
             .toEqual('/quote/first-quote');
     }));
 
+    it('trackByIndex(2) should return 2', async(() => {
+        expect(comp.trackByIndex(2, {}))
+            .toBe(2);
+    }));
+
 });

@@ -61,20 +61,23 @@ export class QuoteDetailComponent implements OnInit {
                         if (data && data.length > 0) {
                             data.map(pld => {
                                 this.router.navigate(['/quote', pld.payload.doc.id])
-                                    .catch(reason => {
-                                        this.alert.error(reason);
-                                    });
+                                    .catch(// istanbul ignore next
+                                        reason => {
+                                            this.alert.error(reason);
+                                        });
                             });
                         } else if (pID === 0) {
                             this.router.navigate(['/quotes'])
-                                .catch(reason => {
-                                    this.alert.error(reason);
-                                });
+                                .catch(// istanbul ignore next
+                                    reason => {
+                                        this.alert.error(reason);
+                                    });
                         } else {
                             this.router.navigate(['/quote', pID + 1])
-                                .catch(reason => {
-                                    this.alert.error(reason);
-                                });
+                                .catch(// istanbul ignore next
+                                    reason => {
+                                        this.alert.error(reason);
+                                    });
                         }
                     });
 
