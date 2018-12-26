@@ -6,6 +6,8 @@ import { ArticleListComponent } from './components/article-list/article-list.com
 import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { HomeComponent } from './components/home/home.component';
+import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
+import { JokeListComponent } from './components/joke-list/joke-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
@@ -45,6 +47,18 @@ const routes: Routes = [
         path: 'article/:id', component: ArticleDetailComponent
     },
     {
+        path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'
+    },
+    {
+        path: 'jokes/:pageNo', component: JokeListComponent
+    },
+    {
+        path: 'joke', redirectTo: 'jokes/1', pathMatch: 'full'
+    },
+    {
+        path: 'joke/:id', component: JokeDetailComponent
+    },
+    {
         path: 'tag/:id', component: TaxonomyComponent
     },
     // endregion
@@ -72,6 +86,42 @@ const routes: Routes = [
     },
     {
         path: 'makale/:id', component: ArticleDetailComponent
+    },
+    {
+        path: 'eglence', redirectTo: 'eglence/1', pathMatch: 'full'
+    },
+    {
+        path: 'eglence/:pageNo', component: JokeListComponent
+    },
+    {
+        path: 'fikralar', redirectTo: 'fikralar/1', pathMatch: 'full'
+    },
+    {
+        path: 'fikralar/:pageNo', component: JokeListComponent
+    },
+    {
+        path: 'fikra', redirectTo: 'eglence/1', pathMatch: 'full'
+    },
+    {
+        path: 'fikra/:id', component: JokeDetailComponent
+    },
+    {
+        path: 'saka', redirectTo: 'eglence/1', pathMatch: 'full'
+    },
+    {
+        path: 'saka/:id', component: JokeDetailComponent
+    },
+    {
+        path: 'espri', redirectTo: 'eglence/1', pathMatch: 'full'
+    },
+    {
+        path: 'espri/:id', component: JokeDetailComponent
+    },
+    {
+        path: 'soguk-espri', redirectTo: 'eglence/1', pathMatch: 'full'
+    },
+    {
+        path: 'soguk-espri/:id', component: JokeDetailComponent
     },
     {
         path: 'etiket/:id', component: TaxonomyComponent

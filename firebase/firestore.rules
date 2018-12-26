@@ -20,6 +20,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+    match /jokes_en-US/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /jokes_tr-TR/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /pages_en-US/{document=**} {
       allow read: if true;
       allow write: if false;

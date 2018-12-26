@@ -21,6 +21,8 @@ import { BlogDetailComponent } from './components/blog-detail/blog-detail.compon
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
+import { JokeListComponent } from './components/joke-list/joke-list.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -52,7 +54,9 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         FooterComponent,
         SideBarComponent,
         PagerComponent,
-        TaxonomyComponent
+        TaxonomyComponent,
+        JokeListComponent,
+        JokeDetailComponent
     ],
     imports: [
         CommonModule,

@@ -153,7 +153,7 @@ function addToJokes(lang, element) {
         addToRedirectionRecords("en/", element, "joke/");
     }
     else if (lang === "_tr-TR") {
-        newData.routePath = "/fikra";
+        newData.routePath = element.type === "sogukespriler" ? "/soguk-espri" : "/fikra";
         addToRedirectionRecords("tr/", element, "fikra/");
     }
     if (newData.contentSummary === undefined || newData.contentSummary === null || newData.contentSummary.trim() === "") {
