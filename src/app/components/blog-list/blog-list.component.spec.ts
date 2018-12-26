@@ -1,15 +1,12 @@
-
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { BlogListComponent } from './blog-list.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, PagerService, SeoService } from '../../services';
-import { FooterComponent } from '../footer/footer.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
-import { PagerComponent } from '../pager/pager.component';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { FooterComponent } from '../footer/footer.component';
+import { PagerComponent } from '../pager/pager.component';
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { BlogListComponent } from './blog-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
@@ -27,8 +24,8 @@ describe('BlogListComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, PagerService,
-                { provide: ActivatedRoute, useValue: activatedRouteStub },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -56,7 +53,7 @@ describe('BlogListComponent', () => {
     }));
 
     it('count of blog should be 3', async(() => {
-        activatedRouteStub.setParamMap({ pageNo: 1 });
+        activatedRouteStub.setParamMap({pageNo: 1});
         comp.blogs$.subscribe(result => {
             expect(result.length)
                 .toEqual(3);
@@ -70,7 +67,7 @@ describe('BlogListComponent', () => {
     }));
 
     it('should redirect to page 1 if page is not exist', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ pageNo: 9 }); // page 9 not exist
+        activatedRouteStub.setParamMap({pageNo: 9}); // page 9 not exist
         tick();
         fixture.detectChanges();
         expect(comp.router.url)

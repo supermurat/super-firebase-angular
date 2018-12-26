@@ -6,7 +6,7 @@
     "migrate-to-firebase": "node migrate-to-firebase.js"
   },
   "dependencies": {
-    "firebase-admin": "^6.3.0",
+    "firebase-admin": "^6.4.0",
     "fs": "^0.0.1-security",
     "mysql": "^2.16.0",
     "latinize": "0.4.0",

@@ -1,11 +1,10 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { AdminLoginComponent } from './admin-login.component';
-import { AuthService, SeoService } from '../../services';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
 import { from, Subject } from 'rxjs';
+import { AuthService, SeoService } from '../../services';
+import { AdminLoginComponent } from './admin-login.component';
 
 const credentialsMock = {
     email: 'abc@123.com',
@@ -73,8 +72,8 @@ describe('AdminLoginComponent', () => {
             ],
             providers: [
                 SeoService, AuthService,
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireAuth, useValue: angularFireAuthStub }
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: AngularFireAuth, useValue: angularFireAuthStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])
@@ -106,8 +105,8 @@ describe('AdminLoginComponentAuthService', () => {
             ],
             providers: [
                 SeoService, AuthService,
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireAuth, useValue: angularFireAuthStub }
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: AngularFireAuth, useValue: angularFireAuthStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])

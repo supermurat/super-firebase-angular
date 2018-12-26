@@ -1,16 +1,14 @@
-
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { RouterTestingModule } from '@angular/router/testing';
-import { ArticleDetailComponent } from './article-detail.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
-
-import { AlertService, SeoService } from '../../services';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ArticleModel } from '../../models';
+import { AlertService, SeoService } from '../../services';
+import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { ArticleDetailComponent } from './article-detail.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
@@ -27,8 +25,8 @@ describe('ArticleDetailComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, TransferState,
-                { provide: ActivatedRoute, useValue: activatedRouteStub },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -39,7 +37,7 @@ describe('ArticleDetailComponent', () => {
                     {path: 'tr/article/:id', component: ArticleDetailComponent},
                     {path: 'en/article', component: ArticleDetailComponent},
                     {path: 'tr/article', component: ArticleDetailComponent}
-                    ])
+                ])
             ]
         })
             .compileComponents()
@@ -56,7 +54,7 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it('should load first-article', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: 'first-article' });
+        activatedRouteStub.setParamMap({id: 'first-article'});
         fixture.detectChanges();
         let lastArticle = new ArticleModel();
         comp.article$.subscribe(article => {
@@ -68,7 +66,7 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: 'first-article' });
+        activatedRouteStub.setParamMap({id: 'first-article'});
         fixture.detectChanges();
         comp.checkTranslation(undefined);
         tick();
@@ -79,7 +77,7 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: '-1' });
+        activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
         fixture.detectChanges();

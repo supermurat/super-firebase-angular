@@ -1,10 +1,10 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { PagerService, SeoService } from '../../services';
-import { ArticleModel, PagerModel } from '../../models';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ArticleModel, PagerModel } from '../../models';
+import { PagerService, SeoService } from '../../services';
 
 /**
  * Article List Component
@@ -47,11 +47,11 @@ export class ArticleListComponent implements OnInit {
      * @param pagerService: PagerService
      * @param locale: LOCALE_ID
      */
-    constructor(private afs: AngularFirestore,
-                private seo: SeoService,
+    constructor(private readonly afs: AngularFirestore,
+                private readonly seo: SeoService,
                 public router: Router,
-                private route: ActivatedRoute,
-                private pagerService: PagerService,
+                private readonly route: ActivatedRoute,
+                private readonly pagerService: PagerService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -74,9 +74,9 @@ export class ArticleListComponent implements OnInit {
      * init articles and get first item
      */
     initArticles(): void {
-        if (this.firstItem) // no need to get firstItem again
+        if (this.firstItem) { // no need to get firstItem again
             this.getArticles();
-        else
+        } else {
             this.afs.collection(`articles_${this.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
@@ -89,6 +89,7 @@ export class ArticleListComponent implements OnInit {
                         this.getArticles();
                     }
                 });
+        }
     }
 
     /**
@@ -111,16 +112,16 @@ export class ArticleListComponent implements OnInit {
                 .limit(this.pagerModel.pageSize)
         )
             .snapshotChanges()
-            .pipe(map(actions => {
-                return actions.map(action => {
+            .pipe(map(actions =>
+                actions.map(action => {
                     const id = action.payload.doc.id;
                     const data = action.payload.doc.data();
-                    if (!data.hasOwnProperty('contentSummary'))
+                    if (!data.hasOwnProperty('contentSummary')) {
                         data['contentSummary'] = data['content'];
+                    }
 
                     return { id, ...data as ArticleModel };
-                });
-            }));
+                })));
         this.articles$.subscribe(articles => {
             if (articles.length > 0) {
                 this.lastItemOfCurrentPage = articles[articles.length - 1];

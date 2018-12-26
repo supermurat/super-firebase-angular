@@ -22,7 +22,14 @@ export class HtmlDocumentModel {
     /** language code of page */
     languageCode?: string;
     /** alternate language object array of page */
-    langAlternates?: Array<{languageCode: string, cultureCode: string, slug: string}> = [];
+    langAlternates?: Array<{
+        /** alternate language code of page */
+        languageCode: string,
+        /** alternate culture code of page */
+        cultureCode: string,
+        /** alternate slug of page */
+        slug: string
+    }> = [];
 
     /** twitter:card of page */
     twitterCard?: string;

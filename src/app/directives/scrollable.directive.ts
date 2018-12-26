@@ -28,11 +28,13 @@ export class ScrollableDirective {
             const height = this.el.nativeElement.scrollHeight;
             const offset = this.el.nativeElement.offsetHeight;
 
-            if (top > height - offset - 1)
+            if (top > height - offset - 1) {
                 this.scrollPosition.emit('bottom');
+            }
 
-            if (top === 0)
+            if (top === 0) {
                 this.scrollPosition.emit('top');
+            }
 
         } catch (err) {
             // console.error('Error within ScrollableDirective : ', err);

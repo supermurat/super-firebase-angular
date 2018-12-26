@@ -23,7 +23,7 @@ export class NavMenuComponent implements OnInit {
      */
     constructor(
         @Inject(LOCALE_ID) public locale: string,
-        private router: Router) {
+        private readonly router: Router) {
     }
 
     /**

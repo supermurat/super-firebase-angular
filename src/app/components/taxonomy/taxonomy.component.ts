@@ -1,6 +1,6 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationService, SeoService } from '../../services';
 
 /**
@@ -26,10 +26,10 @@ export class TaxonomyComponent implements OnInit {
      * @param pagination: PaginationService
      * @param locale: LOCALE_ID
      */
-    constructor(private afs: AngularFirestore,
-                private seo: SeoService,
+    constructor(private readonly afs: AngularFirestore,
+                private readonly seo: SeoService,
                 public router: Router,
-                private route: ActivatedRoute,
+                private readonly route: ActivatedRoute,
                 public pagination: PaginationService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
@@ -50,7 +50,7 @@ export class TaxonomyComponent implements OnInit {
                     }
                 });
 
-            this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents/`, 'created', { reverse: true, prepend: false, limit: 5 });
+            this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents/`, 'created', {reverse: true, prepend: false, limit: 5});
 
         });
     }
@@ -60,10 +60,9 @@ export class TaxonomyComponent implements OnInit {
      * @param e: event
      */
     scrollHandler(e): void {
-        if (e === 'bottom')
+        if (e === 'bottom') {
             this.pagination.more();
-        /*if (e === 'top')
-            this.pagination.more();*/
+        }
     }
 
     /**

@@ -1,16 +1,14 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { PLATFORM_ID } from '@angular/core';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { PlaygroundComponent } from './playground.component';
-
-import { AlertService, PaginationService, SeoService } from '../../services';
-import { ScrollableDirective } from '../../directives';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ScrollableDirective } from '../../directives';
+import { AlertService, PaginationService, SeoService } from '../../services';
 import { angularFireStorageStub, angularFirestoreStub } from '../../testing/index.spec';
+import { PlaygroundComponent } from './playground.component';
 
 describe('PlaygroundComponent', () => {
     let fixture: ComponentFixture<PlaygroundComponent>;
@@ -24,9 +22,9 @@ describe('PlaygroundComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireStorage, useValue: angularFireStorageStub }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: AngularFireStorage, useValue: angularFireStorageStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -118,7 +116,7 @@ describe('PlaygroundComponent', () => {
     }));
 
     it('pagination.init() should load data with alternate options { reverse: false, prepend: true }', fakeAsync(() => {
-        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: false, prepend: true });
+        comp.pagination.init(`blogs_${comp.locale}`, 'created', {reverse: false, prepend: true});
         tick();
         let countOfItem = 0;
         comp.pagination.data.subscribe(result => {
@@ -140,7 +138,7 @@ describe('PlaygroundComponent', () => {
         tick();
         comp.scrollHandler('bottom');
         tick();
-        comp.pagination.init(`blogs_${comp.locale}`, 'created', { reverse: true, prepend: false }, false);
+        comp.pagination.init(`blogs_${comp.locale}`, 'created', {reverse: true, prepend: false}, false);
         tick();
         expect(countOfItem)
             .toEqual(3);
@@ -174,9 +172,9 @@ describe('PlaygroundComponentAsync', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireStorage, useValue: angularFireStorageStub }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: AngularFireStorage, useValue: angularFireStorageStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -261,10 +259,10 @@ describe('PlaygroundComponentServer', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: PLATFORM_ID, useValue: 'server' },
-                { provide: AngularFirestore, useValue: angularFirestoreStub },
-                { provide: AngularFireStorage, useValue: angularFireStorageStub }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: PLATFORM_ID, useValue: 'server'},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: AngularFireStorage, useValue: angularFireStorageStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),

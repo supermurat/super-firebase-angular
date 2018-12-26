@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { PagerService } from '../../services';
-import { PagerModel } from '../../models';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { PagerModel } from '../../models';
+import { PagerService } from '../../services';
 
 /**
  * Pager Component
@@ -30,8 +30,9 @@ export class PagerComponent implements OnDestroy, OnInit {
      * @param pagerService: PagerService
      * @param router: Router
      */
-    constructor(private pagerService: PagerService,
-                private router: Router) { }
+    constructor(private readonly pagerService: PagerService,
+                private readonly router: Router) {
+    }
 
     /**
      * ngOnInit
@@ -45,10 +46,12 @@ export class PagerComponent implements OnDestroy, OnInit {
                 } else {
                     this.previousPageNo = pagerModel.currentPageNo - 1;
                     this.nextPageNo = pagerModel.currentPageNo + 1;
-                    if (pagerModel.currentPageNo === 1)
+                    if (pagerModel.currentPageNo === 1) {
                         this.previousPageNo = undefined;
-                    if (pagerModel.currentPageNo >= pagerModel.maxPageNo)
+                    }
+                    if (pagerModel.currentPageNo >= pagerModel.maxPageNo) {
                         this.nextPageNo = undefined;
+                    }
                     this.pagerModel = pagerModel;
                 }
             });
@@ -58,7 +61,8 @@ export class PagerComponent implements OnDestroy, OnInit {
      * ngOnDestroy
      */
     ngOnDestroy(): void {
-        if (this.subscription !== undefined)
+        if (this.subscription !== undefined) {
             this.subscription.unsubscribe();
+        }
     }
 }

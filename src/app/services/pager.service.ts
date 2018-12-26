@@ -8,7 +8,7 @@ import { PagerModel } from '../models';
 @Injectable()
 export class PagerService {
     /** collection of PagerModel */
-    private subject = new Subject<PagerModel>();
+    private readonly subject = new Subject<PagerModel>();
 
     /**
      * init pager component

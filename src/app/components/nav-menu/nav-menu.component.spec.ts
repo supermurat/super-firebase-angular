@@ -1,7 +1,6 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Location } from '@angular/common';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavMenuComponent } from './nav-menu.component';
 
@@ -15,13 +14,13 @@ describe('NavMenuComponent', () => {
                 NavMenuComponent
             ],
             providers: [
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                {provide: ComponentFixtureAutoDetect, useValue: true}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
                     {path: '', component: NavMenuComponent},
                     {path: 'unit-test', component: NavMenuComponent}
-                    ])
+                ])
             ]
         })
             .compileComponents()

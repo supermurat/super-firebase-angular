@@ -21,11 +21,11 @@ export class PageModel extends HtmlDocumentModel {
     /** unique key for translations */
     i18nKey?: string;
     /** creation date */
-    created?: any = { seconds: undefined };
+    created?: any = {seconds: undefined};
     /** creator person */
     createdBy?: string;
     /** last change date */
-    changed?: any = { seconds: undefined };
+    changed?: any = {seconds: undefined};
     /** last changer person */
     changedBy?: string;
 }

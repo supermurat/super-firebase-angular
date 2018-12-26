@@ -1,15 +1,11 @@
-
 import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { TaxonomyComponent } from './taxonomy.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-
-import { AlertService, PaginationService, SeoService } from '../../services';
-import { SideBarComponent } from '../side-bar/side-bar.component';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { ScrollableDirective } from '../../directives';
+import { AlertService, PaginationService, SeoService } from '../../services';
 import { angularFirestoreStub } from '../../testing/index.spec';
+import { SideBarComponent } from '../side-bar/side-bar.component';
+import { TaxonomyComponent } from './taxonomy.component';
 
 describe('TaxonomyComponent', () => {
     let fixture: ComponentFixture<TaxonomyComponent>;
@@ -24,8 +20,8 @@ describe('TaxonomyComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: TaxonomyComponent}])

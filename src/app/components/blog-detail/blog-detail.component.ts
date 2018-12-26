@@ -1,11 +1,11 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { SeoService } from '../../services';
-import { BlogModel } from '../../models/blog-model';
-import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
+import { BlogModel } from '../../models/blog-model';
+import { SeoService } from '../../services';
 
 /** State key of current blog */
 const BLOG_KEY = makeStateKey<any>('blog');
@@ -34,11 +34,11 @@ export class BlogDetailComponent implements OnInit {
      * @param locale: LOCALE_ID
      */
     constructor(
-        private afs: AngularFirestore,
-        private seo: SeoService,
+        private readonly afs: AngularFirestore,
+        private readonly seo: SeoService,
         public router: Router,
-        private route: ActivatedRoute,
-        private state: TransferState,
+        private readonly route: ActivatedRoute,
+        private readonly state: TransferState,
         @Inject(LOCALE_ID) public locale: string
     ) {
     }
@@ -56,14 +56,15 @@ export class BlogDetailComponent implements OnInit {
                 )
                     .snapshotChanges()
                     .subscribe(data => {
-                        if (data && data.length > 0)
+                        if (data && data.length > 0) {
                             data.map(pld => {
                                 this.router.navigate(['/blog', pld.payload.doc.id]);
                             });
-                        else if (pID === 0)
+                        } else if (pID === 0) {
                             this.router.navigate(['/blogs']);
-                        else
+                        } else {
                             this.router.navigate(['/blog', pID + 1]);
+                        }
                     });
 
                 return;
@@ -81,10 +82,11 @@ export class BlogDetailComponent implements OnInit {
     initBlog(): void {
         this.blog$ = this.ssrFirestoreDoc(`blogs_${this.locale}/${this.blogID}`, true);
         this.blog$.subscribe(blog => {
-            if (blog)
+            if (blog) {
                 this.seo.setHtmlTags(blog);
-            else
+            } else {
                 this.checkTranslation(undefined);
+            }
         });
     }
 
@@ -92,20 +94,22 @@ export class BlogDetailComponent implements OnInit {
      * check if there is another translation and redirect to it
      */
     checkTranslation(checkInLocale): void {
-        if (checkInLocale)
+        if (checkInLocale) {
             this.afs.doc<BlogModel>(`blogs_${checkInLocale}/${this.blogID}`)
                 .valueChanges()
                 .subscribe(blog => {
                     if (blog) {
                         const languageCode2 = checkInLocale.substring(0, 2);
                         this.seo.http301(`/${languageCode2}/blog/${this.blogID}`);
-                    } else
+                    } else {
                         this.seo.http404();
+                    }
                 });
-        else if (this.locale === 'en-US')
+        } else if (this.locale === 'en-US') {
             this.checkTranslation('tr-TR');
-        else if (this.locale === 'tr-TR')
+        } else if (this.locale === 'tr-TR') {
             this.checkTranslation('en-US');
+        }
     }
 
     /**
@@ -119,8 +123,9 @@ export class BlogDetailComponent implements OnInit {
         return this.afs.doc<BlogModel>(path)
             .valueChanges()
             .pipe(tap(blog => {
-                    if (blog)
+                    if (blog) {
                         this.state.set(BLOG_KEY, blog);
+                    }
                 }),
                 startWith(exists)
             );

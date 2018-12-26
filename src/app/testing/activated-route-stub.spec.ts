@@ -13,10 +13,10 @@ export class ActivatedRouteStub {
      * Use a ReplaySubject to share previous values with subscribers
      * and pump new values into the `paramMap` observable
      */
-    private subject = new ReplaySubject<ParamMap>();
+    private readonly subject = new ReplaySubject<ParamMap>();
 
     /** The mock paramMap observable */
-    /* tslint:disable:member-ordering */
+    // tslint:disable:member-ordering
     readonly paramMap = this.subject.asObservable();
 
     /**

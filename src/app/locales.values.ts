@@ -1,6 +1,5 @@
-
 /** interface of locale object */
-export interface ILocale {
+export interface InterfaceLocale {
     /** code of locale */
     code: string;
     /** text of locale */
@@ -8,7 +7,7 @@ export interface ILocale {
 }
 
 /** supported locale object array */
-export const locales: Array<ILocale> = [
+export const locales: Array<InterfaceLocale> = [
     {
         code: 'en',
         text: 'English'

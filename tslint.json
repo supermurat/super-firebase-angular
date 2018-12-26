@@ -30,6 +30,13 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "completed-docs": true
+    "completed-docs": true,
+
+    // following rules are temporary, will be fixed in next commit
+    "no-floating-promises": false,
+    "promise-function-async": false,
+    "no-unbound-method": false,
+    "comment-type": false,
+    "template-cyclomatic-complexity": [false, 5]
   }
 }

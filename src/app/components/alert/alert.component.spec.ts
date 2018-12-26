@@ -1,8 +1,8 @@
 import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertComponent } from './alert.component';
 import { AlertService } from '../../services';
+import { AlertComponent } from './alert.component';
 
 describe('AlertComponent', () => {
     let fixture: ComponentFixture<AlertComponent>;
@@ -15,7 +15,7 @@ describe('AlertComponent', () => {
             ],
             providers: [
                 AlertService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                {provide: ComponentFixtureAutoDetect, useValue: true}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AlertComponent}])

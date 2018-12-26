@@ -1,4 +1,3 @@
-
 import { from } from 'rxjs';
 import {
     getArrayStartAfterByDocument,
@@ -54,7 +53,8 @@ export const angularFirestoreStub = {
                                 tDataSnap = getFirestoreSnap(tData);
 
                                 return from([tDataSnap]);
-                            }};
+                            }
+                        };
                     },
                     startAt(startAtValue): any {
                         tData = getArrayStartByNumberField(tData, fieldPath, startAtValue);
@@ -97,7 +97,8 @@ export const angularFirestoreStub = {
                                 tDataSnap = getFirestoreSnap(tData);
 
                                 return from([tDataSnap]);
-                            }};
+                            }
+                        };
                     }
                 };
             }

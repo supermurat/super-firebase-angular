@@ -1,16 +1,13 @@
-
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { BlogDetailComponent } from './blog-detail.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
-
-import { AlertService, SeoService } from '../../services';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BlogModel } from '../../models';
+import { AlertService, SeoService } from '../../services';
+import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { FooterComponent } from '../footer/footer.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { BlogDetailComponent } from './blog-detail.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
@@ -27,8 +24,8 @@ describe('BlogDetailComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, TransferState,
-                { provide: ActivatedRoute, useValue: activatedRouteStub },
-                { provide: AngularFirestore, useValue: angularFirestoreStub }
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -56,7 +53,7 @@ describe('BlogDetailComponent', () => {
     }));
 
     it('should load first-blog', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: 'first-blog' });
+        activatedRouteStub.setParamMap({id: 'first-blog'});
         fixture.detectChanges();
         let lastBlog = new BlogModel();
         comp.blog$.subscribe(blog => {
@@ -68,7 +65,7 @@ describe('BlogDetailComponent', () => {
     }));
 
     it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: 'first-blog' });
+        activatedRouteStub.setParamMap({id: 'first-blog'});
         fixture.detectChanges();
         comp.checkTranslation(undefined);
         tick();
@@ -79,7 +76,7 @@ describe('BlogDetailComponent', () => {
     }));
 
     it("should redirection to '/blog/first-blog' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({ id: '-1' });
+        activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
         fixture.detectChanges();

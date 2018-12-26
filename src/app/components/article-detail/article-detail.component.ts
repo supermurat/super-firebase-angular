@@ -1,11 +1,11 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { SeoService } from '../../services';
-import { ArticleModel } from '../../models';
-import { startWith, tap } from 'rxjs/operators';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
+import { ArticleModel } from '../../models';
+import { SeoService } from '../../services';
 
 /** State key of current article */
 const ARTICLE_KEY = makeStateKey<any>('article');
@@ -34,11 +34,11 @@ export class ArticleDetailComponent implements OnInit {
      * @param locale: LOCALE_ID
      */
     constructor(
-        private afs: AngularFirestore,
-        private seo: SeoService,
+        private readonly afs: AngularFirestore,
+        private readonly seo: SeoService,
         public router: Router,
-        private route: ActivatedRoute,
-        private state: TransferState,
+        private readonly route: ActivatedRoute,
+        private readonly state: TransferState,
         @Inject(LOCALE_ID) public locale: string
     ) {
     }
@@ -56,14 +56,15 @@ export class ArticleDetailComponent implements OnInit {
                 )
                     .snapshotChanges()
                     .subscribe(data => {
-                        if (data && data.length > 0)
+                        if (data && data.length > 0) {
                             data.map(pld => {
                                 this.router.navigate(['/article', pld.payload.doc.id]);
                             });
-                        else if (pID === 0)
+                        } else if (pID === 0) {
                             this.router.navigate(['/articles']);
-                        else
+                        } else {
                             this.router.navigate(['/article', pID + 1]);
+                        }
                     });
 
                 return;
@@ -81,10 +82,11 @@ export class ArticleDetailComponent implements OnInit {
     initArticle(): void {
         this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`, true);
         this.article$.subscribe(article => {
-            if (article)
+            if (article) {
                 this.seo.setHtmlTags(article);
-            else
+            } else {
                 this.checkTranslation(undefined);
+            }
         });
     }
 
@@ -92,20 +94,22 @@ export class ArticleDetailComponent implements OnInit {
      * check if there is another translation and redirect to it
      */
     checkTranslation(checkInLocale): void {
-        if (checkInLocale)
+        if (checkInLocale) {
             this.afs.doc<ArticleModel>(`articles_${checkInLocale}/${this.articleID}`)
                 .valueChanges()
                 .subscribe(article => {
                     if (article) {
                         const languageCode2 = checkInLocale.substring(0, 2);
                         this.seo.http301(`/${languageCode2}/article/${this.articleID}`);
-                    } else
+                    } else {
                         this.seo.http404();
+                    }
                 });
-        else if (this.locale === 'en-US')
+        } else if (this.locale === 'en-US') {
             this.checkTranslation('tr-TR');
-        else if (this.locale === 'tr-TR')
+        } else if (this.locale === 'tr-TR') {
             this.checkTranslation('en-US');
+        }
     }
 
     /**
@@ -119,11 +123,12 @@ export class ArticleDetailComponent implements OnInit {
         return this.afs.doc<ArticleModel>(path)
             .valueChanges()
             .pipe(tap(article => {
-                if (article)
-                    this.state.set(ARTICLE_KEY, article);
-            }),
-            startWith(exists)
-        );
+                    if (article) {
+                        this.state.set(ARTICLE_KEY, article);
+                    }
+                }),
+                startWith(exists)
+            );
     }
 
     /**
