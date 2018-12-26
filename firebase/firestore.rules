@@ -36,6 +36,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+    match /quotes_en-US/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /quotes_tr-TR/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
     match /taxonomy_en-US/{document=**} {
       allow read: if true;
       allow write: if false;

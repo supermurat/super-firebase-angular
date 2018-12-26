@@ -28,6 +28,8 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PagerComponent } from './components/pager/pager.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
+import { QuoteDetailComponent } from './components/quote-detail/quote-detail.component';
+import { QuoteListComponent } from './components/quote-list/quote-list.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 import { ScrollableDirective } from './directives';
@@ -56,7 +58,9 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         PagerComponent,
         TaxonomyComponent,
         JokeListComponent,
-        JokeDetailComponent
+        JokeDetailComponent,
+        QuoteListComponent,
+        QuoteDetailComponent
     ],
     imports: [
         CommonModule,

@@ -10,6 +10,8 @@ import { JokeDetailComponent } from './components/joke-detail/joke-detail.compon
 import { JokeListComponent } from './components/joke-list/joke-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
+import { QuoteDetailComponent } from './components/quote-detail/quote-detail.component';
+import { QuoteListComponent } from './components/quote-list/quote-list.component';
 import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
 
 const routes: Routes = [
@@ -57,6 +59,18 @@ const routes: Routes = [
     },
     {
         path: 'joke/:id', component: JokeDetailComponent
+    },
+    {
+        path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'
+    },
+    {
+        path: 'quotes/:pageNo', component: QuoteListComponent
+    },
+    {
+        path: 'quote', redirectTo: 'quotes/1', pathMatch: 'full'
+    },
+    {
+        path: 'quote/:id', component: QuoteDetailComponent
     },
     {
         path: 'tag/:id', component: TaxonomyComponent
@@ -122,6 +136,30 @@ const routes: Routes = [
     },
     {
         path: 'soguk-espri/:id', component: JokeDetailComponent
+    },
+    {
+        path: 'alintilar', redirectTo: 'alintilar/1', pathMatch: 'full'
+    },
+    {
+        path: 'alintilar/:pageNo', component: QuoteListComponent
+    },
+    {
+        path: 'alinti', redirectTo: 'alintilar/1', pathMatch: 'full'
+    },
+    {
+        path: 'alinti/:id', component: QuoteDetailComponent
+    },
+    {
+        path: 'guzel-sozler', redirectTo: 'guzel-sozler/1', pathMatch: 'full'
+    },
+    {
+        path: 'guzel-sozler/:pageNo', component: QuoteListComponent
+    },
+    {
+        path: 'guzel-soz', redirectTo: 'guzel-sozler/1', pathMatch: 'full'
+    },
+    {
+        path: 'guzel-soz/:id', component: QuoteDetailComponent
     },
     {
         path: 'etiket/:id', component: TaxonomyComponent

@@ -30,6 +30,9 @@ dataFirestore[cnoArticles + "_en-US"] = {};
 const cnoJokes = "jokes";
 dataFirestore[cnoJokes + "_tr-TR"] = {};
 dataFirestore[cnoJokes + "_en-US"] = {};
+const cnoQuotes = "quotes";
+dataFirestore[cnoQuotes + "_tr-TR"] = {};
+dataFirestore[cnoQuotes + "_en-US"] = {};
 const collectionNameOfRedirectionRecords = "redirectionRecords";
 dataFirestore[collectionNameOfRedirectionRecords] = {};
 
@@ -55,17 +58,19 @@ function removeUnneededFields(newData) {
 
 function generateTaxonomy(lang, newData) {
     let taxonomy = {};
-    const tagTitleList = newData.tagTitles.split("|");
-    const tagLinkList = newData.tagLinks.split("|");
-    if (tagTitleList.length === tagLinkList.length) {
-        for (let i = 0; i < tagLinkList.length; i++) {
-            const docID = fixDocID(tagLinkList[i].replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
-            taxonomy[docID] = tagTitleList[i].trim();
+    if (newData.tagTitles && newData.tagLinks) {
+        const tagTitleList = newData.tagTitles.split("|");
+        const tagLinkList = newData.tagLinks.split("|");
+        if (tagTitleList.length === tagLinkList.length) {
+            for (let i = 0; i < tagLinkList.length; i++) {
+                const docID = fixDocID(tagLinkList[i].replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
+                taxonomy[docID] = tagTitleList[i].trim();
 
-            addToTaxonomyContentsCollection(lang, docID, newData)
+                addToTaxonomyContentsCollection(lang, docID, newData)
+            }
+        } else {
+            console.log("Taxonomy list is invalid:", tagTitleList, tagLinkList);
         }
-    } else {
-        console.log("Taxonomy list is invalid:", tagTitleList, tagLinkList);
     }
     newData.taxonomy = taxonomy;
 }
@@ -166,6 +171,28 @@ function addToJokes(lang, element) {
     dataFirestore[cnoJokes + lang][element.documentID] = removeUnneededFields(newData);
     dataFirestore[cnoJokes + lang][element.documentID].orderNo
         = (Object.keys(dataFirestore[cnoJokes + lang]).length) * -1;
+}
+
+function addToQuotes(lang, element) {
+    const newData = { ...element };
+    if (lang === "_en-US") {
+        newData.routePath = "/quote";
+        addToRedirectionRecords("en/", element, "quote/");
+    }
+    else if (lang === "_tr-TR") {
+        newData.routePath = "/alinti";
+        addToRedirectionRecords("tr/", element, "alinti/");
+    }
+    if (newData.contentSummary === undefined || newData.contentSummary === null || newData.contentSummary.trim() === "") {
+        newData.contentSummary = newData.content;
+    }
+    newData.createdBy = "Murat Demir";
+    newData.changedBy = "Murat Demir";
+    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+    generateTaxonomy(lang, newData);
+    dataFirestore[cnoQuotes + lang][element.documentID] = removeUnneededFields(newData);
+    dataFirestore[cnoQuotes + lang][element.documentID].orderNo
+        = (Object.keys(dataFirestore[cnoQuotes + lang]).length) * -1;
 }
 
 function addToRedirectionRecords(lang, element, path) {
@@ -292,6 +319,47 @@ ORDER BY n.created ASC`,
                     if (element.language === "und" || element.language === "tr") addToJokes("_tr-TR", element);
                     if (element.language === "und" || element.language === "en") addToJokes("_en-US", element);
                 }
+            });
+            getQuotes();
+        });
+}
+
+function getQuotes() {
+    connection.query(
+            `SELECT u.language, u.alias, n.nid, n.type, n.status, 
+FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created', 
+n.title, fdb.body_value AS 'content', fdb.body_summary AS 'contentSummary', 
+GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagTitles', 
+GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagLinks',
+fdfs.field_soyleyen_value AS 'whoSaidThat',
+fdfk.field_kaynak_value AS 'source'
+FROM node n 
+    LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (
+       SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source
+    )
+    LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid 
+    LEFT JOIN taxonomy_index ti ON ti.nid = n.nid 
+    LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid 
+    LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (
+        SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source
+    )
+    LEFT JOIN field_data_field_soyleyen fdfs ON fdfs.entity_id = n.nid AND fdfs.revision_id IN (
+       SELECT MAX(fdfss.revision_id) FROM field_data_field_soyleyen fdfss GROUP BY fdfss.entity_id
+    )
+    LEFT JOIN field_data_field_kaynak fdfk ON fdfk.entity_id = n.nid AND fdfk.revision_id IN (
+       SELECT MAX(fdfks.revision_id) FROM field_data_field_kaynak fdfks GROUP BY fdfks.entity_id
+    )
+WHERE n.type IN ('guzelsozler') AND n.status='1' 
+GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value, fdb.body_summary 
+ORDER BY n.created ASC`,
+        function (error, results, fields) {
+            if (error) throw error;
+
+            results.forEach(function(element) {
+                downloadFiles(element.content);
+                element.documentID = fixDocID(element.alias.replace(/guzel_sozler\//gi, ''));
+                if (element.language === "und" || element.language === "tr") addToQuotes("_tr-TR", element);
+                if (element.language === "und" || element.language === "en") addToQuotes("_en-US", element);
             });
             writeResultToFile();
         });

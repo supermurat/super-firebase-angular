@@ -116,13 +116,47 @@ export const myData = {
             title: 'İkinci Fıkra', content: 'bu daha güzel bir fıkra',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
-        'ucuncu-soguk-espri': {
+        'ucuncu-espri': {
             id: 'ucuncu-espri', routePath: '/espri', orderNo: -3,
-            title: 'Üçüncü Soğuk Espri', content: 'bu en güzel soğuk espri',
+            title: 'Üçüncü Espri', content: 'bu en güzel espri',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     redirectionRecords: {},
+    'quotes_en-US': {
+        'first-quote': {
+            id: 'first-quote', routePath: '/quote', orderNo: -1,
+            title: 'First Quote', content: 'this is good quote', contentSummary: 'good quote',
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+        },
+        'second-quote': {
+            id: 'second-quote', routePath: '/quote', orderNo: -2,
+            title: 'Second Quote', content: 'this is better quote',
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+        },
+        'third-quote': {
+            id: 'third-quote', routePath: '/quote', orderNo: -3,
+            title: 'Third Quote', content: 'this is the best quote',
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+        }
+    },
+    'quotes_tr-TR': {
+        'ilk-alinti': {
+            id: 'ilk-alinti', routePath: '/alinti', orderNo: -1,
+            title: 'İlk Alıntı', content: 'bu güzel bir alıntı', contentSummary: 'güzel alıntı',
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+        },
+        'ikinci-guzel-soz': {
+            id: 'ikinci-guzel-soz', routePath: '/guzel-soz', orderNo: -2,
+            title: 'İkinci Güzel Söz', content: 'bu daha güzel bir söz',
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+        },
+        'ucuncu-guzel-soz': {
+            id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3,
+            title: 'Üçüncü Güzel Söz', content: 'bu en güzel söz',
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+        }
+    },
     'taxonomy_en-US': {
         'first-tag': {
             id: 'first-tag', routePath: '/tag', orderNo: -3,
