@@ -33,8 +33,6 @@
     "completed-docs": true,
 
     // following rules are temporary, will be fixed in next commit
-    "no-unbound-method": false,
-    "comment-type": false,
     "template-cyclomatic-complexity": [false, 5]
   }
 }

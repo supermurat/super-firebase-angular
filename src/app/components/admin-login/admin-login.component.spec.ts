@@ -27,18 +27,6 @@ const angularFirestoreStub = {
 
 const fakeAuthState = new Subject();
 
-const fakeSignInHandler = async (email, password): Promise<any> => {
-    fakeAuthState.next(userMock);
-
-    return Promise.resolve(userMock);
-};
-
-const fakeSignOutHandler = async (): Promise<any> => {
-    fakeAuthState.next(undefined);
-
-    return Promise.resolve();
-};
-
 const angularFireAuthStub = {
     authState: {
         pipe(): any {
@@ -46,18 +34,21 @@ const angularFireAuthStub = {
         }
     },
     auth: {
-        createUserWithEmailAndPassword: jasmine
-            .createSpy('createUserWithEmailAndPassword')
-            .and
-            .callFake(fakeSignInHandler),
-        signInWithEmailAndPassword: jasmine
-            .createSpy('signInWithEmailAndPassword')
-            .and
-            .callFake(fakeSignInHandler),
-        signOut: jasmine
-            .createSpy('signOut')
-            .and
-            .callFake(fakeSignOutHandler)
+        async createUserWithEmailAndPassword(email, password): Promise<any> {
+            fakeAuthState.next(userMock);
+
+            return Promise.resolve(userMock);
+        },
+        async signInWithEmailAndPassword(email, password): Promise<any> {
+            fakeAuthState.next(userMock);
+
+            return Promise.resolve(userMock);
+        },
+        async signOut(): Promise<any> {
+            fakeAuthState.next(undefined);
+
+            return Promise.resolve();
+        }
     }
 };
 
@@ -100,7 +91,6 @@ describe('AdminLoginComponent', () => {
 describe('AdminLoginComponentAuthService', () => {
     let fixture: ComponentFixture<AdminLoginComponent>;
     let comp: AdminLoginComponent;
-    let afAuth: AngularFireAuth;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -120,7 +110,6 @@ describe('AdminLoginComponentAuthService', () => {
             .then(() => {
                 fixture = TestBed.createComponent(AdminLoginComponent);
                 comp = fixture.componentInstance;
-                afAuth = TestBed.get(AngularFireAuth);
                 fakeAuthState.next(undefined);
                 fixture.detectChanges();
             })
@@ -157,8 +146,6 @@ describe('AdminLoginComponentAuthService', () => {
             });
         tick();
 
-        expect(afAuth.auth.createUserWithEmailAndPassword)
-            .toHaveBeenCalledWith(credentialsMock.email, credentialsMock.password);
         expect(lastUser)
             .toBeDefined();
         expect(lastUser.email)
@@ -177,8 +164,6 @@ describe('AdminLoginComponentAuthService', () => {
             });
         tick();
 
-        expect(afAuth.auth.signInWithEmailAndPassword)
-            .toHaveBeenCalledWith(credentialsMock.email, credentialsMock.password);
         expect(lastUser)
             .toBeDefined();
         expect(lastUser.email)

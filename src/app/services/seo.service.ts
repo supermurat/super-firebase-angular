@@ -163,7 +163,7 @@ export class SeoService {
 
             const head = this.document.head;
 
-            /* istanbul ignore if */
+            // istanbul ignore if
             if (head === null) {
                 return; // <head> not found within DOCUMENT
             }
@@ -173,7 +173,7 @@ export class SeoService {
                     renderer.setAttribute(link, prop, linkObject[prop]);
                 });
 
-            /* istanbul ignore next */
+            // istanbul ignore next
             const attr: string = linkObject.rel ? 'rel' : 'hreflang';
             const attrSelector = `${attr}="${linkObject[attr]}"`;
             const linkTags = this.document.querySelectorAll(`link[${attrSelector}]`);

@@ -41,7 +41,7 @@ export class AlertService {
         this.subject.next({type: 'success', text: message});
     }
 
-    /* istanbul ignore next */
+    // istanbul ignore next
     /**
      * Show error to user
      * @param message: error text
