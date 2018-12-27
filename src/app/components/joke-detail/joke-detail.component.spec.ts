@@ -96,4 +96,15 @@ describe('JokeDetailComponent', () => {
             .toBe(2);
     }));
 
+    it("should redirection to '/joke/third-joke' if id is -4", fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'jokes', 'joke');
+        activatedRouteStub.setParamMap({id: '-4'});
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/joke/third-joke');
+    }));
+
 });

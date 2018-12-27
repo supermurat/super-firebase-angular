@@ -96,4 +96,15 @@ describe('BlogDetailComponent', () => {
             .toBe(2);
     }));
 
+    it("should redirection to '/blog/third-blog' if id is -4", fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'blogs', 'blog');
+        activatedRouteStub.setParamMap({id: '-4'});
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/blog/third-blog');
+    }));
+
 });

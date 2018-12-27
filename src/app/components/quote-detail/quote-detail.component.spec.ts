@@ -96,4 +96,15 @@ describe('QuoteDetailComponent', () => {
             .toBe(2);
     }));
 
+    it("should redirection to '/quote/third-quote' if id is -4", fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'quotes', 'quote');
+        activatedRouteStub.setParamMap({id: '-4'});
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/quote/third-quote');
+    }));
+
 });

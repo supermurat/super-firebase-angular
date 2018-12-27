@@ -96,4 +96,15 @@ describe('ArticleDetailComponent', () => {
             .toBe(2);
     }));
 
+    it("should redirection to '/article/fifth-article' if id is -6", fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'articles', 'article');
+        activatedRouteStub.setParamMap({id: '-6'});
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/article/fifth-article');
+    }));
+
 });
