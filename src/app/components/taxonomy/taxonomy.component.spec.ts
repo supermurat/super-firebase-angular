@@ -1,5 +1,6 @@
 import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ScrollableDirective } from '../../directives';
 import { AlertService, PaginationService, SeoService } from '../../services';
@@ -24,6 +25,7 @@ describe('TaxonomyComponent', () => {
                 {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([{path: '', component: TaxonomyComponent}])
             ]
         })

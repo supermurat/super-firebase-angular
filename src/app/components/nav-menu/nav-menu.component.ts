@@ -27,7 +27,7 @@ export class NavMenuComponent implements OnInit {
     }
 
     /**
-     * ngOnDestroy
+     * ngOnInit
      */
     ngOnInit(): void {
         this.locales = locales;

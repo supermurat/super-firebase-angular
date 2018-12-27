@@ -1,4 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AlertService } from '../../services';
+import { AlertComponent } from '../alert/alert.component';
 import { SideBarComponent } from './side-bar.component';
 
 describe('SideBarComponent', () => {
@@ -7,7 +11,21 @@ describe('SideBarComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SideBarComponent]
+            declarations: [
+                SideBarComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService,
+                {provide: ComponentFixtureAutoDetect, useValue: true}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: '', component: SideBarComponent},
+                    {path: 'search', component: SideBarComponent}
+                ])
+            ]
         })
             .compileComponents()
             .then(() => {

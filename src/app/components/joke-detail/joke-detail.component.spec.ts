@@ -1,6 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { JokeModel } from '../../models';
@@ -31,6 +31,7 @@ describe('JokeDetailComponent', () => {
                 {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'joke/:id', component: JokeDetailComponent},
                     {path: 'jokes', component: JokeDetailComponent},

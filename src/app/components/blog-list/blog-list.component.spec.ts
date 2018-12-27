@@ -1,5 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, PagerService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -30,6 +31,7 @@ describe('BlogListComponent', () => {
                 {provide: AngularFirestore, useValue: angularFirestoreStub}
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
                     {path: 'blogs/:pageNo', component: BlogListComponent}

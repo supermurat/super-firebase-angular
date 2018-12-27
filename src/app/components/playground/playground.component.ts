@@ -80,7 +80,7 @@ export class PlaygroundComponent implements OnInit {
     }
 
     /**
-     * ngOnDestroy
+     * ngOnInit
      */
     ngOnInit(): void {
         this.pagination.init(`blogs_${this.locale}`, 'created', {reverse: true, prepend: false});

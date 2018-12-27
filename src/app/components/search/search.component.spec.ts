@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlertService, SeoService } from '../../services';
+import { SideBarComponent } from '../side-bar/side-bar.component';
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
@@ -10,12 +12,14 @@ describe('SearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                SearchComponent
+                SearchComponent,
+                SideBarComponent
             ],
             providers: [
                 AlertService, SeoService
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([{path: '', component: SearchComponent}])
             ]
         })
