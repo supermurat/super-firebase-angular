@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { QuoteModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -28,7 +29,8 @@ describe('QuoteDetailComponent', () => {
             providers: [
                 AlertService, SeoService, TransferState,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub}
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 FormsModule,
@@ -37,9 +39,9 @@ describe('QuoteDetailComponent', () => {
                     {path: 'quotes', component: QuoteDetailComponent},
                     {path: 'quotes/:pageNo', component: QuoteDetailComponent},
                     {path: 'en/quote/:id', component: QuoteDetailComponent},
-                    {path: 'tr/quote/:id', component: QuoteDetailComponent},
+                    {path: 'tr/alinti/:id', component: QuoteDetailComponent},
                     {path: 'en/quote', component: QuoteDetailComponent},
-                    {path: 'tr/quote', component: QuoteDetailComponent}
+                    {path: 'tr/alinti', component: QuoteDetailComponent}
                 ])
             ]
         })
@@ -72,16 +74,6 @@ describe('QuoteDetailComponent', () => {
             .toEqual('first-quote');
     }));
 
-    it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-quote'});
-        fixture.detectChanges();
-        comp.checkTranslation(undefined);
-        tick();
-        fixture.detectChanges();
-        expect(comp.router.url)
-            .toEqual('/tr/quote/first-quote');
-    }));
-
     it("should redirection to '/quote/first-quote' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
@@ -97,7 +89,7 @@ describe('QuoteDetailComponent', () => {
     }));
 
     it("should redirection to '/quote/third-quote' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'quotes', 'quote');
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
         tick();
@@ -105,6 +97,16 @@ describe('QuoteDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/quote/third-quote');
+    }));
+
+    it('should redirection to translation of ilk-alinti', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
+        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'ilk-alinti']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/alinti/ilk-alinti');
     }));
 
 });

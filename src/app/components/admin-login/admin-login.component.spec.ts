@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
 import { from, Subject } from 'rxjs';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AuthService, SeoService } from '../../services';
 import { AdminLoginComponent } from './admin-login.component';
 
@@ -64,7 +65,8 @@ describe('AdminLoginComponent', () => {
             providers: [
                 SeoService, AuthService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireAuth, useValue: angularFireAuthStub}
+                {provide: AngularFireAuth, useValue: angularFireAuthStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])
@@ -100,7 +102,8 @@ describe('AdminLoginComponentAuthService', () => {
             providers: [
                 SeoService, AuthService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireAuth, useValue: angularFireAuthStub}
+                {provide: AngularFireAuth, useValue: angularFireAuthStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AdminLoginComponent}])

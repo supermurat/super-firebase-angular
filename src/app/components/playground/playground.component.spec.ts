@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { ScrollableDirective } from '../../directives';
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { angularFireStorageStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -24,7 +25,8 @@ describe('PlaygroundComponent', () => {
                 AlertService, SeoService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub}
+                {provide: AngularFireStorage, useValue: angularFireStorageStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -178,7 +180,8 @@ describe('PlaygroundComponentAsync', () => {
                 AlertService, SeoService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub}
+                {provide: AngularFireStorage, useValue: angularFireStorageStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
@@ -270,7 +273,8 @@ describe('PlaygroundComponentServer', () => {
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: PLATFORM_ID, useValue: 'server'},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub}
+                {provide: AngularFireStorage, useValue: angularFireStorageStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),

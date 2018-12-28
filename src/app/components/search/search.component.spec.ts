@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, SeoService } from '../../services';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { SearchComponent } from './search.component';
@@ -16,7 +17,8 @@ describe('SearchComponent', () => {
                 SideBarComponent
             ],
             providers: [
-                AlertService, SeoService
+                AlertService, SeoService,
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 FormsModule,

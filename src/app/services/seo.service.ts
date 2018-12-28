@@ -4,6 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
 import { HtmlDocumentModel, HtmlLinkElementModel, HttpStatusModel } from '../models';
 
 /**
@@ -22,6 +23,7 @@ export class SeoService {
      * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
      * @param platformId: PLATFORM_ID
+     * @param appConfig: APP_CONFIG
      * @param locale: LOCALE_ID
      * @param document: DOCUMENT
      */
@@ -31,6 +33,7 @@ export class SeoService {
                 private readonly rendererFactory: RendererFactory2,
                 private readonly platformLocation: PlatformLocation,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
+                @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
                 @Inject(LOCALE_ID) private readonly locale: string,
                 @Inject(DOCUMENT) public document) {
     }
@@ -207,7 +210,7 @@ export class SeoService {
      */
     http301(destinationURL: string, isExternal = false): void {
         if (isPlatformBrowser(this.platformId)) {
-            if (isExternal) {
+            if (isExternal && !this.appConfig.isUnitTest) {
                 // this.router.navigate can't work because it is out of base url
                 window.location.href = destinationURL;
             } else {

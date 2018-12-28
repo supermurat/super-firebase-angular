@@ -2,6 +2,7 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -27,7 +28,8 @@ describe('AppComponent', () => {
             providers: [
                 AlertService, SeoService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}}
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -77,7 +79,8 @@ describe('AppComponentSeoService', () => {
             providers: [
                 AlertService, SeoService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}}
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -195,7 +198,8 @@ describe('AppComponentAlertService', () => {
             providers: [
                 AlertService, SeoService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}}
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([

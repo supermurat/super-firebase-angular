@@ -60,7 +60,8 @@ export class ArticleDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0) {
                             data.map(pld => {
-                                this.router.navigate(['/article', pld.payload.doc.id])
+                                const article = pld.payload.doc.data() as ArticleModel;
+                                this.router.navigate([article.routePath, article.id])
                                     .catch(// istanbul ignore next
                                         reason => {
                                             this.alert.error(reason);
@@ -114,7 +115,7 @@ export class ArticleDetailComponent implements OnInit {
                 .subscribe(article => {
                     if (article) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/article/${this.articleID}`);
+                        this.seo.http301(`/${languageCode2}/${article.routePath}/${article.id}`, true);
                     } else {
                         this.seo.http404();
                     }
@@ -132,7 +133,7 @@ export class ArticleDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current article is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<ArticleModel> {
-        const exists = this.state.get(ARTICLE_KEY, new ArticleModel());
+        const exists = this.state.get(ARTICLE_KEY, undefined);
 
         return this.afs.doc<ArticleModel>(path)
             .valueChanges()

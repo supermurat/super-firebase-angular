@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SeoService } from '../../services';
 import { NotFoundComponent } from './not-found.component';
 
@@ -13,7 +14,8 @@ describe('NotFoundComponent', () => {
                 NotFoundComponent
             ],
             providers: [
-                SeoService
+                SeoService,
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: NotFoundComponent}])

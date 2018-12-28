@@ -27,13 +27,20 @@ export const getFirestoreSnap = (tData: Array<any>): Array<any> => {
  * @param path: to get data of it
  */
 export const getDataByPath = (path: string): Array<any> => {
+    const paths = path.split('/');
     const tData: Array<any> = [];
     Object.keys(myData)
         .forEach((prop: string) => {
-            if (path.startsWith(prop)) {
+            if (paths[0] === prop) {
                 Object.keys(myData[prop])
                     .forEach((subProp: string) => {
-                        tData.push(myData[prop][subProp]);
+                        if (paths.length > 1) {
+                            if (paths[1] === subProp) {
+                                tData.push(myData[prop][subProp]);
+                            }
+                        } else {
+                            tData.push(myData[prop][subProp]);
+                        }
                     });
             }
         });

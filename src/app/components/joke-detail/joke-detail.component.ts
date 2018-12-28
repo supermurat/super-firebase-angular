@@ -60,7 +60,8 @@ export class JokeDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0) {
                             data.map(pld => {
-                                this.router.navigate(['/joke', pld.payload.doc.id])
+                                const joke = pld.payload.doc.data() as JokeModel;
+                                this.router.navigate([joke.routePath, joke.id])
                                     .catch(// istanbul ignore next
                                         reason => {
                                             this.alert.error(reason);
@@ -114,7 +115,7 @@ export class JokeDetailComponent implements OnInit {
                 .subscribe(joke => {
                     if (joke) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/joke/${this.jokeID}`);
+                        this.seo.http301(`/${languageCode2}/${joke.routePath}/${joke.id}`, true);
                     } else {
                         this.seo.http404();
                     }
@@ -132,7 +133,7 @@ export class JokeDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current joke is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<JokeModel> {
-        const exists = this.state.get(ARTICLE_KEY, new JokeModel());
+        const exists = this.state.get(ARTICLE_KEY, undefined);
 
         return this.afs.doc<JokeModel>(path)
             .valueChanges()

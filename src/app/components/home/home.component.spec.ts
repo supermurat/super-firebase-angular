@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, SeoService } from '../../services';
 import { HomeComponent } from './home.component';
 
@@ -13,7 +14,8 @@ describe('HomeComponent', () => {
                 HomeComponent
             ],
             providers: [
-                AlertService, SeoService
+                AlertService, SeoService,
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: HomeComponent}])

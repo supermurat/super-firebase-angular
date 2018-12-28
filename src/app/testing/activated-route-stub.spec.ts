@@ -2,7 +2,7 @@
 export { ActivatedRoute } from '@angular/router';
 
 import { ComponentFixture, tick } from '@angular/core/testing';
-import { convertToParamMap, NavigationEnd, ParamMap, Params, Router } from '@angular/router';
+import { convertToParamMap, NavigationEnd, NavigationExtras, ParamMap, Params, Router } from '@angular/router';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/internal/operators';
 
@@ -37,12 +37,11 @@ export class ActivatedRouteStub {
     /**
      * init Navigation in order to handle redirections
      * @param fixture: ComponentFixture<any>
+     * @param router: Router
      * @param routeForPageNoParam: in oder to use 'pageNo' parameter, url need to contains this
      * @param routeForIdParam: in oder to use 'id' parameter, url need to contains this
      */
-    initNavigation(fixture: ComponentFixture<any>, routeForPageNoParam: string, routeForIdParam: string): Subscription {
-        const injector = fixture.debugElement.injector;
-        const router = injector.get(Router);
+    initNavigation(fixture: ComponentFixture<any>, router: Router, routeForPageNoParam: string, routeForIdParam: string): Subscription {
         router.initialNavigation();
         let lastUrl = '';
 
@@ -59,6 +58,21 @@ export class ActivatedRouteStub {
                     fixture.detectChanges();
                     tick();
                 }
+            });
+    }
+
+    /**
+     * navigate to url
+     * @param fixture: ComponentFixture<any>
+     * @param router: Router
+     * @param commands: Array<any>
+     * @param extras: NavigationExtras
+     */
+    navigate(fixture: ComponentFixture<any>, router: Router, commands: Array<any>, extras?: NavigationExtras): void {
+        router.initialNavigation();
+        router.navigate(commands, extras)
+            .catch(reason => {
+                console.error(reason);
             });
     }
 

@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { ArticleModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -28,7 +29,8 @@ describe('ArticleDetailComponent', () => {
             providers: [
                 AlertService, SeoService, TransferState,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub}
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 FormsModule,
@@ -37,9 +39,9 @@ describe('ArticleDetailComponent', () => {
                     {path: 'articles', component: ArticleDetailComponent},
                     {path: 'articles/:pageNo', component: ArticleDetailComponent},
                     {path: 'en/article/:id', component: ArticleDetailComponent},
-                    {path: 'tr/article/:id', component: ArticleDetailComponent},
+                    {path: 'tr/makale/:id', component: ArticleDetailComponent},
                     {path: 'en/article', component: ArticleDetailComponent},
-                    {path: 'tr/article', component: ArticleDetailComponent}
+                    {path: 'tr/makale', component: ArticleDetailComponent}
                 ])
             ]
         })
@@ -72,16 +74,6 @@ describe('ArticleDetailComponent', () => {
             .toEqual('first-article');
     }));
 
-    it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-article'});
-        fixture.detectChanges();
-        comp.checkTranslation(undefined);
-        tick();
-        fixture.detectChanges();
-        expect(comp.router.url)
-            .toEqual('/tr/article/first-article');
-    }));
-
     it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
@@ -97,7 +89,7 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it("should redirection to '/article/fifth-article' if id is -6", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'articles', 'article');
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
         activatedRouteStub.setParamMap({id: '-6'});
         fixture.detectChanges();
         tick();
@@ -105,6 +97,16 @@ describe('ArticleDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/article/fifth-article');
+    }));
+
+    it('should redirection to translation of ilk-makale', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'ilk-makale']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/makale/ilk-makale');
     }));
 
 });

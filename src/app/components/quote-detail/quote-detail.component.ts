@@ -60,7 +60,8 @@ export class QuoteDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0) {
                             data.map(pld => {
-                                this.router.navigate(['/quote', pld.payload.doc.id])
+                                const quote = pld.payload.doc.data() as QuoteModel;
+                                this.router.navigate([quote.routePath, quote.id])
                                     .catch(// istanbul ignore next
                                         reason => {
                                             this.alert.error(reason);
@@ -114,7 +115,7 @@ export class QuoteDetailComponent implements OnInit {
                 .subscribe(quote => {
                     if (quote) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/quote/${this.quoteID}`);
+                        this.seo.http301(`/${languageCode2}/${quote.routePath}/${quote.id}`, true);
                     } else {
                         this.seo.http404();
                     }
@@ -132,7 +133,7 @@ export class QuoteDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current quote is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<QuoteModel> {
-        const exists = this.state.get(ARTICLE_KEY, new QuoteModel());
+        const exists = this.state.get(ARTICLE_KEY, undefined);
 
         return this.afs.doc<QuoteModel>(path)
             .valueChanges()

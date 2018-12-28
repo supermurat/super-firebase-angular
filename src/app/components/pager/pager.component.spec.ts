@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertService, PagerService, SeoService } from '../../services';
+import { AlertService, PagerService } from '../../services';
 import { AlertComponent } from '../alert/alert.component';
 import { PagerComponent } from './pager.component';
 

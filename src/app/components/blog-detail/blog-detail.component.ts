@@ -4,7 +4,7 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
-import { BlogModel } from '../../models/blog-model';
+import { BlogModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 
 /** State key of current blog */
@@ -60,7 +60,8 @@ export class BlogDetailComponent implements OnInit {
                     .subscribe(data => {
                         if (data && data.length > 0) {
                             data.map(pld => {
-                                this.router.navigate(['/blog', pld.payload.doc.id])
+                                const blog = pld.payload.doc.data() as BlogModel;
+                                this.router.navigate([blog.routePath, blog.id])
                                     .catch(// istanbul ignore next
                                         reason => {
                                             this.alert.error(reason);
@@ -114,7 +115,7 @@ export class BlogDetailComponent implements OnInit {
                 .subscribe(blog => {
                     if (blog) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/blog/${this.blogID}`);
+                        this.seo.http301(`/${languageCode2}/${blog.routePath}/${blog.id}`, true);
                     } else {
                         this.seo.http404();
                     }
@@ -132,7 +133,7 @@ export class BlogDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current blog is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<BlogModel> {
-        const exists = this.state.get(BLOG_KEY, new BlogModel());
+        const exists = this.state.get(BLOG_KEY, undefined);
 
         return this.afs.doc<BlogModel>(path)
             .valueChanges()

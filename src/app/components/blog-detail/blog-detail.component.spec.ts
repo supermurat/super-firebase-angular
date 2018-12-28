@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { BlogModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -28,7 +29,8 @@ describe('BlogDetailComponent', () => {
             providers: [
                 AlertService, SeoService, TransferState,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub}
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 FormsModule,
@@ -37,9 +39,9 @@ describe('BlogDetailComponent', () => {
                     {path: 'blogs', component: BlogDetailComponent},
                     {path: 'blogs/:pageNo', component: BlogDetailComponent},
                     {path: 'en/blog/:id', component: BlogDetailComponent},
-                    {path: 'tr/blog/:id', component: BlogDetailComponent},
+                    {path: 'tr/gunluk/:id', component: BlogDetailComponent},
                     {path: 'en/blog', component: BlogDetailComponent},
-                    {path: 'tr/blog', component: BlogDetailComponent}
+                    {path: 'tr/gunluk', component: BlogDetailComponent}
                 ])
             ]
         })
@@ -72,16 +74,6 @@ describe('BlogDetailComponent', () => {
             .toEqual('first-blog');
     }));
 
-    it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-blog'});
-        fixture.detectChanges();
-        comp.checkTranslation(undefined);
-        tick();
-        fixture.detectChanges();
-        expect(comp.router.url)
-            .toEqual('/tr/blog/first-blog');
-    }));
-
     it("should redirection to '/blog/first-blog' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
@@ -97,7 +89,7 @@ describe('BlogDetailComponent', () => {
     }));
 
     it("should redirection to '/blog/third-blog' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'blogs', 'blog');
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
         tick();
@@ -105,6 +97,16 @@ describe('BlogDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/blog/third-blog');
+    }));
+
+    it('should redirection to translation of ilk-gunluk', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'ilk-gunluk']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/gunluk/ilk-gunluk');
     }));
 
 });

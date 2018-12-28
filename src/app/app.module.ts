@@ -11,6 +11,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 import { firebaseConfig } from '../environments/firebase.config';
+import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AlertComponent } from './components/alert/alert.component';
@@ -90,7 +91,8 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         SeoService,
         AuthService,
         PaginationService,
-        PagerService
+        PagerService,
+        {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
     ],
     bootstrap: [AppComponent]
 })

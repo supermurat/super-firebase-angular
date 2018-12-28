@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { JokeModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
@@ -28,7 +29,8 @@ describe('JokeDetailComponent', () => {
             providers: [
                 AlertService, SeoService, TransferState,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub}
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 FormsModule,
@@ -37,9 +39,9 @@ describe('JokeDetailComponent', () => {
                     {path: 'jokes', component: JokeDetailComponent},
                     {path: 'jokes/:pageNo', component: JokeDetailComponent},
                     {path: 'en/joke/:id', component: JokeDetailComponent},
-                    {path: 'tr/joke/:id', component: JokeDetailComponent},
+                    {path: 'tr/saka/:id', component: JokeDetailComponent},
                     {path: 'en/joke', component: JokeDetailComponent},
-                    {path: 'tr/joke', component: JokeDetailComponent}
+                    {path: 'tr/saka', component: JokeDetailComponent}
                 ])
             ]
         })
@@ -72,16 +74,6 @@ describe('JokeDetailComponent', () => {
             .toEqual('first-joke');
     }));
 
-    it('should redirection to translation of page', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-joke'});
-        fixture.detectChanges();
-        comp.checkTranslation(undefined);
-        tick();
-        fixture.detectChanges();
-        expect(comp.router.url)
-            .toEqual('/tr/joke/first-joke');
-    }));
-
     it("should redirection to '/joke/first-joke' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
@@ -97,7 +89,7 @@ describe('JokeDetailComponent', () => {
     }));
 
     it("should redirection to '/joke/third-joke' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, 'jokes', 'joke');
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
         tick();
@@ -105,6 +97,16 @@ describe('JokeDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/joke/third-joke');
+    }));
+
+    it('should redirection to translation of ilk-saka', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'ilk-saka']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/saka/ilk-saka');
     }));
 
 });
