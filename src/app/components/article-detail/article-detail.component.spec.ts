@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -107,6 +108,70 @@ describe('ArticleDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/makale/ilk-makale');
+    }));
+
+});
+
+describe('ArticleDetailComponent_tr-TR', () => {
+    let fixture: ComponentFixture<ArticleDetailComponent>;
+    let comp: ArticleDetailComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ArticleDetailComponent,
+                FooterComponent,
+                SideBarComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService, SeoService, TransferState,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: 'article/:id', component: ArticleDetailComponent},
+                    {path: 'articles', component: ArticleDetailComponent},
+                    {path: 'articles/:pageNo', component: ArticleDetailComponent},
+                    {path: 'makale/:id', component: ArticleDetailComponent},
+                    {path: 'makaleler', component: ArticleDetailComponent},
+                    {path: 'makaleler/:pageNo', component: ArticleDetailComponent},
+                    {path: 'en/article/:id', component: ArticleDetailComponent},
+                    {path: 'tr/makale/:id', component: ArticleDetailComponent},
+                    {path: 'en/article', component: ArticleDetailComponent},
+                    {path: 'tr/makale', component: ArticleDetailComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(ArticleDetailComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirection to translation of first-article', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'makaleler', 'makale');
+        activatedRouteStub.navigate(fixture, comp.router, ['/makale', 'first-article']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/en/article/first-article');
     }));
 
 });

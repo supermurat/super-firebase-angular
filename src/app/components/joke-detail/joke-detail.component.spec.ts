@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -107,6 +108,70 @@ describe('JokeDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/saka/ilk-saka');
+    }));
+
+});
+
+describe('JokeDetailComponent_tr-TR', () => {
+    let fixture: ComponentFixture<JokeDetailComponent>;
+    let comp: JokeDetailComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                JokeDetailComponent,
+                FooterComponent,
+                SideBarComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService, SeoService, TransferState,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: 'joke/:id', component: JokeDetailComponent},
+                    {path: 'jokes', component: JokeDetailComponent},
+                    {path: 'jokes/:pageNo', component: JokeDetailComponent},
+                    {path: 'saka/:id', component: JokeDetailComponent},
+                    {path: 'sakalar', component: JokeDetailComponent},
+                    {path: 'sakalar/:pageNo', component: JokeDetailComponent},
+                    {path: 'en/joke/:id', component: JokeDetailComponent},
+                    {path: 'tr/saka/:id', component: JokeDetailComponent},
+                    {path: 'en/joke', component: JokeDetailComponent},
+                    {path: 'tr/saka', component: JokeDetailComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(JokeDetailComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirection to translation of first-joke', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'sakalar', 'saka');
+        activatedRouteStub.navigate(fixture, comp.router, ['/saka', 'first-joke']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/en/joke/first-joke');
     }));
 
 });

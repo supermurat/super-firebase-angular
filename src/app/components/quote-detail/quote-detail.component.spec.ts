@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -107,6 +108,70 @@ describe('QuoteDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/alinti/ilk-alinti');
+    }));
+
+});
+
+describe('QuoteDetailComponent_tr-TR', () => {
+    let fixture: ComponentFixture<QuoteDetailComponent>;
+    let comp: QuoteDetailComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                QuoteDetailComponent,
+                FooterComponent,
+                SideBarComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService, SeoService, TransferState,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: 'quote/:id', component: QuoteDetailComponent},
+                    {path: 'quotes', component: QuoteDetailComponent},
+                    {path: 'quotes/:pageNo', component: QuoteDetailComponent},
+                    {path: 'alinti/:id', component: QuoteDetailComponent},
+                    {path: 'alintilar', component: QuoteDetailComponent},
+                    {path: 'alintilar/:pageNo', component: QuoteDetailComponent},
+                    {path: 'en/quote/:id', component: QuoteDetailComponent},
+                    {path: 'tr/alinti/:id', component: QuoteDetailComponent},
+                    {path: 'en/quote', component: QuoteDetailComponent},
+                    {path: 'tr/alinti', component: QuoteDetailComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(QuoteDetailComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirection to translation of first-quote', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'alintilar', 'alinti');
+        activatedRouteStub.navigate(fixture, comp.router, ['/alinti', 'first-quote']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/en/quote/first-quote');
     }));
 
 });

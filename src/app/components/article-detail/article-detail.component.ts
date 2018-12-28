@@ -122,7 +122,7 @@ export class ArticleDetailComponent implements OnInit {
                 });
         } else if (this.locale === 'en-US') {
             this.checkTranslation('tr-TR');
-        } else if (this.locale === 'tr-TR') {
+        } else {
             this.checkTranslation('en-US');
         }
     }
