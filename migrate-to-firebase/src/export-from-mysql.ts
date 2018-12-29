@@ -1,8 +1,15 @@
-const mysql = require('mysql');
-const fs = require('fs');
-const mysqlConfig = require("./mysql-config.json");
+import * as mysql from 'mysql';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const mysqlConfig = require("../mysql-config.json");
 
 const connection = mysql.createConnection(mysqlConfig);
+
+const pathOfData = path.dirname(__dirname) + path.sep + "data";
+const pathOfDataJson = pathOfData + path.sep + "data.json";
+if (!fs.existsSync(pathOfData))
+    fs.mkdirSync(pathOfData);
 
 connection.connect();
 
@@ -19,7 +26,7 @@ connection.query(
             resultsForFirestore[collectionName][docID] = element;
         });
 
-        fs.writeFile('data.json', JSON.stringify(resultsForFirestore, undefined, 2), {encoding: 'utf8', flag: 'w'}, function (err) {
+        fs.writeFile(pathOfDataJson, JSON.stringify(resultsForFirestore, undefined, 2), {encoding: 'utf8', flag: 'w'}, function (err) {
             if (err) throw err;
             console.log('Exported row count:' + results.length);
         });

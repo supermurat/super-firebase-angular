@@ -1,16 +1,21 @@
 {
   "name": "migrate-to-firebase",
   "scripts": {
-    "export-from-mysql": "node export-from-mysql.js",
-    "export-from-drupal-7": "node export-from-drupal-7.js",
-    "migrate-to-firebase": "node migrate-to-firebase.js"
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "export-from-mysql": "npm run build && node ./lib/export-from-mysql.js",
+    "export-from-drupal-7": "npm run build && node ./lib/export-from-drupal-7.js",
+    "migrate-to-firebase": "npm run build && node ./lib/migrate-to-firebase.js"
   },
   "dependencies": {
     "firebase-admin": "^6.4.0",
     "fs": "^0.0.1-security",
     "mysql": "^2.16.0",
     "latinize": "0.4.0",
-    "mime-types": "^2.1.21"
+    "mime-types": "^2.1.21",
+    "@google-cloud/storage": "^2.3.4",
+    "tslint": "~5.12.0",
+    "typescript": "3.1.6"
   },
   "private": true
 }

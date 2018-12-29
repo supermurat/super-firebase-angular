@@ -1,10 +1,14 @@
-const admin = require('firebase-admin');
-const serviceAccount = require("./supermurat-com-service-key.json");
-const fs = require('fs');
-const path = require('path');
-const mime = require('mime-types');
-let data = require("./data.json");
-const storage = require('@google-cloud/storage')();
+import * as admin from 'firebase-admin';
+import * as fs from 'fs';
+import * as mime from 'mime-types';
+import * as path from 'path';
+import { Storage } from '@google-cloud/storage';
+
+const serviceAccount = require("../supermurat-com-service-key.json");
+
+let data = require("../data/data.json");
+
+const storage = new Storage();
 
 // CONFIG
 // keep "remoteFilePath" undefined in order to use relative path
@@ -19,11 +23,12 @@ admin.initializeApp({
 admin.app().firestore().settings({timestampsInSnapshots: true});
 const bucketName = serviceAccount.project_id + ".appspot.com";
 const bucket = admin.storage().bucket(bucketName);
-const pathOfFiles = __dirname + path.sep + "files";
+const pathOfData = path.dirname(__dirname) + path.sep + "data";
+const pathOfFiles = pathOfData + path.sep + "files";
 
 // FixFilePaths
-function getFiles(dir, files_){
-    files_ = files_ || [];
+function getFiles(dir, _files){
+    const files_ = _files || [];
     const files = fs.readdirSync(dir);
     for (const i in files){
         const name = dir + path.sep + files[i];
@@ -38,7 +43,7 @@ function getFiles(dir, files_){
 
 function uploadImageToStorage(fileContent, fileName) {
     return new Promise((resolve, reject) => {
-        let fileUpload = bucket.file(fileName);
+        const fileUpload = bucket.file(fileName);
         const blobStream = fileUpload.createWriteStream({
             metadata: {
                 contentType: mime.lookup(fileName)
@@ -51,8 +56,8 @@ function uploadImageToStorage(fileContent, fileName) {
             fileUpload.acl.add({
                 entity: 'allUsers',
                 role: storage.acl.READER_ROLE
-            }).then(function(data) {
-                //console.log(data); // this "data" contains lots of cool info about file
+            }).then(function(info) {
+                //console.log(info); // this "info" contains lots of cool info about file
                 resolve("https://storage.googleapis.com/" + bucket.name + fileName);
             }).catch(err => {
                 reject(err);
@@ -62,14 +67,14 @@ function uploadImageToStorage(fileContent, fileName) {
     });
 }
 
-function uploadFileAndGetURL(pathOfFiles, filePath){
+function uploadFileAndGetURL(pathOfFile, filePath){
     return new Promise((resolve, reject) => {
-        const relativePath = filePath.replace(pathOfFiles, "").replace(/\\/g, "/");
+        const relativePath = filePath.replace(pathOfFile, "").replace(/\\/g, "/");
         const destinationPath = remoteFilePath ? remoteFilePath + path.basename(filePath) : relativePath;
 
         bucket.file(destinationPath).exists()
-            .then(function(data) {
-                if (data[0]) {
+            .then(function(info) {
+                if (info[0]) {
                     const url = "https://storage.googleapis.com/" + bucket.name + destinationPath;
                     console.log("Already Uploaded File : ", url);
                     resolve({ relativePath: relativePath, url: url });
@@ -84,6 +89,9 @@ function uploadFileAndGetURL(pathOfFiles, filePath){
                             reject(error);
                         });
                 }
+            })
+            .catch(error => {
+                reject(error);
             });
     });
 }
@@ -93,7 +101,7 @@ function uploadFilesAndFixFilePaths(){
         let dataString = JSON.stringify(data);
         if (!fs.existsSync(pathOfFiles))
             resolve(); // There is no directory (pathOfFiles) to upload, so let's skip to import only data.json
-        const files = getFiles(pathOfFiles);
+        const files = getFiles(pathOfFiles, undefined);
         if (files.length > 0) {
             const promises = [];
             files.forEach(function (filePath) {
@@ -121,7 +129,7 @@ function uploadFilesAndFixFilePaths(){
 function fixTimestamps(nestedData){
     if (typeof nestedData === "string") {
         if (nestedData.match(/^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])[ T](00|[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])\.\d\d\d[Z]?$/gi)) {
-            nestedData = new Date(nestedData);
+            return new Date(nestedData);
         }
     } else if (typeof nestedData === "object" && nestedData !== undefined && nestedData !== null) {
         Object.keys(nestedData).forEach(key => {
@@ -139,9 +147,9 @@ function importIntoFirestore(){
             Object.keys(nestedContent).forEach(docID => {
                 const nestedData = fixTimestamps(nestedContent[docID]);
                 const docData = {...nestedData};
-                Object.keys(nestedData).forEach(key => {
-                    if (key.startsWith("__collection__")) {
-                        delete docData[key];
+                Object.keys(nestedData).forEach(subKey => {
+                    if (subKey.startsWith("__collection__")) {
+                        delete docData[subKey];
                     }
                 });
 
@@ -162,7 +170,7 @@ function importIntoFirestore(){
                                         .collection(subKey.replace("__collection__", ""))
                                         .doc(subDocID)
                                         .set(subDocData)
-                                        .then((res) => {
+                                        .then((subRes) => {
                                             console.log("Imported:", key, docID, subKey, subDocID);
                                         })
                                         .catch((error) => {

@@ -1,19 +1,21 @@
-const mysql = require('mysql');
-const fs = require('fs');
-const http = require('http');
-const path = require('path');
-const latinize = require('latinize');
+import * as mysql from 'mysql';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as http from 'http';
+import * as latinize from 'latinize';
 
-const mysqlConfig = require("./mysql-config.json");
+const mysqlConfig = require("../mysql-config.json");
 
 const connection = mysql.createConnection(mysqlConfig);
 
 connection.connect();
 
 const baseURLOfWebSite = "http://supermurat.com";
-const pathOfFiles = __dirname + path.sep + "files";
+const pathOfData = path.dirname(__dirname) + path.sep + "data";
+const pathOfDataJson = pathOfData + path.sep + "data.json";
+const pathOfFiles = pathOfData + path.sep + "files";
 if (!fs.existsSync(pathOfFiles))
-    fs.mkdir(pathOfFiles);
+    fs.mkdirSync(pathOfFiles);
 
 // data you want to import into Firestore
 const dataFirestore = {};
@@ -57,7 +59,7 @@ function removeUnneededFields(newData) {
 }
 
 function generateTaxonomy(lang, newData) {
-    let taxonomy = {};
+    const taxonomy = {};
     if (newData.tagTitles && newData.tagLinks) {
         const tagTitleList = newData.tagTitles.split("|");
         const tagLinkList = newData.tagLinks.split("|");
@@ -97,7 +99,7 @@ function addToTaxonomy(lang, element) {
 }
 
 function addToTaxonomyContentsCollection(lang, taxonomyDocID, element) {
-    let newData = removeUnneededFields({ ...element });
+    const newData = removeUnneededFields({ ...element });
     const docID = newData.routePath.replace("/", "_") + "_" + element.documentID;
     newData.path = element.documentID;
 
@@ -195,13 +197,13 @@ function addToQuotes(lang, element) {
         = (Object.keys(dataFirestore[cnoQuotes + lang]).length) * -1;
 }
 
-function addToRedirectionRecords(lang, element, path) {
-    if (lang + element.alias !== lang + path + element.documentID){
+function addToRedirectionRecords(lang, element, url) {
+    if (lang + element.alias !== lang + url + element.documentID){
         dataFirestore[collectionNameOfRedirectionRecords][(lang + element.alias).replace(/\//gi, '\\')]
-            = {code: 301, url: "/" + lang + path + element.documentID};
+            = {code: 301, url: "/" + lang + url + element.documentID};
         if (lang === "tr/")
             dataFirestore[collectionNameOfRedirectionRecords][(element.alias).replace(/\//gi, '\\')]
-                = {code: 301, url: "/" + lang + path + element.documentID};
+                = {code: 301, url: "/" + lang + url + element.documentID};
     }
 }
 
@@ -213,11 +215,11 @@ function checkDirectory(directoryPath) {
     if (!fs.existsSync(directoryPath)){
         directoryPath.split(path.sep)
             .reduce((currentPath, folder) => {
-                currentPath += folder + path.sep;
-                if (!fs.existsSync(currentPath)){
-                    fs.mkdirSync(currentPath);
+                const dirPath = currentPath + folder + path.sep;
+                if (!fs.existsSync(dirPath)){
+                    fs.mkdirSync(dirPath);
                 }
-                return currentPath;
+                return dirPath;
             }, '');
     }
 }
@@ -231,7 +233,7 @@ function downloadFiles(htmlContent) {
             checkDirectory(path.dirname(pathOfFiles + filePath));
             if (!fs.existsSync(pathOfFiles + filePath)) {
                 const file = fs.createWriteStream(pathOfFiles + filePath); // TODO: if it starts with url, you can replace it for local file
-                const request = http.get(baseURLOfWebSite + filePath, function (response) {
+                http.get(baseURLOfWebSite + filePath, function (response) {
                     response.pipe(file);
                     file.on('finish', function () {
                         file.close();
@@ -370,7 +372,7 @@ ORDER BY n.created ASC`,
 getTaxonomy();
 
 function writeResultToFile() {
-    fs.writeFile('data.json', JSON.stringify(dataFirestore, undefined, 2), {encoding: 'utf8', flag: 'w'}, function (err) {
+    fs.writeFile(pathOfDataJson, JSON.stringify(dataFirestore, undefined, 2), {encoding: 'utf8', flag: 'w'}, function (err) {
         if (err) throw err;
         console.log('Collections Exported Successfully');
     });
