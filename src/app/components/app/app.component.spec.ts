@@ -1,18 +1,20 @@
-import { async, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
-
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
-import { NavMenuComponent } from '../nav-menu/nav-menu.component';
-import { AlertComponent } from '../alert/alert.component';
-import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { AlertService, PaginationService, SeoService } from '../../services';
+import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+    let fixture: ComponentFixture<AppComponent>;
+    let comp: AppComponent;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -25,51 +27,9 @@ describe('AppComponent', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: {} }
-            ],
-            imports: [
-                RouterTestingModule.withRoutes([
-                    {path: '', component: AppComponent},
-                    {path: 'unit-test', component: NavMenuComponent}
-                    ])
-            ]
-        })
-            .compileComponents();
-    }));
-
-    it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
-            .toBeTruthy();
-    }));
-
-    it('should render Navbar in a nav.a', async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('nav a').textContent)
-            .toContain('Navbar');
-    }));
-
-});
-
-describe('AppComponentSeoService', () => {
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                AppComponent,
-                NavMenuComponent,
-                AlertComponent,
-                LoadingSpinnerComponent,
-                FooterComponent,
-                NotFoundComponent
-            ],
-            providers: [
-                AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: {} }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -78,37 +38,91 @@ describe('AppComponentSeoService', () => {
                 ])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AppComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should render Navbar in a nav.a', async(() => {
+        expect(fixture.nativeElement.querySelector('nav a').textContent)
+            .toContain('Navbar');
+    }));
+
+});
+
+describe('AppComponentSeoService', () => {
+    let fixture: ComponentFixture<AppComponent>;
+    let comp: AppComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
+                NavMenuComponent,
+                AlertComponent,
+                LoadingSpinnerComponent,
+                FooterComponent,
+                NotFoundComponent
+            ],
+            providers: [
+                AlertService, SeoService, PaginationService,
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+            ],
+            imports: [
+                RouterTestingModule.withRoutes([
+                    {path: '', component: AppComponent},
+                    {path: 'unit-test', component: NavMenuComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AppComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
     }));
 
     it("should set title as 'My Unit Test Title'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title'
         });
         fixture.detectChanges();
-        expect(app.seo.getTitle())
+        expect(comp.seo.getTitle())
             .toContain('My Unit Test Title');
     }));
 
     it("should set meta og:type as 'article'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             ogType: 'article'
         });
         fixture.detectChanges();
-        expect(app.seo.getMeta()
+        expect(comp.seo.getMeta()
             .getTag('property="og:type"').content)
             .toContain('article');
     }));
 
     it("should set meta og:title as 'My Unit Test Title'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             ogType: 'article',
             image: '/favicon.ico',
@@ -116,28 +130,24 @@ describe('AppComponentSeoService', () => {
             langAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}]
         });
         fixture.detectChanges();
-        expect(app.seo.getMeta()
+        expect(comp.seo.getMeta()
             .getTag('property="og:title"').content)
             .toContain('My Unit Test Title');
     }));
 
     it("should set meta twitter:card as 'summary'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             twitterCard: 'summary'
         });
         fixture.detectChanges();
-        expect(app.seo.getMeta()
+        expect(comp.seo.getMeta()
             .getTag('name="twitter:card"').content)
             .toContain('summary');
     }));
 
     it("should set meta twitter:title as 'My Unit Test Title'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             twitterCard: 'summary',
             image: '/favicon.ico',
@@ -145,15 +155,13 @@ describe('AppComponentSeoService', () => {
             twitterCreator: '@UnitTest'
         });
         fixture.detectChanges();
-        expect(app.seo.getMeta()
+        expect(comp.seo.getMeta()
             .getTag('name="twitter:title"').content)
             .toContain('My Unit Test Title');
     }));
 
     it("should set meta robots as 'index,follow'", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.seo.generateTags({
+        comp.seo.setHtmlTags({
             robots: 'index,follow',
             author: 'unit-test',
             owner: 'unit-test',
@@ -166,7 +174,7 @@ describe('AppComponentSeoService', () => {
             langAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}]
         });
         fixture.detectChanges();
-        expect(app.seo.getMeta()
+        expect(comp.seo.getMeta()
             .getTag('name="robots"').content)
             .toContain('index,follow');
     }));
@@ -174,6 +182,9 @@ describe('AppComponentSeoService', () => {
 });
 
 describe('AppComponentAlertService', () => {
+    let fixture: ComponentFixture<AppComponent>;
+    let comp: AppComponent;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -186,8 +197,9 @@ describe('AppComponentAlertService', () => {
             ],
             providers: [
                 AlertService, SeoService, PaginationService,
-                { provide: ComponentFixtureAutoDetect, useValue: true },
-                { provide: AngularFirestore, useValue: {} }
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -196,122 +208,121 @@ describe('AppComponentAlertService', () => {
                 ])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AppComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
     }));
 
     it("should add 'My success message' to alert.service and get 'My success message' from alert.service", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alert.getMessage()
+        comp.alert.getMessage()
             .subscribe(message => {
                 expect(message.text)
                     .toContain('My success message');
             });
-        app.alert.success('My success message', true);
+        comp.alert.success('My success message', true);
         fixture.detectChanges();
     }));
 
     it("should render 'My success message' in alert component", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alert.success('My success message', false);
+        comp.alert.success('My success message', false);
         fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success').textContent)
             .toContain('My success message');
     }));
 
     it("should render 'My success message' in alert component and should be cleared after redirect", fakeAsync(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
         const injector = fixture.debugElement.injector;
         const router = injector.get(Router);
         router.initialNavigation();
-        const app = fixture.debugElement.componentInstance;
-        app.alert.success('My success message', false);
+        comp.alert.success('My success message', false);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success'))
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success'))
             .toBeNull();
     }));
 
     it("should render 'My success message' in alert component and should not be cleared after redirect", fakeAsync(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
         const injector = fixture.debugElement.injector;
         const router = injector.get(Router);
         router.initialNavigation();
-        const app = fixture.debugElement.componentInstance;
-        app.alert.success('My success message', true);
+        comp.alert.success('My success message', true);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-success').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-success').textContent)
             .toBe('My success message');
     }));
 
     it("should add 'My error message' to alert.service and get 'My error message' from alert.service", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alert.getMessage()
+        comp.alert.getMessage()
             .subscribe(message => {
                 expect(message.text)
                     .toContain('My error message');
             });
-        app.alert.error('My error message', true);
+        comp.alert.error('My error message', true);
         fixture.detectChanges();
     }));
 
     it("should render 'My error message' in alert component", async(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alert.error('My error message', false);
+        comp.alert.error('My error message', false);
         fixture.detectChanges();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger').textContent)
             .toContain('My error message');
     }));
 
     it("should render 'My error message' in alert component and should be cleared after redirect", fakeAsync(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
         const injector = fixture.debugElement.injector;
         const router = injector.get(Router);
         router.initialNavigation();
-        const app = fixture.debugElement.componentInstance;
-        app.alert.error('My error message', false);
+        comp.alert.error('My error message', false);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger'))
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger'))
             .toBeNull();
     }));
 
     it("should render 'My error message' in alert component and should not be cleared after redirect", fakeAsync(() => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
         const injector = fixture.debugElement.injector;
         const router = injector.get(Router);
         router.initialNavigation();
-        const app = fixture.debugElement.componentInstance;
-        app.alert.error('My error message', true);
+        comp.alert.error('My error message', true);
         fixture.detectChanges();
-        router.navigate(['unit-test']);
+        router.navigate(['unit-test'])
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
         tick();
         fixture.detectChanges();
         tick();
-        const compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('app-alert .alert-danger').textContent)
+        expect(fixture.nativeElement.querySelector('app-alert .alert-danger').textContent)
             .toBe('My error message');
     }));
 

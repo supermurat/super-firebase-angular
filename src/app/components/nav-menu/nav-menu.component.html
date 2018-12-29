@@ -18,8 +18,18 @@
                     </a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/pages']">
-                        <span class='' i18n>Pages</span>
+                    <a class="nav-link" [routerLink]="['/articles']">
+                        <span class='' i18n>Articles</span>
+                    </a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/jokes']">
+                        <span class='' i18n>Jokes</span>
+                    </a>
+                </li>
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/quotes']">
+                        <span class='' i18n>Quotes</span>
                     </a>
                 </li>
                 <li class="nav-item" [routerLinkActive]="['active']">
@@ -45,10 +55,6 @@
                     </a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" i18n="@@search">Search</button>
-            </form>
         </div>
     </div>
 </nav>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService, AuthService, SeoService } from '../../services';
+import { AuthService, SeoService } from '../../services';
 
 /**
  * Admin Login Component
  */
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html'
+    selector: 'app-admin-login',
+    templateUrl: './admin-login.component.html'
 })
 export class AdminLoginComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class AdminLoginComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: 'Admin Login',
             description: 'Admin login page'
         });

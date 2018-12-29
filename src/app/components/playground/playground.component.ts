@@ -1,12 +1,11 @@
-import { AlertService, PaginationService, SeoService } from '../../services';
-
 /** window object of browser */
 declare let window: any;
 
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
+import { AlertService, PaginationService, SeoService } from '../../services';
 
 /**
  * Playground Component
@@ -41,18 +40,27 @@ export class PlaygroundComponent implements OnInit {
     inc(i: number): void {
         this.minutes = Math.min(5, Math.max(0, this.minutes + i));
     }
+
     /**
      * set male as current gender
      */
-    male(): void { this.gender = 'male'; }
+    male(): void {
+        this.gender = 'male';
+    }
+
     /**
      * set female as current gender
      */
-    female(): void { this.gender = 'female'; }
+    female(): void {
+        this.gender = 'female';
+    }
+
     /**
      * set other as current gender
      */
-    other(): void { this.gender = 'other'; }
+    other(): void {
+        this.gender = 'other';
+    }
 
     /**
      * constructor of PlaygroundComponent
@@ -60,34 +68,38 @@ export class PlaygroundComponent implements OnInit {
      * @param locale: LOCALE_ID
      * @param seo: SeoService
      * @param alert: AlertService
-     * @param page: PaginationService
+     * @param pagination: PaginationService
      * @param storage: AngularFireStorage
      */
-    constructor(@Inject(PLATFORM_ID) private platformId: string,
+    constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
-                private seo: SeoService,
+                private readonly seo: SeoService,
                 public alert: AlertService,
-                public page: PaginationService,
-                private storage: AngularFireStorage) {}
+                public pagination: PaginationService,
+                private readonly storage: AngularFireStorage) {
+    }
 
     /**
-     * ngOnDestroy
+     * ngOnInit
      */
     ngOnInit(): void {
-        this.page.init(`blogs_${this.locale}`, 'created', { reverse: true, prepend: false });
+        this.pagination.init(`blogs_${this.locale}`, 'created', {reverse: true, prepend: false});
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: this.title,
             description: this.title
         });
 
         const ref = this.storage.ref('blogs/bad, very bad angel.gif');
-        this.imgURL$ = ref.getDownloadURL();
-        this.imgURL$.subscribe(result => {
-            this.imgURL = result;
-        });
+        if (isPlatformBrowser(this.platformId)) {
+            // following lines are not working on server side because of undefined XMLHttpRequest
+            this.imgURL$ = ref.getDownloadURL();
+            this.imgURL$.subscribe(result => {
+                this.imgURL = result;
+            });
+        }
     }
 
     /**
@@ -95,8 +107,9 @@ export class PlaygroundComponent implements OnInit {
      */
     openAlert(): void {
         this.alert.success('This is alert test');
-        if (isPlatformBrowser(this.platformId))
+        if (isPlatformBrowser(this.platformId)) {
             window.alert('Yes it is!');
+        }
     }
 
     /**
@@ -104,10 +117,9 @@ export class PlaygroundComponent implements OnInit {
      * @param e: event
      */
     scrollHandler(e): void {
-        if (e === 'bottom')
-            this.page.more();
-        /*if (e === 'top')
-            this.page.more();*/
+        if (e === 'bottom') {
+            this.pagination.more();
+        }
     }
 
     /**

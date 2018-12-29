@@ -1,29 +1,38 @@
 <div class='row'>
     <!-- Blog Entries Column -->
     <div class="col-md-8">
+        <div *ngIf="blog$ | async as content">
+            <article class="card my-4">
+                <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}">
+                <div class="card-body">
+                    <h2 class="card-title"><a [routerLink]="[content.routePath, blogID]">{{ content.title }}</a></h2>
+                    <p class="card-text" [innerHTML]="content.content"></p>
+                    <hr />
+                    <div class="text-center">
+                        <div class="d-inline p-1" *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
+                            <a class="badge badge-secondary" [routerLink]="['/tag', tag.key]">{{ tag.value }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
+                    <br>
+                    <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>
+                </div>
 
-        <div class="card my-4" *ngIf="blog$ | async as blog">
-            <img class="card-img-top" *ngIf="blog.image" [src]="blog.image" alt="Card image cap">
-            <div class="card-body">
-                <a [routerLink]="['/blog', blog.id]"><h2 class="card-title">{{ blog.title }}</h2></a>
-                <p class="card-text" [innerHTML]="blog.content"></p>
-            </div>
-            <div class="card-footer text-muted">
-                <!--<span i18n>Posted on {{ blog.created.toMillis() | date:'medium' }} by {{ blog.createdBy }}</span>-->
+            </article>
+
+            <div class="col-md-12 text-center mb-4">
+                <a [routerLink]="[content.routePath, content.orderNo + 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>&lArr; Previous Article</a>
+                <a [routerLink]="[content.routePath]" class="btn btn-primary btn-sm mr-2" role="button" i18n>Return to Article List &uArr;</a>
+                <a [routerLink]="[content.routePath, content.orderNo - 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>Next Article &rArr;</a>
             </div>
         </div>
-
-        <div class="col-md-12 text-center mb-4">
-            <a routerLink="/blog" class="btn btn-primary btn-sm mr-2" role="button" i18n>&lArr; Previous Blog</a>
-            <a routerLink="/blog" class="btn btn-primary btn-sm mr-2" role="button" i18n>Return to Blog List &uArr;</a>
-            <a routerLink="/blog" class="btn btn-primary btn-sm mr-2" role="button" i18n>Next Blog &rArr;</a>
-        </div>
-
     </div>
 
     <!-- Sidebar Widgets Column -->
-    <div class="col-md-4">
+    <aside class="col-md-4">
         <app-side-bar></app-side-bar>
-    </div>
+    </aside>
 
 </div>

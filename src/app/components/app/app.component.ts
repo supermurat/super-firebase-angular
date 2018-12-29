@@ -1,9 +1,8 @@
-import { AlertService, PaginationService, SeoService } from '../../services';
-
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { HttpStatusModel } from '../../models';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpStatusModel } from '../../models';
+import { AlertService, PaginationService, SeoService } from '../../services';
 
 /**
  * App Component
@@ -24,15 +23,15 @@ export class AppComponent implements OnInit {
      * @param renderer: Renderer2
      * @param seo: SeoService
      * @param alert: AlertService
-     * @param page: PaginationService
+     * @param pagination: PaginationService
      */
-    constructor(@Inject(PLATFORM_ID) private platformId: string,
+    constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(DOCUMENT) doc: Document,
                 @Inject(LOCALE_ID) locale: string,
                 renderer: Renderer2,
                 public seo: SeoService,
                 public alert: AlertService,
-                public page: PaginationService) {
+                public pagination: PaginationService) {
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
     }
 

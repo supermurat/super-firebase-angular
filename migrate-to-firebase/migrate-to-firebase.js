@@ -120,7 +120,7 @@ function uploadFilesAndFixFilePaths(){
 
 function fixTimestamps(nestedData){
     if (typeof nestedData === "string") {
-        if (nestedData.match(/^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])[ T](00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])\.\d\d\d[Z]?$/gi)) {
+        if (nestedData.match(/^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])[ T](00|[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])\.\d\d\d[Z]?$/gi)) {
             nestedData = new Date(nestedData);
         }
     } else if (typeof nestedData === "object" && nestedData !== undefined && nestedData !== null) {
@@ -138,17 +138,45 @@ function importIntoFirestore(){
         if (typeof nestedContent === "object") {
             Object.keys(nestedContent).forEach(docID => {
                 const nestedData = fixTimestamps(nestedContent[docID]);
-                // console.log("nestedData:", nestedData);
+                const docData = {...nestedData};
+                Object.keys(nestedData).forEach(key => {
+                    if (key.startsWith("__collection__")) {
+                        delete docData[key];
+                    }
+                });
+
                 admin.firestore()
                     .collection(key)
                     .doc(docID)
-                    .set(nestedData)
+                    .set(docData)
                     .then((res) => {
+                        Object.keys(nestedData).forEach(subKey => {
+                            if (subKey.startsWith("__collection__")) {
+                                console.log("Importing sub collections:", key, docID, subKey);
+                                const subNestedContent = nestedData[subKey];
+                                Object.keys(subNestedContent).forEach(subDocID => {
+                                    const subDocData = {...subNestedContent[subDocID]};
+                                    admin.firestore()
+                                        .collection(key)
+                                        .doc(docID)
+                                        .collection(subKey.replace("__collection__", ""))
+                                        .doc(subDocID)
+                                        .set(subDocData)
+                                        .then((res) => {
+                                            console.log("Imported:", key, docID, subKey, subDocID);
+                                        })
+                                        .catch((error) => {
+                                            console.error("Error:", key, docID, subKey, subDocID, error);
+                                        });
+                                });
+                            }
+                        });
                         console.log("Imported:", key, docID);
                     })
                     .catch((error) => {
                         console.error("Error:", key, docID, error);
                     });
+
             });
         }
     });

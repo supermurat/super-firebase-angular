@@ -8,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable()
 export class AlertService {
     /** collection of messages */
-    private subject = new Subject<any>();
+    private readonly subject = new Subject<any>();
     /** do you want to keep message as shown even after gone to another page? */
     private keepAfterNavigationChange = false;
 
@@ -19,13 +19,15 @@ export class AlertService {
     constructor(router: Router) {
         // clear alert message on route change
         router.events.subscribe(event => {
-            if (event instanceof NavigationStart)
-                if (this.keepAfterNavigationChange)
+            if (event instanceof NavigationStart) {
+                if (this.keepAfterNavigationChange) {
                     // only keep for a single location change
                     this.keepAfterNavigationChange = false;
-                else
+                } else {
                     // clear alert
                     this.subject.next();
+                }
+            }
         });
     }
 
@@ -36,10 +38,10 @@ export class AlertService {
      */
     success(message: string, keepAfterNavigationChange = false): void {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'success', text: message });
+        this.subject.next({type: 'success', text: message});
     }
 
-    /* istanbul ignore next */
+    // istanbul ignore next
     /**
      * Show error to user
      * @param message: error text
@@ -47,7 +49,7 @@ export class AlertService {
      */
     error(message: string, keepAfterNavigationChange = false): void {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next({ type: 'error', text: message });
+        this.subject.next({type: 'error', text: message});
     }
 
     /**

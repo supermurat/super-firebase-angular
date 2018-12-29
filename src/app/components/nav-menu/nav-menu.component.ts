@@ -1,7 +1,7 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
-import { locales } from '../../locales.values';
+import { locales } from '../../app-config';
 
 /**
  * Nav Menu Component
@@ -23,11 +23,11 @@ export class NavMenuComponent implements OnInit {
      */
     constructor(
         @Inject(LOCALE_ID) public locale: string,
-        private router: Router) {
+        private readonly router: Router) {
     }
 
     /**
-     * ngOnDestroy
+     * ngOnInit
      */
     ngOnInit(): void {
         this.locales = locales;

@@ -1,0 +1,31 @@
+<div class='row'>
+    <h1 class="col-md-12" i18n>{{ title }}
+    </h1>
+</div>
+<div class='row'>
+    <!-- Articles Column -->
+
+    <div class="col-md-8">
+
+        <article class="card my-4" *ngFor="let content of articles$ | async; trackBy:trackByIndex">
+            <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}">
+            <div class="card-body">
+                <h2 class="card-title"><a [routerLink]="[content.routePath, content.id]">{{ content.title }}</a></h2>
+                <p class="card-text" [innerHTML]="content.contentSummary"></p>
+                <a [routerLink]="[content.routePath, content.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
+            </div>
+        </article>
+
+        <app-pager></app-pager>
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+
+</div>

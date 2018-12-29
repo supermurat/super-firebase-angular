@@ -15,7 +15,7 @@ exports.config = {
     getPageTimeout: 1000 * 60 * 2,
     maxSessions: 2,
     specs: [
-        "./e2e/**/*.e2e-spec.ts"
+        "./**/*.e2e-spec.ts"
     ],
     commonCapabilities: {
         // https://www.browserstack.com/automate/capabilities

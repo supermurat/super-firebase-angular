@@ -32,12 +32,12 @@ export class PaginationService {
     loading = new BehaviorSubject<boolean>(false);
 
     /** private source data */
-    private _data = new BehaviorSubject([]);
+    private readonly _data = new BehaviorSubject([]);
 
     /** QueryConfig */
     private query: QueryConfig;
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private readonly afs: AngularFirestore) {
     }
 
     /**
@@ -45,8 +45,9 @@ export class PaginationService {
      * @param path: path to collection
      * @param field: field to orderBy
      * @param opts: options
+     * @param isReset: do you want to reset before init?
      */
-    init(path, field, opts?): void {
+    init(path, field, opts?, isReset?): void {
         this.query = {
             path,
             field,
@@ -55,21 +56,22 @@ export class PaginationService {
             prepend: false,
             ...opts
         };
+        if (isReset || isReset === undefined) {
+            this.reset();
+        }
 
         setTimeout(() => {
-            const first = this.afs.collection(this.query.path, ref => {
-                return ref
+            const first = this.afs.collection(this.query.path, ref =>
+                ref
                     .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
-                    .limit(this.query.limit);
-            });
+                    .limit(this.query.limit));
 
             this.mapAndUpdate(first);
 
             // create the observable array for consumption in components
             this.data = this._data.asObservable()
-                .pipe(scan((acc, val) => {
-                    return this.query.prepend ? val.concat(acc) : acc.concat(val);
-                }));
+                .pipe(scan((acc, val) =>
+                    this.query.prepend ? val.concat(acc) : acc.concat(val)));
         }, 0);
     }
 
@@ -79,19 +81,19 @@ export class PaginationService {
     more(): any {
         const cursor = this.getCursor();
         if (cursor) {
-            const more = this.afs.collection(this.query.path, ref => {
-                return ref
+            const more = this.afs.collection(this.query.path, ref =>
+                ref
                     .orderBy(this.query.field, this.query.reverse ? 'desc' : 'asc')
                     .limit(this.query.limit)
-                    .startAfter(cursor);
-            });
+                    .startAfter(cursor));
             this.mapAndUpdate(more);
-        } else
+        } else {
             this.done.next(true);
+        }
     }
 
     /**
-     * Reset the page
+     * Reset the pagination
      */
     reset(): void {
         this._data.next([]);
@@ -104,8 +106,9 @@ export class PaginationService {
      */
     private getCursor(): any {
         const current = this._data.value;
-        if (current.length)
+        if (current.length) {
             return this.query.prepend ? current[0].doc : current[current.length - 1].doc;
+        }
 
         return;
     }
@@ -116,8 +119,9 @@ export class PaginationService {
      */
     private mapAndUpdate(col: AngularFirestoreCollection<any>): any {
 
-        if (this.done.value || this.loading.value)
+        if (this.done.value || this.loading.value) {
             return;
+        }
 
         // loading
         this.loading.next(true);
@@ -126,10 +130,11 @@ export class PaginationService {
         return col.snapshotChanges()
             .pipe(tap(arr => {
                 let values = arr.map(snap => {
+                    const id = snap.payload.doc.id;
                     const data = snap.payload.doc.data();
                     const doc = snap.payload.doc;
 
-                    return {...data, doc};
+                    return {id, ...data, doc};
                 });
 
                 // if prepending, reverse array
@@ -140,8 +145,9 @@ export class PaginationService {
                 this.loading.next(false);
 
                 // no more values, mark done
-                if (!values.length)
+                if (!values.length) {
                     this.done.next(true);
+                }
             }))
             .pipe(take(1))
             .subscribe();

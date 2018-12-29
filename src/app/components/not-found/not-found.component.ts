@@ -11,13 +11,13 @@ import { SeoService } from '../../services';
 })
 export class NotFoundComponent {
     /**
-     * constructor of PageDetailComponent
+     * constructor of ArticleDetailComponent
      * @param seo: SeoService
      */
     constructor(
-        private seo: SeoService
+        private readonly seo: SeoService
     ) {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: '404 - Page not found',
             description: '404 - Page not found'
         });

@@ -1,10 +1,13 @@
-import { async, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertComponent } from './alert.component';
 import { AlertService } from '../../services';
+import { AlertComponent } from './alert.component';
 
 describe('AlertComponent', () => {
+    let fixture: ComponentFixture<AlertComponent>;
+    let comp: AlertComponent;
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
@@ -12,51 +15,52 @@ describe('AlertComponent', () => {
             ],
             providers: [
                 AlertService,
-                { provide: ComponentFixtureAutoDetect, useValue: true }
+                {provide: ComponentFixtureAutoDetect, useValue: true}
             ],
             imports: [
                 RouterTestingModule.withRoutes([{path: '', component: AlertComponent}])
             ]
         })
-            .compileComponents();
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AlertComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
     }));
 
     it('should create the app', async(() => {
-        const fixture = TestBed.createComponent(AlertComponent);
-        const app = fixture.debugElement.componentInstance;
-        expect(app)
+        expect(comp)
             .toBeTruthy();
     }));
 
     it('should create the app and destroy with undefined subscription', async(() => {
-        const fixture = TestBed.createComponent(AlertComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.subscription = undefined;
-        expect(app)
+        comp.subscription = undefined;
+        expect(comp)
             .toBeTruthy();
     }));
 
     it("should add 'My success message' to alert.service and get 'My success message' from alert.service", async(() => {
-        const fixture = TestBed.createComponent(AlertComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alertService.getMessage()
+        comp.alertService.getMessage()
             .subscribe(message => {
                 expect(message.text)
                     .toContain('My success message');
             });
-        app.alertService.success('My success message', false);
+        comp.alertService.success('My success message', false);
         fixture.detectChanges();
     }));
 
     it("should add 'My error message' to alert.service and get 'My error message' from alert.service", async(() => {
-        const fixture = TestBed.createComponent(AlertComponent);
-        const app = fixture.debugElement.componentInstance;
-        app.alertService.getMessage()
+        comp.alertService.getMessage()
             .subscribe(message => {
                 expect(message.text)
                     .toContain('My error message');
             });
-        app.alertService.error('My error message', false);
+        comp.alertService.error('My error message', false);
         fixture.detectChanges();
     }));
 

@@ -26,7 +26,6 @@
       true
     ],
     "label-position": true,
-    "no-string-literal": false,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,

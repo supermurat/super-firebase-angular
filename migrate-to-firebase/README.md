@@ -1,7 +1,9 @@
 # super-firebase-angular / migrate-to-firebase
-- Import your data directly to Cloud Firestore
-- Upload your files directly to Firebase Storage
-- Fix file/image paths on your json data
+  - Import your data directly to Cloud Firestore
+
+  - Upload your files directly to Firebase Storage
+
+  - Fix file/image paths on your json data
 (in html, just before import) for web projects
 
 ## Install dependencies

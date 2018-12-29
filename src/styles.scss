@@ -50,10 +50,6 @@ body {
   min-height: 25vh;
 }
 
-.tag {
-  font-size: 2.2em;
-}
-
 @keyframes fadeIn {
   /** keep me **/
 }
@@ -75,4 +71,16 @@ body {
 .animated {
   animation-duration: 1s;
   animation-fill-mode: both;
+}
+
+.card-title a:hover {
+  text-decoration: none;
+}
+
+.google-custom-search-result .gsc-tabHeader {
+  overflow: hidden !important;
+}
+
+.google-custom-search-result .gsc-control-cse .gsc-option-menu-container {
+  min-width: 120px;
 }

@@ -1,7 +1,7 @@
 import { environment } from '../../environments/environment';
 
 /**
- * Tags Definition of Page
+ * HTML Tags of Page
  *
  * Contains all kind of data for seo and html
  */
@@ -10,8 +10,10 @@ export class HtmlDocumentModel {
     title ? = environment.defaultTitle;
     /** description of page */
     description ? = environment.defaultDescription;
-    /** image url of page */
+    /** image url of content */
     image?: string;
+    /** image alternate text */
+    imageAltText?: string;
 
     /** slug of page */
     slug?: string;
@@ -20,7 +22,14 @@ export class HtmlDocumentModel {
     /** language code of page */
     languageCode?: string;
     /** alternate language object array of page */
-    langAlternates?: Array<{languageCode: string, cultureCode: string, slug: string}> = [];
+    langAlternates?: Array<{
+        /** alternate language code of page */
+        languageCode: string,
+        /** alternate culture code of page */
+        cultureCode: string,
+        /** alternate slug of page */
+        slug: string
+    }> = [];
 
     /** twitter:card of page */
     twitterCard?: string;
@@ -64,4 +73,7 @@ export class HtmlDocumentModel {
     articleAuthorURL?: string;
     /** article:publisher tag of page */
     articlePublisherURL?: string;
+
+    /** taxonomy */
+    taxonomy?: any; // key: link, value: title
 }

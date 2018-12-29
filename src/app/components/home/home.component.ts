@@ -1,6 +1,5 @@
-import { AlertService, SeoService } from '../../services';
-
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { AlertService, SeoService } from '../../services';
 
 /**
  * Home Component
@@ -20,15 +19,16 @@ export class HomeComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      */
-    constructor(@Inject(PLATFORM_ID) private platformId: string,
+    constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 public seo: SeoService,
-                public alert: AlertService) {}
+                public alert: AlertService) {
+    }
 
     /**
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.generateTags({
+        this.seo.setHtmlTags({
             title: this.title,
             description: this.title
         });

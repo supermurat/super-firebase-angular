@@ -6,6 +6,10 @@ import { HtmlDocumentModel } from './html-document-model';
 export class PageModel extends HtmlDocumentModel {
     /** id of record */
     id?: string;
+    /** path of record */
+    path?: string;
+    /** route path without id */
+    routePath?: string;
     /** order number of record */
     orderNo?: number;
     /** html content or content array of page */
@@ -17,11 +21,11 @@ export class PageModel extends HtmlDocumentModel {
     /** unique key for translations */
     i18nKey?: string;
     /** creation date */
-    created?: any = { seconds: undefined };
+    created?: any = {seconds: undefined};
     /** creator person */
     createdBy?: string;
     /** last change date */
-    changed?: any = { seconds: undefined };
+    changed?: any = {seconds: undefined};
     /** last changer person */
     changedBy?: string;
 }

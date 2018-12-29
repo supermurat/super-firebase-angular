@@ -1,0 +1,18 @@
+<div class='row'>
+    <div class="col-md-8">
+        <div class="card my-4">
+            <h5 class="card-header" i18n>Search</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <div class="google-custom-search-box" [innerHTML]="gcseSearchBox"></div>
+                    <div class="google-custom-search-result" [innerHTML]="gcseSearchResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+</div>

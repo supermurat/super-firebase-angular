@@ -257,12 +257,6 @@
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">66</context>
         </context-group>
-      </trans-unit><trans-unit id="d6053bbc60b540f2db8c00b119ed27036391dd5e" datatype="html">
-        <source>(Loading ...)</source><target state="final">(Loading ...)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/app/app.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="4865ecf44ecb3799ce27539d4fe4bfadc9ed1907" datatype="html">
         <source>Navbar</source>
@@ -286,8 +280,8 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
-      </trans-unit><trans-unit id="8c109a1d72eeab6d3219c9dfb72722fe68d19431" datatype="html">
-        <source>Pages</source><target state="final">Pages</target>
+      </trans-unit><trans-unit id="3b6143a528c6f4586e60e9af4ced8ac0fbe08251" datatype="html">
+        <source>Articles</source><target state="final">Articles</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">22</context>
@@ -403,42 +397,23 @@
           <context context-type="sourcefile">app/components/pager/pager.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-      </trans-unit><trans-unit id="7d35e6d7549327f714a050ed5caae922b69b34d4" datatype="html">
-        <source>Side Widget</source><target state="final">Side Widget</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit><trans-unit id="fa39532ab0d8eba95713f31116c32d6d83d499fd" datatype="html">
-        <source>
-        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap
-        4 card containers!
-    </source><target state="final">
-        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap
-        4 card containers!
+      </trans-unit><trans-unit id="314c476245223e917fe6f7f3704a97e432873758" datatype="html">
+        <source>Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tagName }}"/>"
+    </source><target state="final">Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tagName }}"/>"
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit><trans-unit id="c47c5656e72dacecfb416b45427f36079e42d7f1" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</source><target state="final"><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit><trans-unit id="88d56c4350ea466b7c77ec075e87d6368faef123" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</source><target state="final"><x id="INTERPOLATION" equiv-text="{{rendererText}}"/> side rendering with Firebase 🔥 Build Test #2</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit>
       <trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html">
         <source>Angular logo</source>
         <target>Angular logo</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit><trans-unit id="7c3d41811fe34133ef9f9739de524cdee0c1cadf" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit><trans-unit id="7c3d41811fe34133ef9f9739de524cdee0c1cadf" datatype="html">
         <source>Is browser code loaded?</source><target state="final">Is browser code loaded?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
@@ -453,13 +428,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/playground/playground.component.html</context>
           <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="71c5a2d85870556e50fb868c43cb7946cff2a77a" datatype="html">
-        <source>Warning!</source>
-        <target>Warning!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
-          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="introductionHeader" datatype="html">
@@ -544,7 +512,7 @@
       <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="f1a2bd5833a685d9eb7e6037c7be59ff5c71ec27" datatype="html">
         <source>I ran out of blogs!</source><target state="final">I ran out of blogs!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="db9e2ebbed87ec7d1de0de6d26cf09df6e79e29a" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/playground/playground.component.html</context><context context-type="linenumber">50</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit><trans-unit id="db9e2ebbed87ec7d1de0de6d26cf09df6e79e29a" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ title }}"/>
         <x id="START_SMALL_TEXT" ctype="x-small" equiv-text="&lt;small>"/>Let me make you smile <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/><x id="CLOSE_SMALL_TEXT" ctype="x-small" equiv-text="&lt;/small>"/>
     </source><target state="final"><x id="INTERPOLATION" equiv-text="{{ title }}"/>
@@ -557,101 +525,56 @@
       </trans-unit><trans-unit id="6bbfc6a91008949626b70d5bacaca91822e1f575" datatype="html">
         <source>Read More ⇒</source><target state="final">Read More ⇒</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/page-list/page-list.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="7e09e3f6c6ea1b360e02e85184a0f4be654c2c70" datatype="html">
-        <source>← Older</source><target state="final">← Older</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit><trans-unit id="0334bcdd9c68e17adc4152d09a7d0bd53dffc0e7" datatype="html">
-        <source>Newer →</source><target state="final">Newer →</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit><trans-unit id="5ac117d2b17561014e5223236892721a618232a4" datatype="html">
-        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ blog.created.toMillis() | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ blog.createdBy }}"/></source><target state="final">Posted on <x id="INTERPOLATION" equiv-text="{{ blog.created.toMillis() | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ blog.createdBy }}"/></target>
+      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/article-list/article-list.component.html</context><context context-type="linenumber">15</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="a97c1791d078c919f71f2f5587b7087efa49fa9d" datatype="html">
+        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source><target state="final">Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit><trans-unit id="c713f1e5a0f2309c87076cd3022f9fd32dd0288d" datatype="html">
-        <source>⇐ Previous Blog</source><target state="final">⇐ Previous Blog</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit><trans-unit id="daf7d33f355f6a94ccbd7e4ee445c0e21a6a2d5f" datatype="html">
-        <source>Return to Blog List ⇑</source><target state="final">Return to Blog List ⇑</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
-      </trans-unit><trans-unit id="abe5f11c23fdd5c55315fc2f70de97f680d443a5" datatype="html">
-        <source>Next Blog ⇒</source><target state="final">Next Blog ⇒</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="2352209fd9a5f4571b0b9f2c2b582e9a6a3fb307" datatype="html">
+        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></source><target state="final">Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit><trans-unit id="98da3dc51c657ec05c1c250fd0967f21e92c946f" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ title }}"/>
     </source><target state="final"><x id="INTERPOLATION" equiv-text="{{ title }}"/>
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
+          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-      </trans-unit><trans-unit id="36c389a1eb379efe6ba44512ce6acd1d53cb7071" datatype="html">
-        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ page.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.createdBy }}"/></source><target state="final">Posted on <x id="INTERPOLATION" equiv-text="{{ page.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.createdBy }}"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-list/page-list.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit><trans-unit id="188e97704151eb6b735031669535f20e3e3da0b0" datatype="html">
-        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ page.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.changedBy }}"/></source><target state="final">Updated on <x id="INTERPOLATION" equiv-text="{{ page.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ page.changedBy }}"/></target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit><trans-unit id="ef4373dd376b6e2a0e9e707566847df9211a372b" datatype="html">
-        <source>⇐ Previous Page</source><target state="final">⇐ Previous Page</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit><trans-unit id="3cac07189290567b0b0926b4fb8dbaa21e5ccf69" datatype="html">
-        <source>Return to Page List ⇑</source><target state="final">Return to Page List ⇑</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit><trans-unit id="d2107fb84bd1bb1f7d6ea96808a491fa48c0245e" datatype="html">
-        <source>Next Page ⇒</source><target state="final">Next Page ⇒</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/page-detail/page-detail.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit><trans-unit id="9d2c08f67d083d95f0085db3939afdf70efe6889" datatype="html">
-        <source>Blog Entries</source><target state="final">Blog Entries</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit><trans-unit id="218ed6d9fd5d6b4eef31a6c3c4d7f9b72f2163c0" datatype="html">
-        <source>Back to Blog List</source><target state="final">Back to Blog List</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
+      </trans-unit><trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
+        <source>⇐ Previous Article</source><target state="final">⇐ Previous Article</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context><context context-type="linenumber">26</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
+        <source>Return to Article List ⇑</source><target state="final">Return to Article List ⇑</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context><context context-type="linenumber">27</context></context-group></trans-unit><trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
+        <source>Next Article ⇒</source><target state="final">Next Article ⇒</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit>
     </body>
   </file>
 </xliff>
