@@ -37,11 +37,15 @@ export const getDataByPath = (path: string): Array<any> => {
                         if (paths.length > 1) {
                             if (paths[1] === subProp) {
                                 tData.push(myData[prop][subProp]);
+
+                                return tData;
                             }
                         } else {
                             tData.push(myData[prop][subProp]);
                         }
                     });
+
+                return tData;
             }
         });
 

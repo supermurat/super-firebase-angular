@@ -87,8 +87,6 @@ export class QuoteDetailComponent implements OnInit {
             this.quoteID = pmap.get('id');
             this.initQuote();
         });
-        // this will create a split second flash
-        // this.page$ = this.afs.doc(`quotes_${this.locale}/${id}`).valueChanges();
     }
 
     /**
@@ -97,10 +95,10 @@ export class QuoteDetailComponent implements OnInit {
     initQuote(): void {
         this.quote$ = this.ssrFirestoreDoc(`quotes_${this.locale}/${this.quoteID}`, true);
         this.quote$.subscribe(quote => {
-            if (quote) {
-                this.seo.setHtmlTags(quote);
-            } else {
+            if (quote === undefined) {
                 this.checkTranslation(undefined);
+            } else if (quote.id) {
+                this.seo.setHtmlTags(quote);
             }
         });
     }
@@ -133,7 +131,7 @@ export class QuoteDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current quote is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<QuoteModel> {
-        const exists = this.state.get(ARTICLE_KEY, undefined);
+        const exists = this.state.get(ARTICLE_KEY, new QuoteModel());
 
         return this.afs.doc<QuoteModel>(path)
             .valueChanges()

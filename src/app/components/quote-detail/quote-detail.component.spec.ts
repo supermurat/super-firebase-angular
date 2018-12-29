@@ -10,6 +10,7 @@ import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { QuoteDetailComponent } from './quote-detail.component';
 
@@ -25,7 +26,8 @@ describe('QuoteDetailComponent', () => {
                 QuoteDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -42,7 +44,9 @@ describe('QuoteDetailComponent', () => {
                     {path: 'en/quote/:id', component: QuoteDetailComponent},
                     {path: 'tr/alinti/:id', component: QuoteDetailComponent},
                     {path: 'en/quote', component: QuoteDetailComponent},
-                    {path: 'tr/alinti', component: QuoteDetailComponent}
+                    {path: 'tr/alinti', component: QuoteDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -75,7 +79,7 @@ describe('QuoteDetailComponent', () => {
             .toEqual('first-quote');
     }));
 
-    it("should redirection to '/quote/first-quote' if id is -1", fakeAsync(() => {
+    it("should redirect to '/quote/first-quote' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
@@ -89,7 +93,7 @@ describe('QuoteDetailComponent', () => {
             .toBe(2);
     }));
 
-    it("should redirection to '/quote/third-quote' if id is -4", fakeAsync(() => {
+    it("should redirect to '/quote/third-quote' if id is -4", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
@@ -100,7 +104,7 @@ describe('QuoteDetailComponent', () => {
             .toEqual('/quote/third-quote');
     }));
 
-    it('should redirection to translation of ilk-alinti', fakeAsync(() => {
+    it('should redirect to translation of ilk-alinti', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
         activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'ilk-alinti']);
         fixture.detectChanges();
@@ -108,6 +112,16 @@ describe('QuoteDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/alinti/ilk-alinti');
+    }));
+
+    it('should redirect to http-404 for not-found-page', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
+        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'not-found-page']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/quote/not-found-page/http-404');
     }));
 
 });
@@ -122,7 +136,8 @@ describe('QuoteDetailComponent_tr-TR', () => {
                 QuoteDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -143,7 +158,9 @@ describe('QuoteDetailComponent_tr-TR', () => {
                     {path: 'en/quote/:id', component: QuoteDetailComponent},
                     {path: 'tr/alinti/:id', component: QuoteDetailComponent},
                     {path: 'en/quote', component: QuoteDetailComponent},
-                    {path: 'tr/alinti', component: QuoteDetailComponent}
+                    {path: 'tr/alinti', component: QuoteDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -164,7 +181,7 @@ describe('QuoteDetailComponent_tr-TR', () => {
             .toBeTruthy();
     }));
 
-    it('should redirection to translation of first-quote', fakeAsync(() => {
+    it('should redirect to translation of first-quote', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'alintilar', 'alinti');
         activatedRouteStub.navigate(fixture, comp.router, ['/alinti', 'first-quote']);
         fixture.detectChanges();

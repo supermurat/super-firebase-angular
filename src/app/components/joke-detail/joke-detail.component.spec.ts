@@ -10,6 +10,7 @@ import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { JokeDetailComponent } from './joke-detail.component';
 
@@ -25,7 +26,8 @@ describe('JokeDetailComponent', () => {
                 JokeDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -42,7 +44,9 @@ describe('JokeDetailComponent', () => {
                     {path: 'en/joke/:id', component: JokeDetailComponent},
                     {path: 'tr/saka/:id', component: JokeDetailComponent},
                     {path: 'en/joke', component: JokeDetailComponent},
-                    {path: 'tr/saka', component: JokeDetailComponent}
+                    {path: 'tr/saka', component: JokeDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -75,7 +79,7 @@ describe('JokeDetailComponent', () => {
             .toEqual('first-joke');
     }));
 
-    it("should redirection to '/joke/first-joke' if id is -1", fakeAsync(() => {
+    it("should redirect to '/joke/first-joke' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
@@ -89,7 +93,7 @@ describe('JokeDetailComponent', () => {
             .toBe(2);
     }));
 
-    it("should redirection to '/joke/third-joke' if id is -4", fakeAsync(() => {
+    it("should redirect to '/joke/third-joke' if id is -4", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
@@ -100,7 +104,7 @@ describe('JokeDetailComponent', () => {
             .toEqual('/joke/third-joke');
     }));
 
-    it('should redirection to translation of ilk-saka', fakeAsync(() => {
+    it('should redirect to translation of ilk-saka', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
         activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'ilk-saka']);
         fixture.detectChanges();
@@ -108,6 +112,16 @@ describe('JokeDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/saka/ilk-saka');
+    }));
+
+    it('should redirect to http-404 for not-found-page', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'not-found-page']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/joke/not-found-page/http-404');
     }));
 
 });
@@ -122,7 +136,8 @@ describe('JokeDetailComponent_tr-TR', () => {
                 JokeDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -143,7 +158,9 @@ describe('JokeDetailComponent_tr-TR', () => {
                     {path: 'en/joke/:id', component: JokeDetailComponent},
                     {path: 'tr/saka/:id', component: JokeDetailComponent},
                     {path: 'en/joke', component: JokeDetailComponent},
-                    {path: 'tr/saka', component: JokeDetailComponent}
+                    {path: 'tr/saka', component: JokeDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -164,7 +181,7 @@ describe('JokeDetailComponent_tr-TR', () => {
             .toBeTruthy();
     }));
 
-    it('should redirection to translation of first-joke', fakeAsync(() => {
+    it('should redirect to translation of first-joke', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'sakalar', 'saka');
         activatedRouteStub.navigate(fixture, comp.router, ['/saka', 'first-joke']);
         fixture.detectChanges();

@@ -10,6 +10,7 @@ import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { BlogDetailComponent } from './blog-detail.component';
 
@@ -25,7 +26,8 @@ describe('BlogDetailComponent', () => {
                 BlogDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -42,7 +44,9 @@ describe('BlogDetailComponent', () => {
                     {path: 'en/blog/:id', component: BlogDetailComponent},
                     {path: 'tr/gunluk/:id', component: BlogDetailComponent},
                     {path: 'en/blog', component: BlogDetailComponent},
-                    {path: 'tr/gunluk', component: BlogDetailComponent}
+                    {path: 'tr/gunluk', component: BlogDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -75,7 +79,7 @@ describe('BlogDetailComponent', () => {
             .toEqual('first-blog');
     }));
 
-    it("should redirection to '/blog/first-blog' if id is -1", fakeAsync(() => {
+    it("should redirect to '/blog/first-blog' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
@@ -89,7 +93,7 @@ describe('BlogDetailComponent', () => {
             .toBe(2);
     }));
 
-    it("should redirection to '/blog/third-blog' if id is -4", fakeAsync(() => {
+    it("should redirect to '/blog/third-blog' if id is -4", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
@@ -100,7 +104,7 @@ describe('BlogDetailComponent', () => {
             .toEqual('/blog/third-blog');
     }));
 
-    it('should redirection to translation of ilk-gunluk', fakeAsync(() => {
+    it('should redirect to translation of ilk-gunluk', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
         activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'ilk-gunluk']);
         fixture.detectChanges();
@@ -108,6 +112,16 @@ describe('BlogDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/gunluk/ilk-gunluk');
+    }));
+
+    it('should redirect to http-404 for not-found-page', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'not-found-page']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/blog/not-found-page/http-404');
     }));
 
 });
@@ -122,7 +136,8 @@ describe('BlogDetailComponent_tr-TR', () => {
                 BlogDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -143,7 +158,9 @@ describe('BlogDetailComponent_tr-TR', () => {
                     {path: 'en/blog/:id', component: BlogDetailComponent},
                     {path: 'tr/gunluk/:id', component: BlogDetailComponent},
                     {path: 'en/blog', component: BlogDetailComponent},
-                    {path: 'tr/gunluk', component: BlogDetailComponent}
+                    {path: 'tr/gunluk', component: BlogDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -164,7 +181,7 @@ describe('BlogDetailComponent_tr-TR', () => {
             .toBeTruthy();
     }));
 
-    it('should redirection to translation of first-blog', fakeAsync(() => {
+    it('should redirect to translation of first-blog', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'gunlukler', 'gunluk');
         activatedRouteStub.navigate(fixture, comp.router, ['/gunluk', 'first-blog']);
         fixture.detectChanges();

@@ -10,6 +10,7 @@ import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { ArticleDetailComponent } from './article-detail.component';
 
@@ -25,7 +26,8 @@ describe('ArticleDetailComponent', () => {
                 ArticleDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -42,7 +44,9 @@ describe('ArticleDetailComponent', () => {
                     {path: 'en/article/:id', component: ArticleDetailComponent},
                     {path: 'tr/makale/:id', component: ArticleDetailComponent},
                     {path: 'en/article', component: ArticleDetailComponent},
-                    {path: 'tr/makale', component: ArticleDetailComponent}
+                    {path: 'tr/makale', component: ArticleDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -75,7 +79,7 @@ describe('ArticleDetailComponent', () => {
             .toEqual('first-article');
     }));
 
-    it("should redirection to '/article/first-article' if id is -1", fakeAsync(() => {
+    it("should redirect to '/article/first-article' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
@@ -89,7 +93,7 @@ describe('ArticleDetailComponent', () => {
             .toBe(2);
     }));
 
-    it("should redirection to '/article/fifth-article' if id is -6", fakeAsync(() => {
+    it("should redirect to '/article/fifth-article' if id is -6", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
         activatedRouteStub.setParamMap({id: '-6'});
         fixture.detectChanges();
@@ -100,7 +104,7 @@ describe('ArticleDetailComponent', () => {
             .toEqual('/article/fifth-article');
     }));
 
-    it('should redirection to translation of ilk-makale', fakeAsync(() => {
+    it('should redirect to translation of ilk-makale', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
         activatedRouteStub.navigate(fixture, comp.router, ['/article', 'ilk-makale']);
         fixture.detectChanges();
@@ -108,6 +112,16 @@ describe('ArticleDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/tr/makale/ilk-makale');
+    }));
+
+    it('should redirect to http-404 for not-found-page', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'not-found-page']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/article/not-found-page/http-404');
     }));
 
 });
@@ -122,7 +136,8 @@ describe('ArticleDetailComponent_tr-TR', () => {
                 ArticleDetailComponent,
                 FooterComponent,
                 SideBarComponent,
-                AlertComponent
+                AlertComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -143,7 +158,9 @@ describe('ArticleDetailComponent_tr-TR', () => {
                     {path: 'en/article/:id', component: ArticleDetailComponent},
                     {path: 'tr/makale/:id', component: ArticleDetailComponent},
                     {path: 'en/article', component: ArticleDetailComponent},
-                    {path: 'tr/makale', component: ArticleDetailComponent}
+                    {path: 'tr/makale', component: ArticleDetailComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -164,7 +181,7 @@ describe('ArticleDetailComponent_tr-TR', () => {
             .toBeTruthy();
     }));
 
-    it('should redirection to translation of first-article', fakeAsync(() => {
+    it('should redirect to translation of first-article', fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'makaleler', 'makale');
         activatedRouteStub.navigate(fixture, comp.router, ['/makale', 'first-article']);
         fixture.detectChanges();

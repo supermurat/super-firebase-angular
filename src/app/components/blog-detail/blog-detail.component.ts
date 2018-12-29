@@ -87,8 +87,6 @@ export class BlogDetailComponent implements OnInit {
             this.blogID = pmap.get('id');
             this.initBlog();
         });
-        // this will create a split second flash
-        // this.page$ = this.afs.doc(`articles_${this.locale}/${id}`).valueChanges();
     }
 
     /**
@@ -97,10 +95,10 @@ export class BlogDetailComponent implements OnInit {
     initBlog(): void {
         this.blog$ = this.ssrFirestoreDoc(`blogs_${this.locale}/${this.blogID}`, true);
         this.blog$.subscribe(blog => {
-            if (blog) {
-                this.seo.setHtmlTags(blog);
-            } else {
+            if (blog === undefined) {
                 this.checkTranslation(undefined);
+            } else if (blog.id) {
+                this.seo.setHtmlTags(blog);
             }
         });
     }
@@ -133,7 +131,7 @@ export class BlogDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current blog is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<BlogModel> {
-        const exists = this.state.get(BLOG_KEY, undefined);
+        const exists = this.state.get(BLOG_KEY, new BlogModel());
 
         return this.afs.doc<BlogModel>(path)
             .valueChanges()

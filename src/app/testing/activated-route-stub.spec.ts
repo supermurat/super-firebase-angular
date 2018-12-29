@@ -48,7 +48,7 @@ export class ActivatedRouteStub {
         return router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
-                if (lastUrl !== router.url) {
+                if (lastUrl !== router.url && !router.url.endsWith('/http-404')) {
                     lastUrl = router.url;
                     if (router.url.startsWith(`/${routeForPageNoParam}/`)) {
                         this.setParamMap({pageNo: router.url.replace(`/${routeForPageNoParam}/`, '')});

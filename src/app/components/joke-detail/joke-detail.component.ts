@@ -87,8 +87,6 @@ export class JokeDetailComponent implements OnInit {
             this.jokeID = pmap.get('id');
             this.initJoke();
         });
-        // this will create a split second flash
-        // this.page$ = this.afs.doc(`jokes_${this.locale}/${id}`).valueChanges();
     }
 
     /**
@@ -97,10 +95,10 @@ export class JokeDetailComponent implements OnInit {
     initJoke(): void {
         this.joke$ = this.ssrFirestoreDoc(`jokes_${this.locale}/${this.jokeID}`, true);
         this.joke$.subscribe(joke => {
-            if (joke) {
-                this.seo.setHtmlTags(joke);
-            } else {
+            if (joke === undefined) {
                 this.checkTranslation(undefined);
+            } else if (joke.id) {
+                this.seo.setHtmlTags(joke);
             }
         });
     }
@@ -133,7 +131,7 @@ export class JokeDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current joke is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<JokeModel> {
-        const exists = this.state.get(ARTICLE_KEY, undefined);
+        const exists = this.state.get(ARTICLE_KEY, new JokeModel());
 
         return this.afs.doc<JokeModel>(path)
             .valueChanges()

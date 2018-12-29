@@ -87,8 +87,6 @@ export class ArticleDetailComponent implements OnInit {
             this.articleID = pmap.get('id');
             this.initArticle();
         });
-        // this will create a split second flash
-        // this.page$ = this.afs.doc(`articles_${this.locale}/${id}`).valueChanges();
     }
 
     /**
@@ -97,10 +95,10 @@ export class ArticleDetailComponent implements OnInit {
     initArticle(): void {
         this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`, true);
         this.article$.subscribe(article => {
-            if (article) {
-                this.seo.setHtmlTags(article);
-            } else {
+            if (article === undefined) {
                 this.checkTranslation(undefined);
+            } else if (article.id) {
+                this.seo.setHtmlTags(article);
             }
         });
     }
@@ -133,7 +131,7 @@ export class ArticleDetailComponent implements OnInit {
      * @param checkTranslation: check translation if current article is not exist
      */
     ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<ArticleModel> {
-        const exists = this.state.get(ARTICLE_KEY, undefined);
+        const exists = this.state.get(ARTICLE_KEY, new ArticleModel());
 
         return this.afs.doc<ArticleModel>(path)
             .valueChanges()
