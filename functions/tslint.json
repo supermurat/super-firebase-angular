@@ -37,6 +37,12 @@
     "arrow-return-shorthand": [
       true,
       "multiline"
-    ]
+    ],
+    "file-name-casing": [
+      true,
+      "kebab-case"
+    ],
+    "prefer-switch": [false],
+    "increment-decrement": [false]
   }
 }
