@@ -1,5 +1,3 @@
-import { myData } from './data.spec';
-
 /**
  * get snap of data
  * @param tData: to get snap of it
@@ -24,24 +22,25 @@ export const getFirestoreSnap = (tData: Array<any>): Array<any> => {
 
 /**
  * get data from json test data by field path
+ * @param testData: test data for firestore
  * @param path: to get data of it
  */
-export const getDataByPath = (path: string): Array<any> => {
+export const getDataByPath = (testData: any, path: string): Array<any> => {
     const paths = path.split('/');
     const tData: Array<any> = [];
-    Object.keys(myData)
+    Object.keys(testData)
         .forEach((prop: string) => {
             if (paths[0] === prop) {
-                Object.keys(myData[prop])
+                Object.keys(testData[prop])
                     .forEach((subProp: string) => {
                         if (paths.length > 1) {
                             if (paths[1] === subProp) {
-                                tData.push(myData[prop][subProp]);
+                                tData.push(testData[prop][subProp]);
 
                                 return tData;
                             }
                         } else {
-                            tData.push(myData[prop][subProp]);
+                            tData.push(testData[prop][subProp]);
                         }
                     });
 
@@ -54,9 +53,10 @@ export const getDataByPath = (path: string): Array<any> => {
 
 /**
  * get snap of data from json test data by field path
+ * @param testData: test data for firestore
  * @param path: to get snap data of it
  */
-export const getFirestoreSnapByPath = (path: string): Array<any> => getFirestoreSnap(getDataByPath(path));
+export const getFirestoreSnapByPath = (testData: any, path: string): Array<any> => getFirestoreSnap(getDataByPath(testData, path));
 
 /**
  * get sorted array by number key

@@ -193,3 +193,19 @@ export const myData = {
     },
     users: {}
 };
+
+export const noData = {
+    'articles_en-US': {},
+    'articles_tr-TR': {},
+    'blogs_en-US': {},
+    'blogs_tr-TR': {},
+    dynamicFiles: {},
+    'jokes_en-US': {},
+    'jokes_tr-TR': {},
+    redirectionRecords: {},
+    'quotes_en-US': {},
+    'quotes_tr-TR': {},
+    'taxonomy_en-US': {},
+    'taxonomy_tr-TR': {},
+    users: {}
+};

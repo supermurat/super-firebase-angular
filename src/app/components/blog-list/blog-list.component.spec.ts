@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, PagerService, SeoService } from '../../services';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { FooterComponent } from '../footer/footer.component';
 import { PagerComponent } from '../pager/pager.component';
@@ -83,6 +83,52 @@ describe('BlogListComponent', () => {
         expect(comp.router.url)
             .toEqual('/blogs/1');
         fixture.detectChanges();
+    }));
+
+});
+
+describe('BlogListComponentNoData', () => {
+    let fixture: ComponentFixture<BlogListComponent>;
+    let comp: BlogListComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                BlogListComponent,
+                FooterComponent,
+                SideBarComponent,
+                PagerComponent,
+                AlertComponent
+            ],
+            providers: [
+                AlertService, SeoService, PagerService,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
+                    {path: 'blogs/:pageNo', component: BlogListComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(BlogListComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
     }));
 
 });

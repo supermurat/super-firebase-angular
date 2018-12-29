@@ -1,4 +1,5 @@
 import { from } from 'rxjs';
+import { myData, noData } from './data.spec';
 import {
     getArrayStartAfterByDocument,
     getArrayStartByNumberField, getArrayWhereByField,
@@ -7,9 +8,9 @@ import {
     getSortedArrayByNumberKey
 } from './helpers.spec';
 
-export const angularFirestoreStub = {
-    doc(path: string): any {
-        const tData = getDataByPath(path);
+const angularFirestoreStubEmpty = {
+    doc(testData: any, path: string): any {
+        const tData = getDataByPath(testData, path);
         const tDataSnap = getFirestoreSnap(tData);
 
         return {
@@ -18,10 +19,10 @@ export const angularFirestoreStub = {
             }
         };
     },
-    collection(path: string, queryFn?: any): any {
+    collection(testData: any, path: string, queryFn?: any): any {
         let limitNumberValue = -1;
 
-        const tDataFull = getDataByPath(path);
+        const tDataFull = getDataByPath(testData, path);
         const tDataSnapFull = getFirestoreSnap(tDataFull);
 
         let tData = tDataFull.slice();
@@ -146,5 +147,23 @@ export const angularFirestoreStub = {
                 };
             }
         };
+    }
+};
+
+export const angularFirestoreStub = {
+    doc(path: string): any {
+        return angularFirestoreStubEmpty.doc(myData, path);
+    },
+    collection(path: string, queryFn?: any): any {
+        return angularFirestoreStubEmpty.collection(myData, path, queryFn);
+    }
+};
+
+export const angularFirestoreStubNoData = {
+    doc(path: string): any {
+        return angularFirestoreStubEmpty.doc(noData, path);
+    },
+    collection(path: string, queryFn?: any): any {
+        return angularFirestoreStubEmpty.collection(noData, path, queryFn);
     }
 };
