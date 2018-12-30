@@ -3,12 +3,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { PagerComponent } from '../../components/pager/pager.component';
+import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { AlertService, PagerService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
-import { AlertComponent } from '../alert/alert.component';
-import { FooterComponent } from '../footer/footer.component';
-import { PagerComponent } from '../pager/pager.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
 import { ArticleListComponent } from './article-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();

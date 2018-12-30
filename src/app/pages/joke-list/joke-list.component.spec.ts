@@ -3,24 +3,24 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { PagerComponent } from '../../components/pager/pager.component';
+import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { AlertService, PagerService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
-import { AlertComponent } from '../alert/alert.component';
-import { FooterComponent } from '../footer/footer.component';
-import { PagerComponent } from '../pager/pager.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
-import { QuoteListComponent } from './quote-list.component';
+import { JokeListComponent } from './joke-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
-describe('QuoteListComponent', () => {
-    let fixture: ComponentFixture<QuoteListComponent>;
-    let comp: QuoteListComponent;
+describe('JokeListComponent', () => {
+    let fixture: ComponentFixture<JokeListComponent>;
+    let comp: JokeListComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                QuoteListComponent,
+                JokeListComponent,
                 FooterComponent,
                 SideBarComponent,
                 PagerComponent,
@@ -35,14 +35,14 @@ describe('QuoteListComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
-                    {path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'},
-                    {path: 'quotes/:pageNo', component: QuoteListComponent}
+                    {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
+                    {path: 'jokes/:pageNo', component: JokeListComponent}
                 ])
             ]
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(QuoteListComponent);
+                fixture = TestBed.createComponent(JokeListComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             })
@@ -57,14 +57,14 @@ describe('QuoteListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'Quotes'", async(() => {
+    it("should have as title 'Jokes'", async(() => {
         expect(comp.title)
-            .toEqual('My Quotes');
+            .toEqual('My Jokes');
     }));
 
     it('count of record should be 3', async(() => {
         activatedRouteStub.setParamMap({pageNo: 1});
-        comp.quotes$.subscribe(result => {
+        comp.jokes$.subscribe(result => {
             expect(result.length)
                 .toEqual(3);
         });
@@ -81,20 +81,20 @@ describe('QuoteListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/quotes/1');
+            .toEqual('/jokes/1');
         fixture.detectChanges();
     }));
 
 });
 
-describe('QuoteListComponentNoData', () => {
-    let fixture: ComponentFixture<QuoteListComponent>;
-    let comp: QuoteListComponent;
+describe('JokeListComponentNoData', () => {
+    let fixture: ComponentFixture<JokeListComponent>;
+    let comp: JokeListComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                QuoteListComponent,
+                JokeListComponent,
                 FooterComponent,
                 SideBarComponent,
                 PagerComponent,
@@ -109,14 +109,14 @@ describe('QuoteListComponentNoData', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
-                    {path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'},
-                    {path: 'quotes/:pageNo', component: QuoteListComponent}
+                    {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
+                    {path: 'jokes/:pageNo', component: JokeListComponent}
                 ])
             ]
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(QuoteListComponent);
+                fixture = TestBed.createComponent(JokeListComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             })
@@ -130,4 +130,5 @@ describe('QuoteListComponentNoData', () => {
         expect(comp)
             .toBeTruthy();
     }));
+
 });

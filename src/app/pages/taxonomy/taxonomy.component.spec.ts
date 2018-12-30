@@ -3,10 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ScrollableDirective } from '../../directives';
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { angularFirestoreStub } from '../../testing/index.spec';
-import { SideBarComponent } from '../side-bar/side-bar.component';
 import { TaxonomyComponent } from './taxonomy.component';
 
 describe('TaxonomyComponent', () => {

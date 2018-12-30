@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { ArticleDetailComponent } from './components/article-detail/article-detail.component';
-import { ArticleListComponent } from './components/article-list/article-list.component';
-import { BlogDetailComponent } from './components/blog-detail/blog-detail.component';
-import { BlogListComponent } from './components/blog-list/blog-list.component';
-import { HomeComponent } from './components/home/home.component';
-import { JokeDetailComponent } from './components/joke-detail/joke-detail.component';
-import { JokeListComponent } from './components/joke-list/joke-list.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { PlaygroundComponent } from './components/playground/playground.component';
-import { QuoteDetailComponent } from './components/quote-detail/quote-detail.component';
-import { QuoteListComponent } from './components/quote-list/quote-list.component';
-import { SearchComponent } from './components/search/search.component';
-import { TaxonomyComponent } from './components/taxonomy/taxonomy.component';
+import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
+import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
+import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
+import { BlogListComponent } from './pages/blog-list/blog-list.component';
+import { HomeComponent } from './pages/home/home.component';
+import { JokeDetailComponent } from './pages/joke-detail/joke-detail.component';
+import { JokeListComponent } from './pages/joke-list/joke-list.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PlaygroundComponent } from './pages/playground/playground.component';
+import { QuoteDetailComponent } from './pages/quote-detail/quote-detail.component';
+import { QuoteListComponent } from './pages/quote-list/quote-list.component';
+import { SearchComponent } from './pages/search/search.component';
+import { TaxonomyComponent } from './pages/taxonomy/taxonomy.component';
 
 const routes: Routes = [
     // region home paths

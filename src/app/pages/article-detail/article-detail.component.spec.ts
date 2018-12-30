@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ArticleModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
-import { AlertComponent } from '../alert/alert.component';
-import { FooterComponent } from '../footer/footer.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
 import { ArticleDetailComponent } from './article-detail.component';
 
 const activatedRouteStub = new ActivatedRouteStub();

@@ -5,25 +5,25 @@ import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { BlogModel } from '../../models';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { SideBarComponent } from '../../components/side-bar/side-bar.component';
+import { JokeModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
-import { AlertComponent } from '../alert/alert.component';
-import { FooterComponent } from '../footer/footer.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
-import { SideBarComponent } from '../side-bar/side-bar.component';
-import { BlogDetailComponent } from './blog-detail.component';
+import { JokeDetailComponent } from './joke-detail.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
 
-describe('BlogDetailComponent', () => {
-    let fixture: ComponentFixture<BlogDetailComponent>;
-    let comp: BlogDetailComponent;
+describe('JokeDetailComponent', () => {
+    let fixture: ComponentFixture<JokeDetailComponent>;
+    let comp: JokeDetailComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent,
+                JokeDetailComponent,
                 FooterComponent,
                 SideBarComponent,
                 AlertComponent,
@@ -38,13 +38,13 @@ describe('BlogDetailComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
-                    {path: 'blog/:id', component: BlogDetailComponent},
-                    {path: 'blogs', component: BlogDetailComponent},
-                    {path: 'blogs/:pageNo', component: BlogDetailComponent},
-                    {path: 'en/blog/:id', component: BlogDetailComponent},
-                    {path: 'tr/gunluk/:id', component: BlogDetailComponent},
-                    {path: 'en/blog', component: BlogDetailComponent},
-                    {path: 'tr/gunluk', component: BlogDetailComponent},
+                    {path: 'joke/:id', component: JokeDetailComponent},
+                    {path: 'jokes', component: JokeDetailComponent},
+                    {path: 'jokes/:pageNo', component: JokeDetailComponent},
+                    {path: 'en/joke/:id', component: JokeDetailComponent},
+                    {path: 'tr/saka/:id', component: JokeDetailComponent},
+                    {path: 'en/joke', component: JokeDetailComponent},
+                    {path: 'tr/saka', component: JokeDetailComponent},
                     {path: 'http-404', component: NotFoundComponent},
                     {path: '**', component: NotFoundComponent}
                 ])
@@ -52,7 +52,7 @@ describe('BlogDetailComponent', () => {
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(BlogDetailComponent);
+                fixture = TestBed.createComponent(JokeDetailComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             })
@@ -67,25 +67,25 @@ describe('BlogDetailComponent', () => {
             .toBeTruthy();
     }));
 
-    it('should load first-blog', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-blog'});
+    it('should load first-joke', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'first-joke'});
         fixture.detectChanges();
-        let lastBlog = new BlogModel();
-        comp.blog$.subscribe(blog => {
-            lastBlog = blog;
+        let lastJoke = new JokeModel();
+        comp.joke$.subscribe(joke => {
+            lastJoke = joke;
         });
         tick();
-        expect(lastBlog.id)
-            .toEqual('first-blog');
+        expect(lastJoke.id)
+            .toEqual('first-joke');
     }));
 
-    it("should redirect to '/blog/first-blog' if id is -1", fakeAsync(() => {
+    it("should redirect to '/joke/first-joke' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/blog/first-blog');
+            .toEqual('/joke/first-joke');
     }));
 
     it('trackByIndex(2) should return 2', async(() => {
@@ -93,47 +93,47 @@ describe('BlogDetailComponent', () => {
             .toBe(2);
     }));
 
-    it("should redirect to '/blog/third-blog' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+    it("should redirect to '/joke/third-joke' if id is -4", fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
         activatedRouteStub.setParamMap({id: '-4'});
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/blog/third-blog');
+            .toEqual('/joke/third-joke');
     }));
 
-    it('should redirect to translation of ilk-gunluk', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'ilk-gunluk']);
+    it('should redirect to translation of ilk-saka', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'ilk-saka']);
         fixture.detectChanges();
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/gunluk/ilk-gunluk');
+            .toEqual('/tr/saka/ilk-saka');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'not-found-page']);
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'not-found-page']);
         fixture.detectChanges();
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/blog/not-found-page/http-404');
+            .toEqual('/joke/not-found-page/http-404');
     }));
 
 });
 
-describe('BlogDetailComponent_tr-TR', () => {
-    let fixture: ComponentFixture<BlogDetailComponent>;
-    let comp: BlogDetailComponent;
+describe('JokeDetailComponent_tr-TR', () => {
+    let fixture: ComponentFixture<JokeDetailComponent>;
+    let comp: JokeDetailComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent,
+                JokeDetailComponent,
                 FooterComponent,
                 SideBarComponent,
                 AlertComponent,
@@ -149,16 +149,16 @@ describe('BlogDetailComponent_tr-TR', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
-                    {path: 'blog/:id', component: BlogDetailComponent},
-                    {path: 'blogs', component: BlogDetailComponent},
-                    {path: 'blogs/:pageNo', component: BlogDetailComponent},
-                    {path: 'gunluk/:id', component: BlogDetailComponent},
-                    {path: 'gunlukler', component: BlogDetailComponent},
-                    {path: 'gunlukler/:pageNo', component: BlogDetailComponent},
-                    {path: 'en/blog/:id', component: BlogDetailComponent},
-                    {path: 'tr/gunluk/:id', component: BlogDetailComponent},
-                    {path: 'en/blog', component: BlogDetailComponent},
-                    {path: 'tr/gunluk', component: BlogDetailComponent},
+                    {path: 'joke/:id', component: JokeDetailComponent},
+                    {path: 'jokes', component: JokeDetailComponent},
+                    {path: 'jokes/:pageNo', component: JokeDetailComponent},
+                    {path: 'saka/:id', component: JokeDetailComponent},
+                    {path: 'sakalar', component: JokeDetailComponent},
+                    {path: 'sakalar/:pageNo', component: JokeDetailComponent},
+                    {path: 'en/joke/:id', component: JokeDetailComponent},
+                    {path: 'tr/saka/:id', component: JokeDetailComponent},
+                    {path: 'en/joke', component: JokeDetailComponent},
+                    {path: 'tr/saka', component: JokeDetailComponent},
                     {path: 'http-404', component: NotFoundComponent},
                     {path: '**', component: NotFoundComponent}
                 ])
@@ -166,7 +166,7 @@ describe('BlogDetailComponent_tr-TR', () => {
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(BlogDetailComponent);
+                fixture = TestBed.createComponent(JokeDetailComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             })
@@ -181,14 +181,14 @@ describe('BlogDetailComponent_tr-TR', () => {
             .toBeTruthy();
     }));
 
-    it('should redirect to translation of first-blog', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'gunlukler', 'gunluk');
-        activatedRouteStub.navigate(fixture, comp.router, ['/gunluk', 'first-blog']);
+    it('should redirect to translation of first-joke', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'sakalar', 'saka');
+        activatedRouteStub.navigate(fixture, comp.router, ['/saka', 'first-joke']);
         fixture.detectChanges();
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/blog/first-blog');
+            .toEqual('/en/joke/first-joke');
     }));
 
 });
