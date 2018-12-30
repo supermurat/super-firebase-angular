@@ -11,6 +11,10 @@ body {
   }
 }
 
+#only-for-http-status {
+  display: none;
+}
+
 .content {
   overflow-y: scroll;
   max-height: 100vh;
@@ -34,19 +38,19 @@ body {
   background-color: #f27236;
 }
 
-.contentItem1 {
+.content-item1 {
   min-height: 100vh;
 }
 
-.contentItem2 {
+.content-item2 {
   min-height: 50vh;
 }
 
-.contentItem3 {
+.content-item3 {
   min-height: 33vh;
 }
 
-.contentItem4 {
+.content-item4 {
   min-height: 25vh;
 }
 

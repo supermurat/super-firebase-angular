@@ -1,14 +1,14 @@
-<div class='row'>
+<div class="row">
     <h1 class="col-md-12" i18n>{{ title }}
     </h1>
 </div>
-<div class='row'>
+<div class="row">
     <!-- Articles Column -->
 
     <div class="col-md-8">
 
         <article class="card my-4" *ngFor="let content of articles$ | async; trackBy:trackByIndex">
-            <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}">
+            <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
             <div class="card-body">
                 <h2 class="card-title"><a [routerLink]="[content.routePath, content.id]">{{ content.title }}</a></h2>
                 <p class="card-text" [innerHTML]="content.contentSummary"></p>

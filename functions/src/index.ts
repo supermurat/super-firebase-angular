@@ -27,7 +27,7 @@ let indexMain: any;
 let indexEN: any;
 let indexTR: any;
 
-const uniqueKeyFor404 = '"doNotRemoveMe-ThisIsForOnlyGet404ErrorOnSSRWithUniqueAndHiddenKey"';
+const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key"';
 const isI18N = !existsSync(path.resolve(__dirname, '../dist/browser/index.html'));
 
 if (isI18N) {

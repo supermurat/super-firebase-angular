@@ -1,18 +1,18 @@
-<div class='row'>
+<div class="row">
     <!-- Quote Column -->
     <div class="col-md-8">
         <div *ngIf="quote$ | async as content">
             <article class="card my-4">
-                <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}">
+                <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
                 <div class="card-body">
                     <h2 class="card-title"><a [routerLink]="[content.routePath, quoteID]">{{ content.title }}</a></h2>
                     <p class="card-text" [innerHTML]="content.content"></p>
-                    <hr />
+                    <hr/>
                     <div class="float-left mx-1" i18n>Who Said That:</div>
                     <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
                     <div class="float-left mx-1" i18n>Source:</div>
                     <div class="font-weight-bold" [innerHTML]="content.source"></div>
-                    <hr />
+                    <hr/>
                     <div class="text-center">
                         <div class="d-inline p-1" *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
                             <a class="badge badge-secondary" [routerLink]="['/tag', tag.key]">{{ tag.value }}</a>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
-                    <br>
+                    <br/>
                     <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>
                 </div>
 
