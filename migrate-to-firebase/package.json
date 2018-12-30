@@ -10,6 +10,7 @@
   "dependencies": {
     "firebase-admin": "^6.4.0",
     "fs": "^0.0.1-security",
+    "html2plaintext": "^2.1.2",
     "mysql": "^2.16.0",
     "latinize": "0.4.0",
     "mime-types": "^2.1.21",

@@ -8,8 +8,16 @@
                     <h2 class="card-title"><a [routerLink]="[content.routePath, quoteID]">{{ content.title }}</a></h2>
                     <p class="card-text" [innerHTML]="content.content"></p>
                     <hr/>
-                    <div class="float-left mx-1" i18n>Who Said That:</div>
-                    <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
+                    <div *ngIf="content.whoSaidThat">
+                        <div class="float-left mx-1" i18n>Who Said That:</div>
+                        <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
+                    </div>
+                    <div *ngIf="content.persons">
+                        <div *ngFor="let person of content.persons | keyvalue; trackBy:trackByIndex">
+                            <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
+                            <div class="font-weight-bold" [innerHTML]="person.value"></div>
+                        </div>
+                    </div>
                     <div class="float-left mx-1" i18n>Source:</div>
                     <div class="font-weight-bold" [innerHTML]="content.source"></div>
                     <hr/>

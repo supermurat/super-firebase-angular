@@ -88,6 +88,9 @@ describe('TaxonomyComponent', () => {
     }));
 
     it('scrollHandler("top") should not load more data', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'first-tag'});
+        tick();
+        fixture.detectChanges();
         let countOfItem = 0;
         comp.pagination.data.subscribe(result => {
             countOfItem = result.length;

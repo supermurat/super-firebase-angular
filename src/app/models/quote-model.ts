@@ -8,4 +8,6 @@ export class QuoteModel extends PageModel {
     whoSaidThat?: string;
     /** where to find that quote */
     source?: string;
+    /** persons in the dialog */
+    persons?: any; // key: name, value: description
 }

@@ -119,7 +119,7 @@ const uploadFilesAndFixFilePaths = async () =>
                     resolve();
                 })
                 .catch((e) => {
-                    console.log(e);
+                    console.error(e);
                 });
         } else {
             resolve();
@@ -202,5 +202,5 @@ uploadFilesAndFixFilePaths()
         importIntoFirestore();
     })
     .catch((error) => {
-        console.log(error);
+        console.error(error);
     });

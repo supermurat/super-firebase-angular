@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as h2p from 'html2plaintext';
 import * as http from 'http';
 import * as latinize from 'latinize';
 import * as mysql from 'mysql';
@@ -211,6 +212,23 @@ const addToQuotes = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoQuotes + lang]).length) * -1;
 };
 
+const addToDialogs = (lang: string, element: any) => {
+    const newData = {...element};
+    const persons = {};
+    const personsList = newData.persons.split('|');
+    personsList.forEach((person) => {
+        const values = h2p(person).split(':');
+        if (values.length > 1) {
+            persons[values[0].trim()] = values[1].trim();
+        } else {
+            // tslint:disable-next-line: no-string-literal
+            persons['Person'] = values[0].trim();
+        }
+    });
+    newData.persons = persons;
+    addToQuotes(lang, newData);
+};
+
 /* endregion */
 
 /* region Files */
@@ -393,6 +411,56 @@ ORDER BY n.created ASC`,
                 }
                 if (element.language === 'und' || element.language === 'en') {
                     addToQuotes('_en-US', element);
+                }
+            });
+            // tslint:disable-next-line:no-use-before-declare
+            getDialogs();
+        });
+};
+
+const getDialogs = () => {
+    connection.query(
+        `SELECT u.language, u.alias, n.nid, n.type, n.status,
+FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created',
+n.title, fdb.body_value AS 'content', fdb.body_summary AS 'contentSummary',
+GROUP_CONCAT(ttd.name ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagTitles',
+GROUP_CONCAT(tu.alias ORDER BY ttd.tid SEPARATOR '|' ) AS 'tagLinks',
+  (
+    SELECT GROUP_CONCAT(fdfs.field_kisiler_value ORDER BY fdfs.delta SEPARATOR '|' ) FROM field_data_field_kisiler fdfs
+    WHERE fdfs.entity_id = n.nid AND fdfs.revision_id IN (
+       SELECT MAX(fdfss.revision_id) FROM field_data_field_kisiler fdfss GROUP BY fdfss.entity_id
+    )
+  ) AS 'persons',
+fdfk.field_kaynak_value AS 'source'
+FROM node n
+    LEFT JOIN url_alias u ON u.source = CONCAT('node/', n.nid) AND u.language=n.language AND u.pid IN (
+       SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source
+    )
+    LEFT JOIN field_data_body fdb ON fdb.entity_type = 'node' AND fdb.entity_id = n.nid AND fdb.revision_id = n.vid
+    LEFT JOIN taxonomy_index ti ON ti.nid = n.nid
+    LEFT JOIN taxonomy_term_data ttd ON ttd.tid = ti.tid
+    LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (
+        SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source
+    )
+    LEFT JOIN field_data_field_kaynak fdfk ON fdfk.entity_id = n.nid AND fdfk.revision_id IN (
+       SELECT MAX(fdfks.revision_id) FROM field_data_field_kaynak fdfks GROUP BY fdfks.entity_id
+    )
+WHERE n.type IN ('diyalog') AND n.status='1'
+GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value, fdb.body_summary
+ORDER BY n.created ASC`,
+        (error, results, fields) => {
+            if (error) {
+                throw error;
+            }
+
+            results.forEach((element) => {
+                downloadFiles(element.content);
+                element.documentID = fixDocID(element.alias.replace(/diyalog\//gi, ''));
+                if (element.language === 'und' || element.language === 'tr') {
+                    addToDialogs('_tr-TR', element);
+                }
+                if (element.language === 'und' || element.language === 'en') {
+                    addToDialogs('_en-US', element);
                 }
             });
             // tslint:disable-next-line:no-use-before-declare
