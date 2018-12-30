@@ -1,6 +1,8 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { TaxonomyModel } from '../../models';
 import { PaginationService, SeoService } from '../../services';
 
 /**
@@ -12,6 +14,8 @@ import { PaginationService, SeoService } from '../../services';
     styleUrls: ['./taxonomy.component.scss']
 })
 export class TaxonomyComponent implements OnInit {
+    /** current tag object */
+    tag$: Observable<TaxonomyModel>;
     /** current tagID */
     tagID = '';
     /** current tagName */
@@ -41,16 +45,16 @@ export class TaxonomyComponent implements OnInit {
         this.route.paramMap.subscribe(pmap => {
             this.tagID = pmap.get('id');
 
-            this.afs.doc<any>(`taxonomy_${this.locale}/${this.tagID}`)
-                .valueChanges()
-                .subscribe(tag => {
+            this.tag$ = this.afs.doc<any>(`taxonomy_${this.locale}/${this.tagID}`)
+                .valueChanges();
+            this.tag$.subscribe(tag => {
                     if (tag) {
                         this.tagName = tag.title;
                         this.seo.setHtmlTags(tag);
                     }
                 });
 
-            this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents/`, 'created', {reverse: true, prepend: false, limit: 5});
+            this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents`, 'created', {reverse: true, prepend: false, limit: 5});
 
         });
     }

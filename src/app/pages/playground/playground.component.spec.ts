@@ -150,7 +150,7 @@ describe('PlaygroundComponent', () => {
             .toEqual(3);
     }));
 
-    it('.content.onScroll should load more data', fakeAsync(() => {
+    it('.content.onScroll to bottom should load more data', fakeAsync(() => {
         tick();
         let countOfItem = 0;
         comp.pagination.data.subscribe(result => {
@@ -162,6 +162,20 @@ describe('PlaygroundComponent', () => {
         tick();
         expect(countOfItem)
             .toEqual(3);
+    }));
+
+    it('.content.onScroll to top should not load more data', fakeAsync(() => {
+        tick();
+        let countOfItem = 0;
+        comp.pagination.data.subscribe(result => {
+            countOfItem = result.length;
+        });
+        const div = fixture.debugElement.query(By.css('.content'));
+        div.nativeElement.scrollTop = 0;
+        div.triggerEventHandler('scroll', {target: {scrollTop: 0}});
+        tick();
+        expect(countOfItem)
+            .toEqual(2);
     }));
 
 });
@@ -199,9 +213,9 @@ describe('PlaygroundComponentAsync', () => {
             });
     }));
 
-    it("should render 'Browser side rendering with Firebase 🔥 Build Test' in a h2", async(() => {
+    it("should render 'Browser side rendering with Firebase 🔥' in a h2", async(() => {
         expect(fixture.nativeElement.querySelector('h2').textContent)
-            .toContain('Browser side rendering with Firebase 🔥 Build Test');
+            .toContain('Browser side rendering with Firebase 🔥');
     }));
 
     it('should create the app', async(() => {
@@ -292,10 +306,10 @@ describe('PlaygroundComponentServer', () => {
             });
     }));
 
-    it("should render 'Server side rendering with Firebase 🔥 Build Test' in a h2", async(() => {
+    it("should render 'Server side rendering with Firebase 🔥' in a h2", async(() => {
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('h2').textContent)
-            .toContain('Server side rendering with Firebase 🔥 Build Test');
+            .toContain('Server side rendering with Firebase 🔥');
     }));
 
     it('openAlert() should alert user', async(() => {

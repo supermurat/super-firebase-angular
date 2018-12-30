@@ -273,6 +273,10 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">27</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="8563dea6c78c71d1d4ffce4798fe3c9f736dd09c" datatype="html">
         <source>Quotes</source>
@@ -305,35 +309,35 @@
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/not-found/not-found.component.html</context>
+          <context context-type="sourcefile">app/pages/not-found/not-found.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="356501fb47a7de720e71263c3d1cce5d6e681c4b" datatype="html">
         <source>Welcome!</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/home/home.component.html</context>
+          <context context-type="sourcefile">app/pages/home/home.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="27bf75de7326f88adbf37f0df2300f149f4dcde1" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ rendererText }}"/> side rendering with Firebase 🔥 Build Test #2</source>
+      <trans-unit id="28ff6e82caf9645d6f918bc21ca42aa33d1e3568" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ rendererText }}"/> side rendering with Firebase 🔥</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html">
         <source>Angular logo</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7c3d41811fe34133ef9f9739de524cdee0c1cadf" datatype="html">
         <source>Is browser code loaded?</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
@@ -342,14 +346,14 @@
         <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Sample alert.
     </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="introductionHeader" datatype="html">
         <source>Hello i18n!</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
         <note priority="1" from="description">An introduction header for this sample</note>
@@ -358,116 +362,116 @@
       <trans-unit id="a2bf198c006ed191bc3944c1b9532207e3b5aa2f" datatype="html">
         <source>Today is <x id="INTERPOLATION" equiv-text="{{ today | date }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="073960d390d01cc391f68a2ae97e3917770abe0b" datatype="html">
         <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:&apos;fullDate&apos; }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="15e648b1aadd939ba431d872b15133caad241d58" datatype="html">
         <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:&apos;medium&apos; }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e4d8a59dc04c3a70da4abcbd25df9ebe42287abb" datatype="html">
         <source>The time is <x id="INTERPOLATION" equiv-text="{{ today | date:&apos;h:mm a z&apos; }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f5a3407c5d5e3044bea77f929dc78eef1b2545fd" datatype="html">
         <source>The application is using the locale <x id="INTERPOLATION" equiv-text="{{ locale }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html">
         <source>I don&apos;t output any element</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="08d4402532d6eb348cf14a6d774f2474da4aaf8d" datatype="html">
         <source>+</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="37a0c0fffef57ba4b1fe7bf2318fc9211267286e" datatype="html">
         <source>-</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3944089997907e06b0be8ac4cdf1ad448c4fdaa1" datatype="html">
         <source>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d21b287b4d1e079c11ad2c547d104798fb3d111e" datatype="html">
         <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{ minutes }}"/> minutes ago} }</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e37ea76f97bda09179bff45dd514d586fc783241" datatype="html">
         <source>♂</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a67056c7a596774989449aad8dd898e2b32a7a22" datatype="html">
         <source>♀</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dc5042b4003609f59b9787f5023328fc5c9bf2bd" datatype="html">
         <source>⚧</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1aea987749c68c472a876b26a5afd69a4f186125" datatype="html">
         <source>Updated by <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="eff74b75ab7364b6fa888f1cbfae901aaaf02295" datatype="html">
         <source>{VAR_SELECT, select, male {male} female {female} other {other} }</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f1a2bd5833a685d9eb7e6037c7be59ff5c71ec27" datatype="html">
         <source>I ran out of blogs!</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/playground/playground.component.html</context>
+          <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
           <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
+          <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
@@ -476,182 +480,182 @@
         <x id="START_SMALL_TEXT" ctype="x-small" equiv-text="&lt;small&gt;"/>Let me make you smile <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="CLOSE_SMALL_TEXT" ctype="x-small" equiv-text="&lt;/small&gt;"/>
     </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
+          <context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6bbfc6a91008949626b70d5bacaca91822e1f575" datatype="html">
         <source>Read More ⇒</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
+          <context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
+          <context context-type="sourcefile">app/pages/article-list/article-list.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
+          <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-list/joke-list.component.html</context>
+          <context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-list/quote-list.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a97c1791d078c919f71f2f5587b7087efa49fa9d" datatype="html">
         <source>Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-list/blog-list.component.html</context>
+          <context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/article-list/article-list.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
+          <context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-list/joke-list.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-list/quote-list.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2352209fd9a5f4571b0b9f2c2b582e9a6a3fb307" datatype="html">
         <source>Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
         <source>⇐ Previous Article</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
         <source>Return to Article List ⇑</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
         <source>Next Article ⇒</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="98da3dc51c657ec05c1c250fd0967f21e92c946f" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ title }}"/>
     </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/article-list/article-list.component.html</context>
+          <context context-type="sourcefile">app/pages/article-list/article-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/joke-list/joke-list.component.html</context>
+          <context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-list/quote-list.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d106826fbee9f9e017fe78864b10259e1c4f46f9" datatype="html">
         <source>Hello,</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/admin-login/admin-login.component.html</context>
+          <context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="640eec093c685babaa3265137215e3cc92ad704d" datatype="html">
         <source>Sign Out</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/admin-login/admin-login.component.html</context>
+          <context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6f21558313038c924127b3ff527b6a6ec2ec17d7" datatype="html">
         <source>Login with Google</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/admin-login/admin-login.component.html</context>
+          <context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
@@ -673,59 +677,34 @@
           <context context-type="linenumber">16</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/search/search.component.html</context>
+          <context context-type="sourcefile">app/pages/search/search.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
-        <source>Categories</source>
+      <trans-unit id="5c988d3fc5e248a0fdb08fbb150e505f2e954274" datatype="html">
+        <source>Active Tags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d347cf25948bc63c2ecec8b8ce8075ae2ef81056" datatype="html">
-        <source>Web Design</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="153aa4062a72c2db19550f8f666631951d79af69" datatype="html">
-        <source>HTML</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0da9752916950ce6890d897b835c923a71ad9c5c" datatype="html">
-        <source>JavaScript</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a4c33c9dc2547050ed4f6e0542d3ffdfd81680a1" datatype="html">
-        <source>CSS</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f44d2ac087cf3956357c588003dc4de9ddaa111c" datatype="html">
-        <source>Comics / Fıkralar</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="475d3d2fab3d66392aa95c821baedb2b35ebd4ad" datatype="html">
+      <trans-unit id="4dba8418f13ae7081bdd604b004a3e2a951b7ca2" datatype="html">
         <source>
-        Random comics / Rastgele fıkralar
+        <x id="START_TAG_DIV_1" ctype="x-div" equiv-text="&lt;div&gt;"/>
+            <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>
+                <x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;ul&gt;"/>
+                    <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&lt;li&gt;"/>
+                        <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
+                            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="INTERPOLATION" equiv-text="{{ joke.title }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+                        <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+                    <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&lt;/li&gt;"/>
+                <x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;/ul&gt;"/>
+            <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
+        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d0253cb27b529666fc238fb3aa7d5733940547dd" datatype="html">
@@ -746,29 +725,29 @@
         <source>Related Contents to &quot;<x id="INTERPOLATION" equiv-text="{{ tagName }}"/>&quot;
     </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/taxonomy/taxonomy.component.html</context>
+          <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="402ebee585163f948fbd0ca49657f286127b4411" datatype="html">
         <source>Who Said That:</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-list/quote-list.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2f2d3537be5ad6783862d60ec1e4b6a034714783" datatype="html">
         <source>Source:</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-list/quote-list.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/quote-detail/quote-detail.component.html</context>
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
