@@ -7,5 +7,6 @@ export * from './joke-model';
 export * from './page-model';
 export * from './pager-model';
 export * from './quote-model';
+export * from './taxonomy-model';
 export * from './user-credentials-model';
 export * from './user-model';

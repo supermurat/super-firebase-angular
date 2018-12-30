@@ -1,9 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { AlertService, SeoService } from '../../services';
+import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
@@ -18,6 +20,7 @@ describe('SearchComponent', () => {
             ],
             providers: [
                 AlertService, SeoService,
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [

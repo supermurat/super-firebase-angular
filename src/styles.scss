@@ -88,3 +88,76 @@ body {
 .google-custom-search-result .gsc-control-cse .gsc-option-menu-container {
   min-width: 120px;
 }
+
+.tag-cloud ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-cloud ul li {
+  display: inline-block;
+  margin: 0 0 0.3em 1em;
+  padding: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.tag-cloud ul li a {
+  position: relative;
+  display: inline-block;
+  height: 22px;
+  line-height: 19px;
+  padding: 0 1em;
+  background-color: #777;
+  border-radius: 0 3px 3px 0;
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.tag-cloud ul li a::before {
+  position: absolute;
+  top: 0;
+  left: -11px;
+  content: '';
+  width: 0;
+  height: 0;
+  border-color: transparent #777 transparent transparent;
+  border-style: solid;
+  border-width: 11px 11px 11px 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.tag-cloud ul li a::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  display: block;
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  background-color: #fff;
+  border-radius: 100%;
+}
+
+.tag-cloud ul li span {
+  display: block;
+  max-width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tag-cloud ul li a:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.tag-cloud ul li a:hover::before {
+  border-right-color: #3498db;
+}

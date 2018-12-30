@@ -8,10 +8,14 @@
                     <h2 class="card-title"><a [routerLink]="[content.routePath, blogID]">{{ content.title }}</a></h2>
                     <p class="card-text" [innerHTML]="content.content"></p>
                     <hr/>
-                    <div class="text-center">
-                        <div class="d-inline p-1" *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
-                            <a class="badge badge-secondary" [routerLink]="['/tag', tag.key]">{{ tag.value }}</a>
-                        </div>
+                    <div class="text-center tag-cloud">
+                        <ul>
+                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
+                                <a [routerLink]="['/tag', tag.key]">
+                                    <span>{{ tag.value }}</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="card-footer text-muted">
