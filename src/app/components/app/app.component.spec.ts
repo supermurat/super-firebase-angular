@@ -55,9 +55,9 @@ describe('AppComponent', () => {
             .toBeTruthy();
     }));
 
-    it('should render Navbar in a nav.a', async(() => {
+    it('should render "Super Murat" in a nav.a', async(() => {
         expect(fixture.nativeElement.querySelector('nav a').textContent)
-            .toContain('Navbar');
+            .toContain('Super Murat');
     }));
 
 });

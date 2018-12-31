@@ -40,9 +40,9 @@ describe('NavMenuComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should render 'Navbar' in an a.navbar-brand", async(() => {
+    it("should render 'Super Murat' in an a.navbar-brand", async(() => {
         expect(fixture.nativeElement.querySelector('a.navbar-brand').textContent)
-            .toContain('Navbar');
+            .toContain('Super Murat');
     }));
 
     it('count of locales should be greater than 1', async(() => {
