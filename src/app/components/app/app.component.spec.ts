@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, PaginationService, SeoService } from '../../services';
 import { AlertComponent } from '../alert/alert.component';
+import { CarouselComponent } from '../carousel/carousel.component';
 import { FooterComponent } from '../footer/footer.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
@@ -23,10 +24,11 @@ describe('AppComponent', () => {
                 AlertComponent,
                 LoadingSpinnerComponent,
                 FooterComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, PaginationService, CarouselService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: {}},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -74,10 +76,11 @@ describe('AppComponentSeoService', () => {
                 AlertComponent,
                 LoadingSpinnerComponent,
                 FooterComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, PaginationService, CarouselService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: {}},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -193,10 +196,11 @@ describe('AppComponentAlertService', () => {
                 AlertComponent,
                 LoadingSpinnerComponent,
                 FooterComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, PaginationService, CarouselService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: {}},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}

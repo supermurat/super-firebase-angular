@@ -228,8 +228,8 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4865ecf44ecb3799ce27539d4fe4bfadc9ed1907" datatype="html">
-        <source>Navbar</source>
+      <trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
+        <source>Super Murat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">3</context>
@@ -259,6 +259,10 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="3b6143a528c6f4586e60e9af4ced8ac0fbe08251" datatype="html">
         <source>Articles</source>
@@ -266,12 +270,20 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="eeb8cd10ca7b7cab87834315a306497d949b8ac5" datatype="html">
         <source>Jokes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/side-bar/side-bar.component.html</context>
@@ -284,26 +296,9 @@
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
-        <source>Playground</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">
-        <source>Coverage</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fcfd4675b4c90f08d18d3abede9a9a4dff4cfdc7" datatype="html">
-        <source>Documentation</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
@@ -539,11 +534,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2352209fd9a5f4571b0b9f2c2b582e9a6a3fb307" datatype="html">
@@ -562,7 +557,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
@@ -581,7 +576,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
@@ -600,7 +595,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
@@ -619,7 +614,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="98da3dc51c657ec05c1c250fd0967f21e92c946f" datatype="html">
@@ -659,11 +654,74 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">
+        <source>About</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91e43855f15e813a740e3868bbac1d98224ea341" datatype="html">
+        <source>This is my personal web site so it is all about me :-)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5f4234fde7008fef126728fe6891c9294b3ee7b0" datatype="html">
+        <source>Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
+        <source>Content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="82fe39600ad951ab88b6493b510d2bc9cc4ec807" datatype="html">
+        <source>Fun</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7f3f6a4fb2545cacf800f0623582b6d41d1f8791" datatype="html">
+        <source>Development</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
+        <source>Playground</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">
+        <source>Coverage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fcfd4675b4c90f08d18d3abede9a9a4dff4cfdc7" datatype="html">
+        <source>Documentation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="0eb7500bc2f411c04ea5f56fe2d8379eae1f74c6" datatype="html">
         <source>Copyright © Super Murat 2018</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
@@ -733,22 +791,36 @@
         <source>Who Said That:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2f2d3537be5ad6783862d60ec1e4b6a034714783" datatype="html">
         <source>Source:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="680d5c75b7fd8d37961083608b9fcdc4167b4c43" datatype="html">
+        <source>Previous</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
+        <source>Next</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
     </body>

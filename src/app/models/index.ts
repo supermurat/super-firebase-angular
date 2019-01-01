@@ -1,5 +1,7 @@
 export * from './article-model';
 export * from './blog-model';
+export * from './carousel-model';
+export * from './carousel-item-model';
 export * from './html-link-element-model';
 export * from './html-document-model';
 export * from './http-status-model';

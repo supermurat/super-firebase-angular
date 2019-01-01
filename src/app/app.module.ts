@@ -15,6 +15,7 @@ import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from './components/alert/alert.component';
 import { AppComponent } from './components/app/app.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -35,7 +36,7 @@ import { QuoteDetailComponent } from './pages/quote-detail/quote-detail.componen
 import { QuoteListComponent } from './pages/quote-list/quote-list.component';
 import { SearchComponent } from './pages/search/search.component';
 import { TaxonomyComponent } from './pages/taxonomy/taxonomy.component';
-import { AlertService, AuthService, PagerService, PaginationService, SeoService } from './services';
+import { AlertService, AuthService, CarouselService, PagerService, PaginationService, SeoService } from './services';
 
 /**
  * App Module
@@ -63,7 +64,8 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         JokeDetailComponent,
         QuoteListComponent,
         QuoteDetailComponent,
-        SearchComponent
+        SearchComponent,
+        CarouselComponent
     ],
     imports: [
         CommonModule,
@@ -92,6 +94,7 @@ import { AlertService, AuthService, PagerService, PaginationService, SeoService 
         AuthService,
         PaginationService,
         PagerService,
+        CarouselService,
         {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
     ],
     bootstrap: [AppComponent]
