@@ -1,7 +1,7 @@
-import { PageModel } from './page-model';
+import { PageBaseModel } from './page-base-model';
 
 /**
  * Joke Class
  */
-export class JokeModel extends PageModel {
+export class JokeModel extends PageBaseModel {
 }

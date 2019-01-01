@@ -1,9 +1,10 @@
+import { CarouselModel } from './carousel-model';
 import { HtmlDocumentModel } from './html-document-model';
 
 /**
  * Page Base Class
  */
-export class PageModel extends HtmlDocumentModel {
+export class PageBaseModel extends HtmlDocumentModel {
     /** id of record */
     id?: string;
     /** path of record */
@@ -15,7 +16,7 @@ export class PageModel extends HtmlDocumentModel {
     /** html content or content array of page */
     content?: any;
     /** carousel item array of page */
-    carousel?: any;
+    carousel?: CarouselModel;
     /** summary html content of page */
     contentSummary?: string;
     /** unique key for translations */

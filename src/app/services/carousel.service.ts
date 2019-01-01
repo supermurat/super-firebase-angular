@@ -29,7 +29,9 @@ export class CarouselService {
      * @param carouselModel: CarouselModel
      */
     init(carouselModel: CarouselModel): void {
-        this.subject.next(carouselModel);
+        if (carouselModel) {
+            this.subject.next(carouselModel);
+        }
     }
 
     /**

@@ -18,9 +18,9 @@ export class BlogListComponent implements OnInit {
     /** blog object array */
     blogs$: Observable<Array<BlogModel>>;
     /** current page`s title */
-    title = 'Murat Demir\'s blog';
+    title = 'My blog';
     /** current page`s description */
-    description = 'Murat Demir\'s blog';
+    description = 'My blog';
     /** count of blogs */
 
     /** pager model */

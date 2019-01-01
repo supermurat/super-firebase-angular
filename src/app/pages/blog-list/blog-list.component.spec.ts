@@ -57,9 +57,9 @@ describe('BlogListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'Murat Demir's blog'", async(() => {
+    it("should have as title 'My blog'", async(() => {
         expect(comp.title)
-            .toEqual('Murat Demir\'s blog');
+            .toEqual('My blog');
     }));
 
     it('count of blog should be 3', async(() => {

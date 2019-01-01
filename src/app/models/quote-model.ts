@@ -1,9 +1,9 @@
-import { PageModel } from './page-model';
+import { PageBaseModel } from './page-base-model';
 
 /**
  * Quote Class
  */
-export class QuoteModel extends PageModel {
+export class QuoteModel extends PageBaseModel {
     /** who said that quote */
     whoSaidThat?: string;
     /** where to find that quote */
