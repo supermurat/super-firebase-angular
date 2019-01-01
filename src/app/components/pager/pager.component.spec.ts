@@ -37,4 +37,13 @@ describe('PagerComponent', () => {
         expect(comp)
             .toBeTruthy();
     });
+
+    it('destroying should work properly', async(() => {
+        comp.subscription.unsubscribe();
+        comp.subscription = undefined;
+        fixture.detectChanges();
+        expect(comp)
+            .toBeTruthy();
+    }));
+
 });

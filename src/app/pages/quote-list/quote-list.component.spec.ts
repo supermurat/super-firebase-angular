@@ -85,6 +85,24 @@ describe('QuoteListComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('should redirect to page 1 if pageNo is lower than 0', fakeAsync(() => {
+        activatedRouteStub.setParamMap({pageNo: -2});
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/quotes/1');
+        fixture.detectChanges();
+    }));
+
+    it('should redirect to page 1 if pageNo is not Number', fakeAsync(() => {
+        activatedRouteStub.setParamMap({pageNo: 'not-number'});
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/quotes/1');
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('QuoteListComponentNoData', () => {

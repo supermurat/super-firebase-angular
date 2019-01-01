@@ -25,8 +25,10 @@ export class BlogListComponent implements OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
-        pagePath: '/blogs',
-        pageSize: 3
+        currentPageNo: 1,
+        maxPageNo: 0,
+        pageSize: 3,
+        pagePath: '/blogs'
     };
 
     /** first article */

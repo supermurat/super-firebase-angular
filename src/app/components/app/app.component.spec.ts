@@ -1,3 +1,4 @@
+import { PLATFORM_ID } from '@angular/core';
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -328,6 +329,71 @@ describe('AppComponentAlertService', () => {
         tick();
         expect(fixture.nativeElement.querySelector('app-alert .alert-danger').textContent)
             .toBe('My error message');
+    }));
+
+});
+
+describe('AppComponentServer', () => {
+    let fixture: ComponentFixture<AppComponent>;
+    let comp: AppComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                AppComponent,
+                NavMenuComponent,
+                AlertComponent,
+                LoadingSpinnerComponent,
+                FooterComponent,
+                NotFoundComponent,
+                CarouselComponent
+            ],
+            providers: [
+                AlertService, SeoService, PaginationService, CarouselService,
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: PLATFORM_ID, useValue: 'server'}
+            ],
+            imports: [
+                RouterTestingModule.withRoutes([
+                    {path: '', component: AppComponent},
+                    {path: 'unit-test', component: NavMenuComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(AppComponent);
+                comp = fixture.componentInstance;
+                fixture.detectChanges();
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should contain page not found key if redirected to http-404', fakeAsync(() => {
+        comp.seo.http404();
+        tick();
+        fixture.detectChanges();
+        // tslint:disable:max-line-length
+        const element = fixture.nativeElement.querySelector('div#do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
+        expect(element.tagName)
+            .toBe('DIV');
+        expect(element.id)
+            .toBe('do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
+    }));
+
+    it('should contain html redirection key and url if redirected to http-301', fakeAsync(() => {
+        comp.seo.http301('/go-to-next-page');
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('div#only-for-http-status').textContent)
+            .toBe('--http-redirect-301--/go-to-next-page--end-of-http-redirect-301--');
     }));
 
 });

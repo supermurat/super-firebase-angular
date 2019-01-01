@@ -24,8 +24,10 @@ export class JokeListComponent implements OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
-        pagePath: '/jokes',
-        pageSize: 3
+        currentPageNo: 1,
+        maxPageNo: 0,
+        pageSize: 3,
+        pagePath: '/jokes'
     };
 
     /** first joke */

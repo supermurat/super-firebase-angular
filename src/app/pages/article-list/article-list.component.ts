@@ -24,8 +24,10 @@ export class ArticleListComponent implements OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
-        pagePath: '/articles',
-        pageSize: 3
+        currentPageNo: 1,
+        maxPageNo: 0,
+        pageSize: 3,
+        pagePath: '/articles'
     };
 
     /** first article */

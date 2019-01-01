@@ -210,12 +210,14 @@ export class SeoService {
      */
     http301(destinationURL: string, isExternal = false): void {
         if (isPlatformBrowser(this.platformId)) {
+            // istanbul ignore next
             if (isExternal && !this.appConfig.isUnitTest) {
                 // this.router.navigate can't work because it is out of base url
                 window.location.href = destinationURL;
             } else {
                 this.router.navigate([destinationURL])
-                    .catch(reason => {
+                    .catch(// istanbul ignore next
+                        reason => {
                         console.error(reason);
                     });
             }
@@ -233,7 +235,8 @@ export class SeoService {
     http404(): void {
         if (isPlatformBrowser(this.platformId)) {
             this.router.navigate([this.router.url, 'http-404'])
-                .catch(reason => {
+                .catch(// istanbul ignore next
+                    reason => {
                     console.error(reason);
                 });
         } else {

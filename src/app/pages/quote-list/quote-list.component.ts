@@ -24,8 +24,10 @@ export class QuoteListComponent implements OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
-        pagePath: '/quotes',
-        pageSize: 3
+        currentPageNo: 1,
+        maxPageNo: 0,
+        pageSize: 3,
+        pagePath: '/quotes'
     };
 
     /** first quote */

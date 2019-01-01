@@ -17,6 +17,9 @@ export class PagerComponent implements OnDestroy, OnInit {
 
     /** pager model */
     pagerModel: PagerModel = {
+        currentPageNo: 1,
+        maxPageNo: 0,
+        pageSize: 5,
         pagePath: '/'
     };
 
@@ -45,7 +48,8 @@ export class PagerComponent implements OnDestroy, OnInit {
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {
                     pagerModel.currentPageNo = !pagerModel.currentPageNo ? 1 : pagerModel.currentPageNo < 1 ? 1 : pagerModel.maxPageNo;
                     this.router.navigate([pagerModel.pagePath, pagerModel.currentPageNo])
-                        .catch(reason => {
+                        .catch(// istanbul ignore next
+                            reason => {
                             this.alert.error(reason);
                         });
                 } else {

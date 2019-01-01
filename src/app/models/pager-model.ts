@@ -3,11 +3,11 @@
  */
 export class PagerModel {
     /** current page no */
-    currentPageNo ? = 1;
+    currentPageNo?: number;
     /** max page no */
     maxPageNo?: number;
     /** page size */
-    pageSize ? = 5;
+    pageSize?: number;
     /** page path */
     pagePath: string;
 }
