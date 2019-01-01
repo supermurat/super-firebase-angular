@@ -308,11 +308,11 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="356501fb47a7de720e71263c3d1cce5d6e681c4b" datatype="html">
-        <source>Welcome!</source>
+      <trans-unit id="d6cb2af5501e2df32b21a352958076920da1b188" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:&apos;medium&apos; }}"/> - <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/home/home.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="28ff6e82caf9645d6f918bc21ca42aa33d1e3568" datatype="html">

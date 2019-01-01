@@ -111,4 +111,5 @@ dist-ssr
 /migrate-to-firebase/mysql-config.json
 /migrate-to-firebase/data/data.json
 /migrate-to-firebase/data/files
+/migrate-to-firebase/data/*
 /migrate-to-firebase/lib

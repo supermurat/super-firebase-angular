@@ -1,3 +1,4 @@
+// tslint:disable:max-line-length
 export const myData = {
     'articles_en-US': {
         'first-article': {
@@ -120,6 +121,92 @@ export const myData = {
             id: 'ucuncu-espri', routePath: '/espri', orderNo: -3,
             title: 'Üçüncü Espri', content: 'bu en güzel espri',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+        }
+    },
+    'pages_en-US': {
+        home: {
+            id: 'home',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Let me make you smile :-)',
+            routePath: '/',
+            i18nKey: 'home',
+            orderNo: -1,
+            __collection__contents: {
+                'article_first-article': {
+                    id: 'article_first-article', path: 'first-article', routePath: '/article', orderNo: -1,
+                    title: 'First Article', contentSummary: 'good article',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'article_second-article': {
+                    id: 'article_second-article', path: 'second-article', routePath: '/article', orderNo: -2,
+                    title: 'Second Article', contentSummary: 'better article',
+                    created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+                },
+                'article_third-article': {
+                    id: 'article_third-article', path: 'third-article', routePath: '/article', orderNo: -3,
+                    title: 'Third Article', contentSummary: 'the best article',
+                    created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+                }
+            },
+            carousel: {
+                carouselItems: [
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        title: 'Welcome to endless world!'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        title: 'Isn\'t it beautiful?'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        title: 'Hey, what\'s up ? '
+                    }]
+            }
+        }
+    },
+    'pages_tr-TR': {
+        home: {
+            id: 'home',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Süper Murat - İzin verin gülümseteyim :-)',
+            routePath: '/',
+            i18nKey: 'home',
+            orderNo: -1,
+            __collection__contents: {
+                'makale_ilk-makale': {
+                    id: 'makale_ilk-makale', path: 'ilk-makale', routePath: '/makale', orderNo: -1,
+                    title: 'İlk Makale', contentSummary: 'güzel makale',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'saka_ilk-saka': {
+                    id: 'saka_ilk-saka', path: 'ilk-saka', routePath: '/saka', orderNo: -2,
+                    title: 'İlk Şaka', contentSummary: 'güzel şaka',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'alinti_ilk-alinti': {
+                    id: 'alinti_ilk-alinti', path: 'ilk-alinti', routePath: '/alinti', orderNo: -3,
+                    title: 'İlk Alıntı', contentSummary: 'güzel alıntı',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                }
+            },
+            carousel: {
+                carouselItems: [
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        title: 'Sonsuz dünyaya hoşgeldiniz!'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        title: 'Harika değil mi?'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        title: 'Hey, naber?'
+                    }]
+            }
         }
     },
     redirectionRecords: {},
@@ -261,6 +348,8 @@ export const noData = {
     dynamicFiles: {},
     'jokes_en-US': {},
     'jokes_tr-TR': {},
+    'pages_en-US': {},
+    'pages_tr-TR': {},
     redirectionRecords: {},
     'quotes_en-US': {},
     'quotes_tr-TR': {},

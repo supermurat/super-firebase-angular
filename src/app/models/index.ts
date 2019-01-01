@@ -9,7 +9,7 @@ export * from './joke-model';
 export * from './page-base-model';
 export * from './pager-model';
 export * from './quote-model';
-export * from './standalone-page-model';
+export * from './page-model';
 export * from './taxonomy-model';
 export * from './user-credentials-model';
 export * from './user-model';

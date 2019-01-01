@@ -2,7 +2,7 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { TaxonomyModel } from '../../models';
+import { PageModel, TaxonomyModel } from '../../models';
 import { PaginationService, SeoService } from '../../services';
 
 /**
@@ -45,7 +45,7 @@ export class TaxonomyComponent implements OnInit {
         this.route.paramMap.subscribe(pmap => {
             this.tagID = pmap.get('id');
 
-            this.tag$ = this.afs.doc<any>(`taxonomy_${this.locale}/${this.tagID}`)
+            this.tag$ = this.afs.doc<PageModel>(`taxonomy_${this.locale}/${this.tagID}`)
                 .valueChanges();
             this.tag$.subscribe(tag => {
                     if (tag) {

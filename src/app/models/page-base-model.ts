@@ -13,7 +13,7 @@ export class PageBaseModel extends HtmlDocumentModel {
     routePath?: string;
     /** order number of record */
     orderNo?: number;
-    /** html content or content array of page */
+    /** html content of page */
     content?: any;
     /** carousel item array of page */
     carousel?: CarouselModel;

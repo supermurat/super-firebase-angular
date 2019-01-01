@@ -1,5 +1,8 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { AlertService, CarouselService, SeoService } from '../../services';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { PageBaseModel, PageModel } from '../../models';
+import { AlertService, CarouselService, PaginationService, SeoService } from '../../services';
 
 /**
  * Home Component
@@ -10,8 +13,10 @@ import { AlertService, CarouselService, SeoService } from '../../services';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    /** current page`s title */
-    title = 'home';
+    /** current page object */
+    page$: Observable<PageModel>;
+    /** contents of current page */
+    contents$: Observable<Array<PageBaseModel>>;
 
     /**
      * constructor of HomeComponent
@@ -19,37 +24,41 @@ export class HomeComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      * @param carouselService: CarouselService
+     * @param afs: AngularFirestore
+     * @param locale: LOCALE_ID
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 public seo: SeoService,
                 public alert: AlertService,
-                public carouselService: CarouselService) {
+                public carouselService: CarouselService,
+                private readonly afs: AngularFirestore,
+                @Inject(LOCALE_ID) public locale: string) {
     }
 
     /**
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.setHtmlTags({
-            title: this.title,
-            description: this.title
+        this.page$ = this.afs.doc<PageModel>(`pages_${this.locale}/home`)
+            .valueChanges();
+        this.page$.subscribe(page => {
+            if (page) {
+                this.seo.setHtmlTags(page);
+                this.carouselService.init(page.carousel);
+            }
         });
-        this.carouselService.init({
-            // tslint:disable:max-line-length
-            carouselItems: [
-                {
-                    src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
-                    title: 'Welcome to endless world!'
-                },
-                {
-                    src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
-                    title: 'Isn\'t it beautiful?'
-                },
-                {
-                    src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
-                    title: 'Hey, what\'s up?'
-                }]
-        });
+        this.contents$ = this.afs.collection(`pages_${this.locale}/home/contents`,
+            ref => ref.orderBy('orderNo'))
+            .valueChanges();
+    }
+
+    /**
+     * track content object array by index
+     * @param index: index no
+     * @param item: object
+     */
+    trackByIndex(index, item): number {
+        return index;
     }
 
 }

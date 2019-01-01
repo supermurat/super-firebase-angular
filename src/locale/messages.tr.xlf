@@ -298,10 +298,13 @@
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source><target state="final">Sayfa bulunamadı</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/not-found/not-found.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="356501fb47a7de720e71263c3d1cce5d6e681c4b" datatype="html">
-        <source>Welcome!</source><target state="final">Hoş geldiniz!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/home/home.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit><trans-unit id="28ff6e82caf9645d6f918bc21ca42aa33d1e3568" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/not-found/not-found.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="d6cb2af5501e2df32b21a352958076920da1b188" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> - <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source><target state="new"><x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> - <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/home/home.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit><trans-unit id="28ff6e82caf9645d6f918bc21ca42aa33d1e3568" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ rendererText }}"/> side rendering with Firebase 🔥</source><target state="new"><x id="INTERPOLATION" equiv-text="{{ rendererText }}"/> side rendering with Firebase 🔥</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/playground/playground.component.html</context>
