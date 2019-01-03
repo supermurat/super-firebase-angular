@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="migrate-to-firebase" type="js.build_tools.npm" factoryName="npm">
+  <configuration default="false" name="MTF - export-from-mysql" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/migrate-to-firebase/package.json" />
     <command value="run" />
     <scripts>
-      <script value="migrate-to-firebase" />
+      <script value="export-from-mysql" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

@@ -5,9 +5,12 @@
     "build": "tsc",
     "export-from-mysql": "npm run build && node ./lib/export-from-mysql.js",
     "export-from-drupal-7": "npm run build && node ./lib/export-from-drupal-7.js",
-    "migrate-to-firebase": "npm run build && node ./lib/migrate-to-firebase.js"
+    "migrate-to-firebase": "npm run build && node ./lib/migrate-to-firebase.js",
+    "download-data-from-firestore": "npm run build && node ./lib/download-data-from-firestore.js",
+    "download-files-from-fire-storage": "npm run build && node ./lib/download-files-from-fire-storage.js"
   },
   "dependencies": {
+    "colors": "^1.3.3",
     "firebase-admin": "^6.4.0",
     "fs": "^0.0.1-security",
     "html2plaintext": "^2.1.2",

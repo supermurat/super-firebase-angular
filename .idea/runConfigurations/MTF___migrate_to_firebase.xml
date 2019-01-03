@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MTF - migrate-to-firebase" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/migrate-to-firebase/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="migrate-to-firebase" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

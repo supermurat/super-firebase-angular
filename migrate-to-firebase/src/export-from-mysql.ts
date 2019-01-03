@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as mysql from 'mysql';
 import * as path from 'path';
+import { writeResultToFile } from './helper';
 
 // tslint:disable-next-line:no-var-requires no-require-imports
 const mysqlConfig = require('../mysql-config.json');
@@ -21,20 +22,14 @@ connection.query(
         if (error) { throw error; }
 
         const collectionName = 'myCollection'; // TODO: set collection name for firestore
-        const resultsForFirestore = {};
-        resultsForFirestore[collectionName] = {};
+        const dataFirestore = {};
+        dataFirestore[collectionName] = {};
         results.forEach((element) => {
             const docID = element.id; // TODO: set document ID for firestore
-            resultsForFirestore[collectionName][docID] = element;
+            dataFirestore[collectionName][docID] = element;
         });
 
-        fs.writeFile(
-            pathOfDataJson,
-            JSON.stringify(resultsForFirestore, undefined, 2),
-            {encoding: 'utf8', flag: 'w'}, (err) => {
-            if (err) { throw err; }
-            console.log(`Exported row count:${results.length}`);
-        });
+        writeResultToFile(pathOfDataJson, dataFirestore);
 });
 
 connection.end();

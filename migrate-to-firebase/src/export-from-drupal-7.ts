@@ -4,6 +4,7 @@ import * as http from 'http';
 import * as latinize from 'latinize';
 import * as mysql from 'mysql';
 import * as path from 'path';
+import { checkDirectory, writeResultToFile } from './helper';
 
 // tslint:disable-next-line:no-var-requires no-require-imports
 const mysqlConfig = require('../mysql-config.json');
@@ -16,9 +17,7 @@ const baseURLOfWebSite = 'http://supermurat.com';
 const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
 const pathOfDataJson = `${pathOfData + path.sep}data.json`;
 const pathOfFiles = `${pathOfData + path.sep}files`;
-if (!fs.existsSync(pathOfFiles)) {
-    fs.mkdirSync(pathOfFiles);
-}
+checkDirectory(pathOfFiles);
 
 // data you want to import into Firestore
 const dataFirestore = {};
@@ -232,22 +231,6 @@ const addToDialogs = (lang: string, element: any) => {
 /* endregion */
 
 /* region Files */
-
-const checkDirectory = (directoryPath: string) => {
-    if (!fs.existsSync(directoryPath)) {
-        directoryPath.split(path.sep)
-            .reduce(
-                (currentPath, folder) => {
-                    const dirPath = currentPath + folder + path.sep;
-                    if (!fs.existsSync(dirPath)) {
-                        fs.mkdirSync(dirPath);
-                    }
-
-                    return dirPath;
-                },
-                '');
-    }
-};
 
 const downloadFiles = (htmlContent: string) => {
     const fileMatchList = htmlContent.match(/<img src=[\\]?"[\w\d\/\-_\\]*\.[\w\d]*[\\]?"/gi);
@@ -464,7 +447,7 @@ ORDER BY n.created ASC`,
                 }
             });
             // tslint:disable-next-line:no-use-before-declare
-            writeResultToFile();
+            saveToFile();
         });
 };
 
@@ -472,15 +455,7 @@ ORDER BY n.created ASC`,
 
 getTaxonomy();
 
-const writeResultToFile = () => {
-    fs.writeFile(
-        pathOfDataJson,
-        JSON.stringify(dataFirestore, undefined, 2),
-        {encoding: 'utf8', flag: 'w'}, (err) => {
-            if (err) {
-                throw err;
-            }
-            console.log('Collections Exported Successfully');
-        });
+const saveToFile = () => {
+    writeResultToFile(pathOfDataJson, dataFirestore);
     connection.end();
 };

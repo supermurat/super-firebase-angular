@@ -28,7 +28,7 @@ const bucket = admin.storage().bucket(bucketName);
 const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
 const pathOfFiles = `${pathOfData + path.sep}files`;
 
-// FixFilePaths
+// File
 const getFiles = (dir: string, files: string[]) => {
     const filesWithBefore = files || [];
     const currentFiles = fs.readdirSync(dir);
@@ -125,7 +125,7 @@ const uploadFilesAndFixFilePaths = async () =>
             resolve();
         }
     });
-// End OF FixFilePaths
+// End OF File
 
 const fixTimestamps = (nestedData: any) => {
     if (typeof nestedData === 'string') {
@@ -135,6 +135,10 @@ const fixTimestamps = (nestedData: any) => {
             return new Date(nestedData);
         }
     } else if (typeof nestedData === 'object' && nestedData !== undefined && nestedData !== null) {
+        if (nestedData.hasOwnProperty('_seconds') && nestedData.hasOwnProperty('_nanoseconds') &&
+            Object.keys(nestedData).length === 2) {
+            return new Date((nestedData._seconds * 1000) + nestedData._nanoseconds);
+        }
         Object.keys(nestedData).forEach((key) => {
             nestedData[key] = fixTimestamps(nestedData[key]);
         });
