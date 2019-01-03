@@ -2,7 +2,7 @@ import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PageBaseModel, PageModel } from '../../models';
-import { AlertService, CarouselService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, SeoService } from '../../services';
 
 /**
  * Home Component
@@ -48,7 +48,8 @@ export class HomeComponent implements OnInit {
             }
         });
         this.contents$ = this.afs.collection(`pages_${this.locale}/home/contents`,
-            ref => ref.orderBy('orderNo'))
+            ref => ref.orderBy('orderNo')
+                .limit(3))
             .valueChanges();
     }
 

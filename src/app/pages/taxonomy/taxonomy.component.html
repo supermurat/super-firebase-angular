@@ -20,7 +20,7 @@
 
         </article>
 
-        <p class="alert-warning" *ngIf="pagination.done | async" i18n>I ran out of blogs!</p>
+        <p class="alert alert-warning" *ngIf="pagination.done | async" i18n>There is no more content related to "{{ tagName }}". You may want to check out active tags :-)</p>
 
     </div>
 

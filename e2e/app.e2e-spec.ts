@@ -7,13 +7,13 @@ describe('super-firebase-angular App', () => {
         page = new AppPage();
     });
 
-    it('should display welcome message', async () => {
+    it('should display footer', async () => {
         page.navigateTo()
             .catch(reason => {
                 console.error(reason);
             });
 
-        return expect(page.getParagraphText())
-            .toEqual('Welcome!');
+        return expect(page.getFooterCopyrightText())
+            .toContain('Copyright');
     });
 });
