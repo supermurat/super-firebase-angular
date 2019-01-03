@@ -9,6 +9,9 @@ import { ScrollableDirective } from '../../directives';
 import { TaxonomyModel } from '../../models';
 import { AlertService, PaginationService, SeoService } from '../../services';
 import { ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { TaxonomyComponent } from './taxonomy.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -22,7 +25,10 @@ describe('TaxonomyComponent', () => {
             declarations: [
                 TaxonomyComponent,
                 SideBarComponent,
-                ScrollableDirective
+                ScrollableDirective,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService, PaginationService,

@@ -4,6 +4,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, CarouselService, SeoService } from '../../services';
 import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
+import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -13,7 +15,9 @@ describe('HomeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent
+                HomeComponent,
+                ActiveTagsComponent,
+                LastJokesComponent
             ],
             providers: [
                 AlertService, SeoService, CarouselService,
@@ -55,7 +59,9 @@ describe('HomeComponentNoData', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent
+                HomeComponent,
+                ActiveTagsComponent,
+                LastJokesComponent
             ],
             providers: [
                 AlertService, SeoService, CarouselService,

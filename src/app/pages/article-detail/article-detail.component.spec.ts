@@ -11,6 +11,9 @@ import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ArticleModel } from '../../models';
 import { AlertService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
+import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { ArticleDetailComponent } from './article-detail.component';
 
@@ -27,7 +30,10 @@ describe('ArticleDetailComponent', () => {
                 FooterComponent,
                 SideBarComponent,
                 AlertComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,
@@ -137,7 +143,10 @@ describe('ArticleDetailComponent_tr-TR', () => {
                 FooterComponent,
                 SideBarComponent,
                 AlertComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService, TransferState,

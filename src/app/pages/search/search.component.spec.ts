@@ -6,6 +6,9 @@ import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { AlertService, SeoService } from '../../services';
 import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
+import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { SearchComponent } from './search.component';
 
 describe('SearchComponent', () => {
@@ -16,7 +19,10 @@ describe('SearchComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 SearchComponent,
-                SideBarComponent
+                SideBarComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService,

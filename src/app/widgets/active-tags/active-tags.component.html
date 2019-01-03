@@ -1,0 +1,14 @@
+<h5 class="card-header" i18n>Active Tags</h5>
+<div class="card-body">
+    <div class="row">
+        <div class="tag-cloud">
+            <ul>
+                <li *ngFor="let tag of taxonomyList$ | async; trackBy:trackByIndex">
+                    <a [routerLink]="[tag.routePath, tag.id]">
+                        <span>{{ tag.title }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,9 @@ import { PagerComponent } from '../../components/pager/pager.component';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { AlertService, PagerService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
+import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { BlogListComponent } from './blog-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -24,7 +27,10 @@ describe('BlogListComponent', () => {
                 FooterComponent,
                 SideBarComponent,
                 PagerComponent,
-                AlertComponent
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService,
@@ -116,7 +122,10 @@ describe('BlogListComponentNoData', () => {
                 FooterComponent,
                 SideBarComponent,
                 PagerComponent,
-                AlertComponent
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService,
