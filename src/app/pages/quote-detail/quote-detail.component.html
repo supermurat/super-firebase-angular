@@ -13,7 +13,7 @@
                         <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
                     </div>
                     <div *ngIf="content.persons">
-                        <div *ngFor="let person of content.persons | keyvalue; trackBy:trackByIndex">
+                        <div *ngFor="let person of content.persons | keyvalue; trackBy:pageService.trackByIndex">
                             <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
                             <div class="font-weight-bold" [innerHTML]="person.value"></div>
                         </div>
@@ -23,7 +23,7 @@
                     <hr/>
                     <div class="text-center tag-cloud">
                         <ul>
-                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
+                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
                                 <a [routerLink]="['/tag', tag.key]">
                                     <span>{{ tag.value }}</span>
                                 </a>

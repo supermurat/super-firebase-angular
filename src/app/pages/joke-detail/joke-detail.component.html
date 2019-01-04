@@ -10,7 +10,7 @@
                     <hr/>
                     <div class="text-center tag-cloud">
                         <ul>
-                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:trackByIndex">
+                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
                                 <a [routerLink]="['/tag', tag.key]">
                                     <span>{{ tag.value }}</span>
                                 </a>

@@ -94,11 +94,6 @@ describe('QuoteDetailComponent', () => {
             .toEqual('/quote/first-quote');
     }));
 
-    it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
-            .toBe(2);
-    }));
-
     it("should redirect to '/quote/third-quote' if id is -4", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
         activatedRouteStub.setParamMap({id: '-4'});

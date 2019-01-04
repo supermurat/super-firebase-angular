@@ -94,11 +94,6 @@ describe('ArticleDetailComponent', () => {
             .toEqual('/article/first-article');
     }));
 
-    it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
-            .toBe(2);
-    }));
-
     it("should redirect to '/article/fifth-article' if id is -6", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
         activatedRouteStub.setParamMap({id: '-6'});

@@ -64,44 +64,21 @@ export class JokeDetailComponent implements OnInit {
      * init joke
      */
     initJoke(): void {
-        this.joke$ = this.ssrFirestoreDoc(`jokes_${this.locale}/${this.jokeID}`, true);
+        this.joke$ = this.ssrFirestoreDoc(`jokes_${this.locale}/${this.jokeID}`);
         this.joke$.subscribe(joke => {
             if (joke === undefined) {
-                this.checkTranslation(undefined);
+                this.pageService.redirectToTranslationOr404(undefined, 'jokes', this.jokeID);
             } else if (joke.id) {
-                this.seo.setHtmlTags(joke);
+                this.pageService.initPage(joke);
             }
         });
     }
 
     /**
-     * check if there is another translation and redirect to it
-     */
-    checkTranslation(checkInLocale): void {
-        if (checkInLocale) {
-            this.afs.doc<JokeModel>(`jokes_${checkInLocale}/${this.jokeID}`)
-                .valueChanges()
-                .subscribe(joke => {
-                    if (joke) {
-                        const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/${joke.routePath}/${joke.id}`, true);
-                    } else {
-                        this.seo.http404();
-                    }
-                });
-        } else if (this.locale === 'en-US') {
-            this.checkTranslation('tr-TR');
-        } else {
-            this.checkTranslation('en-US');
-        }
-    }
-
-    /**
      * Get joke object from firestore by path
      * @param path: joke path
-     * @param checkTranslation: check translation if current joke is not exist
      */
-    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<JokeModel> {
+    ssrFirestoreDoc(path: string): Observable<JokeModel> {
         const exists = this.state.get(ARTICLE_KEY, new JokeModel());
 
         return this.afs.doc<JokeModel>(path)
@@ -113,15 +90,6 @@ export class JokeDetailComponent implements OnInit {
                 }),
                 startWith(exists)
             );
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 
 }

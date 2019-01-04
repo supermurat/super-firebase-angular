@@ -64,44 +64,21 @@ export class ArticleDetailComponent implements OnInit {
      * init article
      */
     initArticle(): void {
-        this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`, true);
+        this.article$ = this.ssrFirestoreDoc(`articles_${this.locale}/${this.articleID}`);
         this.article$.subscribe(article => {
             if (article === undefined) {
-                this.checkTranslation(undefined);
+                this.pageService.redirectToTranslationOr404(undefined, 'articles', this.articleID);
             } else if (article.id) {
-                this.seo.setHtmlTags(article);
+                this.pageService.initPage(article);
             }
         });
     }
 
     /**
-     * check if there is another translation and redirect to it
-     */
-    checkTranslation(checkInLocale): void {
-        if (checkInLocale) {
-            this.afs.doc<ArticleModel>(`articles_${checkInLocale}/${this.articleID}`)
-                .valueChanges()
-                .subscribe(article => {
-                    if (article) {
-                        const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/${article.routePath}/${article.id}`, true);
-                    } else {
-                        this.seo.http404();
-                    }
-                });
-        } else if (this.locale === 'en-US') {
-            this.checkTranslation('tr-TR');
-        } else {
-            this.checkTranslation('en-US');
-        }
-    }
-
-    /**
      * Get article object from firestore by path
      * @param path: article path
-     * @param checkTranslation: check translation if current article is not exist
      */
-    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<ArticleModel> {
+    ssrFirestoreDoc(path: string): Observable<ArticleModel> {
         const exists = this.state.get(ARTICLE_KEY, new ArticleModel());
 
         return this.afs.doc<ArticleModel>(path)
@@ -113,15 +90,6 @@ export class ArticleDetailComponent implements OnInit {
                 }),
                 startWith(exists)
             );
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 
 }

@@ -64,44 +64,21 @@ export class BlogDetailComponent implements OnInit {
      * init blog
      */
     initBlog(): void {
-        this.blog$ = this.ssrFirestoreDoc(`blogs_${this.locale}/${this.blogID}`, true);
+        this.blog$ = this.ssrFirestoreDoc(`blogs_${this.locale}/${this.blogID}`);
         this.blog$.subscribe(blog => {
             if (blog === undefined) {
-                this.checkTranslation(undefined);
+                this.pageService.redirectToTranslationOr404(undefined, 'blogs', this.blogID);
             } else if (blog.id) {
-                this.seo.setHtmlTags(blog);
+                this.pageService.initPage(blog);
             }
         });
     }
 
     /**
-     * check if there is another translation and redirect to it
-     */
-    checkTranslation(checkInLocale): void {
-        if (checkInLocale) {
-            this.afs.doc<BlogModel>(`blogs_${checkInLocale}/${this.blogID}`)
-                .valueChanges()
-                .subscribe(blog => {
-                    if (blog) {
-                        const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/${blog.routePath}/${blog.id}`, true);
-                    } else {
-                        this.seo.http404();
-                    }
-                });
-        } else if (this.locale === 'en-US') {
-            this.checkTranslation('tr-TR');
-        } else {
-            this.checkTranslation('en-US');
-        }
-    }
-
-    /**
      * Get blog object from firestore by path
      * @param path: blog path
-     * @param checkTranslation: check translation if current blog is not exist
      */
-    ssrFirestoreDoc(path: string, checkTranslation: boolean): Observable<BlogModel> {
+    ssrFirestoreDoc(path: string): Observable<BlogModel> {
         const exists = this.state.get(BLOG_KEY, new BlogModel());
 
         return this.afs.doc<BlogModel>(path)
@@ -113,15 +90,6 @@ export class BlogDetailComponent implements OnInit {
                 }),
                 startWith(exists)
             );
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 
 }

@@ -94,11 +94,6 @@ describe('JokeDetailComponent', () => {
             .toEqual('/joke/first-joke');
     }));
 
-    it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
-            .toBe(2);
-    }));
-
     it("should redirect to '/joke/third-joke' if id is -4", fakeAsync(() => {
         const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
         activatedRouteStub.setParamMap({id: '-4'});

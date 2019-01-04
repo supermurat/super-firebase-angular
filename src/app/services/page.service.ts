@@ -2,7 +2,7 @@ import { Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ArticleModel, PageModel } from '../models';
+import { PageBaseModel, PageModel } from '../models';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
 import { SeoService } from './seo.service';
@@ -30,16 +30,33 @@ export class PageService {
     }
 
     /**
-     * init page
+     * track content object array by index
+     * @param index: index no
+     * @param item: object
+     */
+    trackByIndex(index, item): number {
+        return index;
+    }
+
+    /**
+     * init page html tags and content
+     * @param page: PageBaseModel
+     */
+    initPage(page: PageBaseModel): void {
+        this.seo.setHtmlTags(page);
+        this.carouselService.init(page.carousel);
+    }
+
+    /**
+     * get page from firestore
      * @param pageName: Page Name to load from Firestore
      */
-    initPage(pageName: string): Observable<PageModel> {
+    getPageFromFirestore(pageName: string): Observable<PageModel> {
         const page$ = this.afs.doc<PageModel>(`pages_${this.locale}/${pageName}`)
             .valueChanges();
         page$.subscribe(page => {
             if (page) {
-                this.seo.setHtmlTags(page);
-                this.carouselService.init(page.carousel);
+                this.initPage(page);
             }
         });
 
@@ -68,8 +85,8 @@ export class PageService {
                 .subscribe(data => {
                     if (data && data.length > 0) {
                         data.map(pld => {
-                            const article = pld.payload.doc.data() as ArticleModel;
-                            this.router.navigate([article.routePath, article.id])
+                            const pageItem = pld.payload.doc.data() as PageBaseModel;
+                            this.router.navigate([pageItem.routePath, pld.payload.doc.id])
                                 .catch(// istanbul ignore next
                                     reason => {
                                         this.alert.error(reason);
@@ -94,6 +111,32 @@ export class PageService {
         }
 
         return false;
+    }
+
+    /**
+     * check if there is another translation and redirect to it
+     * @param checkInLocale: locale code; sample: undefined, en-US, tr-TR
+     * @param pathOfCollectionWithoutLocalePart: main collection path of firestore;
+     * used in: `${pathOfCollectionWithoutLocalePart}_${this.locale}`
+     * @param pageID: page id on firestore
+     */
+    redirectToTranslationOr404(checkInLocale: string, pathOfCollectionWithoutLocalePart: string, pageID: string): void {
+        if (checkInLocale) {
+            this.afs.doc<PageBaseModel>(`${pathOfCollectionWithoutLocalePart}_${checkInLocale}/${pageID}`)
+                .valueChanges()
+                .subscribe(pageItem => {
+                    if (pageItem) {
+                        const languageCode2 = checkInLocale.substring(0, 2);
+                        this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageItem.id}`, true);
+                    } else {
+                        this.seo.http404();
+                    }
+                });
+        } else if (this.locale === 'en-US') {
+            this.redirectToTranslationOr404('tr-TR', pathOfCollectionWithoutLocalePart, pageID);
+        } else {
+            this.redirectToTranslationOr404('en-US', pathOfCollectionWithoutLocalePart, pageID);
+        }
     }
 
 }

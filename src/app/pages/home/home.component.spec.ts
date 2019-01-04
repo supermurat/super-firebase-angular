@@ -46,7 +46,7 @@ describe('HomeComponent', () => {
     }));
 
     it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
+        expect(comp.pageService.trackByIndex(2, {}))
             .toBe(2);
     }));
 
