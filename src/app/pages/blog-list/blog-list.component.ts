@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BlogModel, PagerModel } from '../../models';
-import { PagerService, SeoService } from '../../services';
+import { BlogModel, PageModel, PagerModel } from '../../models';
+import { PagerService, PageService, SeoService } from '../../services';
 
 /**
  * Blog List Component
@@ -15,13 +15,10 @@ import { PagerService, SeoService } from '../../services';
     styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent implements OnInit {
+    /** current page object */
+    page$: Observable<PageModel>;
     /** blog object array */
     blogs$: Observable<Array<BlogModel>>;
-    /** current page`s title */
-    title = 'My blog';
-    /** current page`s description */
-    description = 'My blog';
-    /** count of blogs */
 
     /** pager model */
     pagerModel: PagerModel = {
@@ -48,6 +45,7 @@ export class BlogListComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
+     * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
@@ -55,6 +53,7 @@ export class BlogListComponent implements OnInit {
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
+                public pageService: PageService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -66,11 +65,7 @@ export class BlogListComponent implements OnInit {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initBlogs();
         });
-
-        this.seo.setHtmlTags({
-            title: this.title,
-            description: this.description
-        });
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'blog-list');
     }
 
     /**
@@ -131,14 +126,5 @@ export class BlogListComponent implements OnInit {
                 this.lastItemOrderNoOfCurrentPage = this.lastItemOfCurrentPage.orderNo;
             }
         });
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 }

@@ -6,4 +6,6 @@ import { PageBaseModel } from './page-base-model';
 export class PageModel extends PageBaseModel {
     /** content array of page */
     contents?: any;
+    /** caption of page */
+    caption?: any;
 }

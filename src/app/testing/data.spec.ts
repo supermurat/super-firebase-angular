@@ -164,6 +164,46 @@ export const myData = {
                         title: 'Hey, what\'s up ? '
                     }]
             }
+        },
+        'article-list': {
+            id: 'quote-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Articles',
+            caption: 'My Articles',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        'blog-list': {
+            id: 'blog-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Blog',
+            caption: 'My Blog',
+            routePath: '/',
+            i18nKey: 'blog-list',
+            orderNo: -1
+        },
+        'joke-list': {
+            id: 'joke-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Jokes',
+            caption: 'My Jokes',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        'quote-list': {
+            id: 'quote-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Quotes',
+            caption: 'My Quotes',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
         }
     },
     'pages_tr-TR': {
@@ -207,6 +247,46 @@ export const myData = {
                         title: 'Hey, naber?'
                     }]
             }
+        },
+        'article-list': {
+            id: 'quote-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Makalelerim',
+            caption: 'Makalelerim',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        'blog-list': {
+            id: 'blog-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Günlüğüm',
+            caption: 'Günlüğüm',
+            routePath: '/',
+            i18nKey: 'blog-list',
+            orderNo: -1
+        },
+        'joke-list': {
+            id: 'joke-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Şakalarım ve Fıkralarım',
+            caption: 'Şakalarım ve Fıkralarım',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        'quote-list': {
+            id: 'quote-list',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Alıntılarım',
+            caption: 'Alıntılarım',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
         }
     },
     redirectionRecords: {},

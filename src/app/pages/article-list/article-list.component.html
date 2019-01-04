@@ -1,13 +1,16 @@
 <div class="row">
-    <h1 class="col-md-12" i18n>{{ title }}
-    </h1>
+    <div class="col-md-12">
+        <div class="card py-1 px-3 mt-3">
+            <h1 class="">{{ (page$ | async)?.caption }}</h1>
+        </div>
+    </div>
 </div>
 <div class="row">
     <!-- Articles Column -->
 
     <div class="col-md-8">
 
-        <article class="card my-4" *ngFor="let content of articles$ | async; trackBy:trackByIndex">
+        <article class="card my-4" *ngFor="let content of articles$ | async; trackBy:pageService.trackByIndex">
             <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
             <div class="card-body">
                 <h2 class="card-title"><a [routerLink]="[content.routePath, content.id]">{{ content.title }}</a></h2>

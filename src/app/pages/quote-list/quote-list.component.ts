@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PagerModel, QuoteModel } from '../../models';
-import { PagerService, SeoService } from '../../services';
+import { PageModel, PagerModel, QuoteModel } from '../../models';
+import { PagerService, PageService, SeoService } from '../../services';
 
 /**
  * Quote List Component
@@ -15,12 +15,10 @@ import { PagerService, SeoService } from '../../services';
     styleUrls: ['./quote-list.component.scss']
 })
 export class QuoteListComponent implements OnInit {
+    /** current page object */
+    page$: Observable<PageModel>;
     /** quote object array */
     quotes$: Observable<Array<QuoteModel>>;
-    /** current page`s title */
-    title = 'My Quotes';
-    /** current page`s description */
-    description = 'List of My Quotes';
 
     /** pager model */
     pagerModel: PagerModel = {
@@ -47,6 +45,7 @@ export class QuoteListComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
+     * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
@@ -54,6 +53,7 @@ export class QuoteListComponent implements OnInit {
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
+                public pageService: PageService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -65,11 +65,7 @@ export class QuoteListComponent implements OnInit {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initQuotes();
         });
-
-        this.seo.setHtmlTags({
-            title: this.title,
-            description: this.description
-        });
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'quote-list');
     }
 
     /**
@@ -130,14 +126,5 @@ export class QuoteListComponent implements OnInit {
                 this.lastItemOrderNoOfCurrentPage = this.lastItemOfCurrentPage.orderNo;
             }
         });
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 }

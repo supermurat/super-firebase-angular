@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { JokeModel, PagerModel } from '../../models';
-import { PagerService, SeoService } from '../../services';
+import { JokeModel, PageModel, PagerModel } from '../../models';
+import { PagerService, PageService, SeoService } from '../../services';
 
 /**
  * Joke List Component
@@ -15,12 +15,10 @@ import { PagerService, SeoService } from '../../services';
     styleUrls: ['./joke-list.component.scss']
 })
 export class JokeListComponent implements OnInit {
+    /** current page object */
+    page$: Observable<PageModel>;
     /** joke object array */
     jokes$: Observable<Array<JokeModel>>;
-    /** current page`s title */
-    title = 'My Jokes';
-    /** current page`s description */
-    description = 'List of My Jokes';
 
     /** pager model */
     pagerModel: PagerModel = {
@@ -47,6 +45,7 @@ export class JokeListComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
+     * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
@@ -54,6 +53,7 @@ export class JokeListComponent implements OnInit {
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
+                public pageService: PageService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -65,11 +65,7 @@ export class JokeListComponent implements OnInit {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initJokes();
         });
-
-        this.seo.setHtmlTags({
-            title: this.title,
-            description: this.description
-        });
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'joke-list');
     }
 
     /**
@@ -130,14 +126,5 @@ export class JokeListComponent implements OnInit {
                 this.lastItemOrderNoOfCurrentPage = this.lastItemOfCurrentPage.orderNo;
             }
         });
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 }

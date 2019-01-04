@@ -1,13 +1,14 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { PagerComponent } from '../../components/pager/pager.component';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
-import { AlertService, PagerService, SeoService } from '../../services';
+import { AlertService, CarouselService, PagerService, PageService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
@@ -33,7 +34,7 @@ describe('QuoteListComponent', () => {
                 SearchBarComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService,
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -63,11 +64,6 @@ describe('QuoteListComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should have as title 'Quotes'", async(() => {
-        expect(comp.title)
-            .toEqual('My Quotes');
-    }));
-
     it('count of record should be 3', async(() => {
         activatedRouteStub.setParamMap({pageNo: 1});
         comp.quotes$.subscribe(result => {
@@ -75,11 +71,6 @@ describe('QuoteListComponent', () => {
                 .toEqual(3);
         });
         fixture.detectChanges();
-    }));
-
-    it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
-            .toBe(2);
     }));
 
     it('should redirect to page 1 if page is not exist', fakeAsync(() => {
@@ -128,7 +119,7 @@ describe('QuoteListComponentNoData', () => {
                 SearchBarComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService,
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
