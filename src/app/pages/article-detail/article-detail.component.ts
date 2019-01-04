@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import { ArticleModel } from '../../models';
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PageService, SeoService } from '../../services';
 
 /** State key of current article */
 const ARTICLE_KEY = makeStateKey<any>('article');
@@ -32,6 +32,7 @@ export class ArticleDetailComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param state: TransferState
+     * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
     constructor(
@@ -41,6 +42,7 @@ export class ArticleDetailComponent implements OnInit {
         public router: Router,
         private readonly route: ActivatedRoute,
         private readonly state: TransferState,
+        public pageService: PageService,
         @Inject(LOCALE_ID) public locale: string
     ) {
     }
@@ -50,38 +52,7 @@ export class ArticleDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
-            const pID = Number(pmap.get('id'));
-            if (pID || pID === 0) {
-                this.afs.collection(`articles_${this.locale}`,
-                    ref => ref.where('orderNo', '==', pID)
-                        .limit(1)
-                )
-                    .snapshotChanges()
-                    .subscribe(data => {
-                        if (data && data.length > 0) {
-                            data.map(pld => {
-                                const article = pld.payload.doc.data() as ArticleModel;
-                                this.router.navigate([article.routePath, article.id])
-                                    .catch(// istanbul ignore next
-                                        reason => {
-                                            this.alert.error(reason);
-                                        });
-                            });
-                        } else if (pID === 0) {
-                            this.router.navigate(['/articles'])
-                                .catch(// istanbul ignore next
-                                    reason => {
-                                        this.alert.error(reason);
-                                    });
-                        } else {
-                            this.router.navigate(['/article', pID + 1])
-                                .catch(// istanbul ignore next
-                                    reason => {
-                                        this.alert.error(reason);
-                                    });
-                        }
-                    });
-
+            if (this.pageService.checkToRedirectByIDParam(pmap, 'articles', '/articles', '/article')) {
                 return;
             }
             this.articleID = pmap.get('id');

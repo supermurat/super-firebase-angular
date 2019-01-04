@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, SeoService } from '../../services';
+import { AlertService, CarouselService, PageService, SeoService } from '../../services';
 import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
@@ -20,7 +20,7 @@ describe('HomeComponent', () => {
                 LastJokesComponent
             ],
             providers: [
-                AlertService, SeoService, CarouselService,
+                AlertService, SeoService, CarouselService, PageService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
@@ -64,7 +64,7 @@ describe('HomeComponentNoData', () => {
                 LastJokesComponent
             ],
             providers: [
-                AlertService, SeoService, CarouselService,
+                AlertService, SeoService, CarouselService, PageService,
                 {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],

@@ -9,7 +9,7 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { JokeModel } from '../../models';
-import { AlertService, SeoService } from '../../services';
+import { AlertService, CarouselService, PageService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
@@ -36,7 +36,7 @@ describe('JokeDetailComponent', () => {
                 SearchBarComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState,
+                AlertService, SeoService, TransferState, CarouselService, PageService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -149,7 +149,7 @@ describe('JokeDetailComponent_tr-TR', () => {
                 SearchBarComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState,
+                AlertService, SeoService, TransferState, CarouselService, PageService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},

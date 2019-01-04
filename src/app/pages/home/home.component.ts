@@ -2,7 +2,7 @@ import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PageBaseModel, PageModel } from '../../models';
-import { AlertService, CarouselService, SeoService } from '../../services';
+import { AlertService, CarouselService, PageService, SeoService } from '../../services';
 
 /**
  * Home Component
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
      * @param alert: AlertService
      * @param carouselService: CarouselService
      * @param afs: AngularFirestore
+     * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
                 public alert: AlertService,
                 public carouselService: CarouselService,
                 private readonly afs: AngularFirestore,
+                public pageService: PageService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -39,14 +41,7 @@ export class HomeComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.page$ = this.afs.doc<PageModel>(`pages_${this.locale}/home`)
-            .valueChanges();
-        this.page$.subscribe(page => {
-            if (page) {
-                this.seo.setHtmlTags(page);
-                this.carouselService.init(page.carousel);
-            }
-        });
+        this.page$ = this.pageService.initPage('home');
         this.contents$ = this.afs.collection(`pages_${this.locale}/home/contents`,
             ref => ref.orderBy('orderNo')
                 .limit(3))
