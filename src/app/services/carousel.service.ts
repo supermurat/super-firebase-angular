@@ -9,7 +9,7 @@ import { CarouselModel } from '../models';
 @Injectable()
 export class CarouselService {
     /** collection of carousel */
-    private readonly subject = new Subject<any>();
+    private readonly subject = new Subject<CarouselModel>();
 
     /**
      * constructor of CarouselService
@@ -37,7 +37,7 @@ export class CarouselService {
     /**
      * get current carousel
      */
-    getCarousel(): Observable<any> {
+    getCarousel(): Observable<CarouselModel> {
         return this.subject.asObservable();
     }
 }

@@ -3,6 +3,10 @@
 
 body {
   padding-top: 54px;
+  background-repeat: no-repeat;
+  background-position: top;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 @media (min-width: 992px) {

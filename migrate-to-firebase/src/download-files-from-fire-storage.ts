@@ -31,7 +31,7 @@ const downloadFromStorage = async () => {
             continue;
         }
         if (!fs.existsSync(filePath)) {
-            await file.createReadStream()
+            file.createReadStream()
                 .on('error', (err) => {
                     console.error(err);
                 })

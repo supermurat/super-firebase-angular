@@ -183,7 +183,8 @@ export const myData = {
             caption: 'My Blog',
             routePath: '/',
             i18nKey: 'blog-list',
-            orderNo: -1
+            orderNo: -1,
+            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
         'joke-list': {
             id: 'joke-list',
@@ -266,7 +267,8 @@ export const myData = {
             caption: 'Günlüğüm',
             routePath: '/',
             i18nKey: 'blog-list',
-            orderNo: -1
+            orderNo: -1,
+            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
         'joke-list': {
             id: 'joke-list',

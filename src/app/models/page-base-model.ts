@@ -17,6 +17,8 @@ export class PageBaseModel extends HtmlDocumentModel {
     content?: any;
     /** carousel item array of page */
     carousel?: CarouselModel;
+    /** url of background cover image */
+    backgroundCoverUrl?: CarouselModel;
     /** summary html content of page */
     contentSummary?: string;
     /** unique key for translations */

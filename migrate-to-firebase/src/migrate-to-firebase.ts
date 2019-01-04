@@ -137,7 +137,7 @@ const fixTimestamps = (nestedData: any) => {
     } else if (typeof nestedData === 'object' && nestedData !== undefined && nestedData !== null) {
         if (nestedData.hasOwnProperty('_seconds') && nestedData.hasOwnProperty('_nanoseconds') &&
             Object.keys(nestedData).length === 2) {
-            return new Date((nestedData._seconds * 1000) + nestedData._nanoseconds);
+            return new Date((nestedData._seconds * 1000) + Number(nestedData._nanoseconds));
         }
         Object.keys(nestedData).forEach((key) => {
             nestedData[key] = fixTimestamps(nestedData[key]);

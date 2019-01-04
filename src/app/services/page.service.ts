@@ -1,4 +1,5 @@
-import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, LOCALE_ID, Renderer2, RendererFactory2 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
@@ -15,6 +16,11 @@ import { SeoService } from './seo.service';
 @Injectable()
 export class PageService {
     /**
+     * Renderer2
+     */
+    private readonly renderer: Renderer2;
+
+    /**
      * constructor of PageService
      * @param seo: SeoService
      * @param carouselService: CarouselService
@@ -22,6 +28,8 @@ export class PageService {
      * @param state: TransferState
      * @param afs: AngularFirestore
      * @param router: Router
+     * @param rendererFactory: RendererFactory2
+     * @param document: DOCUMENT
      * @param locale: LOCALE_ID
      */
     constructor(public seo: SeoService,
@@ -30,7 +38,10 @@ export class PageService {
                 private readonly state: TransferState,
                 private readonly afs: AngularFirestore,
                 public router: Router,
+                private readonly rendererFactory: RendererFactory2,
+                @Inject(DOCUMENT) private readonly document,
                 @Inject(LOCALE_ID) public locale: string) {
+        this.renderer = rendererFactory.createRenderer(undefined, undefined);
     }
 
     /**
@@ -49,6 +60,11 @@ export class PageService {
     initPage(page: PageBaseModel): void {
         this.seo.setHtmlTags(page);
         this.carouselService.init(page.carousel);
+        if (page.backgroundCoverUrl) {
+            this.renderer.setStyle(this.document.body, 'background-image', `url(${page.backgroundCoverUrl})`);
+        } else {
+            this.renderer.setStyle(this.document.body, 'background-image', '');
+        }
     }
 
     /**
