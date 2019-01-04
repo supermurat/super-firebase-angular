@@ -11,8 +11,11 @@ if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic()
-    .bootstrapModule(AppModule)
-    .catch(reason => {
-        console.error(reason);
-    });
+// This event listener is for loading TransferState on Client. Without this; browser does not load state
+document.addEventListener('DOMContentLoaded', () => {
+    platformBrowserDynamic()
+        .bootstrapModule(AppModule)
+        .catch(reason => {
+            console.error(reason);
+        });
+});

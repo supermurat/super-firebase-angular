@@ -1,11 +1,16 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
 import { PageBaseModel, PageModel } from '../models';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
 import { SeoService } from './seo.service';
+
+/** State key of current page */
+const SSR_PAGE_KEY = makeStateKey<any>('ssr_page');
 
 /**
  * Page Service
@@ -17,6 +22,7 @@ export class PageService {
      * @param seo: SeoService
      * @param carouselService: CarouselService
      * @param alert: AlertService
+     * @param state: TransferState
      * @param afs: AngularFirestore
      * @param router: Router
      * @param locale: LOCALE_ID
@@ -24,6 +30,7 @@ export class PageService {
     constructor(public seo: SeoService,
                 public carouselService: CarouselService,
                 private readonly alert: AlertService,
+                private readonly state: TransferState,
                 private readonly afs: AngularFirestore,
                 public router: Router,
                 @Inject(LOCALE_ID) public locale: string) {
@@ -52,8 +59,16 @@ export class PageService {
      * @param pageName: Page Name to load from Firestore
      */
     getPageFromFirestore(pageName: string): Observable<PageModel> {
+        const existPage = this.state.get(SSR_PAGE_KEY, new PageBaseModel());
         const page$ = this.afs.doc<PageModel>(`pages_${this.locale}/${pageName}`)
-            .valueChanges();
+            .valueChanges()
+            .pipe(tap(pageItem => {
+                    if (pageItem) {
+                        this.state.set(SSR_PAGE_KEY, pageItem);
+                    }
+                }),
+                startWith(existPage)
+            );
         page$.subscribe(page => {
             if (page) {
                 this.initPage(page);
