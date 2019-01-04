@@ -1,17 +1,19 @@
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { TransferState } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ScrollableDirective } from '../../directives';
 import { TaxonomyModel } from '../../models';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
 import { ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { TaxonomyComponent } from './taxonomy.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -28,10 +30,11 @@ describe('TaxonomyComponent', () => {
                 ScrollableDirective,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
@@ -41,7 +44,9 @@ describe('TaxonomyComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: TaxonomyComponent},
-                    {path: 'tag/:id', component: TaxonomyComponent}
+                    {path: 'tag/:id', component: TaxonomyComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -60,11 +65,6 @@ describe('TaxonomyComponent', () => {
     it('should create the app', async(() => {
         expect(comp)
             .toBeTruthy();
-    }));
-
-    it('trackByIndex(2) should return 2', async(() => {
-        expect(comp.trackByIndex(2, {}))
-            .toBe(2);
     }));
 
     it('should load first-tag', fakeAsync(() => {

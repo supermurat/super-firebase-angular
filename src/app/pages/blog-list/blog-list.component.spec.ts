@@ -13,6 +13,7 @@ import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirest
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { BlogListComponent } from './blog-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -31,7 +32,8 @@ describe('BlogListComponent', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -43,7 +45,9 @@ describe('BlogListComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
-                    {path: 'blogs/:pageNo', component: BlogListComponent}
+                    {path: 'blogs/:pageNo', component: BlogListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -116,7 +120,8 @@ describe('BlogListComponentNoData', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -128,7 +133,9 @@ describe('BlogListComponentNoData', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
-                    {path: 'blogs/:pageNo', component: BlogListComponent}
+                    {path: 'blogs/:pageNo', component: BlogListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })

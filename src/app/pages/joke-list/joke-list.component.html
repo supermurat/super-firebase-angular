@@ -1,11 +1,10 @@
-<div class="row">
+<div class="row" *ngIf="page$ | async as page">
     <div class="col-md-12">
         <div class="card py-1 px-3 mt-3">
-            <h1 class="">{{ (page$ | async)?.caption }}</h1>
+            <h1>{{ page?.caption }}</h1>
         </div>
     </div>
-</div>
-<div class="row">
+
     <!-- Jokes Column -->
 
     <div class="col-md-8">

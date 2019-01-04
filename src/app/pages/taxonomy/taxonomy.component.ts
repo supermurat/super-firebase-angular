@@ -2,8 +2,8 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PageModel, TaxonomyModel } from '../../models';
-import { PaginationService, SeoService } from '../../services';
+import { TaxonomyModel } from '../../models';
+import { PageService, PaginationService, SeoService } from '../../services';
 
 /**
  * Taxonomy Component
@@ -18,8 +18,6 @@ export class TaxonomyComponent implements OnInit {
     tag$: Observable<TaxonomyModel>;
     /** current tagID */
     tagID = '';
-    /** current tagName */
-    tagName = '';
 
     /**
      * constructor of TaxonomyComponent
@@ -27,6 +25,7 @@ export class TaxonomyComponent implements OnInit {
      * @param seo: SeoService
      * @param router: Router
      * @param route: ActivatedRoute
+     * @param pageService: PageService
      * @param pagination: PaginationService
      * @param locale: LOCALE_ID
      */
@@ -34,6 +33,7 @@ export class TaxonomyComponent implements OnInit {
                 private readonly seo: SeoService,
                 public router: Router,
                 private readonly route: ActivatedRoute,
+                public pageService: PageService,
                 public pagination: PaginationService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
@@ -44,15 +44,7 @@ export class TaxonomyComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
             this.tagID = pmap.get('id');
-
-            this.tag$ = this.afs.doc<PageModel>(`taxonomy_${this.locale}/${this.tagID}`)
-                .valueChanges();
-            this.tag$.subscribe(tag => {
-                    if (tag) {
-                        this.tagName = tag.title;
-                        this.seo.setHtmlTags(tag);
-                    }
-                });
+            this.tag$ = this.pageService.getPageFromFirestore(TaxonomyModel, 'taxonomy', this.tagID);
 
             this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents`, 'created', {reverse: true, prepend: false, limit: 5});
 
@@ -67,15 +59,6 @@ export class TaxonomyComponent implements OnInit {
         if (e === 'bottom') {
             this.pagination.more();
         }
-    }
-
-    /**
-     * track content object array by index
-     * @param index: index no
-     * @param item: object
-     */
-    trackByIndex(index, item): number {
-        return index;
     }
 
 }

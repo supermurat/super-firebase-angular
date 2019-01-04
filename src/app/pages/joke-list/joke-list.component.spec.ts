@@ -13,6 +13,7 @@ import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirest
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { JokeListComponent } from './joke-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -31,7 +32,8 @@ describe('JokeListComponent', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -43,7 +45,9 @@ describe('JokeListComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
-                    {path: 'jokes/:pageNo', component: JokeListComponent}
+                    {path: 'jokes/:pageNo', component: JokeListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -116,7 +120,8 @@ describe('JokeListComponentNoData', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -128,7 +133,9 @@ describe('JokeListComponentNoData', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
-                    {path: 'jokes/:pageNo', component: JokeListComponent}
+                    {path: 'jokes/:pageNo', component: JokeListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })

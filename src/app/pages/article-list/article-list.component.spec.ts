@@ -13,6 +13,7 @@ import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirest
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { ArticleListComponent } from './article-list.component';
 
 const activatedRouteStub = new ActivatedRouteStub();
@@ -31,7 +32,8 @@ describe('ArticleListComponent', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -43,7 +45,9 @@ describe('ArticleListComponent', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
-                    {path: 'articles/:pageNo', component: ArticleListComponent}
+                    {path: 'articles/:pageNo', component: ArticleListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -128,7 +132,8 @@ describe('ArticleListComponentNoData', () => {
                 AlertComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                NotFoundComponent
             ],
             providers: [
                 AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
@@ -140,7 +145,9 @@ describe('ArticleListComponentNoData', () => {
                 FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
-                    {path: 'articles/:pageNo', component: ArticleListComponent}
+                    {path: 'articles/:pageNo', component: ArticleListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
