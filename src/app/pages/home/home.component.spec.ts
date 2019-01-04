@@ -1,11 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AlertService, CarouselService, PageService, SeoService } from '../../services';
 import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -17,15 +19,20 @@ describe('HomeComponent', () => {
             declarations: [
                 HomeComponent,
                 ActiveTagsComponent,
-                LastJokesComponent
+                LastJokesComponent,
+                NotFoundComponent
             ],
             providers: [
-                AlertService, SeoService, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
-                RouterTestingModule.withRoutes([{path: '', component: HomeComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: '', component: HomeComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
             ]
         })
             .compileComponents()
@@ -61,15 +68,20 @@ describe('HomeComponentNoData', () => {
             declarations: [
                 HomeComponent,
                 ActiveTagsComponent,
-                LastJokesComponent
+                LastJokesComponent,
+                NotFoundComponent
             ],
             providers: [
-                AlertService, SeoService, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService,
                 {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
-                RouterTestingModule.withRoutes([{path: '', component: HomeComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: '', component: HomeComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
             ]
         })
             .compileComponents()

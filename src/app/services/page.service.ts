@@ -4,13 +4,10 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
-import { PageBaseModel, PageModel } from '../models';
+import { PageBaseModel } from '../models';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
 import { SeoService } from './seo.service';
-
-/** State key of current page */
-const SSR_PAGE_KEY = makeStateKey<any>('ssr_page');
 
 /**
  * Page Service
@@ -55,22 +52,40 @@ export class PageService {
     }
 
     /**
-     * get page from firestore
-     * @param pageName: Page Name to load from Firestore
+     * get document from firestore
+     * @param type: type of page
+     * @param path: path of document to load from Firestore
      */
-    getPageFromFirestore(pageName: string): Observable<PageModel> {
-        const existPage = this.state.get(SSR_PAGE_KEY, new PageBaseModel());
-        const page$ = this.afs.doc<PageModel>(`pages_${this.locale}/${pageName}`)
+    getDocumentFromFirestore<T>(type: new() => T, path: string): Observable<T> {
+        const ssrPageKey = makeStateKey<any>(`ssr_page_${path}`);
+        const existPage = this.state.get(ssrPageKey, new type());
+
+        return this.afs.doc<T>(path)
             .valueChanges()
             .pipe(tap(pageItem => {
                     if (pageItem) {
-                        this.state.set(SSR_PAGE_KEY, pageItem);
+                        this.state.set(ssrPageKey, pageItem);
                     }
                 }),
                 startWith(existPage)
             );
+    }
+
+    /**
+     * get page from firestore
+     * @param type: type of page
+     * @param pathOfCollectionWithoutLocalePart: main collection path of firestore;
+     * used in: `${pathOfCollectionWithoutLocalePart}_${this.locale}`
+     * @param pageID: page id on firestore
+     */
+    getPageFromFirestore<T extends PageBaseModel>(type: new() => T,
+                                                  pathOfCollectionWithoutLocalePart: string,
+                                                  pageID: string): Observable<T> {
+        const page$ = this.getDocumentFromFirestore(type, `${pathOfCollectionWithoutLocalePart}_${this.locale}/${pageID}`);
         page$.subscribe(page => {
-            if (page) {
+            if (page === undefined) {
+                this.redirectToTranslationOr404(undefined, pathOfCollectionWithoutLocalePart, pageID);
+            } else if (page.routePath) {
                 this.initPage(page);
             }
         });

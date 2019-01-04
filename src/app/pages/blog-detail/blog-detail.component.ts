@@ -1,14 +1,9 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
 import { BlogModel } from '../../models';
 import { AlertService, PageService, SeoService } from '../../services';
-
-/** State key of current blog */
-const BLOG_KEY = makeStateKey<any>('blog');
 
 /**
  * Blog Detail Component
@@ -31,7 +26,6 @@ export class BlogDetailComponent implements OnInit {
      * @param alert: AlertService
      * @param router: Router
      * @param route: ActivatedRoute
-     * @param state: TransferState
      * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
@@ -41,7 +35,6 @@ export class BlogDetailComponent implements OnInit {
         private readonly alert: AlertService,
         public router: Router,
         private readonly route: ActivatedRoute,
-        private readonly state: TransferState,
         public pageService: PageService,
         @Inject(LOCALE_ID) public locale: string
     ) {
@@ -64,32 +57,7 @@ export class BlogDetailComponent implements OnInit {
      * init blog
      */
     initBlog(): void {
-        this.blog$ = this.ssrFirestoreDoc(`blogs_${this.locale}/${this.blogID}`);
-        this.blog$.subscribe(blog => {
-            if (blog === undefined) {
-                this.pageService.redirectToTranslationOr404(undefined, 'blogs', this.blogID);
-            } else if (blog.id) {
-                this.pageService.initPage(blog);
-            }
-        });
-    }
-
-    /**
-     * Get blog object from firestore by path
-     * @param path: blog path
-     */
-    ssrFirestoreDoc(path: string): Observable<BlogModel> {
-        const exists = this.state.get(BLOG_KEY, new BlogModel());
-
-        return this.afs.doc<BlogModel>(path)
-            .valueChanges()
-            .pipe(tap(blog => {
-                    if (blog) {
-                        this.state.set(BLOG_KEY, blog);
-                    }
-                }),
-                startWith(exists)
-            );
+        this.blog$ = this.pageService.getPageFromFirestore(BlogModel, 'blogs', this.blogID);
     }
 
 }

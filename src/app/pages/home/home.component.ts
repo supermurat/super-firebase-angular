@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.page$ = this.pageService.getPageFromFirestore('home');
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'home');
         this.contents$ = this.afs.collection(`pages_${this.locale}/home/contents`,
             ref => ref.orderBy('orderNo')
                 .limit(3))

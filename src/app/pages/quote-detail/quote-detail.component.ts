@@ -1,14 +1,9 @@
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
 import { QuoteModel } from '../../models';
 import { AlertService, PageService, SeoService } from '../../services';
-
-/** State key of current quote */
-const ARTICLE_KEY = makeStateKey<any>('quote');
 
 /**
  * Quote Detail Component
@@ -31,7 +26,6 @@ export class QuoteDetailComponent implements OnInit {
      * @param alert: AlertService
      * @param router: Router
      * @param route: ActivatedRoute
-     * @param state: TransferState
      * @param pageService: PageService
      * @param locale: LOCALE_ID
      */
@@ -41,7 +35,6 @@ export class QuoteDetailComponent implements OnInit {
         private readonly alert: AlertService,
         public router: Router,
         private readonly route: ActivatedRoute,
-        private readonly state: TransferState,
         public pageService: PageService,
         @Inject(LOCALE_ID) public locale: string
     ) {
@@ -64,32 +57,7 @@ export class QuoteDetailComponent implements OnInit {
      * init quote
      */
     initQuote(): void {
-        this.quote$ = this.ssrFirestoreDoc(`quotes_${this.locale}/${this.quoteID}`);
-        this.quote$.subscribe(quote => {
-            if (quote === undefined) {
-                this.pageService.redirectToTranslationOr404(undefined, 'quotes', this.quoteID);
-            } else if (quote.id) {
-                this.pageService.initPage(quote);
-            }
-        });
-    }
-
-    /**
-     * Get quote object from firestore by path
-     * @param path: quote path
-     */
-    ssrFirestoreDoc(path: string): Observable<QuoteModel> {
-        const exists = this.state.get(ARTICLE_KEY, new QuoteModel());
-
-        return this.afs.doc<QuoteModel>(path)
-            .valueChanges()
-            .pipe(tap(quote => {
-                    if (quote) {
-                        this.state.set(ARTICLE_KEY, quote);
-                    }
-                }),
-                startWith(exists)
-            );
+        this.quote$ = this.pageService.getPageFromFirestore(QuoteModel, 'quotes', this.quoteID);
     }
 
 }
