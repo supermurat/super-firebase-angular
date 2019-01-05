@@ -9,5 +9,5 @@ export class PagerModel {
     /** page size */
     pageSize?: number;
     /** page path */
-    pagePath: string;
+    pagePath?: string;
 }

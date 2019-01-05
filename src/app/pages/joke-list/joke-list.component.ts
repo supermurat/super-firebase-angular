@@ -24,8 +24,7 @@ export class JokeListComponent implements OnInit {
     pagerModel: PagerModel = {
         currentPageNo: 1,
         maxPageNo: 0,
-        pageSize: 3,
-        pagePath: '/jokes'
+        pageSize: 3
     };
 
     /** first joke */
@@ -61,11 +60,14 @@ export class JokeListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
+        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.jokes);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initJokes();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'joke-list');
+        this.page$ = this.pageService.getPageFromFirestore(PageModel,
+            'pages',
+            this.pageService.getRoutePathName(this.pageService.routerLinks.jokes));
     }
 
     /**

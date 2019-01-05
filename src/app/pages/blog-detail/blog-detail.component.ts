@@ -45,7 +45,10 @@ export class BlogDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
-            if (this.pageService.checkToRedirectByIDParam(pmap, 'blogs', '/blogs', '/blog')) {
+            if (this.pageService.checkToRedirectByIDParam(pmap,
+                'blogs',
+                this.pageService.routerLinks.blogs,
+                this.pageService.routerLinks.blog)) {
                 return;
             }
             this.blogID = pmap.get('id');

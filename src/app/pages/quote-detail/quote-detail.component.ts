@@ -45,7 +45,10 @@ export class QuoteDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
-            if (this.pageService.checkToRedirectByIDParam(pmap, 'quotes', '/quotes', '/quote')) {
+            if (this.pageService.checkToRedirectByIDParam(pmap,
+                'quotes',
+                this.pageService.routerLinks.quotes,
+                this.pageService.routerLinks.quote)) {
                 return;
             }
             this.quoteID = pmap.get('id');

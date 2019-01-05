@@ -45,7 +45,10 @@ export class JokeDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
-            if (this.pageService.checkToRedirectByIDParam(pmap, 'jokes', '/jokes', '/joke')) {
+            if (this.pageService.checkToRedirectByIDParam(pmap,
+                'jokes',
+                this.pageService.routerLinks.jokes,
+                this.pageService.routerLinks.joke)) {
                 return;
             }
             this.jokeID = pmap.get('id');

@@ -45,7 +45,10 @@ export class ArticleDetailComponent implements OnInit {
      */
     ngOnInit(): void {
         this.route.paramMap.subscribe(pmap => {
-            if (this.pageService.checkToRedirectByIDParam(pmap, 'articles', '/articles', '/article')) {
+            if (this.pageService.checkToRedirectByIDParam(pmap,
+                'articles',
+                this.pageService.routerLinks.articles,
+                this.pageService.routerLinks.article)) {
                 return;
             }
             this.articleID = pmap.get('id');

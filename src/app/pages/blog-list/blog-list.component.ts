@@ -24,8 +24,7 @@ export class BlogListComponent implements OnInit {
     pagerModel: PagerModel = {
         currentPageNo: 1,
         maxPageNo: 0,
-        pageSize: 3,
-        pagePath: '/blogs'
+        pageSize: 3
     };
 
     /** first article */
@@ -61,11 +60,14 @@ export class BlogListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
+        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.blogs);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initBlogs();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'blog-list');
+        this.page$ = this.pageService.getPageFromFirestore(PageModel,
+            'pages',
+            this.pageService.getRoutePathName(this.pageService.routerLinks.blogs));
     }
 
     /**

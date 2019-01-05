@@ -165,8 +165,8 @@ export const myData = {
                     }]
             }
         },
-        'article-list': {
-            id: 'quote-list',
+        articles: {
+            id: 'articles',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - My Articles',
@@ -175,8 +175,8 @@ export const myData = {
             i18nKey: 'quote-list',
             orderNo: -1
         },
-        'blog-list': {
-            id: 'blog-list',
+        blogs: {
+            id: 'blogs',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - My Blog',
@@ -186,8 +186,8 @@ export const myData = {
             orderNo: -1,
             backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
-        'joke-list': {
-            id: 'joke-list',
+        jokes: {
+            id: 'jokes',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - My Jokes',
@@ -196,8 +196,8 @@ export const myData = {
             i18nKey: 'joke-list',
             orderNo: -1
         },
-        'quote-list': {
-            id: 'quote-list',
+        quotes: {
+            id: 'quotes',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - My Quotes',
@@ -249,8 +249,8 @@ export const myData = {
                     }]
             }
         },
-        'article-list': {
-            id: 'quote-list',
+        makaleler: {
+            id: 'makaleler',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - Makalelerim',
@@ -259,8 +259,8 @@ export const myData = {
             i18nKey: 'quote-list',
             orderNo: -1
         },
-        'blog-list': {
-            id: 'blog-list',
+        gunlukler: {
+            id: 'gunlukler',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - Günlüğüm',
@@ -270,22 +270,42 @@ export const myData = {
             orderNo: -1,
             backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
-        'joke-list': {
-            id: 'joke-list',
+        eglence: {
+            id: 'eglence',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
-            title: 'Super Murat - Şakalarım ve Fıkralarım',
-            caption: 'Şakalarım ve Fıkralarım',
+            title: 'Super Murat - Eğlence Zamanı',
+            caption: 'Eğlence Zamanı',
             routePath: '/',
             i18nKey: 'joke-list',
             orderNo: -1
         },
-        'quote-list': {
-            id: 'quote-list',
+        fikralar: {
+            id: 'fikralar',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Fıkralarım',
+            caption: 'Fıkralarım',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        alintilar: {
+            id: 'alintilar',
             changed: {seconds: 1544207666},
             created: {seconds: 1544207666},
             title: 'Super Murat - Alıntılarım',
             caption: 'Alıntılarım',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        'guzel-sozler': {
+            id: 'guzel-sozler',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Güzel Sözlerim',
+            caption: 'Güzel Sözlerim',
             routePath: '/',
             i18nKey: 'quote-list',
             orderNo: -1

@@ -12,17 +12,17 @@
                 <h5 class="font-weight-bold mb-2" i18n>Content</h5>
                 <ul class="list-unstyled">
                     <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="['/blog']">
+                        <a class="text-light" [routerLink]="[pageService.routerLinks.blogs]">
                             <span i18n>Blog</span>
                         </a>
                     </li>
                     <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="['/articles']">
+                        <a class="text-light" [routerLink]="[pageService.routerLinks.articles]">
                             <span i18n>Articles</span>
                         </a>
                     </li>
                     <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="['/quotes']">
+                        <a class="text-light" [routerLink]="[pageService.routerLinks.quotes]">
                             <span i18n>Quotes</span>
                         </a>
                     </li>
@@ -33,7 +33,7 @@
                 <h5 class="font-weight-bold mb-2" i18n>Fun</h5>
                 <ul class="list-unstyled">
                     <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="['/jokes']">
+                        <a class="text-light" [routerLink]="[pageService.routerLinks.jokes]">
                             <span i18n>Jokes</span>
                         </a>
                     </li>

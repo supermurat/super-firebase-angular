@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { RouterLinksModel } from './models/router-links-model';
 
 export interface InterfaceAppConfig {
     /** is Unit Test running ? */
@@ -34,3 +35,29 @@ export const locales: Array<InterfaceLocale> = [
         text: 'Türkçe'
     }
 ];
+
+/** routerLinks for English */
+export const routerLinksEN: RouterLinksModel = {
+    blogs: '/blogs',
+    articles: '/articles',
+    jokes: '/jokes',
+    quotes: '/quotes',
+    blog: '/blog',
+    article: '/article',
+    joke: '/joke',
+    quote: '/quote',
+    tag: '/tag'
+};
+
+/** routerLinks for Turkish */
+export const routerLinksTR: RouterLinksModel = {
+    blogs: '/gunlukler',
+    articles: '/makaleler',
+    jokes: '/eglence',
+    quotes: '/alintilar',
+    blog: '/gunluk',
+    article: '/makale',
+    joke: '/fikra',
+    quote: '/alinti',
+    tag: '/etiket'
+};

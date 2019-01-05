@@ -24,8 +24,7 @@ export class QuoteListComponent implements OnInit {
     pagerModel: PagerModel = {
         currentPageNo: 1,
         maxPageNo: 0,
-        pageSize: 3,
-        pagePath: '/quotes'
+        pageSize: 3
     };
 
     /** first quote */
@@ -61,11 +60,14 @@ export class QuoteListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
+        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.quotes);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initQuotes();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'quote-list');
+        this.page$ = this.pageService.getPageFromFirestore(PageModel,
+            'pages',
+            this.pageService.getRoutePathName(this.pageService.routerLinks.quotes));
     }
 
     /**

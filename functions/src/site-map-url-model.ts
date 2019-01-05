@@ -1,4 +1,7 @@
-/** Site Map Url Model */
+/**
+ * Site Map Url Model
+ * https://www.npmjs.com/package/sitemap
+ */
 export class SiteMapUrlModel {
     /** url of page */
     url: string;

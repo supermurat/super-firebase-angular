@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PagerModel } from '../../models';
-import { AlertService, PagerService } from '../../services';
+import { AlertService, PagerService, PageService } from '../../services';
 
 /**
  * Pager Component
@@ -31,10 +31,12 @@ export class PagerComponent implements OnDestroy, OnInit {
     /**
      * constructor of PagerComponent
      * @param pagerService: PagerService
+     * @param pageService: PageService
      * @param router: Router
      * @param alert: AlertService
      */
     constructor(private readonly pagerService: PagerService,
+                public pageService: PageService,
                 private readonly router: Router,
                 private readonly alert: AlertService) {
     }
@@ -45,6 +47,9 @@ export class PagerComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         this.subscription = this.pagerService.getPagerModel()
             .subscribe(pagerModel => {
+                if (pagerModel.pagePath === undefined) {
+                    pagerModel.pagePath = this.pageService.getRoutePath('');
+                }
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {
                     pagerModel.currentPageNo = !pagerModel.currentPageNo ? 1 : pagerModel.currentPageNo < 1 ? 1 : pagerModel.maxPageNo;
                     this.router.navigate([pagerModel.pagePath, pagerModel.currentPageNo])

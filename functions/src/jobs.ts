@@ -13,7 +13,7 @@ export const generateSiteMap = (snap: DocumentSnapshot) => {
     const promiseList = [];
     const collectionList = [];
     const languageCodes = ['en-US', 'tr-TR'];
-    const collections = ['articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
+    const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
     for (const lang of languageCodes) {
         for (const col of collections) {
             collectionList.push(`${col}_${lang}`);
@@ -27,9 +27,11 @@ export const generateSiteMap = (snap: DocumentSnapshot) => {
             .then((mainDocsSnapshot) => {
                 mainDocsSnapshot.forEach((mainDoc) => {
                     const mData = mainDoc.data();
+                    const langPrefix = mainCollection.endsWith('tr-TR') ? 'tr' : 'en';
                     urlList.push({
-                        url: `${mData.routePath}/${mainDoc.id}`,
-                        changefreq: mainCollection.startsWith('taxonomy') ? 'daily' : 'weekly',
+                        url: `${langPrefix}/${mData.routePath}/${mainDoc.id}`.replace('//', '/'),
+                        changefreq: (mainCollection.startsWith('pages') || mainCollection.startsWith('taxonomy'))
+                            ? 'daily' : 'weekly',
                         // tslint:disable-next-line:no-string-literal
                         img: mainDoc['image']
                     });

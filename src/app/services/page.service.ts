@@ -5,7 +5,9 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
+import { routerLinksEN, routerLinksTR } from '../app-config';
 import { PageBaseModel } from '../models';
+import { RouterLinksModel } from '../models/router-links-model';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
 import { SeoService } from './seo.service';
@@ -15,6 +17,10 @@ import { SeoService } from './seo.service';
  */
 @Injectable()
 export class PageService {
+    /**
+     * translated router links
+     */
+    routerLinks: RouterLinksModel;
     /**
      * Renderer2
      */
@@ -42,6 +48,7 @@ export class PageService {
                 @Inject(DOCUMENT) private readonly document,
                 @Inject(LOCALE_ID) public locale: string) {
         this.renderer = rendererFactory.createRenderer(undefined, undefined);
+        this.routerLinks = locale === 'tr-TR' ? routerLinksTR : routerLinksEN;
     }
 
     /**
@@ -65,6 +72,28 @@ export class PageService {
         } else {
             this.renderer.setStyle(this.document.body, 'background-image', '');
         }
+    }
+
+    /**
+     * get route path of current page; sample: '/articles/1' will return as '/articles'
+     */
+    getRoutePath(inCaseOfEmptyRouterURL: string): string {
+        return `/${this.getRoutePathName(inCaseOfEmptyRouterURL)}`;
+    }
+
+    /**
+     * get route path name of current page; sample: '/articles/1' will return as 'articles'
+     */
+    getRoutePathName(inCaseOfEmptyRouterURL: string): string {
+        const currentURL = this.router.url.trim() === '/' ? inCaseOfEmptyRouterURL : this.router.url;
+        const currentURLParts = currentURL.trim()
+            .split('?')[0]
+            .split('/');
+        if (currentURLParts[0].trim() === '' && currentURLParts.length > 1) {
+            return currentURLParts[1].trim();
+        }
+
+        return currentURLParts[0].trim();
     }
 
     /**
@@ -92,7 +121,7 @@ export class PageService {
      * @param type: type of page
      * @param pathOfCollectionWithoutLocalePart: main collection path of firestore;
      * used in: `${pathOfCollectionWithoutLocalePart}_${this.locale}`
-     * @param pageID: page id on firestore
+     * @param pageID: page id on firestore; you can keep undefined, if you want to get pageID from 'router.url'
      */
     getPageFromFirestore<T extends PageBaseModel>(type: new() => T,
                                                   pathOfCollectionWithoutLocalePart: string,

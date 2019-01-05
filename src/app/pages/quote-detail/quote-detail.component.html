@@ -24,7 +24,7 @@
                     <div class="text-center tag-cloud">
                         <ul>
                             <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
-                                <a [routerLink]="['/tag', tag.key]">
+                                <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
                                     <span>{{ tag.value }}</span>
                                 </a>
                             </li>
