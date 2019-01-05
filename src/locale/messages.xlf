@@ -547,61 +547,46 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
-        <source>⇐ Previous Article</source>
+      <trans-unit id="c713f1e5a0f2309c87076cd3022f9fd32dd0288d" datatype="html">
+        <source>⇐ Previous Blog</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="daf7d33f355f6a94ccbd7e4ee445c0e21a6a2d5f" datatype="html">
+        <source>Return to Blog List ⇑</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="abe5f11c23fdd5c55315fc2f70de97f680d443a5" datatype="html">
+        <source>Next Blog ⇒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
+        <source>⇐ Previous Article</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
         <source>Return to Article List ⇑</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
         <source>Next Article ⇒</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
           <context context-type="linenumber">32</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d106826fbee9f9e017fe78864b10259e1c4f46f9" datatype="html">
@@ -723,6 +708,27 @@
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2be1b0a64e36a79c89159ff43870fcaaf990c784" datatype="html">
+        <source>⇐ Previous Joke</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6284b15670da837b1146285badb027f6b700fd8c" datatype="html">
+        <source>Return to Joke List ⇑</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="32ed612e25ac14df64376c32118f4126f36de71c" datatype="html">
+        <source>Next Joke ⇒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="402ebee585163f948fbd0ca49657f286127b4411" datatype="html">
         <source>Who Said That:</source>
         <context-group purpose="location">
@@ -743,6 +749,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
           <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3a21c211d5828123e8f10055d6d6ab4dd2be4f9d" datatype="html">
+        <source>⇐ Previous Quote</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4d84d4821a8bba293e1264ddea6be8abceaaf428" datatype="html">
+        <source>Return to Quote List ⇑</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e5ee032d91af1ed6eb7e15a26a1719f1800be1b8" datatype="html">
+        <source>Next Quote ⇒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="559861e17ec7786a504922f4da4eb587980bd999" datatype="html">

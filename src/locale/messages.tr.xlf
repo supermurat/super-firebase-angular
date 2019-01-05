@@ -258,7 +258,7 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
-        <source>Super Murat</source><target state="new">Super Murat</target>
+        <source>Super Murat</source><target state="translated">Süper Murat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">3</context>
@@ -277,13 +277,13 @@
         <source>Blog</source><target state="final">Günlük</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="3b6143a528c6f4586e60e9af4ced8ac0fbe08251" datatype="html">
-        <source>Articles</source><target state="new">Articles</target>
+        <source>Articles</source><target state="translated">Makaleler</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="eeb8cd10ca7b7cab87834315a306497d949b8ac5" datatype="html">
-        <source>Jokes</source><target state="new">Jokes</target>
+        <source>Jokes</source><target state="translated">Şakalar</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">37</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="8563dea6c78c71d1d4ffce4798fe3c9f736dd09c" datatype="html">
-        <source>Quotes</source><target state="new">Quotes</target>
+        <source>Quotes</source><target state="translated">Alıntılar</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
         <source>Playground</source><target state="final">Oyun alanı</target>
@@ -317,37 +317,37 @@
         <source>Login with Google</source><target state="final">Google ile Giriş Yap</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">
-        <source>About</source><target state="new">About</target>
+        <source>About</source><target state="translated">Hakkında</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit><trans-unit id="91e43855f15e813a740e3868bbac1d98224ea341" datatype="html">
-        <source>This is my personal web site so it is all about me :-)</source><target state="new">This is my personal web site so it is all about me :-)</target>
+        <source>This is my personal web site so it is all about me :-)</source><target state="translated">Bu benim kişisel web sitemdir, dolayısıyla tüm içerik bir şekilde benimle ilgilidir :-)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit><trans-unit id="5f4234fde7008fef126728fe6891c9294b3ee7b0" datatype="html">
-        <source>Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</source><target state="new">Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</target>
+        <source>Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</source><target state="translated">Ayrıca, bu açık kaynak kodlu bir projedir. Anahtar kelimeler şöyle : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit><trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
-        <source>Content</source><target state="new">Content</target>
+        <source>Content</source><target state="translated">İçerik</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit><trans-unit id="82fe39600ad951ab88b6493b510d2bc9cc4ec807" datatype="html">
-        <source>Fun</source><target state="new">Fun</target>
+        <source>Fun</source><target state="translated">Eğlence</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit><trans-unit id="7f3f6a4fb2545cacf800f0623582b6d41d1f8791" datatype="html">
-        <source>Development</source><target state="new">Development</target>
+        <source>Development</source><target state="translated">Geliştirme</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">44</context>
@@ -356,87 +356,123 @@
         <source>Copyright © Super Murat 2018</source><target state="new">Copyright © Super Murat 2018</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">69</context></context-group></trans-unit><trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
-        <source>Search</source><target state="new">Search</target>
+        <source>Search</source><target state="translated">Ara</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">1</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="5c988d3fc5e248a0fdb08fbb150e505f2e954274" datatype="html">
-        <source>Active Tags</source><target state="new">Active Tags</target>
+        <source>Active Tags</source><target state="translated">Aktif Etiketler</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/widgets/active-tags/active-tags.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="02b7ecfe720acd21411567909226477f85156977" datatype="html">
         <source>
-    <x id="START_TAG_DIV_1" ctype="x-div" equiv-text="&lt;div>"/>
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;ul>"/>
-                <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&lt;li>"/>
-                    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-                        <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{ joke.title }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
-                    <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-                <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&lt;/li>"/>
-            <x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;/ul>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+    <x id="START_TAG_DIV_1" ctype="x-div" equiv-text="&lt;div&gt;"/>
+        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>
+            <x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;ul&gt;"/>
+                <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&lt;li&gt;"/>
+                    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
+                        <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="INTERPOLATION" equiv-text="{{ joke.title }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+                    <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+                <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&lt;/li&gt;"/>
+            <x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;/ul&gt;"/>
+        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
+    <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
 </source><target state="new">
-    <x id="START_TAG_DIV_1" ctype="x-div" equiv-text="&lt;div>"/>
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;ul>"/>
-                <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&lt;li>"/>
-                    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>
-                        <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION" equiv-text="{{ joke.title }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
-                    <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-                <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&lt;/li>"/>
-            <x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;/ul>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+    <x id="START_TAG_DIV_1" ctype="x-div" equiv-text="&lt;div&gt;"/>
+        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>
+            <x id="START_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;ul&gt;"/>
+                <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&lt;li&gt;"/>
+                    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
+                        <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="INTERPOLATION" equiv-text="{{ joke.title }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
+                    <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+                <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&lt;/li&gt;"/>
+            <x id="CLOSE_UNORDERED_LIST" ctype="x-ul" equiv-text="&lt;/ul&gt;"/>
+        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
+    <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit><trans-unit id="d0253cb27b529666fc238fb3aa7d5733940547dd" datatype="html">
-        <source>← Newest</source><target state="new">← Newest</target>
+        <source>← Newest</source><target state="translated">← En Yeni</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/pager/pager.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit><trans-unit id="ba23a90cf4e8369fd9552aecd286cdeef2b18d0f" datatype="html">
-        <source>Oldest →</source><target state="new">Oldest →</target>
+        <source>Oldest →</source><target state="translated">En Eski →</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/pager/pager.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit><trans-unit id="b3d7833558af5ceb1ca53fa6be25d3361bb2788a" datatype="html">
-        <source>Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>"</source><target state="new">Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>"</target>
+        <source>Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>"</source><target state="translated">"<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>" ile Alakalı İçerikler</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit><trans-unit id="427ef8738f3af76952480c4cf2425bdb7e296474" datatype="html">
-        <source>There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>". You may want to check out active tags :-)</source><target state="new">There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>". You may want to check out active tags :-)</target>
+        <source>There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>". You may want to check out active tags :-)</source><target state="translated">"<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>" ile alakalı başka bir içerik kalmadı. Belki aktif etiketlere göz atmak isteyebilirsiniz :-)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
+      </trans-unit><trans-unit id="2be1b0a64e36a79c89159ff43870fcaaf990c784" datatype="html">
+        <source>⇐ Previous Joke</source><target state="translated">⇐ Önceki Şaka</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit><trans-unit id="6284b15670da837b1146285badb027f6b700fd8c" datatype="html">
+        <source>Return to Joke List ⇑</source><target state="translated">Şaka Listesine Dön ⇑</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="32ed612e25ac14df64376c32118f4126f36de71c" datatype="html">
+        <source>Next Joke ⇒</source><target state="translated">Sonraki Şaka ⇒</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
       </trans-unit><trans-unit id="402ebee585163f948fbd0ca49657f286127b4411" datatype="html">
-        <source>Who Said That:</source><target state="new">Who Said That:</target>
+        <source>Who Said That:</source><target state="translated">Kim Söyledi:</target>
         
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit><trans-unit id="2f2d3537be5ad6783862d60ec1e4b6a034714783" datatype="html">
-        <source>Source:</source><target state="new">Source:</target>
+        <source>Source:</source><target state="translated">Kaynak:</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context><context context-type="linenumber">29</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="559861e17ec7786a504922f4da4eb587980bd999" datatype="html">
-        <source>Search Result</source><target state="new">Search Result</target>
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context><context context-type="linenumber">29</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="3a21c211d5828123e8f10055d6d6ab4dd2be4f9d" datatype="html">
+        <source>⇐ Previous Quote</source><target state="translated">⇐ Önceki Alıntı</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit><trans-unit id="4d84d4821a8bba293e1264ddea6be8abceaaf428" datatype="html">
+        <source>Return to Quote List ⇑</source><target state="translated">Alıntı Listesine Dön ⇑</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit><trans-unit id="e5ee032d91af1ed6eb7e15a26a1719f1800be1b8" datatype="html">
+        <source>Next Quote ⇒</source><target state="translated">Sonraki Alıntı ⇒</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit><trans-unit id="559861e17ec7786a504922f4da4eb587980bd999" datatype="html">
+        <source>Search Result</source><target state="translated">Arama Sonucu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/search/search.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit><trans-unit id="680d5c75b7fd8d37961083608b9fcdc4167b4c43" datatype="html">
-        <source>Previous</source><target state="new">Previous</target>
+        <source>Previous</source><target state="translated">Önceki</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit><trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
-        <source>Next</source><target state="new">Next</target>
+        <source>Next</source><target state="translated">Sonraki</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
           <context context-type="linenumber">26</context>
@@ -451,9 +487,9 @@
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="482ecf35df28e21d3372449451f43b2d3c961442" datatype="html">
         <source>
-        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Sample alert.
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Sample alert.
     </source><target state="translated">
-        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Dikkat!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Örnek uyarı.
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Dikkat!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Örnek uyarı.
     </target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit>
@@ -464,19 +500,19 @@
         <note priority="1" from="description">An introduction header for this sample</note>
         <note priority="1" from="meaning">User welcome</note>
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="a2bf198c006ed191bc3944c1b9532207e3b5aa2f" datatype="html">
-        <source>Today is <x id="INTERPOLATION" equiv-text="{{ today | date }}"/></source><target state="new">Today is <x id="INTERPOLATION" equiv-text="{{ today | date }}"/></target>
+        <source>Today is <x id="INTERPOLATION" equiv-text="{{ today | date }}"/></source><target state="translated">Bugün günlerden <x id="INTERPOLATION" equiv-text="{{ today | date }}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">18</context></context-group></trans-unit><trans-unit id="073960d390d01cc391f68a2ae97e3917770abe0b" datatype="html">
-        <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'fullDate' }}"/></source><target state="new">Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'fullDate' }}"/></target>
+        <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'fullDate' }}"/></source><target state="translated">Bir başka deyişle, <x id="INTERPOLATION" equiv-text="{{ today | date:'fullDate' }}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">19</context></context-group></trans-unit><trans-unit id="15e648b1aadd939ba431d872b15133caad241d58" datatype="html">
-        <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'medium' }}"/></source><target state="new">Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'medium' }}"/></target>
+        <source>Or if you prefer, <x id="INTERPOLATION" equiv-text="{{ today | date:'medium' }}"/></source><target state="translated">Ve hatta, <x id="INTERPOLATION" equiv-text="{{ today | date:'medium' }}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="e4d8a59dc04c3a70da4abcbd25df9ebe42287abb" datatype="html">
-        <source>The time is <x id="INTERPOLATION" equiv-text="{{ today | date:'h:mm a z' }}"/></source><target state="new">The time is <x id="INTERPOLATION" equiv-text="{{ today | date:'h:mm a z' }}"/></target>
+        <source>The time is <x id="INTERPOLATION" equiv-text="{{ today | date:'h:mm a z' }}"/></source><target state="translated">Saat ise <x id="INTERPOLATION" equiv-text="{{ today | date:'h:mm a z' }}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="f5a3407c5d5e3044bea77f929dc78eef1b2545fd" datatype="html">
-        <source>The application is using the locale <x id="INTERPOLATION" equiv-text="{{ locale }}"/></source><target state="new">The application is using the locale <x id="INTERPOLATION" equiv-text="{{ locale }}"/></target>
+        <source>The application is using the locale <x id="INTERPOLATION" equiv-text="{{ locale }}"/></source><target state="translated">Bu uygulama <x id="INTERPOLATION" equiv-text="{{ locale }}"/> dil setini kullanmaktadır</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit>
       
@@ -491,10 +527,10 @@
         <source>-</source><target state="final">-</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">28</context></context-group></trans-unit><trans-unit id="3944089997907e06b0be8ac4cdf1ad448c4fdaa1" datatype="html">
-        <source>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></source><target state="new">Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></target>
+        <source>Updated <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></source><target state="translated">Güncelleme: <x id="ICU" equiv-text="{minutes, plural, =0 {...} =1 {...} other {...}}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="d21b287b4d1e079c11ad2c547d104798fb3d111e" datatype="html">
-        <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{ minutes }}"/> minutes ago} }</source><target state="new">{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{ minutes }}"/> minutes ago} }</target>
+        <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<x id="INTERPOLATION" equiv-text="{{ minutes }}"/> minutes ago} }</source><target state="translated">{VAR_PLURAL, plural, =0 {şimdi} =1 {1 dakika önce} other {<x id="INTERPOLATION" equiv-text="{{ minutes }}"/> dakika önce} }</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit>
       
@@ -508,7 +544,7 @@
         <source>⚧</source><target state="final">⚧</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="1aea987749c68c472a876b26a5afd69a4f186125" datatype="html">
-        <source>Updated by <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source><target state="new">Updated by <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></target>
+        <source>Updated by <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></source><target state="translated">Güncelleyen: <x id="ICU" equiv-text="{gender, select, male {...} female {...} other {...}}"/></target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit>
       
@@ -522,29 +558,47 @@
         <source>I ran out of blogs!</source><target state="final">Tüm blog yazılarım tükendi!</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit><trans-unit id="6bbfc6a91008949626b70d5bacaca91822e1f575" datatype="html">
-        <source>Read More ⇒</source><target state="new">Read More ⇒</target>
+        <source>Read More ⇒</source><target state="translated">Devamını Oku ⇒</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-list/article-list.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit><trans-unit id="a97c1791d078c919f71f2f5587b7087efa49fa9d" datatype="html">
-        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source><target state="new">Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></target>
+        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source><target state="translated"><x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:'medium' }}"/> tarihinde <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/> paylaştı</target>
         
         
         
         
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-list/article-list.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context><context context-type="linenumber">20</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">35</context></context-group></trans-unit><trans-unit id="2352209fd9a5f4571b0b9f2c2b582e9a6a3fb307" datatype="html">
-        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></source><target state="new">Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></target>
+        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></source><target state="translated"><x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:'medium' }}"/> tarihinde <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/> güncelledi</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
-        <source>⇐ Previous Article</source><target state="new">⇐ Previous Article</target>
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="c713f1e5a0f2309c87076cd3022f9fd32dd0288d" datatype="html">
+        <source>⇐ Previous Blog</source><target state="translated">⇐ Önceki Günlük</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit><trans-unit id="daf7d33f355f6a94ccbd7e4ee445c0e21a6a2d5f" datatype="html">
+        <source>Return to Blog List ⇑</source><target state="translated">Günlük Listesine Dön ⇑</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="abe5f11c23fdd5c55315fc2f70de97f680d443a5" datatype="html">
+        <source>Next Blog ⇒</source><target state="translated">Sonraki Günlük ⇒</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="a1d2ec5adb00c8be64692858f8f002e6ce72270c" datatype="html">
+        <source>⇐ Previous Article</source><target state="translated">⇐ Önceki Makale</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
-        <source>Return to Article List ⇑</source><target state="new">Return to Article List ⇑</target>
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="2ebf1165913adb4847e07c6fadb43facb17eef3c" datatype="html">
+        <source>Return to Article List ⇑</source><target state="translated">Makale Listesine Dön ⇑</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit><trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
-        <source>Next Article ⇒</source><target state="new">Next Article ⇒</target>
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="3bcc7ceb262a87808263fd264a31d3359eb31fae" datatype="html">
+        <source>Next Article ⇒</source><target state="translated">Sonraki Makale ⇒</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context><context context-type="linenumber">32</context></context-group></trans-unit>
     </body>
   </file>
 </xliff>
