@@ -15,6 +15,8 @@ export class PageBaseModel extends HtmlDocumentModel {
     orderNo?: number;
     /** html content of page */
     content?: any;
+    /** taxonomy */
+    taxonomy?: any; // key: link, value: title
     /** carousel item array of page */
     carousel?: CarouselModel;
     /** url of background cover image */

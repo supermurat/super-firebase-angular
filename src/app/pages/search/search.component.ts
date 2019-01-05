@@ -11,8 +11,6 @@ import { AlertService, SeoService } from '../../services';
     styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-    /** current page`s title */
-    title = 'Search Result';
     /** safe html of google custom search API box */
     gcseSearchBox: SafeHtml;
     /** safe html of google custom search API result */
@@ -36,8 +34,9 @@ export class SearchComponent implements OnInit {
      */
     ngOnInit(): void {
         this.seo.setHtmlTags({
-            title: this.title,
-            description: this.title
+            title: 'Search Result',
+            description: 'Search Result',
+            robots: 'noindex, nofollow'
         });
 
         this.gcseSearchBox = this.sanitizer.bypassSecurityTrustHtml(

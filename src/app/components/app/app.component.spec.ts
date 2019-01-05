@@ -166,7 +166,7 @@ describe('AppComponentSeoService', () => {
 
     it("should set meta robots as 'index,follow'", async(() => {
         comp.seo.setHtmlTags({
-            robots: 'index,follow',
+            robots: 'index, follow',
             author: 'unit-test',
             owner: 'unit-test',
             copyright: 'Unit Test 2018',
@@ -180,7 +180,7 @@ describe('AppComponentSeoService', () => {
         fixture.detectChanges();
         expect(comp.seo.getMeta()
             .getTag('name="robots"').content)
-            .toContain('index,follow');
+            .toContain('index, follow');
     }));
 
 });
