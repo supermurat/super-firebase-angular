@@ -310,7 +310,7 @@ FROM node n
     LEFT JOIN url_alias tu ON tu.source = CONCAT('taxonomy/term/', ttd.tid) AND tu.language=ttd.language AND tu.pid IN (
         SELECT MAX(stu.pid) FROM url_alias stu GROUP BY stu.source
     )
-WHERE n.type IN ('page', 'story', 'blog', 'fikralar', 'sogukespriler') AND n.status='1'
+WHERE n.type IN ('page', 'story', 'blog', 'fikralar', 'sogukespriler', 'project', 'book') AND n.status='1'
 GROUP BY u.language, u.alias, n.nid, n.type, n.status, n.changed, n.created, n.title, fdb.body_value, fdb.body_summary
 ORDER BY n.created ASC`,
         (error, results, fields) => {
@@ -328,8 +328,12 @@ ORDER BY n.created ASC`,
                     if (element.language === 'und' || element.language === 'en') {
                         addToBlogs('_en-US', element);
                     }
-                } else if (element.type === 'page' || element.type === 'story') {
-                    element.documentID = fixDocID(element.alias.replace(/story\//gi, '').replace(/makale\//gi, ''));
+                } else if (element.type === 'page' || element.type === 'story' ||
+                    element.type === 'project' || element.type === 'book') {
+                    element.documentID = fixDocID(element.alias
+                        .replace(/story\//gi, '')
+                        .replace(/makale\//gi, '')
+                        .replace(/doc\//gi, ''));
                     if (element.language === 'und' || element.language === 'tr') {
                         addToArticles('_tr-TR', element);
                     }
