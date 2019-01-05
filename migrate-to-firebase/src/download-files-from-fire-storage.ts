@@ -9,7 +9,7 @@ const serviceAccount = require('../supermurat-com-service-key.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
+    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
 });
 admin.app().firestore().settings({timestampsInSnapshots: true});
 const bucketName = `${serviceAccount.project_id}.appspot.com`;
@@ -21,7 +21,7 @@ checkDirectory(pathOfFiles);
 
 const downloadFromStorage = async () => {
     const allFiles = await bucket.getFiles({
-        autoPaginate: false,
+        autoPaginate: false
     });
     const files = allFiles[0];
     for (const file of files) {

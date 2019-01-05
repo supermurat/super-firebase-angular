@@ -43,6 +43,24 @@
       "kebab-case"
     ],
     "prefer-switch": [false],
-    "increment-decrement": [false]
+    "increment-decrement": [false],
+    "member-ordering": [
+      true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ],
+    "array-type": [
+      true,
+      "generic"
+    ]
   }
 }

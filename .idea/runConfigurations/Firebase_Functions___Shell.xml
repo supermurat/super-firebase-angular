@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Firebase Functions : Shell" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/functions/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="shell" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

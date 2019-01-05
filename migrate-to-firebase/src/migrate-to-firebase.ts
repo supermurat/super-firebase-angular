@@ -20,7 +20,7 @@ const remoteFilePath = '/publicFiles/';
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`,
+    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
 });
 admin.app().firestore().settings({timestampsInSnapshots: true});
 const bucketName = `${serviceAccount.project_id}.appspot.com`;
@@ -29,7 +29,7 @@ const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
 const pathOfFiles = `${pathOfData + path.sep}files`;
 
 // File
-const getFiles = (dir: string, files: string[]) => {
+const getFiles = (dir: string, files: Array<string>) => {
     const filesWithBefore = files || [];
     const currentFiles = fs.readdirSync(dir);
     for (const currentFile of currentFiles) {
@@ -49,8 +49,8 @@ const uploadImageToStorage = async (fileContent: any, fileName: string) =>
         const fileUpload = bucket.file(fileName);
         const blobStream = fileUpload.createWriteStream({
             metadata: {
-                contentType: mime.lookup(fileName),
-            },
+                contentType: mime.lookup(fileName)
+            }
         });
         blobStream.on('error', (error) => {
             reject(error);
@@ -58,7 +58,7 @@ const uploadImageToStorage = async (fileContent: any, fileName: string) =>
         blobStream.on('finish', () => {
             fileUpload.acl.add({
                 entity: 'allUsers',
-                role: storage.acl.READER_ROLE,
+                role: storage.acl.READER_ROLE
             }).then((info) => {
                 // console.log(info); // this "info" contains lots of cool info about file
                 resolve(`https://storage.googleapis.com/${bucket.name}${fileName}`);
