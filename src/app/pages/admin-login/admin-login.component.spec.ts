@@ -126,6 +126,24 @@ describe('AdminLoginComponentAuthService', () => {
             .toEqual(credentialsMock.email);
     }));
 
+    it('should be authenticated after googleSignIn()', fakeAsync(() => {
+        let lastUser;
+        comp.auth.user$.subscribe(user => {
+            lastUser = user;
+        });
+        comp.auth.googleSignIn()
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+        tick();
+
+        expect(lastUser)
+            .toBeDefined();
+        expect(lastUser.email)
+            .toEqual(credentialsMock.email);
+    }));
+
     it('should not be authenticated after logging out', fakeAsync(() => {
         let lastUser;
         comp.auth.user$.subscribe(user => {

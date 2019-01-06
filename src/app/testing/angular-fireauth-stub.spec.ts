@@ -17,7 +17,12 @@ export const angularFireAuthStub = {
                         subscribe(queryFnSubscribe): any {
                             queryFnSubscribe._next({
                                 switchMap(queryFnSwitchMap): any {
-                                    return queryFnSwitchMap({uid: 'super-user'});
+                                    const retVal: Array<any> = [];
+                                    fakeAuthState.subscribe(item => {
+                                        retVal.push(queryFnSwitchMap(item));
+                                    });
+
+                                    return retVal;
                                 }
                             });
                         }
@@ -48,6 +53,17 @@ export const angularFireAuthStub = {
             });
 
             return pUser;
+        },
+        async signInWithPopup(provider): Promise<any> {
+            const pUser = await angularFirestoreStub.doc('users/super-user')
+                .valueChanges();
+            let lastUser;
+            await pUser.subscribe(user => {
+                fakeAuthState.next(user);
+                lastUser = user;
+            });
+
+            return {user: lastUser};
         },
         async signOut(): Promise<any> {
             fakeAuthState.next(undefined);
