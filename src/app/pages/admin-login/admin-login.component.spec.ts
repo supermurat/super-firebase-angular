@@ -2,56 +2,10 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
-import { from, Subject } from 'rxjs';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { AuthService, SeoService } from '../../services';
+import { angularFireAuthStub, angularFirestoreStub, credentialsMock } from '../../testing/index.spec';
 import { AdminLoginComponent } from './admin-login.component';
-
-const credentialsMock = {
-    email: 'abc@123.com',
-    password: 'password'
-};
-
-const userMock = {
-    uid: 'ABC123',
-    email: credentialsMock.email
-};
-
-const angularFirestoreStub = {
-    doc: jasmine.createSpy('doc').and
-        .returnValue(
-            {
-                valueChanges: jasmine.createSpy('valueChanges').and
-                    .returnValue(from([userMock]))
-            })
-};
-
-const fakeAuthState = new Subject();
-
-const angularFireAuthStub = {
-    authState: {
-        pipe(): any {
-            return fakeAuthState;
-        }
-    },
-    auth: {
-        async createUserWithEmailAndPassword(email, password): Promise<any> {
-            fakeAuthState.next(userMock);
-
-            return Promise.resolve(userMock);
-        },
-        async signInWithEmailAndPassword(email, password): Promise<any> {
-            fakeAuthState.next(userMock);
-
-            return Promise.resolve(userMock);
-        },
-        async signOut(): Promise<any> {
-            fakeAuthState.next(undefined);
-
-            return Promise.resolve();
-        }
-    }
-};
 
 describe('AdminLoginComponent', () => {
     let fixture: ComponentFixture<AdminLoginComponent>;
@@ -113,7 +67,6 @@ describe('AdminLoginComponentAuthService', () => {
             .then(() => {
                 fixture = TestBed.createComponent(AdminLoginComponent);
                 comp = fixture.componentInstance;
-                fakeAuthState.next(undefined);
                 fixture.detectChanges();
             })
             .catch(reason => {
@@ -178,7 +131,12 @@ describe('AdminLoginComponentAuthService', () => {
         comp.auth.user$.subscribe(user => {
             lastUser = user;
         });
-        fakeAuthState.next(userMock);
+        comp.auth.logIn(credentialsMock)
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+        tick();
         comp.auth.signOut()
             .catch(reason => {
                 expect(reason)

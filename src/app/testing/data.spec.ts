@@ -439,7 +439,13 @@ export const myData = {
             created: {seconds: 1544207668}
         }
     },
-    users: {}
+    users: {
+        'super-user': {
+            uid: 'super-user',
+            email: 'super-user@example.com',
+            displayName: 'Super User'
+        }
+    }
 };
 
 export const noData = {
