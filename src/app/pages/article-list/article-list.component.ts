@@ -60,14 +60,11 @@ export class ArticleListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.articles);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initArticles();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel,
-            'pages',
-            this.pageService.getRoutePathName(this.pageService.routerLinks.articles));
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', this.pageService.getRoutePathName());
     }
 
     /**

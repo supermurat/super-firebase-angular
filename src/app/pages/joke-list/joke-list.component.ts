@@ -60,14 +60,11 @@ export class JokeListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.jokes);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initJokes();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel,
-            'pages',
-            this.pageService.getRoutePathName(this.pageService.routerLinks.jokes));
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', this.pageService.getRoutePathName());
     }
 
     /**

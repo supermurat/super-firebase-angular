@@ -22,7 +22,7 @@ describe('ArticleListComponent', () => {
     let fixture: ComponentFixture<ArticleListComponent>;
     let comp: ArticleListComponent;
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 ArticleListComponent,
@@ -44,6 +44,7 @@ describe('ArticleListComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'articles/1', pathMatch: 'full'},
                     {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
                     {path: 'articles/:pageNo', component: ArticleListComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -55,6 +56,8 @@ describe('ArticleListComponent', () => {
             .then(() => {
                 fixture = TestBed.createComponent(ArticleListComponent);
                 comp = fixture.componentInstance;
+                comp.router.initialNavigation();
+                tick();
                 fixture.detectChanges();
             })
             .catch(reason => {
@@ -116,6 +119,17 @@ describe('ArticleListComponent', () => {
         tick();
     }));
 
+    it('pagerService should work properly even if we set "pagerModel.pagePath" manually', fakeAsync(() => {
+        comp.pagerModel.pagePath = '/articles';
+        activatedRouteStub.setParamMap({pageNo: 9}); // page 9 not exist
+        comp.checkPageNo();
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/articles/2');
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('ArticleListComponentNoData', () => {
@@ -144,6 +158,7 @@ describe('ArticleListComponentNoData', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'articles/1', pathMatch: 'full'},
                     {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
                     {path: 'articles/:pageNo', component: ArticleListComponent},
                     {path: 'http-404', component: NotFoundComponent},

@@ -60,14 +60,11 @@ export class BlogListComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.pagerModel.pagePath = this.pageService.getRoutePath(this.pageService.routerLinks.blogs);
         this.route.paramMap.subscribe(pmap => {
             this.pagerModel.currentPageNo = Number(pmap.get('pageNo'));
             this.initBlogs();
         });
-        this.page$ = this.pageService.getPageFromFirestore(PageModel,
-            'pages',
-            this.pageService.getRoutePathName(this.pageService.routerLinks.blogs));
+        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', this.pageService.getRoutePathName());
     }
 
     /**

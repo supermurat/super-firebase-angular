@@ -77,23 +77,19 @@ export class PageService {
     /**
      * get route path of current page; sample: '/articles/1' will return as '/articles'
      */
-    getRoutePath(inCaseOfEmptyRouterURL: string): string {
-        return `/${this.getRoutePathName(inCaseOfEmptyRouterURL)}`;
+    getRoutePath(): string {
+        return `/${this.getRoutePathName()}`;
     }
 
     /**
      * get route path name of current page; sample: '/articles/1' will return as 'articles'
      */
-    getRoutePathName(inCaseOfEmptyRouterURL: string): string {
-        const currentURL = this.router.url.trim() === '/' ? inCaseOfEmptyRouterURL : this.router.url;
-        const currentURLParts = currentURL.trim()
+    getRoutePathName(): string {
+        const currentURLParts = this.router.url.trim()
             .split('?')[0]
             .split('/');
-        if (currentURLParts[0].trim() === '' && currentURLParts.length > 1) {
-            return currentURLParts[1].trim();
-        }
 
-        return currentURLParts[0].trim();
+        return currentURLParts[1].trim(); // currentURLParts.length is always greater than 1 because it always starts with a '/'
     }
 
     /**

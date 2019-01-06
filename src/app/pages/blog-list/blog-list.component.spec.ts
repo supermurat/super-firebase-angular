@@ -22,7 +22,7 @@ describe('BlogListComponent', () => {
     let fixture: ComponentFixture<BlogListComponent>;
     let comp: BlogListComponent;
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 BlogListComponent,
@@ -44,6 +44,7 @@ describe('BlogListComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'blogs/1', pathMatch: 'full'},
                     {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
                     {path: 'blogs/:pageNo', component: BlogListComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -55,6 +56,8 @@ describe('BlogListComponent', () => {
             .then(() => {
                 fixture = TestBed.createComponent(BlogListComponent);
                 comp = fixture.componentInstance;
+                comp.router.initialNavigation();
+                tick();
                 fixture.detectChanges();
             })
             .catch(reason => {
@@ -104,6 +107,17 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('pagerService should work properly even if we set "pagerModel.pagePath" manually', fakeAsync(() => {
+        comp.pagerModel.pagePath = '/blogs';
+        activatedRouteStub.setParamMap({pageNo: 9}); // page 9 not exist
+        comp.checkPageNo();
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/blogs/1');
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('BlogListComponentNoData', () => {
@@ -132,6 +146,7 @@ describe('BlogListComponentNoData', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'blogs/1', pathMatch: 'full'},
                     {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
                     {path: 'blogs/:pageNo', component: BlogListComponent},
                     {path: 'http-404', component: NotFoundComponent},

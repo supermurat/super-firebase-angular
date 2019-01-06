@@ -22,7 +22,7 @@ describe('JokeListComponent', () => {
     let fixture: ComponentFixture<JokeListComponent>;
     let comp: JokeListComponent;
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 JokeListComponent,
@@ -44,6 +44,7 @@ describe('JokeListComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes/:pageNo', component: JokeListComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -55,6 +56,8 @@ describe('JokeListComponent', () => {
             .then(() => {
                 fixture = TestBed.createComponent(JokeListComponent);
                 comp = fixture.componentInstance;
+                comp.router.initialNavigation();
+                tick();
                 fixture.detectChanges();
             })
             .catch(reason => {
@@ -104,6 +107,17 @@ describe('JokeListComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('pagerService should work properly even if we set "pagerModel.pagePath" manually', fakeAsync(() => {
+        comp.pagerModel.pagePath = '/jokes';
+        activatedRouteStub.setParamMap({pageNo: 9}); // page 9 not exist
+        comp.checkPageNo();
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/jokes/1');
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('JokeListComponentNoData', () => {
@@ -132,6 +146,7 @@ describe('JokeListComponentNoData', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes/:pageNo', component: JokeListComponent},
                     {path: 'http-404', component: NotFoundComponent},

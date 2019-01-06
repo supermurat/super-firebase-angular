@@ -22,7 +22,7 @@ describe('QuoteListComponent', () => {
     let fixture: ComponentFixture<QuoteListComponent>;
     let comp: QuoteListComponent;
 
-    beforeEach(async(() => {
+    beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 QuoteListComponent,
@@ -44,6 +44,7 @@ describe('QuoteListComponent', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'quotes/1', pathMatch: 'full'},
                     {path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'},
                     {path: 'quotes/:pageNo', component: QuoteListComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -55,6 +56,8 @@ describe('QuoteListComponent', () => {
             .then(() => {
                 fixture = TestBed.createComponent(QuoteListComponent);
                 comp = fixture.componentInstance;
+                comp.router.initialNavigation();
+                tick();
                 fixture.detectChanges();
             })
             .catch(reason => {
@@ -104,6 +107,17 @@ describe('QuoteListComponent', () => {
         fixture.detectChanges();
     }));
 
+    it('pagerService should work properly even if we set "pagerModel.pagePath" manually', fakeAsync(() => {
+        comp.pagerModel.pagePath = '/quotes';
+        activatedRouteStub.setParamMap({pageNo: 9}); // page 9 not exist
+        comp.checkPageNo();
+        tick();
+        fixture.detectChanges();
+        expect(comp.router.url)
+            .toEqual('/quotes/1');
+        fixture.detectChanges();
+    }));
+
 });
 
 describe('QuoteListComponentNoData', () => {
@@ -132,6 +146,7 @@ describe('QuoteListComponentNoData', () => {
             imports: [
                 FormsModule,
                 RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'quotes/1', pathMatch: 'full'},
                     {path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'},
                     {path: 'quotes/:pageNo', component: QuoteListComponent},
                     {path: 'http-404', component: NotFoundComponent},

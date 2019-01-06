@@ -48,7 +48,7 @@ export class PagerComponent implements OnDestroy, OnInit {
         this.subscription = this.pagerService.getPagerModel()
             .subscribe(pagerModel => {
                 if (pagerModel.pagePath === undefined) {
-                    pagerModel.pagePath = this.pageService.getRoutePath('');
+                    pagerModel.pagePath = this.pageService.getRoutePath();
                 }
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {
                     pagerModel.currentPageNo = !pagerModel.currentPageNo ? 1 : pagerModel.currentPageNo < 1 ? 1 : pagerModel.maxPageNo;
