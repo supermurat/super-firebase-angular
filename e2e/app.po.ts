@@ -12,10 +12,10 @@ export class AppPage {
     }
 
     /**
-     * get text of first h1 element in app-root
+     * get text of footer-copyright element
      */
-    async getParagraphText(): wdpromise.Promise<string> {
-        return element(by.css('app-root h1'))
+    async getFooterCopyrightText(): wdpromise.Promise<string> {
+        return element(by.id('footer-copyright'))
             .getText();
     }
 }

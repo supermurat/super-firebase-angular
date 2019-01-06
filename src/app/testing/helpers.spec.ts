@@ -35,9 +35,23 @@ export const getDataByPath = (testData: any, path: string): Array<any> => {
                     .forEach((subProp: string) => {
                         if (paths.length > 1) {
                             if (paths[1] === subProp) {
-                                tData.push(testData[prop][subProp]);
+                                if (paths.length > 2) {
+                                    Object.keys(testData[prop][subProp])
+                                        .forEach((subProp2: string) => {
+                                            if (`__collection__${paths[2]}` === subProp2) {
+                                                Object.keys(testData[prop][subProp][subProp2])
+                                                    .forEach((subProp3: string) => {
+                                                        tData.push(testData[prop][subProp][subProp2][subProp3]);
+                                                    });
 
-                                return tData;
+                                                return tData;
+                                            }
+                                        });
+                                } else {
+                                    tData.push(testData[prop][subProp]);
+
+                                    return tData;
+                                }
                             }
                         } else {
                             tData.push(testData[prop][subProp]);

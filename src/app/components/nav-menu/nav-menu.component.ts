@@ -2,6 +2,7 @@ import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
 import { locales } from '../../app-config';
+import { PageService } from '../../services';
 
 /**
  * Nav Menu Component
@@ -20,10 +21,12 @@ export class NavMenuComponent implements OnInit {
      * constructor of NavMenuComponent
      * @param locale: LOCALE_ID
      * @param router: Router
+     * @param pageService: PageService
      */
     constructor(
         @Inject(LOCALE_ID) public locale: string,
-        private readonly router: Router) {
+        private readonly router: Router,
+        public pageService: PageService) {
     }
 
     /**

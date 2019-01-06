@@ -31,6 +31,7 @@ export class AuthService {
     ) {
         this.user$ = this.afAuth.authState.pipe(
             switchMap(user => {
+                // istanbul ignore else
                 if (user) {
                     return this.afs.doc<any>(`users/${user.uid}`)
                         .valueChanges();
@@ -46,8 +47,7 @@ export class AuthService {
      * @param credentials: user credentials
      */
     async register(credentials: UserCredentialsModel): Promise<any> {
-        return this.afAuth.auth
-            .createUserWithEmailAndPassword(
+        return this.afAuth.auth.createUserWithEmailAndPassword(
                 credentials.email,
                 credentials.password
             );
@@ -58,8 +58,7 @@ export class AuthService {
      * @param credentials: user credentials
      */
     async logIn(credentials: UserCredentialsModel): Promise<any> {
-        return this.afAuth.auth
-            .signInWithEmailAndPassword(
+        return this.afAuth.auth.signInWithEmailAndPassword(
                 credentials.email,
                 credentials.password
             );
@@ -95,21 +94,11 @@ export class AuthService {
 
     /**
      * update current user data
-     * @param uid: uid
-     * @param email: email
-     * @param displayName: display name
-     * @param photoURL: photo URL
+     * @param userData: uid, email, display name, photo URL, etc
      */
-    private async updateUserData({uid, email, displayName, photoURL}): Promise<void> {
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
+    private async updateUserData(userData: UserModel): Promise<void> {
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userData.uid}`);
 
-        const data = {
-            uid,
-            email,
-            displayName,
-            photoURL
-        };
-
-        return userRef.set(data, {merge: true});
+        return userRef.set(userData, {merge: true});
     }
 }

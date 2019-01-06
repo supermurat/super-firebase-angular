@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "lib": ["es6", "dom"],
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "target": "es6",
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "compileOnSave": true,
+  "include": [
+    "src/**/*.ts"
+  ]
+}

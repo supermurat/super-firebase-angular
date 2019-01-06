@@ -1,7 +1,11 @@
 import { Location } from '@angular/common';
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { TransferState } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
+import { AlertService, CarouselService, PageService, SeoService } from '../../services';
 import { NavMenuComponent } from './nav-menu.component';
 
 describe('NavMenuComponent', () => {
@@ -14,7 +18,10 @@ describe('NavMenuComponent', () => {
                 NavMenuComponent
             ],
             providers: [
-                {provide: ComponentFixtureAutoDetect, useValue: true}
+                AlertService, SeoService, TransferState, CarouselService, PageService,
+                {provide: ComponentFixtureAutoDetect, useValue: true},
+                {provide: AngularFirestore, useValue: {}},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
                 RouterTestingModule.withRoutes([
@@ -40,9 +47,9 @@ describe('NavMenuComponent', () => {
             .toBeTruthy();
     }));
 
-    it("should render 'Navbar' in an a.navbar-brand", async(() => {
+    it("should render 'Super Murat' in an a.navbar-brand", async(() => {
         expect(fixture.nativeElement.querySelector('a.navbar-brand').textContent)
-            .toContain('Navbar');
+            .toContain('Super Murat');
     }));
 
     it('count of locales should be greater than 1', async(() => {

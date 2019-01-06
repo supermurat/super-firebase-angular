@@ -16,6 +16,9 @@ const angularFirestoreStubEmpty = {
         return {
             valueChanges(): any {
                 return from([tData[0]]);
+            },
+            set(data): any {
+                return from([data]);
             }
         };
     },

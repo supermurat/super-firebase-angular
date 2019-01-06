@@ -1,7 +1,7 @@
-import { PageModel } from './page-model';
+import { PageBaseModel } from './page-base-model';
 
 /**
  * Blog Class
  */
-export class BlogModel extends PageModel {
+export class BlogModel extends PageBaseModel {
 }

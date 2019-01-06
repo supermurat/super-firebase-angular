@@ -29,6 +29,7 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "completed-docs": true
+    "completed-docs": true,
+    "template-cyclomatic-complexity": [true, 7]
   }
 }

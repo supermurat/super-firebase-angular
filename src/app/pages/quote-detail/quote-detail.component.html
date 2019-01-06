@@ -1,0 +1,55 @@
+<div class="row">
+    <!-- Quote Column -->
+    <div class="col-md-8">
+        <div *ngIf="quote$ | async as content">
+            <article class="card my-4">
+                <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
+                <div class="card-body">
+                    <h2 class="card-title"><a [routerLink]="[content.routePath, quoteID]">{{ content.title }}</a></h2>
+                    <p class="card-text" [innerHTML]="content.content"></p>
+                    <hr/>
+                    <div *ngIf="content.whoSaidThat">
+                        <div class="float-left mx-1" i18n>Who Said That:</div>
+                        <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
+                    </div>
+                    <div *ngIf="content.persons">
+                        <div *ngFor="let person of content.persons | keyvalue; trackBy:pageService.trackByIndex">
+                            <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
+                            <div class="font-weight-bold" [innerHTML]="person.value"></div>
+                        </div>
+                    </div>
+                    <div class="float-left mx-1" i18n>Source:</div>
+                    <div class="font-weight-bold" [innerHTML]="content.source"></div>
+                    <hr/>
+                    <div class="text-center tag-cloud">
+                        <ul>
+                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
+                                <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
+                                    <span>{{ tag.value }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
+                    <br/>
+                    <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>
+                </div>
+
+            </article>
+
+            <div class="col-md-12 text-center mb-4">
+                <a [routerLink]="[content.routePath, content.orderNo + 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>&lArr; Previous Quote</a>
+                <a [routerLink]="[content.routePath]" class="btn btn-primary btn-sm mr-2" role="button" i18n>Return to Quote List &uArr;</a>
+                <a [routerLink]="[content.routePath, content.orderNo - 1]" class="btn btn-primary btn-sm mr-2" role="button" i18n>Next Quote &rArr;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+
+</div>

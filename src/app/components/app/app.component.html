@@ -1,18 +1,23 @@
 
 <app-nav-menu></app-nav-menu>
 
-<!-- Page Content -->
-<main class="container">
-    <div class='row'>
-        <div class='col-12'>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
             <app-loading-spinner *ngIf="pagination.loading | async"></app-loading-spinner>
             <app-alert></app-alert>
         </div>
     </div>
+</div>
+
+<app-carousel></app-carousel>
+
+<!-- Page Content -->
+<main class="container">
     <!-- /.row -->
     <div *ngIf="httpStatus$ | async as httpStatus; else defaultRouter">
         <app-not-found *ngIf="httpStatus.code === 404"></app-not-found>
-        <div id="only-for-http-status" style="display: none;"
+        <div id="only-for-http-status"
              *ngIf="httpStatus.htmlContent" [innerHTML]="httpStatus.htmlContent"></div>
     </div>
     <ng-template #defaultRouter>

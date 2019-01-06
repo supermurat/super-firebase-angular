@@ -1,0 +1,46 @@
+<div class="row" *ngIf="page$ | async as page">
+    <div class="col-md-12">
+        <div class="card py-1 px-3 mt-3">
+            <h1>{{ page?.caption }}</h1>
+        </div>
+    </div>
+
+    <!-- Quotes Column -->
+
+    <div class="col-md-8">
+
+        <article class="card my-4" *ngFor="let content of quotes$ | async; trackBy:pageService.trackByIndex">
+            <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
+            <div class="card-body">
+                <h2 class="card-title"><a [routerLink]="[content.routePath, content.id]">{{ content.title }}</a></h2>
+                <p class="card-text" [innerHTML]="content.contentSummary"></p>
+                <a [routerLink]="[content.routePath, content.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
+                <hr/>
+                <div *ngIf="content.whoSaidThat">
+                    <div class="float-left mx-1" i18n>Who Said That:</div>
+                    <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
+                </div>
+                <div *ngIf="content.persons">
+                    <div *ngFor="let person of content.persons | keyvalue; trackBy:pageService.trackByIndex">
+                        <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
+                        <div class="font-weight-bold" [innerHTML]="person.value"></div>
+                    </div>
+                </div>
+                <div class="float-left mx-1" i18n>Source:</div>
+                <div class="font-weight-bold" [innerHTML]="content.source"></div>
+            </div>
+            <div class="card-footer text-muted">
+                <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
+            </div>
+        </article>
+
+        <app-pager></app-pager>
+
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+
+</div>

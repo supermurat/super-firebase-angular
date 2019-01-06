@@ -55,13 +55,22 @@ export class HtmlDocumentModel {
     /** image url of page specified for twitter */
     ogImage?: string;
 
-    /** robots tag of page */
+    /**
+     * robots tag of page; sample: 'index, follow', 'noindex, nofollow'
+     * https://www.metatags.org/meta_name_robots
+     */
     robots?: string;
-    /** author tag of page */
+    /**
+     * author tag of page
+     * https://www.metatags.org/meta_name_author
+     */
     author?: string;
     /** owner tag of page */
     owner?: string;
-    /** copyright of page */
+    /**
+     * copyright of page
+     * https://www.metatags.org/meta_name_copyright
+     */
     copyright?: string;
     /** facebook App ID */
     facebookAppID?: string;
@@ -73,7 +82,4 @@ export class HtmlDocumentModel {
     articleAuthorURL?: string;
     /** article:publisher tag of page */
     articlePublisherURL?: string;
-
-    /** taxonomy */
-    taxonomy?: any; // key: link, value: title
 }

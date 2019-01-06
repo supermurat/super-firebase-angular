@@ -37,7 +37,8 @@
     "protractor": "~5.4.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.3",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "sitemap": "^2.1.0"
   },
   "devDependencies": {
     "jquery": "^3.3.1",

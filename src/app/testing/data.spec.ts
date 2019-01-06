@@ -1,3 +1,4 @@
+// tslint:disable:max-line-length
 export const myData = {
     'articles_en-US': {
         'first-article': {
@@ -122,6 +123,194 @@ export const myData = {
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
+    'pages_en-US': {
+        home: {
+            id: 'home',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Let me make you smile :-)',
+            routePath: '/',
+            i18nKey: 'home',
+            orderNo: -1,
+            __collection__contents: {
+                'article_first-article': {
+                    id: 'article_first-article', path: 'first-article', routePath: '/article', orderNo: -1,
+                    title: 'First Article', contentSummary: 'good article',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'article_second-article': {
+                    id: 'article_second-article', path: 'second-article', routePath: '/article', orderNo: -2,
+                    title: 'Second Article', contentSummary: 'better article',
+                    created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+                },
+                'article_third-article': {
+                    id: 'article_third-article', path: 'third-article', routePath: '/article', orderNo: -3,
+                    title: 'Third Article', contentSummary: 'the best article',
+                    created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+                }
+            },
+            carousel: {
+                carouselItems: [
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        title: 'Welcome to endless world!'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        title: 'Isn\'t it beautiful?'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        title: 'Hey, what\'s up ? '
+                    }]
+            }
+        },
+        articles: {
+            id: 'articles',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Articles',
+            caption: 'My Articles',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        blogs: {
+            id: 'blogs',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Blog',
+            caption: 'My Blog',
+            routePath: '/',
+            i18nKey: 'blog-list',
+            orderNo: -1,
+            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
+        },
+        jokes: {
+            id: 'jokes',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Jokes',
+            caption: 'My Jokes',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        quotes: {
+            id: 'quotes',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - My Quotes',
+            caption: 'My Quotes',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        }
+    },
+    'pages_tr-TR': {
+        home: {
+            id: 'home',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Süper Murat - İzin verin gülümseteyim :-)',
+            routePath: '/',
+            i18nKey: 'home',
+            orderNo: -1,
+            __collection__contents: {
+                'makale_ilk-makale': {
+                    id: 'makale_ilk-makale', path: 'ilk-makale', routePath: '/makale', orderNo: -1,
+                    title: 'İlk Makale', contentSummary: 'güzel makale',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'saka_ilk-saka': {
+                    id: 'saka_ilk-saka', path: 'ilk-saka', routePath: '/saka', orderNo: -2,
+                    title: 'İlk Şaka', contentSummary: 'güzel şaka',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'alinti_ilk-alinti': {
+                    id: 'alinti_ilk-alinti', path: 'ilk-alinti', routePath: '/alinti', orderNo: -3,
+                    title: 'İlk Alıntı', contentSummary: 'güzel alıntı',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                }
+            },
+            carousel: {
+                carouselItems: [
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        title: 'Sonsuz dünyaya hoşgeldiniz!'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        title: 'Harika değil mi?'
+                    },
+                    {
+                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        title: 'Hey, naber?'
+                    }]
+            }
+        },
+        makaleler: {
+            id: 'makaleler',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Makalelerim',
+            caption: 'Makalelerim',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        gunlukler: {
+            id: 'gunlukler',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Günlüğüm',
+            caption: 'Günlüğüm',
+            routePath: '/',
+            i18nKey: 'blog-list',
+            orderNo: -1,
+            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
+        },
+        eglence: {
+            id: 'eglence',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Eğlence Zamanı',
+            caption: 'Eğlence Zamanı',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        fikralar: {
+            id: 'fikralar',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Fıkralarım',
+            caption: 'Fıkralarım',
+            routePath: '/',
+            i18nKey: 'joke-list',
+            orderNo: -1
+        },
+        alintilar: {
+            id: 'alintilar',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Alıntılarım',
+            caption: 'Alıntılarım',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        },
+        'guzel-sozler': {
+            id: 'guzel-sozler',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Güzel Sözlerim',
+            caption: 'Güzel Sözlerim',
+            routePath: '/',
+            i18nKey: 'quote-list',
+            orderNo: -1
+        }
+    },
     redirectionRecords: {},
     'quotes_en-US': {
         'first-quote': {
@@ -159,9 +348,51 @@ export const myData = {
     },
     'taxonomy_en-US': {
         'first-tag': {
-            id: 'first-tag', routePath: '/tag', orderNo: -3,
+            id: 'first-tag', routePath: '/tag', orderNo: -1,
             title: 'First Tag',
-            created: {seconds: 1544207666}
+            created: {seconds: 1544207666},
+            __collection__contents: {
+                'article_first-article': {
+                    id: 'article_first-article', path: 'first-article', routePath: '/article', orderNo: -1,
+                    title: 'First Article', contentSummary: 'good article',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'article_second-article': {
+                    id: 'article_second-article', path: 'second-article', routePath: '/article', orderNo: -2,
+                    title: 'Second Article', contentSummary: 'better article',
+                    created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+                },
+                'article_third-article': {
+                    id: 'article_third-article', path: 'third-article', routePath: '/article', orderNo: -3,
+                    title: 'Third Article', contentSummary: 'the best article',
+                    created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+                },
+                'joke_first-joke': {
+                    id: 'joke_first-joke', path: 'first-joke', routePath: '/joke', orderNo: -4,
+                    title: 'First Joke', contentSummary: 'good joke',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'joke_second-joke': {
+                    id: 'joke_second-joke', path: 'second-joke', routePath: '/joke', orderNo: -5,
+                    title: 'Second Joke', contentSummary: 'better joke',
+                    created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+                },
+                'joke_third-joke': {
+                    id: 'joke_third-joke', path: 'third-joke', routePath: '/joke', orderNo: -6,
+                    title: 'Third Joke', contentSummary: 'the best joke',
+                    created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+                },
+                'quote_first-quote': {
+                    id: 'quote_first-quote', path: 'first-quote', routePath: '/quote', orderNo: -7,
+                    title: 'First Quote', contentSummary: 'good quote',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'quote_second-quote': {
+                    id: 'quote_second-quote', path: 'second-quote', routePath: '/quote', orderNo: -8,
+                    title: 'Second Quote', contentSummary: 'better quote',
+                    created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+                }
+            }
         },
         'second-tag': {
             id: 'second-tag', routePath: '/tag', orderNo: -2,
@@ -169,16 +400,33 @@ export const myData = {
             created: {seconds: 1544207667}
         },
         'third-tag': {
-            id: 'third-tag', routePath: '/tag', orderNo: -1,
+            id: 'third-tag', routePath: '/tag', orderNo: -3,
             title: 'Third Tag',
             created: {seconds: 1544207668}
         }
     },
     'taxonomy_tr-TR': {
         'ilk-etiket': {
-            id: 'ilk-etiket', routePath: '/etiket', orderNo: -3,
+            id: 'ilk-etiket', routePath: '/etiket', orderNo: -1,
             title: 'İlk Etiket',
-            created: {seconds: 1544207666}
+            created: {seconds: 1544207666},
+            __collection__contents: {
+                'makale_ilk-makale': {
+                    id: 'makale_ilk-makale', path: 'ilk-makale', routePath: '/makale', orderNo: -1,
+                    title: 'İlk Makale', contentSummary: 'güzel makale',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'saka_ilk-saka': {
+                    id: 'saka_ilk-saka', path: 'ilk-saka', routePath: '/saka', orderNo: -2,
+                    title: 'İlk Şaka', contentSummary: 'güzel şaka',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                },
+                'alinti_ilk-alinti': {
+                    id: 'alinti_ilk-alinti', path: 'ilk-alinti', routePath: '/alinti', orderNo: -3,
+                    title: 'İlk Alıntı', contentSummary: 'güzel alıntı',
+                    created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+                }
+            }
         },
         'ikinci-etiket': {
             id: 'ikinci-etiket', routePath: '/etiket', orderNo: -2,
@@ -186,12 +434,18 @@ export const myData = {
             created: {seconds: 1544207667}
         },
         'ucuncu-etiket': {
-            id: 'ucuncu-etiket', routePath: '/etiket', orderNo: -1,
+            id: 'ucuncu-etiket', routePath: '/etiket', orderNo: -3,
             title: 'Üçüncü Etiket',
             created: {seconds: 1544207668}
         }
     },
-    users: {}
+    users: {
+        'super-user': {
+            uid: 'super-user',
+            email: 'super-user@example.com',
+            displayName: 'Super User'
+        }
+    }
 };
 
 export const noData = {
@@ -202,6 +456,8 @@ export const noData = {
     dynamicFiles: {},
     'jokes_en-US': {},
     'jokes_tr-TR': {},
+    'pages_en-US': {},
+    'pages_tr-TR': {},
     redirectionRecords: {},
     'quotes_en-US': {},
     'quotes_tr-TR': {},
