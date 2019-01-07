@@ -172,7 +172,7 @@ export const myData = {
             title: 'Super Murat - My Articles',
             caption: 'My Articles',
             routePath: '/',
-            i18nKey: 'quote-list',
+            i18nKey: 'articles',
             orderNo: -1
         },
         blogs: {
@@ -182,7 +182,7 @@ export const myData = {
             title: 'Super Murat - My Blog',
             caption: 'My Blog',
             routePath: '/',
-            i18nKey: 'blog-list',
+            i18nKey: 'blogs',
             orderNo: -1,
             backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
@@ -193,7 +193,7 @@ export const myData = {
             title: 'Super Murat - My Jokes',
             caption: 'My Jokes',
             routePath: '/',
-            i18nKey: 'joke-list',
+            i18nKey: 'jokes',
             orderNo: -1
         },
         quotes: {
@@ -203,7 +203,7 @@ export const myData = {
             title: 'Super Murat - My Quotes',
             caption: 'My Quotes',
             routePath: '/',
-            i18nKey: 'quote-list',
+            i18nKey: 'quotes',
             orderNo: -1
         }
     },
@@ -256,7 +256,7 @@ export const myData = {
             title: 'Super Murat - Makalelerim',
             caption: 'Makalelerim',
             routePath: '/',
-            i18nKey: 'quote-list',
+            i18nKey: 'articles',
             orderNo: -1
         },
         gunlukler: {
@@ -266,7 +266,7 @@ export const myData = {
             title: 'Super Murat - Günlüğüm',
             caption: 'Günlüğüm',
             routePath: '/',
-            i18nKey: 'blog-list',
+            i18nKey: 'blogs',
             orderNo: -1,
             backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
         },
@@ -277,7 +277,7 @@ export const myData = {
             title: 'Super Murat - Eğlence Zamanı',
             caption: 'Eğlence Zamanı',
             routePath: '/',
-            i18nKey: 'joke-list',
+            i18nKey: 'jokes',
             orderNo: -1
         },
         fikralar: {
@@ -287,7 +287,7 @@ export const myData = {
             title: 'Super Murat - Fıkralarım',
             caption: 'Fıkralarım',
             routePath: '/',
-            i18nKey: 'joke-list',
+            i18nKey: 'jokes',
             orderNo: -1
         },
         alintilar: {
@@ -297,7 +297,7 @@ export const myData = {
             title: 'Super Murat - Alıntılarım',
             caption: 'Alıntılarım',
             routePath: '/',
-            i18nKey: 'quote-list',
+            i18nKey: 'quotes',
             orderNo: -1
         },
         'guzel-sozler': {
@@ -307,7 +307,7 @@ export const myData = {
             title: 'Super Murat - Güzel Sözlerim',
             caption: 'Güzel Sözlerim',
             routePath: '/',
-            i18nKey: 'quote-list',
+            i18nKey: 'quotes',
             orderNo: -1
         }
     },

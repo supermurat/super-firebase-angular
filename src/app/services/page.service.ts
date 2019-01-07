@@ -4,9 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { routerLinksEN, routerLinksTR } from '../app-config';
-import { PageBaseModel } from '../models';
+import { JokeModel, PageBaseModel } from '../models';
 import { RouterLinksModel } from '../models/router-links-model';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
@@ -198,7 +198,11 @@ export class PageService {
                 .subscribe(pageItem => {
                     if (pageItem) {
                         const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageItem.id}`, true);
+                        if (pathOfCollectionWithoutLocalePart === 'pages') {
+                            this.seo.http301(`/${languageCode2}/${pageID}`, true);
+                        } else {
+                            this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageID}`, true);
+                        }
                     } else {
                         this.seo.http404();
                     }

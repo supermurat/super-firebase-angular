@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -169,6 +170,71 @@ describe('JokeListComponentNoData', () => {
     it('should create the app', async(() => {
         expect(comp)
             .toBeTruthy();
+    }));
+
+});
+
+describe('JokeListComponent_tr-TR', () => {
+    let fixture: ComponentFixture<JokeListComponent>;
+    let comp: JokeListComponent;
+
+    beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                JokeListComponent,
+                FooterComponent,
+                SideBarComponent,
+                PagerComponent,
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent,
+                NotFoundComponent
+            ],
+            providers: [
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
+                    {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
+                    {path: 'jokes/:pageNo', component: JokeListComponent},
+                    {path: 'eglence', redirectTo: 'eglence/1', pathMatch: 'full'},
+                    {path: 'eglence/:pageNo', component: JokeListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(JokeListComponent);
+                comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirect to translation of jokes', fakeAsync(() => {
+        activatedRouteStub.navigate(fixture, comp.router, ['/jokes']);
+        comp.router.initialNavigation();
+        tick();
+        fixture.detectChanges();
+        tick();
+        expect(comp.router.url)
+            .toEqual('/en/jokes');
     }));
 
 });

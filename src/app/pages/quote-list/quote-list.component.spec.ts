@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -170,4 +171,69 @@ describe('QuoteListComponentNoData', () => {
         expect(comp)
             .toBeTruthy();
     }));
+});
+
+describe('QuoteListComponent_tr-TR', () => {
+    let fixture: ComponentFixture<QuoteListComponent>;
+    let comp: QuoteListComponent;
+
+    beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                QuoteListComponent,
+                FooterComponent,
+                SideBarComponent,
+                PagerComponent,
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent,
+                NotFoundComponent
+            ],
+            providers: [
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'quotes/1', pathMatch: 'full'},
+                    {path: 'quotes', redirectTo: 'quotes/1', pathMatch: 'full'},
+                    {path: 'quotes/:pageNo', component: QuoteListComponent},
+                    {path: 'alintilar', redirectTo: 'alintilar/1', pathMatch: 'full'},
+                    {path: 'alintilar/:pageNo', component: QuoteListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(QuoteListComponent);
+                comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirect to translation of quotes', fakeAsync(() => {
+        activatedRouteStub.navigate(fixture, comp.router, ['/quotes']);
+        comp.router.initialNavigation();
+        tick();
+        fixture.detectChanges();
+        tick();
+        expect(comp.router.url)
+            .toEqual('/en/quotes');
+    }));
+
 });
