@@ -234,7 +234,7 @@ describe('JokeListComponent_tr-TR', () => {
         fixture.detectChanges();
         tick();
         expect(comp.router.url)
-            .toEqual('/en/jokes');
+            .toEqual('/tr/eglence');
     }));
 
 });

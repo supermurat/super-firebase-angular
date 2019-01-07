@@ -112,7 +112,7 @@ describe('BlogDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/gunluk/ilk-gunluk');
+            .toEqual('/en/blog/first-blog');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -192,7 +192,7 @@ describe('BlogDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/blog/first-blog');
+            .toEqual('/tr/gunluk/ilk-gunluk');
     }));
 
 });

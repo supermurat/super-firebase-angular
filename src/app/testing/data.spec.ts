@@ -2,88 +2,88 @@
 export const myData = {
     'articles_en-US': {
         'first-article': {
-            id: 'first-article', routePath: '/article', orderNo: -1,
+            id: 'first-article', routePath: '/article', orderNo: -1, i18nKey: 'first-article',
             title: 'First Article', content: 'this is good article', contentSummary: 'good article',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'second-article': {
-            id: 'second-article', routePath: '/article', orderNo: -2,
+            id: 'second-article', routePath: '/article', orderNo: -2, i18nKey: 'second-article',
             title: 'Second Article', content: 'this is better article',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'third-article': {
-            id: 'third-article', routePath: '/article', orderNo: -3,
+            id: 'third-article', routePath: '/article', orderNo: -3, i18nKey: 'third-article',
             title: 'Third Article', content: 'this is the best article',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'fourth-article': {
-            id: 'fourth-article', routePath: '/article', orderNo: -4,
+            id: 'fourth-article', routePath: '/article', orderNo: -4, i18nKey: 'fourth-article',
             title: 'Fourth Article', content: 'this is the best article',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'fifth-article': {
-            id: 'fifth-article', routePath: '/article', orderNo: -5,
+            id: 'fifth-article', routePath: '/article', orderNo: -5, i18nKey: 'fifth-article',
             title: 'Fifth Article', content: 'this is the best article',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'articles_tr-TR': {
         'ilk-makale': {
-            id: 'ilk-makale', routePath: '/makale', orderNo: -1,
+            id: 'ilk-makale', routePath: '/makale', orderNo: -1, i18nKey: 'first-article',
             title: 'İlk Makale', content: 'bu güzel bir makale', contentSummary: 'güzel makale',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'ikinci-makale': {
-            id: 'ikinci-makale', routePath: '/makale', orderNo: -2,
+            id: 'ikinci-makale', routePath: '/makale', orderNo: -2, i18nKey: 'second-article',
             title: 'İkinci Makale', content: 'bu daha güzel bir makale',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'ucuncu-makale': {
-            id: 'ucuncu-makale', routePath: '/makale', orderNo: -3,
+            id: 'ucuncu-makale', routePath: '/makale', orderNo: -3, i18nKey: 'third-article',
             title: 'Üçüncü Makale', content: 'bu en güzel makale',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'dorduncu-makale': {
-            id: 'dorduncu-makale', routePath: '/makale', orderNo: -4,
+            id: 'dorduncu-makale', routePath: '/makale', orderNo: -4, i18nKey: 'fourth-article',
             title: 'Dördüncü Makale', content: 'bu en güzel makale',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'besinci-makale': {
-            id: 'besinci-makale', routePath: '/makale', orderNo: -5,
+            id: 'besinci-makale', routePath: '/makale', orderNo: -5, i18nKey: 'fifth-article',
             title: 'Beşinci Makale', content: 'bu en güzel makale',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'blogs_en-US': {
         'first-blog': {
-            id: 'first-blog', routePath: '/blog', orderNo: -1,
+            id: 'first-blog', routePath: '/blog', orderNo: -1, i18nKey: 'first-blog',
             title: 'First Blog', content: 'this is good blog', contentSummary: 'good blog',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'second-blog': {
-            id: 'second-blog', routePath: '/blog', orderNo: -2,
+            id: 'second-blog', routePath: '/blog', orderNo: -2, i18nKey: 'second-blog',
             title: 'Second Blog', content: 'this is better blog',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'third-blog': {
-            id: 'third-blog', routePath: '/blog', orderNo: -3,
+            id: 'third-blog', routePath: '/blog', orderNo: -3, i18nKey: 'third-blog',
             title: 'Third Blog', content: 'this is the best blog',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'blogs_tr-TR': {
         'ilk-gunluk': {
-            id: 'ilk-gunluk', routePath: '/gunluk', orderNo: -1,
+            id: 'ilk-gunluk', routePath: '/gunluk', orderNo: -1, i18nKey: 'first-blog',
             title: 'İlk Günlük', content: 'bu güzel bir günlük', contentSummary: 'güzel günlük',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'ikinci-gunluk': {
-            id: 'ikinci-gunluk', routePath: '/gunluk', orderNo: -2,
+            id: 'ikinci-gunluk', routePath: '/gunluk', orderNo: -2, i18nKey: 'second-blog',
             title: 'İkinci Günlük', content: 'bu daha güzel bir günlük',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'ucuncu-gunluk': {
-            id: 'ucuncu-gunluk', routePath: '/gunluk', orderNo: -3,
+            id: 'ucuncu-gunluk', routePath: '/gunluk', orderNo: -3, i18nKey: 'third-blog',
             title: 'Üçüncü Günlük', content: 'bu en güzel günlük',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
@@ -91,34 +91,34 @@ export const myData = {
     dynamicFiles: {},
     'jokes_en-US': {
         'first-joke': {
-            id: 'first-joke', routePath: '/joke', orderNo: -1,
+            id: 'first-joke', routePath: '/joke', orderNo: -1, i18nKey: 'first-joke',
             title: 'First Joke', content: 'this is good joke', contentSummary: 'good joke',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'second-joke': {
-            id: 'second-joke', routePath: '/joke', orderNo: -2,
+            id: 'second-joke', routePath: '/joke', orderNo: -2, i18nKey: 'second-joke',
             title: 'Second Joke', content: 'this is better joke',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'third-joke': {
-            id: 'third-joke', routePath: '/joke', orderNo: -3,
+            id: 'third-joke', routePath: '/joke', orderNo: -3, i18nKey: 'third-joke',
             title: 'Third Joke', content: 'this is the best joke',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'jokes_tr-TR': {
         'ilk-saka': {
-            id: 'ilk-saka', routePath: '/saka', orderNo: -1,
+            id: 'ilk-saka', routePath: '/saka', orderNo: -1, i18nKey: 'first-joke',
             title: 'İlk Şaka', content: 'bu güzel bir şaka', contentSummary: 'güzel şaka',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'ikinci-fikra': {
-            id: 'ikinci-fikra', routePath: '/fikra', orderNo: -2,
+            id: 'ikinci-fikra', routePath: '/fikra', orderNo: -2, i18nKey: 'second-joke',
             title: 'İkinci Fıkra', content: 'bu daha güzel bir fıkra',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'ucuncu-espri': {
-            id: 'ucuncu-espri', routePath: '/espri', orderNo: -3,
+            id: 'ucuncu-espri', routePath: '/espri', orderNo: -3, i18nKey: 'third-joke',
             title: 'Üçüncü Espri', content: 'bu en güzel espri',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
@@ -314,41 +314,41 @@ export const myData = {
     redirectionRecords: {},
     'quotes_en-US': {
         'first-quote': {
-            id: 'first-quote', routePath: '/quote', orderNo: -1,
+            id: 'first-quote', routePath: '/quote', orderNo: -1, i18nKey: 'first-quote',
             title: 'First Quote', content: 'this is good quote', contentSummary: 'good quote',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'second-quote': {
-            id: 'second-quote', routePath: '/quote', orderNo: -2,
+            id: 'second-quote', routePath: '/quote', orderNo: -2, i18nKey: 'second-quote',
             title: 'Second Quote', content: 'this is better quote',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'third-quote': {
-            id: 'third-quote', routePath: '/quote', orderNo: -3,
+            id: 'third-quote', routePath: '/quote', orderNo: -3, i18nKey: 'third-quote',
             title: 'Third Quote', content: 'this is the best quote',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'quotes_tr-TR': {
         'ilk-alinti': {
-            id: 'ilk-alinti', routePath: '/alinti', orderNo: -1,
+            id: 'ilk-alinti', routePath: '/alinti', orderNo: -1, i18nKey: 'first-quote',
             title: 'İlk Alıntı', content: 'bu güzel bir alıntı', contentSummary: 'güzel alıntı',
             created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'ikinci-guzel-soz': {
-            id: 'ikinci-guzel-soz', routePath: '/guzel-soz', orderNo: -2,
+            id: 'ikinci-guzel-soz', routePath: '/guzel-soz', orderNo: -2, i18nKey: 'second-quote',
             title: 'İkinci Güzel Söz', content: 'bu daha güzel bir söz',
             created: {seconds: 1544207667}, changed: {seconds: 1544207666}
         },
         'ucuncu-guzel-soz': {
-            id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3,
+            id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3, i18nKey: 'third-quote',
             title: 'Üçüncü Güzel Söz', content: 'bu en güzel söz',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
     'taxonomy_en-US': {
         'first-tag': {
-            id: 'first-tag', routePath: '/tag', orderNo: -1,
+            id: 'first-tag', routePath: '/tag', orderNo: -1, i18nKey: 'first-tag',
             title: 'First Tag',
             created: {seconds: 1544207666},
             __collection__contents: {
@@ -395,19 +395,19 @@ export const myData = {
             }
         },
         'second-tag': {
-            id: 'second-tag', routePath: '/tag', orderNo: -2,
+            id: 'second-tag', routePath: '/tag', orderNo: -2, i18nKey: 'second-tag',
             title: 'Second Tag',
             created: {seconds: 1544207667}
         },
         'third-tag': {
-            id: 'third-tag', routePath: '/tag', orderNo: -3,
+            id: 'third-tag', routePath: '/tag', orderNo: -3, i18nKey: 'third-tag',
             title: 'Third Tag',
             created: {seconds: 1544207668}
         }
     },
     'taxonomy_tr-TR': {
         'ilk-etiket': {
-            id: 'ilk-etiket', routePath: '/etiket', orderNo: -1,
+            id: 'ilk-etiket', routePath: '/etiket', orderNo: -1, i18nKey: 'first-tag',
             title: 'İlk Etiket',
             created: {seconds: 1544207666},
             __collection__contents: {
@@ -429,12 +429,12 @@ export const myData = {
             }
         },
         'ikinci-etiket': {
-            id: 'ikinci-etiket', routePath: '/etiket', orderNo: -2,
+            id: 'ikinci-etiket', routePath: '/etiket', orderNo: -2, i18nKey: 'second-tag',
             title: 'İkinci Etiket',
             created: {seconds: 1544207667}
         },
         'ucuncu-etiket': {
-            id: 'ucuncu-etiket', routePath: '/etiket', orderNo: -3,
+            id: 'ucuncu-etiket', routePath: '/etiket', orderNo: -3, i18nKey: 'third-tag',
             title: 'Üçüncü Etiket',
             created: {seconds: 1544207668}
         }

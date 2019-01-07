@@ -233,7 +233,7 @@ describe('QuoteListComponent_tr-TR', () => {
         fixture.detectChanges();
         tick();
         expect(comp.router.url)
-            .toEqual('/en/quotes');
+            .toEqual('/tr/alintilar');
     }));
 
 });

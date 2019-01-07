@@ -246,7 +246,7 @@ describe('ArticleListComponent_tr-TR', () => {
         fixture.detectChanges();
         tick();
         expect(comp.router.url)
-            .toEqual('/en/articles');
+            .toEqual('/tr/makaleler');
     }));
 
 });

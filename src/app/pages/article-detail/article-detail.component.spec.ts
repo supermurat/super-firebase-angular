@@ -112,7 +112,7 @@ describe('ArticleDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/makale/ilk-makale');
+            .toEqual('/en/article/first-article');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -192,7 +192,7 @@ describe('ArticleDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/article/first-article');
+            .toEqual('/tr/makale/ilk-makale');
     }));
 
 });

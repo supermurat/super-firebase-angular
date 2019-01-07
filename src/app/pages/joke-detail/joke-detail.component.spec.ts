@@ -112,7 +112,7 @@ describe('JokeDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/saka/ilk-saka');
+            .toEqual('/en/joke/first-joke');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -192,7 +192,7 @@ describe('JokeDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/joke/first-joke');
+            .toEqual('/tr/saka/ilk-saka');
     }));
 
 });

@@ -112,7 +112,7 @@ describe('QuoteDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/alinti/ilk-alinti');
+            .toEqual('/en/quote/first-quote');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -192,7 +192,7 @@ describe('QuoteDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/quote/first-quote');
+            .toEqual('/tr/alinti/ilk-alinti');
     }));
 
 });

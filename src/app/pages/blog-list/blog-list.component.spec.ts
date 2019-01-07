@@ -234,7 +234,7 @@ describe('BlogListComponent_tr-TR', () => {
         fixture.detectChanges();
         tick();
         expect(comp.router.url)
-            .toEqual('/en/blogs');
+            .toEqual('/tr/gunlukler');
     }));
 
 });
