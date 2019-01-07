@@ -132,11 +132,7 @@ export class PageService {
                 } else {
                     // redirect to origin route path for seo
                     const languageCode2 = this.locale.substring(0, 2);
-                    if (pathOfCollectionWithoutLocalePart === 'pages') {
-                        this.seo.http301(`/${languageCode2}/${pageID}`, false);
-                    } else {
-                        this.seo.http301(`/${languageCode2}/${page.routePath}/${pageID}`, false);
-                    }
+                    this.seo.http301(`/${languageCode2}/${page.routePath}/${pageID}`, true);
                 }
             }
         });
@@ -222,20 +218,12 @@ export class PageService {
                                     const id = pld.payload.doc.id;
                                     const requestedPageItem = pld.payload.doc.data();
                                     const languageCode2 = this.locale.substring(0, 2);
-                                    if (pathOfCollectionWithoutLocalePart === 'pages') {
-                                        this.seo.http301(`/${languageCode2}/${id}`, true);
-                                    } else {
-                                        this.seo.http301(`/${languageCode2}/${requestedPageItem.routePath}/${id}`, true);
-                                    }
+                                    this.seo.http301(`/${languageCode2}/${requestedPageItem.routePath}/${id}`, true);
                                 });
                             } else {
                                 // there is no translation by i18nKey, so redirect to correct locale
                                 const languageCode2 = checkInLocale.substring(0, 2);
-                                if (pathOfCollectionWithoutLocalePart === 'pages') {
-                                    this.seo.http301(`/${languageCode2}/${pageID}`, true);
-                                } else {
-                                    this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageID}`, true);
-                                }
+                                this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageID}`, true);
                             }
                         });
                 } else {

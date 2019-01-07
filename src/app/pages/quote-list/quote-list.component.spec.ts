@@ -86,7 +86,7 @@ describe('QuoteListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/quotes/1');
+            .toEqual('/quotes/2');
         fixture.detectChanges();
     }));
 
@@ -115,7 +115,7 @@ describe('QuoteListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/quotes/1');
+            .toEqual('/quotes/2');
         fixture.detectChanges();
     }));
 

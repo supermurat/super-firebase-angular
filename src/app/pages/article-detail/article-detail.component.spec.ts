@@ -125,6 +125,16 @@ describe('ArticleDetailComponent', () => {
             .toEqual('/article/not-found-page/http-404');
     }));
 
+    it('should redirect to translation of sadece-turkce-makale', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'sadece-turkce-makale']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/makale/sadece-turkce-makale');
+    }));
+
 });
 
 describe('ArticleDetailComponent_tr-TR', () => {

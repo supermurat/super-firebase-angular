@@ -86,7 +86,7 @@ describe('JokeListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/jokes/1');
+            .toEqual('/jokes/2');
         fixture.detectChanges();
     }));
 
@@ -115,7 +115,7 @@ describe('JokeListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/jokes/1');
+            .toEqual('/jokes/2');
         fixture.detectChanges();
     }));
 

@@ -125,6 +125,16 @@ describe('BlogDetailComponent', () => {
             .toEqual('/blog/not-found-page/http-404');
     }));
 
+    it('should redirect to translation of sadece-turkce-gunluk', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'sadece-turkce-gunluk']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/gunluk/sadece-turkce-gunluk');
+    }));
+
 });
 
 describe('BlogDetailComponent_tr-TR', () => {
