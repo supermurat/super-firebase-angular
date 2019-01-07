@@ -2,12 +2,13 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import * as sitemap from 'sitemap';
+import { FUNCTIONS_CONFIG } from './config';
 import { JobModel } from './job-model';
 import { SiteMapUrlModel } from './site-map-url-model';
 
 const db = admin.firestore();
 
-export const generateSiteMap = (snap: DocumentSnapshot) => {
+export const generateSiteMap = async (snap: DocumentSnapshot) => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
     const promiseList = [];
@@ -38,38 +39,48 @@ export const generateSiteMap = (snap: DocumentSnapshot) => {
                 });
             })
             .catch((err) => {
-                console.error(err);
+                console.error('db.collection().get()', err);
             });
     }
 
-    Promise.all(promiseList)
+    return Promise.all(promiseList)
         .then(async (values) => {
             const sm = sitemap.createSitemap({
-                hostname: 'http://supermurat.com',
+                hostname: FUNCTIONS_CONFIG.hostname,
                 cacheTime: 600000, // 600 sec - cache purge period
                 urls: urlList
             });
-            db.collection('dynamicFiles')
+
+            return db.collection('dynamicFiles')
                 .doc('sitemap.xml')
                 .set({content: sm.toString(), changed: new Date()}, {merge: true})
+                // tslint:disable-next-line:promise-function-async
+                .then(() =>
+                    snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true})
+                        .then(() => {
+                            console.log('generateSiteMap is finished');
+                        })
+                        .catch((err) => {
+                            console.error('snap.ref.set()', err);
+                        }))
                 .catch((err) => {
-                    console.error(err);
+                    console.error('db.collection().doc().set()', err);
                 });
-            console.log('generateSiteMap is finished');
-
-            return snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true});
         })
         .catch((err) => {
-            console.error(err);
+            console.error('Promise.all', err);
         });
 };
 
 export const jobRunner = functions.firestore
     .document('jobs/{jobId}')
+    // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) => {
         console.log('jobRunner is started');
         const newValue = snap.data() as JobModel;
         if (newValue.actionKey === 'generateSiteMap') {
-            generateSiteMap(snap);
+            return generateSiteMap(snap);
         }
+
+        return Promise.resolve();
     });

@@ -46,10 +46,7 @@ export class SeoService {
         const defaultTags = new HtmlDocumentModel();
         defaultTags.cultureCode = this.locale;
         defaultTags.languageCode = this.locale.substr(0, 2);
-        defaultTags.slug =
-            this.platformLocation.pathname +
-            this.platformLocation.search +
-            this.platformLocation.hash;
+        defaultTags.slug = this.platformLocation.pathname;
 
         defaultTags.twitterTitle = defaultTags.ogTitle = currentHtmlTags.title;
         defaultTags.twitterDescription = defaultTags.ogDescription = currentHtmlTags.description;
@@ -64,7 +61,7 @@ export class SeoService {
         this.titleService.setTitle(htmlTags.title);
         this.meta.updateTag({itemprop: 'name', content: htmlTags.title});
 
-        this.updateLink({rel: 'canonical', href: `${protocol}//${host}${htmlTags.slug}`});
+        this.updateLink({rel: 'canonical', href: `${protocol}${host}${htmlTags.slug}`});
 
         this.meta.updateTag({name: 'description', content: htmlTags.description});
         this.meta.updateTag({itemprop: 'description', content: htmlTags.description});

@@ -6,8 +6,8 @@
 /** configuration values of development environment */
 export const environment = {
     production: false,
-    defaultTitle: 'Default Page Title',
+    defaultTitle: '',
     defaultDescription: '',
-    protocol: 'http:',
-    host: 'localhost:5000'
+    protocol: '',
+    host: ''
 };

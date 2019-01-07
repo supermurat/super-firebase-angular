@@ -8,34 +8,43 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
+import { FUNCTIONS_CONFIG } from './config';
 import { RedirectionRecordModel } from './redirection-record-model';
 
 const db = admin.firestore();
 
-let serverMain: any;
-let serverEN: any;
-let serverTR: any;
-let indexMain: any;
-let indexEN: any;
-let indexTR: any;
+const serverJS: any = {};
+const indexHtml: any = {};
 
 const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key"';
-const isI18N = !existsSync(path.resolve(__dirname, '../dist/browser/index.html'));
 
-if (isI18N) {
+if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     // tslint:disable-next-line:no-var-requires no-require-imports
-    serverEN = require('../dist/server/en/main');
-    // tslint:disable-next-line:no-var-requires no-require-imports
-    serverTR = require('../dist/server/tr/main');
-    indexEN = readFileSync(path.resolve(__dirname, '../dist/browser/en/index.html'), 'utf8')
-        .toString();
-    indexTR = readFileSync(path.resolve(__dirname, '../dist/browser/tr/index.html'), 'utf8')
+    serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require(`../dist/server/main`);
+    indexHtml[FUNCTIONS_CONFIG.defaultLanguageCode] = readFileSync(
+        path.resolve(__dirname, `../dist/browser/index.html`), 'utf8')
         .toString();
 } else {
-    // tslint:disable-next-line:no-var-requires no-require-imports
-    serverMain = require('../dist/server/main');
-    indexMain = readFileSync(path.resolve(__dirname, '../dist/browser/index.html'), 'utf8')
-        .toString();
+    for (const supportedLanguageCode of FUNCTIONS_CONFIG.supportedLanguageCodes) {
+        if (existsSync(path.resolve(__dirname, `../dist/browser/${supportedLanguageCode}/index.html`))) {
+            // tslint:disable-next-line:no-var-requires no-require-imports
+            serverJS[supportedLanguageCode] = require(`../dist/server/${supportedLanguageCode}/main`);
+            indexHtml[supportedLanguageCode] = readFileSync(
+                path.resolve(__dirname, `../dist/browser/${supportedLanguageCode}/index.html`), 'utf8')
+                .toString();
+        }
+    }
+}
+
+if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
+    !indexHtml.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode)) {
+    throw new Error(`Default Language Code (${
+        FUNCTIONS_CONFIG.defaultLanguageCode
+    }) should be in loaded languages (serverJS:${
+        Object.keys(serverJS).toString()
+    }, indexHtml:${
+        Object.keys(indexHtml).toString()
+    })!`);
 }
 
 enableProdMode();
@@ -65,17 +74,14 @@ const getDynamicFile = (req: express.Request, res: express.Response) => {
 };
 
 const getSSR = (req: express.Request, res: express.Response) => {
-    const supportedLocales = ['en', 'tr'];
-    const defaultLocale = 'en';
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
     // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
-    const locale = (matches && supportedLocales.indexOf(matches[1]) !== -1) ? matches[1] : defaultLocale;
+    const locale = (matches && serverJS.hasOwnProperty(matches[1]) && indexHtml.hasOwnProperty(matches[1])) ?
+        matches[1] : FUNCTIONS_CONFIG.defaultLanguageCode;
 
-    const index = !isI18N ? indexMain : locale ===  'tr' ? indexTR : indexEN;
-    const server = !isI18N ? serverMain : locale ===  'tr' ? serverTR : serverEN;
-    renderModuleFactory(server.AppServerModuleNgFactory, {
+    renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
         url: req.path,
-        document: index
+        document: indexHtml[locale]
     }).then((html) => {
             const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
             if (newUrlInfo) {
@@ -84,7 +90,7 @@ const getSSR = (req: express.Request, res: express.Response) => {
                     .replace(/--http-redirect-301--/gi, '');
                 res.redirect(301, newUrl);
             } else {
-            // thing about redirect to 404 but maybe keeping current url is more cool
+                // thing about redirect to 404 but maybe keeping current url is more cool
                 res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200)
                     .send(html);
             }

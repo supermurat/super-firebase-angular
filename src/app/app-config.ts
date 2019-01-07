@@ -1,19 +1,23 @@
 import { InjectionToken } from '@angular/core';
 import { RouterLinksModel } from './models/router-links-model';
 
+/** Interface of APP_CONFIG */
 export interface InterfaceAppConfig {
     /** is Unit Test running ? */
     isUnitTest: boolean;
 }
 
+/** default configuration object */
 export const APP_DI_CONFIG: InterfaceAppConfig = {
     isUnitTest: false
 };
 
+/** configuration object for unit tests */
 export const APP_UNIT_TEST_CONFIG: InterfaceAppConfig = {
     isUnitTest: true
 };
 
+/** InjectionToken for APP_CONFIG */
 export let APP_CONFIG = new InjectionToken<InterfaceAppConfig>('app.config');
 
 /** interface of locale object */
