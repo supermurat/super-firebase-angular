@@ -112,7 +112,7 @@ describe('ArticleDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/makale/ilk-makale');
+            .toEqual('/en/article/first-article');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -123,6 +123,16 @@ describe('ArticleDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/article/not-found-page/http-404');
+    }));
+
+    it('should redirect to translation of sadece-turkce-makale', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'sadece-turkce-makale']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/makale/sadece-turkce-makale');
     }));
 
 });
@@ -192,7 +202,7 @@ describe('ArticleDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/article/first-article');
+            .toEqual('/tr/makale/ilk-makale');
     }));
 
 });

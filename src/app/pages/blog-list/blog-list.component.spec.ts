@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -85,7 +86,7 @@ describe('BlogListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/blogs/1');
+            .toEqual('/blogs/2');
         fixture.detectChanges();
     }));
 
@@ -114,7 +115,7 @@ describe('BlogListComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.router.url)
-            .toEqual('/blogs/1');
+            .toEqual('/blogs/2');
         fixture.detectChanges();
     }));
 
@@ -169,6 +170,71 @@ describe('BlogListComponentNoData', () => {
     it('should create the app', async(() => {
         expect(comp)
             .toBeTruthy();
+    }));
+
+});
+
+describe('BlogListComponent_tr-TR', () => {
+    let fixture: ComponentFixture<BlogListComponent>;
+    let comp: BlogListComponent;
+
+    beforeEach(fakeAsync(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                BlogListComponent,
+                FooterComponent,
+                SideBarComponent,
+                PagerComponent,
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent,
+                NotFoundComponent
+            ],
+            providers: [
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'blogs/1', pathMatch: 'full'},
+                    {path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'},
+                    {path: 'blogs/:pageNo', component: BlogListComponent},
+                    {path: 'gunlukler', redirectTo: 'gunlukler/1', pathMatch: 'full'},
+                    {path: 'gunlukler/:pageNo', component: BlogListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(BlogListComponent);
+                comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirect to translation of blogs', fakeAsync(() => {
+        activatedRouteStub.navigate(fixture, comp.router, ['/blogs']);
+        comp.router.initialNavigation();
+        tick();
+        fixture.detectChanges();
+        tick();
+        expect(comp.router.url)
+            .toEqual('/tr/gunlukler');
     }));
 
 });

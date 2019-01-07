@@ -4,9 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 import { routerLinksEN, routerLinksTR } from '../app-config';
-import { PageBaseModel } from '../models';
+import { JokeModel, PageBaseModel } from '../models';
 import { RouterLinksModel } from '../models/router-links-model';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
@@ -125,9 +125,15 @@ export class PageService {
         const page$ = this.getDocumentFromFirestore(type, `${pathOfCollectionWithoutLocalePart}_${this.locale}/${pageID}`);
         page$.subscribe(page => {
             if (page === undefined) {
-                this.redirectToTranslationOr404(undefined, pathOfCollectionWithoutLocalePart, pageID);
+                this.redirectToTranslationOr404(pathOfCollectionWithoutLocalePart, pageID);
             } else if (page.routePath) {
-                this.initPage(page);
+                if (this.router.url.startsWith(page.routePath)) {
+                    this.initPage(page);
+                } else {
+                    // redirect to origin route path for seo
+                    const languageCode2 = this.locale.substring(0, 2);
+                    this.seo.http301(`/${languageCode2}/${page.routePath}/${pageID}`, true);
+                }
             }
         });
 
@@ -185,29 +191,46 @@ export class PageService {
     }
 
     /**
-     * check if there is another translation and redirect to it
-     * @param checkInLocale: locale code; sample: undefined, en-US, tr-TR
+     * check if there is translation by pageID on other locale and redirect to correct pageID by requested locale
+     * if there is no record on other locale by pageID, page will be redirected to http-404
      * @param pathOfCollectionWithoutLocalePart: main collection path of firestore;
      * used in: `${pathOfCollectionWithoutLocalePart}_${this.locale}`
      * @param pageID: page id on firestore
      */
-    redirectToTranslationOr404(checkInLocale: string, pathOfCollectionWithoutLocalePart: string, pageID: string): void {
-        if (checkInLocale) {
-            this.afs.doc<PageBaseModel>(`${pathOfCollectionWithoutLocalePart}_${checkInLocale}/${pageID}`)
-                .valueChanges()
-                .subscribe(pageItem => {
-                    if (pageItem) {
-                        const languageCode2 = checkInLocale.substring(0, 2);
-                        this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageItem.id}`, true);
-                    } else {
-                        this.seo.http404();
-                    }
-                });
-        } else if (this.locale === 'en-US') {
-            this.redirectToTranslationOr404('tr-TR', pathOfCollectionWithoutLocalePart, pageID);
-        } else {
-            this.redirectToTranslationOr404('en-US', pathOfCollectionWithoutLocalePart, pageID);
-        }
+    redirectToTranslationOr404(pathOfCollectionWithoutLocalePart: string, pageID: string): void {
+        // try to find pageID in other locale
+        const checkInLocale = this.locale === 'en-US' ? 'tr-TR' : 'en-US';
+        this.afs.doc<PageBaseModel>(`${pathOfCollectionWithoutLocalePart}_${checkInLocale}/${pageID}`)
+            .valueChanges()
+            .subscribe(pageItem => {
+                if (pageItem) {
+                    // found in other locale
+                    // so try to find requested page in requested locale by i18nKey
+                    this.afs.collection<PageBaseModel>(`${pathOfCollectionWithoutLocalePart}_${this.locale}`,
+                        ref => ref.where('i18nKey', '==', pageItem.i18nKey)
+                            .limit(1)
+                    )
+                        .snapshotChanges()
+                        .subscribe(data => {
+                            if (data && data.length > 0) {
+                                // page in found in requested locale by i18nKey
+                                data.map(pld => {
+                                    const id = pld.payload.doc.id;
+                                    const requestedPageItem = pld.payload.doc.data();
+                                    const languageCode2 = this.locale.substring(0, 2);
+                                    this.seo.http301(`/${languageCode2}/${requestedPageItem.routePath}/${id}`, true);
+                                });
+                            } else {
+                                // there is no translation by i18nKey, so redirect to correct locale
+                                const languageCode2 = checkInLocale.substring(0, 2);
+                                this.seo.http301(`/${languageCode2}/${pageItem.routePath}/${pageID}`, true);
+                            }
+                        });
+                } else {
+                    // not found also in other locale
+                    this.seo.http404();
+                }
+            });
     }
 
 }

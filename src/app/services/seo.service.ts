@@ -206,13 +206,14 @@ export class SeoService {
      * @param isExternal: is this url external?
      */
     http301(destinationURL: string, isExternal = false): void {
+        const destURL = destinationURL.replace(/[\/]+/g, '/');
         if (isPlatformBrowser(this.platformId)) {
             // istanbul ignore next
             if (isExternal && !this.appConfig.isUnitTest) {
                 // this.router.navigate can't work because it is out of base url
-                window.location.href = destinationURL;
+                window.location.href = destURL;
             } else {
-                this.router.navigate([destinationURL])
+                this.router.navigate([destURL])
                     .catch(// istanbul ignore next
                         reason => {
                         console.error(reason);
@@ -221,7 +222,7 @@ export class SeoService {
         } else {
             this.httpStatus$.next({
                 code: 301,
-                htmlContent: `--http-redirect-301--${destinationURL}--end-of-http-redirect-301--`
+                htmlContent: `--http-redirect-301--${destURL}--end-of-http-redirect-301--`
             });
         }
     }

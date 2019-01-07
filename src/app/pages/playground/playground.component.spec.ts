@@ -66,7 +66,7 @@ describe('PlaygroundComponent', () => {
         comp.scrollHandler('bottom');
         tick();
         expect(countOfItem)
-            .toEqual(3);
+            .toEqual(4);
     }));
 
     it('double call scrollHandler("bottom") should load all data', fakeAsync(() => {
@@ -131,7 +131,7 @@ describe('PlaygroundComponent', () => {
         comp.scrollHandler('bottom');
         tick();
         expect(countOfItem)
-            .toEqual(3);
+            .toEqual(4);
     }));
 
     it('pagination.init() should not load more data all data already loaded', fakeAsync(() => {
@@ -147,7 +147,7 @@ describe('PlaygroundComponent', () => {
         comp.pagination.init(`blogs_${comp.locale}`, 'created', {reverse: true, prepend: false}, false);
         tick();
         expect(countOfItem)
-            .toEqual(3);
+            .toEqual(4);
     }));
 
     it('.content.onScroll to bottom should load more data', fakeAsync(() => {
@@ -161,7 +161,7 @@ describe('PlaygroundComponent', () => {
         div.triggerEventHandler('scroll', {target: {scrollTop: 200}});
         tick();
         expect(countOfItem)
-            .toEqual(3);
+            .toEqual(4);
     }));
 
     it('.content.onScroll to top should not load more data', fakeAsync(() => {

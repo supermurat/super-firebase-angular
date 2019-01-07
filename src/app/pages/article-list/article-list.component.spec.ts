@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
@@ -181,6 +182,71 @@ describe('ArticleListComponentNoData', () => {
     it('should create the app', async(() => {
         expect(comp)
             .toBeTruthy();
+    }));
+
+});
+
+describe('ArticleListComponent_tr-TR', () => {
+    let fixture: ComponentFixture<ArticleListComponent>;
+    let comp: ArticleListComponent;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                ArticleListComponent,
+                FooterComponent,
+                SideBarComponent,
+                PagerComponent,
+                AlertComponent,
+                ActiveTagsComponent,
+                LastJokesComponent,
+                SearchBarComponent,
+                NotFoundComponent
+            ],
+            providers: [
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                {provide: ActivatedRoute, useValue: activatedRouteStub},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
+                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
+                {provide: LOCALE_ID, useValue: 'tr-TR'}
+            ],
+            imports: [
+                FormsModule,
+                RouterTestingModule.withRoutes([
+                    {path: '', redirectTo: 'articles/1', pathMatch: 'full'},
+                    {path: 'articles', redirectTo: 'articles/1', pathMatch: 'full'},
+                    {path: 'articles/:pageNo', component: ArticleListComponent},
+                    {path: 'makaleler', redirectTo: 'makaleler/1', pathMatch: 'full'},
+                    {path: 'makaleler/:pageNo', component: ArticleListComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
+            ]
+        })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(ArticleListComponent);
+                comp = fixture.componentInstance;
+            })
+            .catch(reason => {
+                expect(reason)
+                    .toBeUndefined();
+            });
+    }));
+
+    it('should create the app', async(() => {
+        expect(comp)
+            .toBeTruthy();
+    }));
+
+    it('should redirect to translation of articles', fakeAsync(() => {
+        activatedRouteStub.navigate(fixture, comp.router, ['/articles']);
+        comp.router.initialNavigation();
+        tick();
+        fixture.detectChanges();
+        tick();
+        expect(comp.router.url)
+            .toEqual('/tr/makaleler');
     }));
 
 });

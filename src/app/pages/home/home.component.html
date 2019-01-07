@@ -1,18 +1,18 @@
-<div class="row">
+<div class="col-12">
     <div class="card-deck">
         <article class="card my-4" *ngFor="let content of contents$ | async; trackBy:pageService.trackByIndex">
             <img class="card-img-top img-fluid" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
             <div class="card-body">
                 <h2 class="card-title"><a [routerLink]="[content.routePath, content.path]">{{ content.title }}</a></h2>
             </div>
-            <div class="card-footer text-muted py-0">
+            <div class="card-footer text-muted pt-0 pb-1">
                 <span i18n>{{ content.created.seconds * 1000 | date:'medium' }} - {{ content.createdBy }}</span>
             </div>
         </article>
     </div>
 </div>
 
-<div class="row">
+<div class="col-12">
     <div class="card-deck">
         <app-active-tags class="card mb-4" [tagLimit]="20"></app-active-tags>
         <app-last-jokes class="card mb-4" [jokeLimit]="5"></app-last-jokes>

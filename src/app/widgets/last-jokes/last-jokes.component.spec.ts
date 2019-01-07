@@ -56,7 +56,7 @@ describe('LastJokesComponent', () => {
     it('should load jokes', fakeAsync(() => {
         comp.jokes$.subscribe(result => {
             expect(result.length)
-                .toEqual(3);
+                .toEqual(4);
         });
         fixture.detectChanges();
     }));

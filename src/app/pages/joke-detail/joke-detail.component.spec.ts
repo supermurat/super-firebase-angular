@@ -112,7 +112,7 @@ describe('JokeDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/saka/ilk-saka');
+            .toEqual('/en/joke/first-joke');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -123,6 +123,16 @@ describe('JokeDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/joke/not-found-page/http-404');
+    }));
+
+    it('should redirect to translation of sadece-turkce-fikra', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'sadece-turkce-fikra']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/fikra/sadece-turkce-fikra');
     }));
 
 });
@@ -192,7 +202,17 @@ describe('JokeDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/joke/first-joke');
+            .toEqual('/tr/saka/ilk-saka');
+    }));
+
+    it('should redirect to origin route of ilk-saka', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'fikralar', 'fikra');
+        activatedRouteStub.navigate(fixture, comp.router, ['/fikra', 'ilk-saka']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/saka/ilk-saka');
     }));
 
 });

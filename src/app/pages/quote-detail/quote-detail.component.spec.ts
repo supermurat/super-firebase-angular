@@ -112,7 +112,7 @@ describe('QuoteDetailComponent', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/tr/alinti/ilk-alinti');
+            .toEqual('/en/quote/first-quote');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
@@ -123,6 +123,16 @@ describe('QuoteDetailComponent', () => {
         sNavEvent.unsubscribe();
         expect(comp.router.url)
             .toEqual('/quote/not-found-page/http-404');
+    }));
+
+    it('should redirect to translation of sadece-turkce-alinti', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
+        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'sadece-turkce-alinti']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/alinti/sadece-turkce-alinti');
     }));
 
 });
@@ -192,7 +202,17 @@ describe('QuoteDetailComponent_tr-TR', () => {
         tick();
         sNavEvent.unsubscribe();
         expect(comp.router.url)
-            .toEqual('/en/quote/first-quote');
+            .toEqual('/tr/alinti/ilk-alinti');
+    }));
+
+    it('should redirect to origin route of ilk-alinti', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'guzel-sozler', 'guzel-soz');
+        activatedRouteStub.navigate(fixture, comp.router, ['/guzel-soz', 'ilk-alinti']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        expect(comp.router.url)
+            .toEqual('/tr/alinti/ilk-alinti');
     }));
 
 });
