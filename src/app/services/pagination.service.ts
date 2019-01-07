@@ -37,6 +37,10 @@ export class PaginationService {
     /** QueryConfig */
     private query: QueryConfig;
 
+    /**
+     * constructor of PaginationService
+     * @param afs: AngularFirestore
+     */
     constructor(private readonly afs: AngularFirestore) {
     }
 
