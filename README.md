@@ -79,6 +79,10 @@ stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki
 
 MIT
 
-## Thanks
+## Thanks to
+&nbsp; | &nbsp;
+--- | ---
+[![firebase](/docs/images/firebase.png "firebase")](https://firebase.google.com/) | 
+[![browserstack](/docs/images/browserstack.png "browserstack")](https://www.browserstack.com/) | [![travis-ci](/docs/images/travis-ci.png "travis-ci")](https://www.travis-ci.org/)
+[![codacy](/docs/images/codacy.png "codacy")](https://www.codacy.com/) | [![coveralls](/docs/images/coveralls.png "coveralls")](https://coveralls.io/)
 
-[![browserstack](https://www.browserstack.com/images/layout/browserstack-logo-600x315.png)](https://www.browserstack.com/)
