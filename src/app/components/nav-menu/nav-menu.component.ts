@@ -1,4 +1,5 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
 import { locales } from '../../app-config';
@@ -19,13 +20,15 @@ export class NavMenuComponent implements OnInit {
 
     /**
      * constructor of NavMenuComponent
+     * @param platformId: PLATFORM_ID
      * @param locale: LOCALE_ID
      * @param router: Router
      * @param pageService: PageService
      */
     constructor(
+        @Inject(PLATFORM_ID) private readonly platformId: string,
         @Inject(LOCALE_ID) public locale: string,
-        private readonly router: Router,
+        public router: Router,
         public pageService: PageService) {
     }
 
@@ -39,15 +42,16 @@ export class NavMenuComponent implements OnInit {
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
                 this.currentUrl = this.router.url;
-
-                const scrollToTop = window.setInterval(() => {
-                    const pos = window.pageYOffset;
-                    if (pos > 0) {
-                        window.scrollTo(0, pos - 60); // how far to scroll on each step
-                    } else {
-                        window.clearInterval(scrollToTop);
-                    }
-                }, 16);
+                if (isPlatformBrowser(this.platformId)) {
+                    const scrollToTop = window.setInterval(() => {
+                        const pos = window.pageYOffset;
+                        if (pos > 0) {
+                            window.scrollTo(0, pos - 60); // how far to scroll on each step
+                        } else {
+                            window.clearInterval(scrollToTop);
+                        }
+                    }, 16);
+                }
             });
     }
 

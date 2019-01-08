@@ -80,9 +80,8 @@ stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki
 MIT
 
 ## Thanks to
-&nbsp; | &nbsp;
---- | ---
-[![firebase](/docs/images/firebase.png "firebase")](https://firebase.google.com/) | 
-[![browserstack](/docs/images/browserstack.png "browserstack")](https://www.browserstack.com/) | [![travis-ci](/docs/images/travis-ci.png "travis-ci")](https://www.travis-ci.org/)
-[![codacy](/docs/images/codacy.png "codacy")](https://www.codacy.com/) | [![coveralls](/docs/images/coveralls.png "coveralls")](https://coveralls.io/)
-
+| &nbsp;                                                                                         | &nbsp;                                                                             |
+| ---                                                                                            | ---                                                                                |
+| [![firebase](/docs/images/firebase.png "firebase")](https://firebase.google.com/)              | &nbsp;                                                                             |
+| [![browserstack](/docs/images/browserstack.png "browserstack")](https://www.browserstack.com/) | [![travis-ci](/docs/images/travis-ci.png "travis-ci")](https://www.travis-ci.org/) |
+| [![codacy](/docs/images/codacy.png "codacy")](https://www.codacy.com/)                         | [![coveralls](/docs/images/coveralls.png "coveralls")](https://coveralls.io/)      |
