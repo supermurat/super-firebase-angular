@@ -107,7 +107,10 @@ const generateTaxonomy = (lang: string, newData: any) => {
         const tagLinkList = newData.tagLinks.split('|');
         if (tagTitleList.length === tagLinkList.length) {
             for (let i = 0; i < tagLinkList.length; i++) {
-                const docID = fixDocID(tagLinkList[i].replace(/taxonomy\/term\//gi, '').replace(/etiket\//gi, ''));
+                const docID = fixDocID(tagLinkList[i]
+                    .replace(/taxonomy\/term\//gi, '')
+                    .replace(/tag\//gi, '')
+                    .replace(/etiket\//gi, ''));
                 taxonomy[docID] = tagTitleList[i].trim();
 
                 addToTaxonomyContentsCollection(lang, docID, newData);
@@ -119,6 +122,47 @@ const generateTaxonomy = (lang: string, newData: any) => {
     newData.taxonomy = taxonomy;
 };
 
+const generateCommonFields = (newData: any) => {
+    newData.createdBy = 'Murat Demir';
+    newData.changedBy = 'Murat Demir';
+    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+
+    if (newData.contentSummary === undefined ||
+        newData.contentSummary === null ||
+        newData.contentSummary.trim() === '' ||
+        (newData.contentSummary === newData.content && newData.contentSummary.length > 1000)) {
+        // tslint:disable-next-line: prefer-conditional-expression
+        if (newData.content.startsWith('<p>') &&
+            newData.content.indexOf('</p>') > -1 &&
+            newData.content.substring(3, newData.content.indexOf('</p>'))
+                .indexOf('<p') === -1) {
+            let tempSummary = newData.content.substring(0, Number(newData.content.indexOf('</p>')) + 4);
+            if (tempSummary.length > 1000) {
+                if (tempSummary.indexOf('<br /><br />', 500) > -1) {
+                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br /><br />', 500))}</p>`;
+                } else if (tempSummary.indexOf('<br><br>', 500) > -1) {
+                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br><br>', 500))}</p>`;
+                } else if (tempSummary.indexOf('<br />', 500) > -1) {
+                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br />', 500))}</p>`;
+                } else if (tempSummary.indexOf('<br>', 500) > -1) {
+                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br>', 500))}</p>`;
+                }
+            }
+            newData.contentSummary = tempSummary;
+        } else {
+            newData.contentSummary = newData.content;
+        }
+    }
+
+    const cleanText = h2p(newData.contentSummary);
+    // tslint:disable-next-line: prefer-conditional-expression
+    if (cleanText.indexOf(' ', 150) > -1) {
+        newData.description = `${h2p(cleanText).substring(0, cleanText.indexOf(' ', 150))}...`;
+    } else {
+        newData.description = `${h2p(cleanText).substring(0, 160)}...`;
+    }
+};
+
 const addToBlogs = (lang: string, element: any) => {
     const newData = {...element};
     if (lang === '_en-US') {
@@ -128,14 +172,7 @@ const addToBlogs = (lang: string, element: any) => {
         newData.routePath = '/gunluk';
         addToRedirectionRecords('tr/', element, 'gunluk/');
     }
-    if (newData.contentSummary === undefined ||
-        newData.contentSummary === null ||
-        newData.contentSummary.trim() === '') {
-        newData.contentSummary = newData.content;
-    }
-    newData.createdBy = 'Murat Demir';
-    newData.changedBy = 'Murat Demir';
-    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+    generateCommonFields(newData);
     generateTaxonomy(lang, newData);
     dataFirestore[cnoBlogs + lang][element.documentID] = removeUnneededFields(newData);
     dataFirestore[cnoBlogs + lang][element.documentID].orderNo
@@ -151,14 +188,7 @@ const addToArticles = (lang: string, element: any) => {
         newData.routePath = '/makale';
         addToRedirectionRecords('tr/', element, 'makale/');
     }
-    if (newData.contentSummary === undefined ||
-        newData.contentSummary === null ||
-        newData.contentSummary.trim() === '') {
-        newData.contentSummary = newData.content;
-    }
-    newData.createdBy = 'Murat Demir';
-    newData.changedBy = 'Murat Demir';
-    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+    generateCommonFields(newData);
     generateTaxonomy(lang, newData);
     dataFirestore[cnoArticles + lang][element.documentID] = removeUnneededFields(newData);
     dataFirestore[cnoArticles + lang][element.documentID].orderNo
@@ -174,14 +204,7 @@ const addToJokes = (lang: string, element: any) => {
         newData.routePath = element.type === 'sogukespriler' ? '/soguk-espri' : '/fikra';
         addToRedirectionRecords('tr/', element, 'fikra/');
     }
-    if (newData.contentSummary === undefined ||
-        newData.contentSummary === null ||
-        newData.contentSummary.trim() === '') {
-        newData.contentSummary = newData.content;
-    }
-    newData.createdBy = 'Murat Demir';
-    newData.changedBy = 'Murat Demir';
-    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+    generateCommonFields(newData);
     generateTaxonomy(lang, newData);
     dataFirestore[cnoJokes + lang][element.documentID] = removeUnneededFields(newData);
     dataFirestore[cnoJokes + lang][element.documentID].orderNo
@@ -197,14 +220,7 @@ const addToQuotes = (lang: string, element: any) => {
         newData.routePath = '/alinti';
         addToRedirectionRecords('tr/', element, 'alinti/');
     }
-    if (newData.contentSummary === undefined ||
-        newData.contentSummary === null ||
-        newData.contentSummary.trim() === '') {
-        newData.contentSummary = newData.content;
-    }
-    newData.createdBy = 'Murat Demir';
-    newData.changedBy = 'Murat Demir';
-    newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
+    generateCommonFields(newData);
     generateTaxonomy(lang, newData);
     dataFirestore[cnoQuotes + lang][element.documentID] = removeUnneededFields(newData);
     dataFirestore[cnoQuotes + lang][element.documentID].orderNo
@@ -278,6 +294,7 @@ ORDER BY t.tid ASC`,
             results.forEach((element) => {
                 element.documentID = fixDocID(element.alias
                     .replace(/taxonomy\/term\//gi, '')
+                    .replace(/tag\//gi, '')
                     .replace(/etiket\//gi, ''));
                 if (element.language === 'und') {
                     addToTaxonomy('_tr-TR', element);
