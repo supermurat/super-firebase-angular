@@ -6,8 +6,14 @@
 /** configuration values of development environment */
 export const environment = {
     production: false,
-    defaultTitle: '',
-    defaultDescription: '',
     protocol: '',
-    host: ''
+    host: '',
+    defaultData: {
+        defaultTitle: '',
+        defaultDescription: '',
+        'twitter:site': undefined,
+        'twitter:creator': undefined,
+        'fb:app_id': undefined,
+        'fb:admins': undefined
+    }
 };

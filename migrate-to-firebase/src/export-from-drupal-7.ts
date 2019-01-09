@@ -122,6 +122,34 @@ const generateTaxonomy = (lang: string, newData: any) => {
     newData.taxonomy = taxonomy;
 };
 
+const getSummary = (content: string, currentLength: number) => {
+    // tslint:disable-next-line: prefer-conditional-expression
+    if (content.startsWith('<p>') &&
+        content.indexOf('</p>') > -1 &&
+        content.substring(3, content.indexOf('</p>'))
+            .indexOf('<p') === -1) {
+        let tempSummary = content.substring(0, Number(content.indexOf('</p>')) + 4);
+        if (tempSummary.length > 1000) {
+            if (tempSummary.indexOf('<br /><br />', 500) > -1) {
+                tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br /><br />', 500))}</p>`;
+            } else if (tempSummary.indexOf('<br><br>', 500) > -1) {
+                tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br><br>', 500))}</p>`;
+            } else if (tempSummary.indexOf('<br />', 500) > -1) {
+                tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br />', 500))}</p>`;
+            } else if (tempSummary.indexOf('<br>', 500) > -1) {
+                tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br>', 500))}</p>`;
+            }
+        } else if (tempSummary.length + currentLength < 400) {
+            const remainingSummary = content.replace(tempSummary, '');
+            tempSummary += getSummary(remainingSummary, tempSummary.length + currentLength);
+        }
+
+        return tempSummary;
+    } else {
+        return content;
+    }
+};
+
 const generateCommonFields = (newData: any) => {
     newData.createdBy = 'Murat Demir';
     newData.changedBy = 'Murat Demir';
@@ -130,28 +158,9 @@ const generateCommonFields = (newData: any) => {
     if (newData.contentSummary === undefined ||
         newData.contentSummary === null ||
         newData.contentSummary.trim() === '' ||
-        (newData.contentSummary === newData.content && newData.contentSummary.length > 1000)) {
-        // tslint:disable-next-line: prefer-conditional-expression
-        if (newData.content.startsWith('<p>') &&
-            newData.content.indexOf('</p>') > -1 &&
-            newData.content.substring(3, newData.content.indexOf('</p>'))
-                .indexOf('<p') === -1) {
-            let tempSummary = newData.content.substring(0, Number(newData.content.indexOf('</p>')) + 4);
-            if (tempSummary.length > 1000) {
-                if (tempSummary.indexOf('<br /><br />', 500) > -1) {
-                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br /><br />', 500))}</p>`;
-                } else if (tempSummary.indexOf('<br><br>', 500) > -1) {
-                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br><br>', 500))}</p>`;
-                } else if (tempSummary.indexOf('<br />', 500) > -1) {
-                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br />', 500))}</p>`;
-                } else if (tempSummary.indexOf('<br>', 500) > -1) {
-                    tempSummary = `${tempSummary.substring(0, tempSummary.indexOf('<br>', 500))}</p>`;
-                }
-            }
-            newData.contentSummary = tempSummary;
-        } else {
-            newData.contentSummary = newData.content;
-        }
+        newData.contentSummary === newData.content ||
+        newData.contentSummary.length > 1000) {
+        newData.contentSummary = getSummary(newData.content, 0);
     }
 
     const cleanText = h2p(newData.contentSummary);

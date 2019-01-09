@@ -3,6 +3,7 @@ import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed
 import { AngularFirestore } from '@angular/fire/firestore';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from '../../../environments/environment';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
 import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
@@ -117,7 +118,11 @@ describe('AppComponentSeoService', () => {
     it("should set meta og:type as 'article'", async(() => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
-            ogType: 'article'
+            seo: {
+                og: {
+                    'og:type': 'article'
+                }
+            }
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
@@ -128,10 +133,15 @@ describe('AppComponentSeoService', () => {
     it("should set meta og:title as 'My Unit Test Title'", async(() => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
-            ogType: 'article',
-            image: '/favicon.ico',
-            ogSiteName: 'Unit Test Site',
-            langAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}]
+            seo: {
+                localeAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
+                og: {
+                    'og:title': 'My Unit Test Title',
+                    'og:type': 'article',
+                    'og:site_name': 'Unit Test Site'
+                }
+            },
+            image: '/favicon.ico'
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
@@ -142,7 +152,11 @@ describe('AppComponentSeoService', () => {
     it("should set meta twitter:card as 'summary'", async(() => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
-            twitterCard: 'summary'
+            seo: {
+                tw: {
+                    'twitter:card': 'summary'
+                }
+            }
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
@@ -153,10 +167,15 @@ describe('AppComponentSeoService', () => {
     it("should set meta twitter:title as 'My Unit Test Title'", async(() => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
-            twitterCard: 'summary',
-            image: '/favicon.ico',
-            twitterSite: '@UnitTest',
-            twitterCreator: '@UnitTest'
+            seo: {
+                tw: {
+                    'twitter:title': 'My Unit Test Title',
+                    'twitter:card': 'summary',
+                    'twitter:site': '@UnitTest',
+                    'twitter:creator': '@UnitTest'
+                }
+            },
+            image: '/favicon.ico'
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
@@ -166,21 +185,44 @@ describe('AppComponentSeoService', () => {
 
     it("should set meta robots as 'index,follow'", async(() => {
         comp.seo.setHtmlTags({
-            robots: 'index, follow',
-            author: 'unit-test',
-            owner: 'unit-test',
-            copyright: 'Unit Test 2018',
-            articleAuthorURL: 'https://unit-test-owner.com',
-            articlePublisherURL: 'https://unit-test-publiser.com',
-            facebookAppID: '123456',
-            facebookAdmins: '000001',
-            googlePublisher: 'https://plus.google.com/unit-test',
-            langAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}]
+            seo: {
+                localeAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
+                custom: {
+                    robots: 'index, follow',
+                    author: 'unit-test',
+                    owner: 'unit-test',
+                    copyright: 'Unit Test 2018'
+                },
+                og: {
+                    'fb:app_id': '123456',
+                    'fb:admins': '000001'
+                }
+            }
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
             .getTag('name="robots"').content)
             .toContain('index, follow');
+    }));
+
+    it('should work properly with different defaultData on environment', async(() => {
+        const currentDefaultData = {...environment.defaultData};
+        environment.defaultData = {
+            defaultTitle: 'My Unit Test Title',
+            defaultDescription: 'My Unit Test Description',
+            'twitter:site': '@UnitTest',
+            'twitter:creator': '@UnitTest',
+            'fb:app_id': '123456',
+            'fb:admins': '000001'
+        };
+        comp.seo.setHtmlTags({
+            seo: {}
+        });
+        fixture.detectChanges();
+        expect(comp.seo.getMeta()
+            .getTag('name="twitter:site"').content)
+            .toContain('@UnitTest');
+        environment.defaultData = currentDefaultData;
     }));
 
 });
