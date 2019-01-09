@@ -11,7 +11,6 @@ const db = admin.firestore();
 export const generateSiteMap = async (snap: DocumentSnapshot) => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
-    const promiseList = [];
     const collectionList = [];
     const languageCodes = ['en-US', 'tr-TR'];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -21,12 +20,10 @@ export const generateSiteMap = async (snap: DocumentSnapshot) => {
         }
     }
 
-    for (const mainCollection of collectionList) {
-        const pMain = db.collection(mainCollection).get();
-        promiseList.push(pMain);
-        pMain
-            .then((mainDocsSnapshot) => {
-                mainDocsSnapshot.forEach((mainDoc) => {
+    return Promise.all(collectionList.map(async (mainCollection) =>
+        db.collection(mainCollection).get()
+            .then(async (mainDocsSnapshot) =>
+                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                     const mData = mainDoc.data();
                     const languageCode = mainCollection.endsWith('tr-TR') ? 'tr' : 'en';
                     urlList.push({
@@ -36,14 +33,12 @@ export const generateSiteMap = async (snap: DocumentSnapshot) => {
                         // tslint:disable-next-line:no-string-literal
                         img: mainDoc['image']
                     });
-                });
-            })
+
+                    return Promise.resolve();
+                })))
             .catch((err) => {
                 console.error('db.collection().get()', err);
-            });
-    }
-
-    return Promise.all(promiseList)
+            })))
         .then(async (values) => {
             const sm = sitemap.createSitemap({
                 hostname: FUNCTIONS_CONFIG.hostname,
@@ -89,7 +84,7 @@ export const generateSEOData = async (snap: DocumentSnapshot) => {
             .then(async (mainDocsSnapshot) =>
                 Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                     const mData = mainDoc.data();
-                    if (mData.hasOwnProperty('seo')) {
+                    if (!mData.hasOwnProperty('seo')) {
                         const cultureCode = mainCollection.endsWith('tr-TR') ? 'tr-TR' : 'en-US';
                         const languageCode = cultureCode.substring(0, 2);
                         const cultureCodeAlt = cultureCode === 'tr-TR' ? 'en-US' : 'tr-TR';
