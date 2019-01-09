@@ -88,7 +88,7 @@ export class SeoService {
             this.updateLink({
                 rel: 'alternate',
                 href: `${protocol}//${host}${langAlternate.slug}`,
-                hreflang: langAlternate.languageCode
+                hreflang: langAlternate.cultureCode
             });
         }
 

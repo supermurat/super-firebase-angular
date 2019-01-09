@@ -5,14 +5,7 @@
  */
 export class PageSeoModel {
     /** alternate language object array of page */
-    localeAlternates?: Array<{
-        /** alternate language code of page */
-        languageCode: string,
-        /** alternate culture code of page */
-        cultureCode: string,
-        /** alternate slug of page */
-        slug: string
-    }>;
+    localeAlternates?: Array<LocaleAlternateModel>;
 
     /**
      * custom meta data of page
@@ -34,4 +27,14 @@ export class PageSeoModel {
      * Note 2: if og is not undefined we will add "og:url" and "og:locale" automatically
      */
     og?: any;
+}
+
+/**
+ * Locale Alternate Model
+ */
+class LocaleAlternateModel {
+    /** alternate culture code of page */
+    cultureCode: string;
+    /** alternate slug of page */
+    slug: string;
 }

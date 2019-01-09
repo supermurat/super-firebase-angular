@@ -134,7 +134,7 @@ describe('AppComponentSeoService', () => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             seo: {
-                localeAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
+                localeAlternates: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
                 og: {
                     'og:title': 'My Unit Test Title',
                     'og:type': 'article',
@@ -186,7 +186,7 @@ describe('AppComponentSeoService', () => {
     it("should set meta robots as 'index,follow'", async(() => {
         comp.seo.setHtmlTags({
             seo: {
-                localeAlternates: [{languageCode: 'tr', cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
+                localeAlternates: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
                 custom: {
                     robots: 'index, follow',
                     author: 'unit-test',
