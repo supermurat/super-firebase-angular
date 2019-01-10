@@ -8,4 +8,6 @@ export class JobModel {
     startedBy?: string;
     /** result of action */
     result?: string;
+    /** do you want to overwrite current data */
+    overwrite?: string;
 }

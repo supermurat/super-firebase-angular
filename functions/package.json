@@ -34,6 +34,7 @@
     "core-js": "^2.6.1",
     "firebase": "5.7.1",
     "grpc": "^1.17.0",
+    "html2plaintext": "^2.1.2",
     "protractor": "~5.4.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.3",
