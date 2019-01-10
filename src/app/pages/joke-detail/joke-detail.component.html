@@ -3,7 +3,7 @@
     <div class="col-md-8">
         <div *ngIf="joke$ | async as content">
             <article class="card my-4">
-                <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="{{ content.imageAltText }}"/>
+                <img class="card-img-top" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
                 <div class="card-body">
                     <h2 class="card-title"><a [routerLink]="[content.routePath, jokeID]">{{ content.title }}</a></h2>
                     <p class="card-text" [innerHTML]="content.content"></p>

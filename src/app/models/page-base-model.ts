@@ -1,4 +1,5 @@
 import { CarouselModel } from './carousel-model';
+import { ImageModel } from './image-model';
 import { PageSeoModel } from './page-seo-model';
 
 /**
@@ -18,17 +19,15 @@ export class PageBaseModel {
     /** description of record */
     description?: string;
     /** image url of content */
-    image?: string;
-    /** image alternate text */
-    imageAltText?: string;
+    image?: ImageModel;
     /** html content of page */
     content?: any;
     /** taxonomy */
     taxonomy?: any; // key: link, value: title
     /** carousel item array of page */
     carousel?: CarouselModel;
-    /** url of background cover image */
-    backgroundCoverUrl?: CarouselModel;
+    /** background cover image */
+    backgroundCoverImage?: ImageModel;
     /** summary html content of page */
     contentSummary?: string;
     /** unique key for translations */

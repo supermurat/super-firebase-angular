@@ -10,7 +10,7 @@
     <div class="col-md-8 scroll-content mt-4" appScrollable (scrollPosition)="scrollHandler($event)">
 
         <article class="card mb-4" *ngFor="let content of pagination.data | async; trackBy:pageService.trackByIndex">
-            <img class="card-img-top" *ngIf="content.image" [src]="content.image" alt="Card image cap"/>
+            <img class="card-img-top" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
             <div class="card-body">
                 <h2 class="card-title"><a [routerLink]="[content.routePath, content.path]">{{ content.title }}</a></h2>
                 <p class="card-text" [innerHTML]="content.contentSummary"></p>

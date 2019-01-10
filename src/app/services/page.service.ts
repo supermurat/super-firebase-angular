@@ -67,8 +67,8 @@ export class PageService {
     initPage(page: PageBaseModel): void {
         this.seo.setHtmlTags(page);
         this.carouselService.init(page.carousel);
-        if (page.backgroundCoverUrl) {
-            this.renderer.setStyle(this.document.body, 'background-image', `url(${page.backgroundCoverUrl})`);
+        if (page.backgroundCoverImage) {
+            this.renderer.setStyle(this.document.body, 'background-image', `url(${page.backgroundCoverImage.src})`);
         } else {
             this.renderer.setStyle(this.document.body, 'background-image', '');
         }

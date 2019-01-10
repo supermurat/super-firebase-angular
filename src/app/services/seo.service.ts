@@ -66,7 +66,7 @@ export class SeoService {
         this.meta.updateTag({name: 'description', content: tempPage.description});
         this.meta.updateTag({itemprop: 'description', content: tempPage.description});
         if (tempPage.image) {
-            this.meta.updateTag({itemprop: 'image', content: tempPage.image});
+            this.meta.updateTag({itemprop: 'image', content: tempPage.image.src});
         }
 
         Object.keys(tempPage.seo.tw)
