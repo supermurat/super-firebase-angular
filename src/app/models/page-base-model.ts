@@ -1,10 +1,10 @@
 import { CarouselModel } from './carousel-model';
-import { HtmlDocumentModel } from './html-document-model';
+import { PageSeoModel } from './page-seo-model';
 
 /**
  * Page Base Class
  */
-export class PageBaseModel extends HtmlDocumentModel {
+export class PageBaseModel {
     /** id of record */
     id?: string;
     /** path of record */
@@ -13,6 +13,14 @@ export class PageBaseModel extends HtmlDocumentModel {
     routePath?: string;
     /** order number of record */
     orderNo?: number;
+    /** title of record */
+    title?: string;
+    /** description of record */
+    description?: string;
+    /** image url of content */
+    image?: string;
+    /** image alternate text */
+    imageAltText?: string;
     /** html content of page */
     content?: any;
     /** taxonomy */
@@ -33,4 +41,7 @@ export class PageBaseModel extends HtmlDocumentModel {
     changed?: any = {seconds: undefined};
     /** last changer person */
     changedBy?: string;
+
+    /** seo data of record */
+    seo?: PageSeoModel;
 }

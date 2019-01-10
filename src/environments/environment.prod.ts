@@ -1,8 +1,14 @@
 /** configuration values of production environment */
 export const environment = {
     production: true,
-    defaultTitle: '',
-    defaultDescription: '',
     protocol: 'https://',
-    host: 'supermurat.com'
+    host: 'supermurat.com',
+    defaultData: {
+        defaultTitle: '',
+        defaultDescription: '',
+        'twitter:site': undefined,
+        'twitter:creator': undefined,
+        'fb:app_id': undefined,
+        'fb:admins': undefined
+    }
 };

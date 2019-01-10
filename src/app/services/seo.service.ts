@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
-import { HtmlDocumentModel, HtmlLinkElementModel, HttpStatusModel } from '../models';
+import { HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
 
 /**
  * Seo Service
@@ -40,110 +40,79 @@ export class SeoService {
 
     /**
      * Set Html Tags
-     * @param currentHtmlTags: html tags of current page
+     * @param page: current page
      */
-    setHtmlTags(currentHtmlTags: HtmlDocumentModel): void {
-        const defaultTags = new HtmlDocumentModel();
-        defaultTags.cultureCode = this.locale;
-        defaultTags.languageCode = this.locale.substr(0, 2);
-        defaultTags.slug = this.platformLocation.pathname;
-
-        defaultTags.twitterTitle = defaultTags.ogTitle = currentHtmlTags.title;
-        defaultTags.twitterDescription = defaultTags.ogDescription = currentHtmlTags.description;
-        defaultTags.twitterImage = defaultTags.ogImage = currentHtmlTags.image;
-
-        const htmlTags = {...defaultTags, ...currentHtmlTags};
-
+    setHtmlTags(page: PageBaseModel): void {
+        const tempPage = {
+            ...{seo: {localeAlternates: [], custom: {}, tw: {}, og: {}}},
+            ...page};
+        for (const key of ['localeAlternates', 'custom', 'tw', 'og']) {
+            if (Object.keys(tempPage.seo)
+                .indexOf(key) === -1) {
+                tempPage.seo[key] = key === 'localeAlternates' ? [] : {};
+            }
+        }
         const protocol = environment.protocol;
         const host = environment.host;
+        const cultureCode = this.locale;
+        const languageCode = this.locale.substr(0, 2);
+        const slug = this.platformLocation.pathname;
 
-        // set a title
-        this.titleService.setTitle(htmlTags.title);
-        this.meta.updateTag({itemprop: 'name', content: htmlTags.title});
+        this.titleService.setTitle(tempPage.title);
+        this.meta.updateTag({itemprop: 'name', content: tempPage.title});
 
-        this.updateLink({rel: 'canonical', href: `${protocol}${host}${htmlTags.slug}`});
+        this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`});
 
-        this.meta.updateTag({name: 'description', content: htmlTags.description});
-        this.meta.updateTag({itemprop: 'description', content: htmlTags.description});
-        if (htmlTags.image) {
-            this.meta.updateTag({itemprop: 'image', content: htmlTags.image});
-        }
-        // set meta tags
-        if (htmlTags.twitterCard) {
-            this.meta.updateTag({name: 'twitter:card', content: htmlTags.twitterCard});
-            this.meta.updateTag({name: 'twitter:title', content: htmlTags.twitterTitle});
-            this.meta.updateTag({name: 'twitter:description', content: htmlTags.twitterDescription});
-            if (htmlTags.twitterImage) {
-                this.meta.updateTag({name: 'twitter:image:src', content: htmlTags.twitterImage});
-            }
-            if (htmlTags.twitterSite) {
-                this.meta.updateTag({name: 'twitter:site', content: htmlTags.twitterSite});
-            }
-            if (htmlTags.twitterCreator) {
-                this.meta.updateTag({name: 'twitter:creator', content: htmlTags.twitterCreator});
-            }
+        this.meta.updateTag({name: 'description', content: tempPage.description});
+        this.meta.updateTag({itemprop: 'description', content: tempPage.description});
+        if (tempPage.image) {
+            this.meta.updateTag({itemprop: 'image', content: tempPage.image});
         }
 
-        if (htmlTags.ogType) {
-            this.meta.updateTag({property: 'og:type', content: htmlTags.ogType});
-            this.meta.updateTag({property: 'og:title', content: htmlTags.ogTitle});
-            this.meta.updateTag({property: 'og:description', content: htmlTags.ogDescription});
-            this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${htmlTags.slug}`});
-            this.meta.updateTag({property: 'og:locale', content: htmlTags.cultureCode});
-            if (htmlTags.ogSiteName) {
-                this.meta.updateTag({property: 'og:site_name', content: htmlTags.ogSiteName});
-            }
-            if (htmlTags.ogImage) {
-                this.meta.updateTag({property: 'og:image', content: htmlTags.ogImage});
-            }
-        }
-        if (htmlTags.articleAuthorURL) {
-            this.meta.updateTag({property: 'article:author', content: htmlTags.articleAuthorURL});
-        }
-        if (htmlTags.articlePublisherURL) {
-            this.meta.updateTag({property: 'article:publisher', content: htmlTags.articlePublisherURL});
-        }
-
-        if (htmlTags.robots) {
-            this.meta.updateTag({name: 'robots', content: htmlTags.robots});
-        }
-        if (htmlTags.author) {
-            this.meta.updateTag({name: 'author', content: htmlTags.author});
-        }
-        if (htmlTags.owner) {
-            this.meta.updateTag({name: 'owner', content: htmlTags.owner});
-        }
-        if (htmlTags.copyright) {
-            this.meta.updateTag({name: 'copyright', content: htmlTags.copyright});
-        }
-
-        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: htmlTags.title});
-        this.meta.updateTag({httpEquiv: 'Content-Language', content: htmlTags.languageCode});
-        if (htmlTags.facebookAppID) {
-            this.meta.updateTag({property: 'fb:app_id', content: htmlTags.facebookAppID});
-        }
-        if (htmlTags.facebookAdmins) {
-            this.meta.updateTag({property: 'fb:admins', content: htmlTags.facebookAdmins});
-        }
-        if (htmlTags.googlePublisher) {
-            this.updateLink({rel: 'publisher', href: htmlTags.googlePublisher});
-        }
-
-        this.updateLink({
-            rel: 'alternate',
-            href: `${protocol}//${host}${htmlTags.slug}`,
-            hreflang: 'x-default'
-        });
-        for (const langAlternate of htmlTags.langAlternates) {
-            if (htmlTags.ogType) {
-                this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode});
-            }
+        Object.keys(tempPage.seo.tw)
+            .forEach((prop: string) => {
+                this.meta.updateTag({name: prop, content: tempPage.seo.tw[prop]});
+            });
+        this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${slug}`});
+        this.meta.updateTag({property: 'og:locale', content: cultureCode});
+        Object.keys(tempPage.seo.og)
+            .forEach((prop: string) => {
+                this.meta.updateTag({property: prop, content: tempPage.seo.og[prop]});
+            });
+        Object.keys(tempPage.seo.custom)
+            .forEach((prop: string) => {
+                this.meta.updateTag({name: prop, content: tempPage.seo.custom[prop]});
+            });
+        for (const langAlternate of tempPage.seo.localeAlternates) {
+            this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode});
             this.updateLink({
                 rel: 'alternate',
                 href: `${protocol}//${host}${langAlternate.slug}`,
-                hreflang: langAlternate.languageCode
+                hreflang: langAlternate.cultureCode
             });
         }
+
+        if (!tempPage.seo.tw['twitter:site'] && environment.defaultData['twitter:site']) {
+            this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']});
+        }
+        if (!tempPage.seo.tw['twitter:creator'] && environment.defaultData['twitter:creator']) {
+            this.meta.updateTag({name: 'twitter:creator', content: environment.defaultData['twitter:creator']});
+        }
+        if (!tempPage.seo.og['fb:app_id'] && environment.defaultData['fb:app_id']) {
+            this.meta.updateTag({property: 'fb:app_id', content: environment.defaultData['fb:app_id']});
+        }
+        if (!tempPage.seo.og['fb:admins'] && environment.defaultData['fb:admins']) {
+            this.meta.updateTag({property: 'fb:admins', content: environment.defaultData['fb:admins']});
+        }
+
+        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title});
+        this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode});
+
+        this.updateLink({
+            rel: 'alternate',
+            href: `${protocol}//${host}${slug}`,
+            hreflang: 'x-default'
+        });
     }
 
     /**

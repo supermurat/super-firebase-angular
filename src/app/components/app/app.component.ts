@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpStatusModel } from '../../models';
 import { AlertService, PaginationService, SeoService } from '../../services';
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
      * @param doc: DOCUMENT
      * @param locale: LOCALE_ID
      * @param renderer: Renderer2
+     * @param router: Router
      * @param seo: SeoService
      * @param alert: AlertService
      * @param pagination: PaginationService
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
                 @Inject(DOCUMENT) doc: Document,
                 @Inject(LOCALE_ID) locale: string,
                 renderer: Renderer2,
+                public router: Router,
                 public seo: SeoService,
                 public alert: AlertService,
                 public pagination: PaginationService) {

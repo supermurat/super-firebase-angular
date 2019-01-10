@@ -3,7 +3,7 @@ export * from './blog-model';
 export * from './carousel-model';
 export * from './carousel-item-model';
 export * from './html-link-element-model';
-export * from './html-document-model';
+export * from './page-seo-model';
 export * from './http-status-model';
 export * from './joke-model';
 export * from './page-base-model';

@@ -11,7 +11,6 @@ const db = admin.firestore();
 export const generateSiteMap = async (snap: DocumentSnapshot) => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
-    const promiseList = [];
     const collectionList = [];
     const languageCodes = ['en-US', 'tr-TR'];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -21,29 +20,25 @@ export const generateSiteMap = async (snap: DocumentSnapshot) => {
         }
     }
 
-    for (const mainCollection of collectionList) {
-        const pMain = db.collection(mainCollection).get();
-        promiseList.push(pMain);
-        pMain
-            .then((mainDocsSnapshot) => {
-                mainDocsSnapshot.forEach((mainDoc) => {
+    return Promise.all(collectionList.map(async (mainCollection) =>
+        db.collection(mainCollection).get()
+            .then(async (mainDocsSnapshot) =>
+                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                     const mData = mainDoc.data();
-                    const langPrefix = mainCollection.endsWith('tr-TR') ? 'tr' : 'en';
+                    const languageCode = mainCollection.endsWith('tr-TR') ? 'tr' : 'en';
                     urlList.push({
-                        url: `${langPrefix}/${mData.routePath}/${mainDoc.id}`.replace('//', '/'),
+                        url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
                         changefreq: (mainCollection.startsWith('pages') || mainCollection.startsWith('taxonomy'))
                             ? 'daily' : 'weekly',
                         // tslint:disable-next-line:no-string-literal
                         img: mainDoc['image']
                     });
-                });
-            })
+
+                    return Promise.resolve();
+                })))
             .catch((err) => {
                 console.error('db.collection().get()', err);
-            });
-    }
-
-    return Promise.all(promiseList)
+            })))
         .then(async (values) => {
             const sm = sitemap.createSitemap({
                 hostname: FUNCTIONS_CONFIG.hostname,
@@ -72,6 +67,85 @@ export const generateSiteMap = async (snap: DocumentSnapshot) => {
         });
 };
 
+export const generateSEOData = async (snap: DocumentSnapshot) => {
+    console.log('generateSEOData is started');
+    let processedDocCount = 0;
+    const collectionList = [];
+    const languageCodes = ['en-US', 'tr-TR'];
+    const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
+    for (const lang of languageCodes) {
+        for (const col of collections) {
+            collectionList.push(`${col}_${lang}`);
+        }
+    }
+
+    return Promise.all(collectionList.map(async (mainCollection) =>
+        db.collection(mainCollection).get()
+            .then(async (mainDocsSnapshot) =>
+                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                    const mData = mainDoc.data();
+                    if (!mData.hasOwnProperty('seo')) {
+                        const cultureCode = mainCollection.endsWith('tr-TR') ? 'tr-TR' : 'en-US';
+                        const languageCode = cultureCode.substring(0, 2);
+                        const cultureCodeAlt = cultureCode === 'tr-TR' ? 'en-US' : 'tr-TR';
+                        const languageCodeAlt = cultureCodeAlt.substring(0, 2);
+                        const seo = {
+                            localeAlternates: [] as Array<LocaleAlternateModel>// ,
+                            // custom: {},
+                            // tw: {},
+                            // og: {}
+                        };
+                        seo.localeAlternates.push({
+                            cultureCode,
+                            slug: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/')
+                        });
+
+                        return db.collection(mainCollection.replace(cultureCode, cultureCodeAlt))
+                            .where('i18nKey', '==', mData.i18nKey)
+                            .limit(1)
+                            .get()
+                            .then(async (documentSnapshots) => {
+                                if (documentSnapshots.docs.length > 0) {
+                                    const mainDocAlt = documentSnapshots.docs[0];
+                                    const mDataAlt = mainDocAlt.data();
+                                    seo.localeAlternates.push({
+                                        cultureCode: cultureCodeAlt,
+                                        slug: `${languageCodeAlt}/${mDataAlt.routePath}/${mainDocAlt.id}`
+                                            .replace(/[\/]+/g, '/')
+                                    });
+                                }
+
+                                return mainDoc.ref.set({seo}, {merge: true})
+                                    .then(() => {
+                                        processedDocCount++;
+                                    })
+                                    .catch((err) => {
+                                        console.error('mainDoc.ref.set()', err);
+                                    });
+                            })
+                            .catch((err) => {
+                                console.error('db.collection(replace(cultureCode, cultureCodeAlt)).get()', err);
+                            });
+                    }
+
+                    return Promise.resolve();
+                })))
+            .catch((err) => {
+                console.error('db.collection().get()', err);
+            })))
+        .then(async (values) =>
+            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log('generateSEOData is finished');
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
 export const jobRunner = functions.firestore
     .document('jobs/{jobId}')
     // tslint:disable-next-line:promise-function-async
@@ -80,6 +154,8 @@ export const jobRunner = functions.firestore
         const newValue = snap.data() as JobModel;
         if (newValue.actionKey === 'generateSiteMap') {
             return generateSiteMap(snap);
+        } else if (newValue.actionKey === 'generateSEOData') {
+            return generateSEOData(snap);
         }
 
         return Promise.resolve();
