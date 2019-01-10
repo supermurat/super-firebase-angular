@@ -183,15 +183,15 @@ export const myData = {
                 carouselItems: [
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
-                        title: 'Welcome to endless world!'
+                        caption: 'Welcome to endless world!'
                     },
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
-                        title: 'Isn\'t it beautiful?'
+                        caption: 'Isn\'t it beautiful?'
                     },
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
-                        title: 'Hey, what\'s up ? '
+                        caption: 'Hey, what\'s up ? '
                     }]
             }
         },
@@ -214,7 +214,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
+            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'}
         },
         jokes: {
             id: 'jokes',
@@ -267,15 +267,15 @@ export const myData = {
                 carouselItems: [
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
-                        title: 'Sonsuz dünyaya hoşgeldiniz!'
+                        caption: 'Sonsuz dünyaya hoşgeldiniz!'
                     },
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
-                        title: 'Harika değil mi?'
+                        caption: 'Harika değil mi?'
                     },
                     {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
-                        title: 'Hey, naber?'
+                        caption: 'Hey, naber?'
                     }]
             }
         },
@@ -298,7 +298,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverUrl: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'
+            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'}
         },
         eglence: {
             id: 'eglence',
@@ -389,8 +389,10 @@ export const myData = {
     'taxonomy_en-US': {
         'first-tag': {
             id: 'first-tag', routePath: '/tag', orderNo: -1, i18nKey: 'first-tag',
-            title: 'First Tag',
+            title: 'Related Contents to "First Tag"',
+            tagName: 'First Tag',
             created: {seconds: 1544207666},
+            changed: {seconds: 1544207666},
             __collection__contents: {
                 'article_first-article': {
                     id: 'article_first-article', path: 'first-article', routePath: '/article', orderNo: -1,
@@ -436,20 +438,26 @@ export const myData = {
         },
         'second-tag': {
             id: 'second-tag', routePath: '/tag', orderNo: -2, i18nKey: 'second-tag',
-            title: 'Second Tag',
-            created: {seconds: 1544207667}
+            title: 'Related Contents to "Second Tag"',
+            tagName: 'Second Tag',
+            created: {seconds: 1544207667},
+            changed: {seconds: 1544207666}
         },
         'third-tag': {
             id: 'third-tag', routePath: '/tag', orderNo: -3, i18nKey: 'third-tag',
-            title: 'Third Tag',
-            created: {seconds: 1544207668}
+            title: 'Related Contents to "Third Tag"',
+            tagName: 'Third Tag',
+            created: {seconds: 1544207668},
+            changed: {seconds: 1544207666}
         }
     },
     'taxonomy_tr-TR': {
         'ilk-etiket': {
             id: 'ilk-etiket', routePath: '/etiket', orderNo: -1, i18nKey: 'first-tag',
-            title: 'İlk Etiket',
+            title: '"İlk Etiket" ile Alakalı İçerikler',
+            tagName: 'İlk Etiket',
             created: {seconds: 1544207666},
+            changed: {seconds: 1544207666},
             __collection__contents: {
                 'makale_ilk-makale': {
                     id: 'makale_ilk-makale', path: 'ilk-makale', routePath: '/makale', orderNo: -1,
@@ -470,13 +478,17 @@ export const myData = {
         },
         'ikinci-etiket': {
             id: 'ikinci-etiket', routePath: '/etiket', orderNo: -2, i18nKey: 'second-tag',
-            title: 'İkinci Etiket',
-            created: {seconds: 1544207667}
+            title: '"İkinci Etiket" ile Alakalı İçerikler',
+            tagName: 'İkinci Etiket',
+            created: {seconds: 1544207667},
+            changed: {seconds: 1544207666}
         },
         'ucuncu-etiket': {
             id: 'ucuncu-etiket', routePath: '/etiket', orderNo: -3, i18nKey: 'third-tag',
-            title: 'Üçüncü Etiket',
-            created: {seconds: 1544207668}
+            title: '"Üçüncü Etiket" ile Alakalı İçerikler',
+            tagName: 'Üçüncü Etiket',
+            created: {seconds: 1544207668},
+            changed: {seconds: 1544207666}
         }
     },
     users: {

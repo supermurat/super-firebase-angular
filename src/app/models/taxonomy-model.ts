@@ -10,8 +10,8 @@ export class TaxonomyModel {
     routePath?: string;
     /** title of tag */
     title?: string;
-    /** content array of tag */
-    contents?: any;
+    /** tag name */
+    tagName?: string;
     /** order number of record */
     orderNo?: number;
     /** unique key for translations */

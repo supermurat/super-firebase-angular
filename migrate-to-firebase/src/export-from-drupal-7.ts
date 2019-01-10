@@ -78,10 +78,13 @@ const addToTaxonomy = (lang: string, element: any) => {
     if (lang === '_en-US') {
         newData.routePath = '/tag';
         addToRedirectionRecords('en/', element, 'tag/');
+        newData.title = `Related Contents to "${newData.tagName}"`;
     } else if (lang === '_tr-TR') {
         newData.routePath = '/etiket';
         addToRedirectionRecords('tr/', element, 'etiket/');
+        newData.title = `"${newData.tagName}" ile Alakalı İçerikler`;
     }
+    newData.changed = newData.created;
     newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
     newData.__collection__contents = {};
     dataFirestore[cnoTaxonomy + lang][element.documentID] = removeUnneededFields(newData);
@@ -163,12 +166,12 @@ const generateCommonFields = (newData: any) => {
         newData.contentSummary = getSummary(newData.content, 0);
     }
 
-    const cleanText = h2p(newData.contentSummary);
+    const cleanText = h2p(newData.contentSummary).replace(/[\r\n]/g, ' ');
     // tslint:disable-next-line: prefer-conditional-expression
     if (cleanText.indexOf(' ', 150) > -1) {
-        newData.description = `${h2p(cleanText).substring(0, cleanText.indexOf(' ', 150))}...`;
+        newData.description = `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...`;
     } else {
-        newData.description = `${h2p(cleanText).substring(0, 160)}...`;
+        newData.description = `${cleanText.substring(0, 160)}...`;
     }
 };
 
@@ -287,7 +290,7 @@ const downloadFiles = (htmlContent: string) => {
 
 const getTaxonomy = () => {
     connection.query(
-        `SELECT u.language, u.alias, t.tid, t.name AS 'title',
+        `SELECT u.language, u.alias, t.tid, t.name AS 'tagName',
 (SELECT FROM_UNIXTIME(MIN(ti.created)) FROM taxonomy_index ti WHERE ti.tid=t.tid) AS 'created'
 FROM taxonomy_term_data t
     LEFT JOIN url_alias u ON u.source = CONCAT('taxonomy/term/', t.tid) AND u.language=t.language AND u.pid IN (

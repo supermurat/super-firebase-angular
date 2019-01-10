@@ -1,13 +1,10 @@
+import { ImageModel } from './image-model';
 /**
  * Carousel Item Class
  */
-export class CarouselItemModel {
-    /** src of image */
-    src?: string;
-    /** alt of image */
-    alt?: string;
-    /** title of image */
-    title?: string;
-    /** text of image */
+export class CarouselItemModel extends ImageModel {
+    /** caption of carousel item */
+    caption?: string;
+    /** text of carousel item */
     text?: string;
 }

@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
+import * as h2p from 'html2plaintext';
 import * as sitemap from 'sitemap';
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel } from './job-model';
@@ -8,7 +9,7 @@ import { SiteMapUrlModel } from './site-map-url-model';
 
 const db = admin.firestore();
 
-export const generateSiteMap = async (snap: DocumentSnapshot) => {
+export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel) => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
     const collectionList = [];
@@ -67,7 +68,7 @@ export const generateSiteMap = async (snap: DocumentSnapshot) => {
         });
 };
 
-export const generateSEOData = async (snap: DocumentSnapshot) => {
+export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel) => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
     const collectionList = [];
@@ -84,7 +85,7 @@ export const generateSEOData = async (snap: DocumentSnapshot) => {
             .then(async (mainDocsSnapshot) =>
                 Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                     const mData = mainDoc.data();
-                    if (!mData.hasOwnProperty('seo')) {
+                    if (!mData.hasOwnProperty('seo') || jobData.overwrite) {
                         const cultureCode = mainCollection.endsWith('tr-TR') ? 'tr-TR' : 'en-US';
                         const languageCode = cultureCode.substring(0, 2);
                         const cultureCodeAlt = cultureCode === 'tr-TR' ? 'en-US' : 'tr-TR';
@@ -146,16 +147,72 @@ export const generateSEOData = async (snap: DocumentSnapshot) => {
         });
 };
 
+export const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel) => {
+    console.log('generateDescription is started');
+    let processedDocCount = 0;
+    const collectionList = [];
+    const languageCodes = ['en-US', 'tr-TR'];
+    const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
+    for (const lang of languageCodes) {
+        for (const col of collections) {
+            collectionList.push(`${col}_${lang}`);
+        }
+    }
+
+    return Promise.all(collectionList.map(async (mainCollection) =>
+        db.collection(mainCollection).get()
+            .then(async (mainDocsSnapshot) =>
+                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                    const mData = mainDoc.data();
+                    if (!mData.hasOwnProperty('description') || jobData.overwrite) {
+                        let cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
+                            mData.content ? h2p(mData.content) :
+                                mData.title;
+                        cleanText = cleanText.replace(/[\r\n]/g, ' ');
+
+                        const description = cleanText.indexOf(' ', 150) > -1 ?
+                            `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...` :
+                            `${cleanText.substring(0, 160)}...`;
+
+                        return mainDoc.ref.set({description}, {merge: true})
+                            .then(() => {
+                                processedDocCount++;
+                            })
+                            .catch((err) => {
+                                console.error('mainDoc.ref.set()', err);
+                            });
+                    }
+
+                    return Promise.resolve();
+                })))
+            .catch((err) => {
+                console.error('db.collection().get()', err);
+            })))
+        .then(async (values) =>
+            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log('generateDescription is finished');
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
 export const jobRunner = functions.firestore
     .document('jobs/{jobId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) => {
         console.log('jobRunner is started');
-        const newValue = snap.data() as JobModel;
-        if (newValue.actionKey === 'generateSiteMap') {
-            return generateSiteMap(snap);
-        } else if (newValue.actionKey === 'generateSEOData') {
-            return generateSEOData(snap);
+        const jobData = snap.data() as JobModel;
+        if (jobData.actionKey === 'generateSiteMap') {
+            return generateSiteMap(snap, jobData);
+        } else if (jobData.actionKey === 'generateSEOData') {
+            return generateSEOData(snap, jobData);
+        } else if (jobData.actionKey === 'generateDescription') {
+            return generateDescription(snap, jobData);
         }
 
         return Promise.resolve();

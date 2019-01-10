@@ -141,7 +141,7 @@ describe('AppComponentSeoService', () => {
                     'og:site_name': 'Unit Test Site'
                 }
             },
-            image: '/favicon.ico'
+            image: {src: '/favicon.ico'}
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
@@ -175,7 +175,7 @@ describe('AppComponentSeoService', () => {
                     'twitter:creator': '@UnitTest'
                 }
             },
-            image: '/favicon.ico'
+            image: {src: '/favicon.ico'}
         });
         fixture.detectChanges();
         expect(comp.seo.getMeta()
