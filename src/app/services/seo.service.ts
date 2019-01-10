@@ -59,32 +59,33 @@ export class SeoService {
         const slug = this.platformLocation.pathname;
 
         this.titleService.setTitle(tempPage.title);
-        this.meta.updateTag({itemprop: 'name', content: tempPage.title});
+        this.meta.updateTag({itemprop: 'name', content: tempPage.title}, "itemprop='name'");
 
         this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`});
 
-        this.meta.updateTag({name: 'description', content: tempPage.description});
-        this.meta.updateTag({itemprop: 'description', content: tempPage.description});
+        this.meta.updateTag({name: 'description', content: tempPage.description}, "name='description'");
+        this.meta.updateTag({itemprop: 'description', content: tempPage.description}, "itemprop='description'");
         if (tempPage.image) {
-            this.meta.updateTag({itemprop: 'image', content: tempPage.image.src});
+            this.meta.updateTag({itemprop: 'image', content: tempPage.image.src}, "itemprop='image'");
         }
 
         Object.keys(tempPage.seo.tw)
             .forEach((prop: string) => {
-                this.meta.updateTag({name: prop, content: tempPage.seo.tw[prop]});
+                this.meta.updateTag({name: prop, content: tempPage.seo.tw[prop]}, `name='${prop}'`);
             });
-        this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${slug}`});
-        this.meta.updateTag({property: 'og:locale', content: cultureCode});
+        this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${slug}`}, "property='og:url'");
+        this.meta.updateTag({property: 'og:locale', content: cultureCode}, "property='og:locale'");
         Object.keys(tempPage.seo.og)
             .forEach((prop: string) => {
-                this.meta.updateTag({property: prop, content: tempPage.seo.og[prop]});
+                this.meta.updateTag({property: prop, content: tempPage.seo.og[prop]}, `property='${prop}'`);
             });
         Object.keys(tempPage.seo.custom)
             .forEach((prop: string) => {
-                this.meta.updateTag({name: prop, content: tempPage.seo.custom[prop]});
+                this.meta.updateTag({name: prop, content: tempPage.seo.custom[prop]}, `name='${prop}'`);
             });
         for (const langAlternate of tempPage.seo.localeAlternates) {
-            this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode});
+            this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode},
+                "property='og:locale:alternate'");
             this.updateLink({
                 rel: 'alternate',
                 href: `${protocol}//${host}${langAlternate.slug}`,
@@ -93,20 +94,24 @@ export class SeoService {
         }
 
         if (!tempPage.seo.tw['twitter:site'] && environment.defaultData['twitter:site']) {
-            this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']});
+            this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']},
+                "name='twitter:site'");
         }
         if (!tempPage.seo.tw['twitter:creator'] && environment.defaultData['twitter:creator']) {
-            this.meta.updateTag({name: 'twitter:creator', content: environment.defaultData['twitter:creator']});
+            this.meta.updateTag({name: 'twitter:creator', content: environment.defaultData['twitter:creator']},
+                "name='twitter:creator'");
         }
         if (!tempPage.seo.og['fb:app_id'] && environment.defaultData['fb:app_id']) {
-            this.meta.updateTag({property: 'fb:app_id', content: environment.defaultData['fb:app_id']});
+            this.meta.updateTag({property: 'fb:app_id', content: environment.defaultData['fb:app_id']},
+                "property='fb:app_id'");
         }
         if (!tempPage.seo.og['fb:admins'] && environment.defaultData['fb:admins']) {
-            this.meta.updateTag({property: 'fb:admins', content: environment.defaultData['fb:admins']});
+            this.meta.updateTag({property: 'fb:admins', content: environment.defaultData['fb:admins']},
+                "property='fb:admins'");
         }
 
-        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title});
-        this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode});
+        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title}, "name='apple-mobile-web-app-title'");
+        this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode}, "httpEquiv='Content-Language'");
 
         this.updateLink({
             rel: 'alternate',

@@ -166,7 +166,7 @@ const generateCommonFields = (newData: any) => {
         newData.contentSummary = getSummary(newData.content, 0);
     }
 
-    const cleanText = h2p(newData.contentSummary);
+    const cleanText = h2p(newData.contentSummary).replace(/[\r\n]/g, ' ');
     // tslint:disable-next-line: prefer-conditional-expression
     if (cleanText.indexOf(' ', 150) > -1) {
         newData.description = `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...`;

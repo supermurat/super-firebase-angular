@@ -165,9 +165,10 @@ export const generateDescription = async (snap: DocumentSnapshot, jobData: JobMo
                 Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                     const mData = mainDoc.data();
                     if (!mData.hasOwnProperty('description') || jobData.overwrite) {
-                        const cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
+                        let cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
                             mData.content ? h2p(mData.content) :
                                 mData.title;
+                        cleanText = cleanText.replace(/[\r\n]/g, ' ');
 
                         const description = cleanText.indexOf(' ', 150) > -1 ?
                             `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...` :
