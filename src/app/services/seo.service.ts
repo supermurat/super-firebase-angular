@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser, PlatformLocation } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, RendererFactory2, ViewEncapsulation } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -12,6 +12,8 @@ import { HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models'
  */
 @Injectable()
 export class SeoService {
+    /** Renderer2 object */
+    renderer: Renderer2;
     /** http status */
     private readonly httpStatus$ = new Subject<HttpStatusModel>();
 
@@ -20,22 +22,20 @@ export class SeoService {
      * @param meta: Meta
      * @param titleService: Title
      * @param router: Router
-     * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
      * @param platformId: PLATFORM_ID
      * @param appConfig: APP_CONFIG
      * @param locale: LOCALE_ID
-     * @param document: DOCUMENT
+     * @param doc: DOCUMENT
      */
     constructor(private readonly meta: Meta,
                 private readonly titleService: Title,
                 private readonly router: Router,
-                private readonly rendererFactory: RendererFactory2,
                 private readonly platformLocation: PlatformLocation,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
                 @Inject(LOCALE_ID) private readonly locale: string,
-                @Inject(DOCUMENT) public document) {
+                @Inject(DOCUMENT) public doc) {
     }
 
     /**
@@ -61,38 +61,39 @@ export class SeoService {
         this.titleService.setTitle(tempPage.title);
         this.meta.updateTag({itemprop: 'name', content: tempPage.title}, "itemprop='name'");
 
-        this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`});
+        this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`}, "link[rel='canonical']");
 
         this.meta.updateTag({name: 'description', content: tempPage.description}, "name='description'");
         this.meta.updateTag({itemprop: 'description', content: tempPage.description}, "itemprop='description'");
         if (tempPage.image) {
             this.meta.updateTag({itemprop: 'image', content: tempPage.image.src}, "itemprop='image'");
+        } else {
+            this.meta.removeTag("itemprop='image'");
         }
 
         Object.keys(tempPage.seo.tw)
             .forEach((prop: string) => {
                 this.meta.updateTag({name: prop, content: tempPage.seo.tw[prop]}, `name='${prop}'`);
+                // TODO: clear added tags on next page
             });
-        this.meta.updateTag({property: 'og:url', content: `${protocol}//${host}${slug}`}, "property='og:url'");
-        this.meta.updateTag({property: 'og:locale', content: cultureCode}, "property='og:locale'");
+        this.meta.updateTag({property: 'og:url', content: `${protocol}${host}${slug}`}, "property='og:url'");
+        this.meta.updateTag({property: 'og:locale', content: cultureCode.replace('-', '_')},
+            "property='og:locale'");
         Object.keys(tempPage.seo.og)
             .forEach((prop: string) => {
                 this.meta.updateTag({property: prop, content: tempPage.seo.og[prop]}, `property='${prop}'`);
+                // TODO: clear added tags on next page
             });
         Object.keys(tempPage.seo.custom)
             .forEach((prop: string) => {
                 this.meta.updateTag({name: prop, content: tempPage.seo.custom[prop]}, `name='${prop}'`);
+                // TODO: clear added tags on next page
             });
-        for (const langAlternate of tempPage.seo.localeAlternates) {
-            this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode},
-                "property='og:locale:alternate'");
-            this.updateLink({
-                rel: 'alternate',
-                href: `${protocol}//${host}${langAlternate.slug}`,
-                hreflang: langAlternate.cultureCode
-            });
-        }
 
+        this.meta.removeTag("name='twitter:site'");
+        this.meta.removeTag("name='twitter:creator'");
+        this.meta.removeTag("property='fb:app_id'");
+        this.meta.removeTag("property='fb:admins'");
         if (!tempPage.seo.tw['twitter:site'] && environment.defaultData['twitter:site']) {
             this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']},
                 "name='twitter:site'");
@@ -113,9 +114,19 @@ export class SeoService {
         this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title}, "name='apple-mobile-web-app-title'");
         this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode}, "httpEquiv='Content-Language'");
 
+        this.meta.removeTag("property='og:locale:alternate'");
+        this.removeLink("link[rel='alternate']");
+        for (const langAlternate of tempPage.seo.localeAlternates) {
+            this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode.replace('-', '_')});
+            this.updateLink({
+                rel: 'alternate',
+                href: `${protocol}${host}${langAlternate.slug}`,
+                hreflang: langAlternate.cultureCode
+            });
+        }
         this.updateLink({
             rel: 'alternate',
-            href: `${protocol}//${host}${slug}`,
+            href: `${protocol}${host}${slug}`,
             hreflang: 'x-default'
         });
     }
@@ -123,38 +134,31 @@ export class SeoService {
     /**
      * add or update link to head of document
      * @param linkObject: tags of link
+     * @param attrSelector: selector to remove old link elements
      */
-    updateLink(linkObject: HtmlLinkElementModel): void {
+    updateLink(linkObject: HtmlLinkElementModel, attrSelector?: string): void {
         try {
-            const renderer = this.rendererFactory.createRenderer(this.document, {
-                id: '-1',
-                encapsulation: ViewEncapsulation.None,
-                styles: [],
-                data: {}
-            });
-
-            const link = renderer.createElement('link');
-
-            const head = this.document.head;
-
-            // istanbul ignore if
-            if (head === null) {
-                return; // <head> not found within DOCUMENT
-            }
-
+            this.removeLink(attrSelector);
+            const link = this.renderer.createElement('link');
             Object.keys(linkObject)
                 .forEach((prop: string) => {
-                    renderer.setAttribute(link, prop, linkObject[prop]);
+                    this.renderer.setAttribute(link, prop, linkObject[prop]);
                 });
+            this.renderer.appendChild(this.doc.head, link);
+        } catch (e) {
+            // console.error('Error within linkService : ', e);
+        }
+    }
 
-            // istanbul ignore next
-            const attr: string = linkObject.rel ? 'rel' : 'hreflang';
-            const attrSelector = `${attr}="${linkObject[attr]}"`;
-            const linkTags = this.document.querySelectorAll(`link[${attrSelector}]`);
-            for (const oldLink of linkTags) {
-                renderer.removeChild(head, oldLink);
+    /**
+     * add or remove link from head of document
+     * @param attrSelector: selector to remove old link elements
+     */
+    removeLink(attrSelector?: string): void {
+        try {
+            for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
+                this.renderer.removeChild(this.doc.head, oldLink);
             }
-            renderer.appendChild(head, link);
         } catch (e) {
             // console.error('Error within linkService : ', e);
         }

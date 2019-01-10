@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
                 public seo: SeoService,
                 public alert: AlertService,
                 public pagination: PaginationService) {
+        seo.renderer = renderer;
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
     }
 
