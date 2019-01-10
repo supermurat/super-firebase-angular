@@ -5,7 +5,7 @@
             <ul>
                 <li *ngFor="let tag of taxonomyList$ | async; trackBy:trackByIndex">
                     <a [routerLink]="[tag.routePath, tag.id]">
-                        <span>{{ tag.title }}</span>
+                        <span>{{ tag.tagName }}</span>
                     </a>
                 </li>
             </ul>
