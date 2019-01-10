@@ -403,14 +403,14 @@
           <context context-type="sourcefile">app/components/pager/pager.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-      </trans-unit><trans-unit id="b3d7833558af5ceb1ca53fa6be25d3361bb2788a" datatype="html">
-        <source>Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>"</source><target state="final">Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>"</target>
+      </trans-unit><trans-unit id="ef8b7f0b694e8637de9decba7d146cb67614a996" datatype="html">
+        <source>Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>"</source><target state="final">Related Contents to "<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>"</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
-      </trans-unit><trans-unit id="427ef8738f3af76952480c4cf2425bdb7e296474" datatype="html">
-        <source>There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>". You may want to check out active tags :-)</source><target state="final">There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.title }}"/>". You may want to check out active tags :-)</target>
+      </trans-unit><trans-unit id="d0c966a2e7d0cb5515ca00af55583a183514bfd2" datatype="html">
+        <source>There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>". You may want to check out active tags :-)</source><target state="final">There is no more content related to "<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>". You may want to check out active tags :-)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
           <context context-type="linenumber">25</context>
