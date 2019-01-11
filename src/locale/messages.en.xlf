@@ -285,7 +285,13 @@
       <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">27</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">37</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="8563dea6c78c71d1d4ffce4798fe3c9f736dd09c" datatype="html">
         <source>Quotes</source><target state="final">Quotes</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
+        <source> (Home)</source><target state="final"> (Home)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit><trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
         <source>Playground</source><target state="final">Playground</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">

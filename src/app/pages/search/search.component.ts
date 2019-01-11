@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AlertService, SeoService } from '../../services';
+import { AlertService, PageService } from '../../services';
 
 /**
  * Search Component
@@ -19,12 +19,12 @@ export class SearchComponent implements OnInit {
     /**
      * constructor of SearchComponent
      * @param platformId: PLATFORM_ID
-     * @param seo: SeoService
+     * @param pageService: PageService
      * @param alert: AlertService
      * @param sanitizer: DomSanitizer
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
-                public seo: SeoService,
+                public pageService: PageService,
                 public alert: AlertService,
                 private readonly sanitizer: DomSanitizer) {
     }
@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.setHtmlTags({
+        this.pageService.initPage({
             title: 'Search Result',
             description: 'Search Result',
             seo: {names: {robots: 'noindex, nofollow'}}

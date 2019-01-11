@@ -15,6 +15,8 @@ import { AlertService } from '../../services';
 export class ActiveTagsComponent implements OnInit {
     /** limit number of tags to show */
     @Input() readonly tagLimit = 10;
+    /** css class of header */
+    @Input() readonly headerCssClass = '';
 
     /** taxonomy object array */
     taxonomyList$: Observable<Array<TaxonomyModel>>;
