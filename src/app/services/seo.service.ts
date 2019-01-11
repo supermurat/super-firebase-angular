@@ -102,7 +102,7 @@ export class SeoService {
             this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode.replace('-', '_')});
             this.updateLink({
                 rel: 'alternate',
-                href: `${protocol}${host}${langAlternate.slug}`,
+                href: `${protocol}${host}/${langAlternate.slug}`,
                 hreflang: langAlternate.cultureCode
             });
         }
