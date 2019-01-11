@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, Input, LOCALE_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services';
 
@@ -11,6 +11,8 @@ import { AlertService } from '../../services';
     styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
+    /** css class of header */
+    @Input() readonly headerCssClass = '';
     /** search for */
     searchFor = '';
 

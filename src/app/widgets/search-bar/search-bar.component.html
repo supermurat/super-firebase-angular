@@ -1,4 +1,4 @@
-<h5 class="card-header" i18n>Search</h5>
+<h5 [ngClass]="['card-header', headerCssClass]" i18n>Search</h5>
 <div class="card-body row">
     <div class="gsc-search-box col-8">
         <input [(ngModel)]="searchFor"
