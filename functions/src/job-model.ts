@@ -10,4 +10,6 @@ export class JobModel {
     result?: string;
     /** do you want to overwrite current data */
     overwrite?: string;
+    /** custom data for job */
+    customData?: any;
 }

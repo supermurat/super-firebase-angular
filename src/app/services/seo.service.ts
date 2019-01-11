@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser, PlatformLocation } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -14,6 +14,15 @@ import { HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models'
 export class SeoService {
     /** Renderer2 object */
     renderer: Renderer2;
+    /**
+     * custom SEO Meta Tags
+     * We need to keep them in order to remove them before load tags of next page
+     */
+    customSEOMetaTags: Array<{
+        /** type of meta tag; name or property */
+        type: string,
+        /** value of name or property, NOT content value */
+        value: string}>;
     /** http status */
     private readonly httpStatus$ = new Subject<HttpStatusModel>();
 
@@ -22,6 +31,7 @@ export class SeoService {
      * @param meta: Meta
      * @param titleService: Title
      * @param router: Router
+     * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
      * @param platformId: PLATFORM_ID
      * @param appConfig: APP_CONFIG
@@ -31,6 +41,7 @@ export class SeoService {
     constructor(private readonly meta: Meta,
                 private readonly titleService: Title,
                 private readonly router: Router,
+                private readonly rendererFactory: RendererFactory2,
                 private readonly platformLocation: PlatformLocation,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
@@ -43,14 +54,33 @@ export class SeoService {
      * @param page: current page
      */
     setHtmlTags(page: PageBaseModel): void {
-        const tempPage = {
-            ...{seo: {localeAlternates: [], custom: {}, tw: {}, og: {}}},
-            ...page};
-        for (const key of ['localeAlternates', 'custom', 'tw', 'og']) {
-            if (Object.keys(tempPage.seo)
-                .indexOf(key) === -1) {
-                tempPage.seo[key] = key === 'localeAlternates' ? [] : {};
-            }
+        const tempPage = {...page};
+        this.titleService.setTitle(tempPage.title);
+        this.meta.updateTag({itemprop: 'name', content: tempPage.title}, "itemprop='name'");
+        this.meta.updateTag({name: 'description', content: tempPage.description}, "name='description'");
+        this.meta.updateTag({itemprop: 'description', content: tempPage.description}, "itemprop='description'");
+
+        if (tempPage.image) {
+            this.meta.updateTag({itemprop: 'image', content: tempPage.image.src}, "itemprop='image'");
+        } else {
+            this.meta.removeTag("itemprop='image'");
+        }
+
+        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title}, "name='apple-mobile-web-app-title'");
+
+        this.setLocalAndUrlHtmlTags(tempPage);
+        this.setProjectSpecifiedHtmlTags(tempPage);
+        this.setCustomSEOHtmlTags(tempPage);
+    }
+
+    /**
+     * Set Locale and Url Html Tags
+     * @param tempPage: current page
+     */
+    setLocalAndUrlHtmlTags(tempPage: PageBaseModel): void {
+        if (!tempPage.hasOwnProperty('locales')) {
+            // tslint:disable-next-line:no-string-literal
+            tempPage['locales'] = [];
         }
         const protocol = environment.protocol;
         const host = environment.host;
@@ -58,65 +88,17 @@ export class SeoService {
         const languageCode = this.locale.substr(0, 2);
         const slug = this.platformLocation.pathname;
 
-        this.titleService.setTitle(tempPage.title);
-        this.meta.updateTag({itemprop: 'name', content: tempPage.title}, "itemprop='name'");
-
         this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`}, "link[rel='canonical']");
 
-        this.meta.updateTag({name: 'description', content: tempPage.description}, "name='description'");
-        this.meta.updateTag({itemprop: 'description', content: tempPage.description}, "itemprop='description'");
-        if (tempPage.image) {
-            this.meta.updateTag({itemprop: 'image', content: tempPage.image.src}, "itemprop='image'");
-        } else {
-            this.meta.removeTag("itemprop='image'");
-        }
+        this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode}, "httpEquiv='Content-Language'");
 
-        Object.keys(tempPage.seo.tw)
-            .forEach((prop: string) => {
-                this.meta.updateTag({name: prop, content: tempPage.seo.tw[prop]}, `name='${prop}'`);
-                // TODO: clear added tags on next page
-            });
         this.meta.updateTag({property: 'og:url', content: `${protocol}${host}${slug}`}, "property='og:url'");
         this.meta.updateTag({property: 'og:locale', content: cultureCode.replace('-', '_')},
             "property='og:locale'");
-        Object.keys(tempPage.seo.og)
-            .forEach((prop: string) => {
-                this.meta.updateTag({property: prop, content: tempPage.seo.og[prop]}, `property='${prop}'`);
-                // TODO: clear added tags on next page
-            });
-        Object.keys(tempPage.seo.custom)
-            .forEach((prop: string) => {
-                this.meta.updateTag({name: prop, content: tempPage.seo.custom[prop]}, `name='${prop}'`);
-                // TODO: clear added tags on next page
-            });
-
-        this.meta.removeTag("name='twitter:site'");
-        this.meta.removeTag("name='twitter:creator'");
-        this.meta.removeTag("property='fb:app_id'");
-        this.meta.removeTag("property='fb:admins'");
-        if (!tempPage.seo.tw['twitter:site'] && environment.defaultData['twitter:site']) {
-            this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']},
-                "name='twitter:site'");
-        }
-        if (!tempPage.seo.tw['twitter:creator'] && environment.defaultData['twitter:creator']) {
-            this.meta.updateTag({name: 'twitter:creator', content: environment.defaultData['twitter:creator']},
-                "name='twitter:creator'");
-        }
-        if (!tempPage.seo.og['fb:app_id'] && environment.defaultData['fb:app_id']) {
-            this.meta.updateTag({property: 'fb:app_id', content: environment.defaultData['fb:app_id']},
-                "property='fb:app_id'");
-        }
-        if (!tempPage.seo.og['fb:admins'] && environment.defaultData['fb:admins']) {
-            this.meta.updateTag({property: 'fb:admins', content: environment.defaultData['fb:admins']},
-                "property='fb:admins'");
-        }
-
-        this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title}, "name='apple-mobile-web-app-title'");
-        this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode}, "httpEquiv='Content-Language'");
 
         this.meta.removeTag("property='og:locale:alternate'");
         this.removeLink("link[rel='alternate']");
-        for (const langAlternate of tempPage.seo.localeAlternates) {
+        for (const langAlternate of tempPage.locales) {
             this.meta.updateTag({property: 'og:locale:alternate', content: langAlternate.cultureCode.replace('-', '_')});
             this.updateLink({
                 rel: 'alternate',
@@ -127,8 +109,66 @@ export class SeoService {
         this.updateLink({
             rel: 'alternate',
             href: `${protocol}${host}${slug}`,
+            hreflang: cultureCode
+        });
+        this.updateLink({
+            rel: 'alternate',
+            href: `${protocol}${host}${slug}`,
             hreflang: 'x-default'
         });
+    }
+
+    /**
+     * Set Project Specified Html Tags
+     * @param tempPage: current page
+     */
+    setProjectSpecifiedHtmlTags(tempPage: PageBaseModel): void {
+        if (environment.defaultData['twitter:site']) {
+            this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']},
+                "name='twitter:site'");
+        }
+        if (environment.defaultData['twitter:creator']) {
+            this.meta.updateTag({name: 'twitter:creator', content: environment.defaultData['twitter:creator']},
+                "name='twitter:creator'");
+        }
+        if (environment.defaultData['fb:app_id']) {
+            this.meta.updateTag({property: 'fb:app_id', content: environment.defaultData['fb:app_id']},
+                "property='fb:app_id'");
+        }
+        if (environment.defaultData['fb:admins']) {
+            this.meta.updateTag({property: 'fb:admins', content: environment.defaultData['fb:admins']},
+                "property='fb:admins'");
+        }
+    }
+
+    /**
+     * Set Custom SEO Html Tags
+     * @param tempPage: current page
+     */
+    setCustomSEOHtmlTags(tempPage: PageBaseModel): void {
+        if (this.customSEOMetaTags) {
+            for (const customSEO of this.customSEOMetaTags) {
+                this.meta.removeTag(`${customSEO.type}='${customSEO.value}'`);
+            }
+        } else {
+            this.customSEOMetaTags = [];
+        }
+        if (tempPage.hasOwnProperty('seo')) {
+            if (tempPage.seo.hasOwnProperty('names')) {
+                Object.keys(tempPage.seo.names)
+                    .forEach((prop: string) => {
+                        this.meta.updateTag({name: prop, content: tempPage.seo.names[prop]}, `name='${prop}'`);
+                        this.customSEOMetaTags.push({type: 'name', value: prop});
+                    });
+            }
+            if (tempPage.seo.hasOwnProperty('properties')) {
+                Object.keys(tempPage.seo.properties)
+                    .forEach((prop: string) => {
+                        this.meta.updateTag({property: prop, content: tempPage.seo.properties[prop]}, `property='${prop}'`);
+                        this.customSEOMetaTags.push({type: 'name', value: prop});
+                    });
+            }
+        }
     }
 
     /**
@@ -137,17 +177,21 @@ export class SeoService {
      * @param attrSelector: selector to remove old link elements
      */
     updateLink(linkObject: HtmlLinkElementModel, attrSelector?: string): void {
-        try {
-            this.removeLink(attrSelector);
-            const link = this.renderer.createElement('link');
-            Object.keys(linkObject)
-                .forEach((prop: string) => {
-                    this.renderer.setAttribute(link, prop, linkObject[prop]);
-                });
-            this.renderer.appendChild(this.doc.head, link);
-        } catch (e) {
-            // console.error('Error within linkService : ', e);
+        if (this.renderer === undefined) {
+            this.renderer = this.rendererFactory.createRenderer(this.doc, {
+                id: '-1',
+                encapsulation: ViewEncapsulation.None,
+                styles: [],
+                data: {}
+            });
         }
+        this.removeLink(attrSelector);
+        const link = this.renderer.createElement('link');
+        Object.keys(linkObject)
+            .forEach((prop: string) => {
+                this.renderer.setAttribute(link, prop, linkObject[prop]);
+            });
+        this.renderer.appendChild(this.doc.head, link);
     }
 
     /**
@@ -155,12 +199,8 @@ export class SeoService {
      * @param attrSelector: selector to remove old link elements
      */
     removeLink(attrSelector?: string): void {
-        try {
-            for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
-                this.renderer.removeChild(this.doc.head, oldLink);
-            }
-        } catch (e) {
-            // console.error('Error within linkService : ', e);
+        for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
+            this.renderer.removeChild(this.doc.head, oldLink);
         }
     }
 

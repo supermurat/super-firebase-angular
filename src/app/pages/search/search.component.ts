@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
         this.seo.setHtmlTags({
             title: 'Search Result',
             description: 'Search Result',
-            seo: {custom: {robots: 'noindex, nofollow'}}
+            seo: {names: {robots: 'noindex, nofollow'}}
         });
 
         this.gcseSearchBox = this.sanitizer.bypassSecurityTrustHtml(

@@ -1,5 +1,6 @@
 import { CarouselModel } from './carousel-model';
 import { ImageModel } from './image-model';
+import { LocaleModel } from './locale-model';
 import { PageSeoModel } from './page-seo-model';
 
 /**
@@ -40,6 +41,8 @@ export class PageBaseModel {
     changed?: any = {seconds: undefined};
     /** last changer person */
     changedBy?: string;
+    /** locale object array of page */
+    locales?: Array<LocaleModel>;
 
     /** seo data of record */
     seo?: PageSeoModel;

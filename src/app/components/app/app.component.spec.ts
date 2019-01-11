@@ -119,7 +119,7 @@ describe('AppComponentSeoService', () => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             seo: {
-                og: {
+                properties: {
                     'og:type': 'article'
                 }
             }
@@ -133,9 +133,9 @@ describe('AppComponentSeoService', () => {
     it("should set meta og:title as 'My Unit Test Title'", async(() => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
+            locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
             seo: {
-                localeAlternates: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
-                og: {
+                properties: {
                     'og:title': 'My Unit Test Title',
                     'og:type': 'article',
                     'og:site_name': 'Unit Test Site'
@@ -153,7 +153,7 @@ describe('AppComponentSeoService', () => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             seo: {
-                tw: {
+                names: {
                     'twitter:card': 'summary'
                 }
             }
@@ -168,7 +168,7 @@ describe('AppComponentSeoService', () => {
         comp.seo.setHtmlTags({
             title: 'My Unit Test Title',
             seo: {
-                tw: {
+                names: {
                     'twitter:title': 'My Unit Test Title',
                     'twitter:card': 'summary',
                     'twitter:site': '@UnitTest',
@@ -185,15 +185,15 @@ describe('AppComponentSeoService', () => {
 
     it("should set meta robots as 'index,follow'", async(() => {
         comp.seo.setHtmlTags({
+            locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
             seo: {
-                localeAlternates: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
-                custom: {
+                names: {
                     robots: 'index, follow',
                     author: 'unit-test',
                     owner: 'unit-test',
                     copyright: 'Unit Test 2018'
                 },
-                og: {
+                properties: {
                     'fb:app_id': '123456',
                     'fb:admins': '000001'
                 }
@@ -203,6 +203,33 @@ describe('AppComponentSeoService', () => {
         expect(comp.seo.getMeta()
             .getTag('name="robots"').content)
             .toContain('index, follow');
+    }));
+
+    it("should set meta robots as 'index,follow' and remove them next meta tag set even if new data is empty", async(() => {
+        comp.seo.setHtmlTags({
+            locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
+            seo: {
+                names: {
+                    robots: 'index, follow',
+                    author: 'unit-test',
+                    owner: 'unit-test',
+                    copyright: 'Unit Test 2018'
+                },
+                properties: {
+                    'fb:app_id': '123456',
+                    'fb:admins': '000001'
+                }
+            }
+        });
+        fixture.detectChanges();
+        expect(comp.seo.getMeta()
+            .getTag('name="robots"').content)
+            .toContain('index, follow');
+        comp.seo.setHtmlTags({});
+        fixture.detectChanges();
+        expect(comp.seo.getMeta()
+            .getTag('name="robots"'))
+            .toBeNull();
     }));
 
     it('should work properly with different defaultData on environment', async(() => {

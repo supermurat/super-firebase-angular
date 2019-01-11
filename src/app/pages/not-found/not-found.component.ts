@@ -20,7 +20,7 @@ export class NotFoundComponent {
         this.seo.setHtmlTags({
             title: '404 - Page not found',
             description: '404 - Page not found',
-            seo: {custom: {robots: 'noindex, nofollow'}}
+            seo: {names: {robots: 'noindex, nofollow'}}
         });
     }
 

@@ -12,34 +12,36 @@ const db = admin.firestore();
 export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel) => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
-    const collectionList = [];
-    const languageCodes = ['en-US', 'tr-TR'];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
-    for (const lang of languageCodes) {
-        for (const col of collections) {
-            collectionList.push(`${col}_${lang}`);
+    if (jobData.hasOwnProperty('customData')) {
+        for (const smUrl of jobData.customData) {
+            urlList.push(smUrl);
         }
     }
 
-    return Promise.all(collectionList.map(async (mainCollection) =>
-        db.collection(mainCollection).get()
-            .then(async (mainDocsSnapshot) =>
-                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
-                    const mData = mainDoc.data();
-                    const languageCode = mainCollection.endsWith('tr-TR') ? 'tr' : 'en';
-                    urlList.push({
-                        url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
-                        changefreq: (mainCollection.startsWith('pages') || mainCollection.startsWith('taxonomy'))
-                            ? 'daily' : 'weekly',
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
+        Promise.all(collections.map(async (collectionPrefix) =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async (mainDocsSnapshot) =>
+                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                        const mData = mainDoc.data();
+                        const languageCode = cultureCode.substring(0, 2);
                         // tslint:disable-next-line:no-string-literal
-                        img: mainDoc['image']
-                    });
+                        const img = mainDoc.hasOwnProperty('image') ? mainDoc['image']['src'] : undefined;
+                        urlList.push({
+                            url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
+                            changefreq: (collectionPrefix === 'pages' || collectionPrefix === 'taxonomy')
+                                ? 'daily' : 'weekly',
+                            img
+                        });
 
-                    return Promise.resolve();
-                })))
-            .catch((err) => {
-                console.error('db.collection().get()', err);
-            })))
+                        return Promise.resolve();
+                    })))
+                .catch((err) => {
+                    console.error('db.collection().get()', err);
+                })
+        ))
+    ))
         .then(async (values) => {
             const sm = sitemap.createSitemap({
                 hostname: FUNCTIONS_CONFIG.hostname,
@@ -71,69 +73,33 @@ export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel)
 export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel) => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
-    const collectionList = [];
-    const languageCodes = ['en-US', 'tr-TR'];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
-    for (const lang of languageCodes) {
-        for (const col of collections) {
-            collectionList.push(`${col}_${lang}`);
-        }
-    }
 
-    return Promise.all(collectionList.map(async (mainCollection) =>
-        db.collection(mainCollection).get()
-            .then(async (mainDocsSnapshot) =>
-                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
-                    const mData = mainDoc.data();
-                    if (!mData.hasOwnProperty('seo') || jobData.overwrite) {
-                        const cultureCode = mainCollection.endsWith('tr-TR') ? 'tr-TR' : 'en-US';
-                        const languageCode = cultureCode.substring(0, 2);
-                        const cultureCodeAlt = cultureCode === 'tr-TR' ? 'en-US' : 'tr-TR';
-                        const languageCodeAlt = cultureCodeAlt.substring(0, 2);
-                        const seo = {
-                            localeAlternates: [] as Array<LocaleAlternateModel>// ,
-                            // custom: {},
-                            // tw: {},
-                            // og: {}
-                        };
-                        seo.localeAlternates.push({
-                            cultureCode,
-                            slug: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/')
-                        });
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
+        Promise.all(collections.map(async (collectionPrefix) =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async (mainDocsSnapshot) =>
+                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                        const mData = mainDoc.data();
+                        if (!mData.hasOwnProperty('seo') || jobData.overwrite) {
+                            const seo = {};
 
-                        return db.collection(mainCollection.replace(cultureCode, cultureCodeAlt))
-                            .where('i18nKey', '==', mData.i18nKey)
-                            .limit(1)
-                            .get()
-                            .then(async (documentSnapshots) => {
-                                if (documentSnapshots.docs.length > 0) {
-                                    const mainDocAlt = documentSnapshots.docs[0];
-                                    const mDataAlt = mainDocAlt.data();
-                                    seo.localeAlternates.push({
-                                        cultureCode: cultureCodeAlt,
-                                        slug: `${languageCodeAlt}/${mDataAlt.routePath}/${mainDocAlt.id}`
-                                            .replace(/[\/]+/g, '/')
-                                    });
-                                }
+                            return mainDoc.ref.set({seo}, {merge: true})
+                                .then(() => {
+                                    processedDocCount++;
+                                })
+                                .catch((err) => {
+                                    console.error('mainDoc.ref.set()', err);
+                                });
+                        }
 
-                                return mainDoc.ref.set({seo}, {merge: true})
-                                    .then(() => {
-                                        processedDocCount++;
-                                    })
-                                    .catch((err) => {
-                                        console.error('mainDoc.ref.set()', err);
-                                    });
-                            })
-                            .catch((err) => {
-                                console.error('db.collection(replace(cultureCode, cultureCodeAlt)).get()', err);
-                            });
-                    }
-
-                    return Promise.resolve();
-                })))
-            .catch((err) => {
-                console.error('db.collection().get()', err);
-            })))
+                        return Promise.resolve();
+                    })))
+                .catch((err) => {
+                    console.error('db.collection().get()', err);
+                })
+        ))
+    ))
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
@@ -147,47 +113,113 @@ export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
+export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel) => {
+    console.log('generateLocales is started');
+    let processedDocCount = 0;
+    const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
+
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
+        Promise.all(collections.map(async (collectionPrefix) =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async (mainDocsSnapshot) =>
+                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                        const mData = mainDoc.data();
+                        if (!mData.hasOwnProperty('locales') || jobData.overwrite) {
+                            const alternateCultureCodes = FUNCTIONS_CONFIG.supportedCultureCodes.slice();
+                            // tslint:disable-next-line:no-dynamic-delete
+                            delete alternateCultureCodes[alternateCultureCodes.indexOf(cultureCode)];
+                            const locales = [] as Array<LocaleAlternateModel>;
+
+                            return Promise.all(alternateCultureCodes.map(async (cultureCodeAlt) =>
+                                db.collection(`${collectionPrefix}_${cultureCodeAlt}`)
+                                    .where('i18nKey', '==', mData.i18nKey)
+                                    .limit(1)
+                                    .get()
+                                    .then(async (documentSnapshots) => {
+                                        if (documentSnapshots.docs.length > 0) {
+                                            const languageCodeAlt = cultureCodeAlt.substring(0, 2);
+                                            const mainDocAlt = documentSnapshots.docs[0];
+                                            const mDataAlt = mainDocAlt.data();
+                                            locales.push({
+                                                cultureCode: cultureCodeAlt,
+                                                slug: `${languageCodeAlt}/${mDataAlt.routePath}/${mainDocAlt.id}`
+                                                    .replace(/[\/]+/g, '/')
+                                            });
+                                        }
+
+                                        return Promise.resolve();
+                                    })
+                                    .catch((err) => {
+                                        console.error('db.collection({collectionPrefix}_{cultureCodeAlt}).get()', err);
+                                    })
+                            )).then(async (values) =>
+                                mainDoc.ref.set({locales}, {merge: true})
+                                    .then(() => {
+                                        processedDocCount++;
+                                    })
+                                    .catch((err) => {
+                                        console.error('mainDoc.ref.set()', err);
+                                    })
+                            );
+                        }
+
+                        return Promise.resolve();
+                    })))
+                .catch((err) => {
+                    console.error('db.collection().get()', err);
+                })
+        ))
+    ))
+        .then(async (values) =>
+            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log('generateLocales is finished');
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
 export const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel) => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
-    const collectionList = [];
-    const languageCodes = ['en-US', 'tr-TR'];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
-    for (const lang of languageCodes) {
-        for (const col of collections) {
-            collectionList.push(`${col}_${lang}`);
-        }
-    }
 
-    return Promise.all(collectionList.map(async (mainCollection) =>
-        db.collection(mainCollection).get()
-            .then(async (mainDocsSnapshot) =>
-                Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
-                    const mData = mainDoc.data();
-                    if (!mData.hasOwnProperty('description') || jobData.overwrite) {
-                        let cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
-                            mData.content ? h2p(mData.content) :
-                                mData.title;
-                        cleanText = cleanText.replace(/[\r\n]/g, ' ');
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
+        Promise.all(collections.map(async (collectionPrefix) =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async (mainDocsSnapshot) =>
+                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                        const mData = mainDoc.data();
+                        if (!mData.hasOwnProperty('description') || jobData.overwrite) {
+                            let cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
+                                mData.content ? h2p(mData.content) :
+                                    mData.title;
+                            cleanText = cleanText.replace(/[\r\n]/g, ' ');
 
-                        const description = cleanText.indexOf(' ', 150) > -1 ?
-                            `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...` :
-                            `${cleanText.substring(0, 160)}...`;
+                            const description = cleanText.indexOf(' ', 150) > -1 ?
+                                `${cleanText.substring(0, cleanText.indexOf(' ', 150))}...` :
+                                `${cleanText.substring(0, 160)}...`;
 
-                        return mainDoc.ref.set({description}, {merge: true})
-                            .then(() => {
-                                processedDocCount++;
-                            })
-                            .catch((err) => {
-                                console.error('mainDoc.ref.set()', err);
-                            });
-                    }
+                            return mainDoc.ref.set({description}, {merge: true})
+                                .then(() => {
+                                    processedDocCount++;
+                                })
+                                .catch((err) => {
+                                    console.error('mainDoc.ref.set()', err);
+                                });
+                        }
 
-                    return Promise.resolve();
-                })))
-            .catch((err) => {
-                console.error('db.collection().get()', err);
-            })))
+                        return Promise.resolve();
+                    })))
+                .catch((err) => {
+                    console.error('db.collection().get()', err);
+                })
+        ))
+    ))
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
@@ -211,6 +243,8 @@ export const jobRunner = functions.firestore
             return generateSiteMap(snap, jobData);
         } else if (jobData.actionKey === 'generateSEOData') {
             return generateSEOData(snap, jobData);
+        } else if (jobData.actionKey === 'generateLocales') {
+            return generateLocales(snap, jobData);
         } else if (jobData.actionKey === 'generateDescription') {
             return generateDescription(snap, jobData);
         }
