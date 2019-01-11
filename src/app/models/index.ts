@@ -6,6 +6,7 @@ export * from './html-link-element-model';
 export * from './page-seo-model';
 export * from './http-status-model';
 export * from './joke-model';
+export * from './language-model';
 export * from './locale-model';
 export * from './page-base-model';
 export * from './pager-model';

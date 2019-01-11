@@ -34,9 +34,9 @@
                 </li>
             </ul>
             <ul class="navbar-nav" id="lang">
-                <li class="nav-item" *ngFor="let locale of locales; trackBy:trackByLocale">
-                    <a class="nav-link" [href]="'/' + locale.code + currentUrl">
-                        <span>{{ locale.text }}</span>
+                <li class="nav-item" *ngFor="let language of languages$ | async; trackBy:pageService.trackByIndex">
+                    <a class="nav-link" [href]="language.url">
+                        <span>{{ language.languageName }}</span><span *ngIf="!language.isExist" i18n> (Home)</span>
                     </a>
                 </li>
             </ul>

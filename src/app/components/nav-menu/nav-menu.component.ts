@@ -1,8 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { filter } from 'rxjs/internal/operators';
-import { locales } from '../../app-config';
+import { languageNames } from '../../app-config';
+import { LanguageModel, PageBaseModel } from '../../models';
 import { PageService } from '../../services';
 
 /**
@@ -13,10 +15,11 @@ import { PageService } from '../../services';
     templateUrl: './nav-menu.component.html'
 })
 export class NavMenuComponent implements OnInit {
-    /** active locale object array */
-    locales = [];
-    /** current page`s url */
-    currentUrl = '';
+    // tslint:disable:member-ordering
+    /** array of languages */
+    private readonly languages = new Subject<Array<LanguageModel>>();
+    /** observable languages */
+    languages$ = this.languages.asObservable();
 
     /**
      * constructor of NavMenuComponent
@@ -36,12 +39,9 @@ export class NavMenuComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.locales = locales;
-
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
-                this.currentUrl = this.router.url;
                 if (isPlatformBrowser(this.platformId)) {
                     const scrollToTop = window.setInterval(() => {
                         const pos = window.pageYOffset;
@@ -53,14 +53,41 @@ export class NavMenuComponent implements OnInit {
                     }, 16);
                 }
             });
-    }
 
-    /**
-     * track locale object array by locale
-     * @param index: locale index
-     * @param item: locale object
-     */
-    trackByLocale(index, item): number {
-        return index;
+        this.pageService.getPage()
+            .subscribe((page: PageBaseModel) => {
+                const existLanguages = [];
+                const languageList: Array<LanguageModel> = [];
+                languageList.push({
+                    languageCode: this.locale.substring(0, 2),
+                    languageName: languageNames[this.locale.substring(0, 2)],
+                    url: this.router.url,
+                    isExist: true
+                });
+                existLanguages.push(this.locale.substring(0, 2));
+                if (page.locales) {
+                    for (const locale of page.locales) {
+                        languageList.push({
+                            languageCode: locale.cultureCode.substring(0, 2),
+                            languageName: languageNames[locale.cultureCode.substring(0, 2)],
+                            url: locale.slug,
+                            isExist: true
+                        });
+                        existLanguages.push(locale.cultureCode.substring(0, 2));
+                    }
+                }
+                Object.keys(languageNames)
+                    .forEach(languageCode => {
+                        if (existLanguages.indexOf(languageCode) === -1) {
+                            languageList.push({
+                                languageCode,
+                                languageName: languageNames[languageCode],
+                                url: '',
+                                isExist: false
+                            });
+                        }
+                });
+                this.languages.next(languageList);
+            });
     }
 }
