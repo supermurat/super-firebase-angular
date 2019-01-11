@@ -198,9 +198,11 @@ export class SeoService {
      * add or remove link from head of document
      * @param attrSelector: selector to remove old link elements
      */
-    removeLink(attrSelector?: string): void {
-        for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
-            this.renderer.removeChild(this.doc.head, oldLink);
+    removeLink(attrSelector: string): void {
+        if (attrSelector) {
+            for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
+                this.renderer.removeChild(this.doc.head, oldLink);
+            }
         }
     }
 

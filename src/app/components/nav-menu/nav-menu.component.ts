@@ -58,31 +58,32 @@ export class NavMenuComponent implements OnInit {
             .subscribe((page: PageBaseModel) => {
                 const existLanguages = [];
                 const languageList: Array<LanguageModel> = [];
+                const languageCode = this.locale.substring(0, 2);
                 languageList.push({
-                    languageCode: this.locale.substring(0, 2),
-                    languageName: languageNames[this.locale.substring(0, 2)],
-                    url: this.router.url,
+                    languageCode,
+                    languageName: languageNames[languageCode],
+                    url: `/${languageCode}${this.router.url}`,
                     isExist: true
                 });
-                existLanguages.push(this.locale.substring(0, 2));
+                existLanguages.push(languageCode);
                 if (page.locales) {
                     for (const locale of page.locales) {
                         languageList.push({
                             languageCode: locale.cultureCode.substring(0, 2),
                             languageName: languageNames[locale.cultureCode.substring(0, 2)],
-                            url: locale.slug,
+                            url: `/${locale.slug}`,
                             isExist: true
                         });
                         existLanguages.push(locale.cultureCode.substring(0, 2));
                     }
                 }
                 Object.keys(languageNames)
-                    .forEach(languageCode => {
-                        if (existLanguages.indexOf(languageCode) === -1) {
+                    .forEach(langCode => {
+                        if (existLanguages.indexOf(langCode) === -1) {
                             languageList.push({
-                                languageCode,
-                                languageName: languageNames[languageCode],
-                                url: '',
+                                languageCode: langCode,
+                                languageName: languageNames[langCode],
+                                url: `/${langCode}/home`,
                                 isExist: false
                             });
                         }
