@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -52,16 +51,6 @@ describe('NavMenuComponent', () => {
             .toContain('Super Murat');
     }));
 
-    it('count of locales should be greater than 1', async(() => {
-        expect(comp.locales.length)
-            .toBeGreaterThan(1);
-    }));
-
-    it('trackByLocale(2) should return 2', async(() => {
-        expect(comp.trackByLocale(2, {}))
-            .toBe(2);
-    }));
-
     it("should redirect to '/unit-test'", fakeAsync(() => {
         comp.router.initialNavigation();
         comp.router.navigate(['unit-test'])
@@ -98,6 +87,31 @@ describe('NavMenuComponent', () => {
             .toBe('/unit-test');
         expect(window.pageYOffset)
             .toBe(0);
+    }));
+
+    it('should init language switcher', fakeAsync(() => {
+        comp.languages$.subscribe(result => {
+            expect(result.length)
+                .toEqual(2);
+        });
+        comp.pageService.initPage({});
+        fixture.detectChanges();
+        tick();
+    }));
+
+    it('should init language switcher with translations', fakeAsync(() => {
+        comp.languages$.subscribe(result => {
+            expect(result.length)
+                .toEqual(2);
+        });
+        comp.pageService.initPage({
+            locales: [{
+                cultureCode: 'tr-TR',
+                slug: '/tr/unit-test'
+            }]
+        });
+        fixture.detectChanges();
+        tick();
     }));
 
 });

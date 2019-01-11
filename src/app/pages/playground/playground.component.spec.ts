@@ -2,12 +2,12 @@ import { PLATFORM_ID } from '@angular/core';
 import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { By } from '@angular/platform-browser';
+import { By, TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { ScrollableDirective } from '../../directives';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
 import { angularFireStorageStub, angularFirestoreStub } from '../../testing/index.spec';
 import { PlaygroundComponent } from './playground.component';
 
@@ -22,7 +22,7 @@ describe('PlaygroundComponent', () => {
                 ScrollableDirective
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: AngularFireStorage, useValue: angularFireStorageStub},
@@ -191,7 +191,7 @@ describe('PlaygroundComponentAsync', () => {
                 ScrollableDirective
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: AngularFireStorage, useValue: angularFireStorageStub},
@@ -283,7 +283,7 @@ describe('PlaygroundComponentServer', () => {
                 PlaygroundComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: PLATFORM_ID, useValue: 'server'},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},

@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
@@ -7,6 +8,7 @@ import { AlertService, CarouselService, PageService, SeoService } from '../../se
 import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
+import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomeComponent } from './home.component';
 
@@ -20,6 +22,7 @@ describe('HomeComponent', () => {
                 HomeComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
+                SearchBarComponent,
                 NotFoundComponent
             ],
             providers: [
@@ -28,6 +31,7 @@ describe('HomeComponent', () => {
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -69,6 +73,7 @@ describe('HomeComponentNoData', () => {
                 HomeComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
+                SearchBarComponent,
                 NotFoundComponent
             ],
             providers: [
@@ -77,6 +82,7 @@ describe('HomeComponentNoData', () => {
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
             imports: [
+                FormsModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},

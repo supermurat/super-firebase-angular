@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, SeoService } from '../../services';
+import { AuthService, PageService } from '../../services';
 
 /**
  * Admin Login Component
@@ -12,11 +12,11 @@ export class AdminLoginComponent implements OnInit {
 
     /**
      * constructor of AdminLoginComponent
-     * @param seo: SeoService
+     * @param pageService: PageService
      * @param auth: AuthService
      */
     constructor(
-        public seo: SeoService,
+        public pageService: PageService,
         public auth: AuthService) {
     }
 
@@ -24,7 +24,7 @@ export class AdminLoginComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.seo.setHtmlTags({
+        this.pageService.initPage({
             title: 'Admin Login',
             description: 'Admin login page'
         });

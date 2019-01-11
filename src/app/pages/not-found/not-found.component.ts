@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SeoService } from '../../services';
+import { PageService } from '../../services';
 
 /**
  * Not Found Component
@@ -12,15 +12,15 @@ import { SeoService } from '../../services';
 export class NotFoundComponent {
     /**
      * constructor of ArticleDetailComponent
-     * @param seo: SeoService
+     * @param pageService: PageService
      */
     constructor(
-        private readonly seo: SeoService
+        private readonly pageService: PageService
     ) {
-        this.seo.setHtmlTags({
+        this.pageService.initPage({
             title: '404 - Page not found',
             description: '404 - Page not found',
-            seo: {custom: {robots: 'noindex, nofollow'}}
+            seo: {names: {robots: 'noindex, nofollow'}}
         });
     }
 

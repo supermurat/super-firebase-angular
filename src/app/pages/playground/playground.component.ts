@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { AlertService, PageService, PaginationService } from '../../services';
 
 /**
  * Playground Component
@@ -66,14 +66,14 @@ export class PlaygroundComponent implements OnInit {
      * constructor of PlaygroundComponent
      * @param platformId: PLATFORM_ID
      * @param locale: LOCALE_ID
-     * @param seo: SeoService
+     * @param pageService: PageService
      * @param alert: AlertService
      * @param pagination: PaginationService
      * @param storage: AngularFireStorage
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(LOCALE_ID) public locale: string,
-                private readonly seo: SeoService,
+                private readonly pageService: PageService,
                 public alert: AlertService,
                 public pagination: PaginationService,
                 private readonly storage: AngularFireStorage) {
@@ -87,7 +87,7 @@ export class PlaygroundComponent implements OnInit {
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 
-        this.seo.setHtmlTags({
+        this.pageService.initPage({
             title: this.title,
             description: this.title
         });

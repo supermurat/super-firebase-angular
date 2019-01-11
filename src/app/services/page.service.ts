@@ -3,10 +3,10 @@ import { Inject, Injectable, LOCALE_ID, Renderer2, RendererFactory2 } from '@ang
 import { AngularFirestore } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { startWith, tap } from 'rxjs/operators';
 import { routerLinksEN, routerLinksTR } from '../app-config';
-import { JokeModel, PageBaseModel } from '../models';
+import { PageBaseModel } from '../models';
 import { RouterLinksModel } from '../models/router-links-model';
 import { AlertService } from './alert.service';
 import { CarouselService } from './carousel.service';
@@ -17,13 +17,11 @@ import { SeoService } from './seo.service';
  */
 @Injectable()
 export class PageService {
-    /**
-     * translated router links
-     */
+    /** translated router links */
     routerLinks: RouterLinksModel;
-    /**
-     * Renderer2
-     */
+    /** collection of PageBaseModel */
+    private readonly page$ = new Subject<PageBaseModel>();
+    /** Renderer2 */
     private readonly renderer: Renderer2;
 
     /**
@@ -61,10 +59,18 @@ export class PageService {
     }
 
     /**
+     * get current PageBaseModel
+     */
+    getPage(): Observable<PageBaseModel> {
+        return this.page$.asObservable();
+    }
+
+    /**
      * init page html tags and content
      * @param page: PageBaseModel
      */
     initPage(page: PageBaseModel): void {
+        this.page$.next(page);
         this.seo.setHtmlTags(page);
         this.carouselService.init(page.carousel);
         if (page.backgroundCoverImage) {
@@ -122,8 +128,8 @@ export class PageService {
     getPageFromFirestore<T extends PageBaseModel>(type: new() => T,
                                                   pathOfCollectionWithoutLocalePart: string,
                                                   pageID: string): Observable<T> {
-        const page$ = this.getDocumentFromFirestore(type, `${pathOfCollectionWithoutLocalePart}_${this.locale}/${pageID}`);
-        page$.subscribe(page => {
+        const pageBase$ = this.getDocumentFromFirestore(type, `${pathOfCollectionWithoutLocalePart}_${this.locale}/${pageID}`);
+        pageBase$.subscribe(page => {
             if (page === undefined) {
                 this.redirectToTranslationOr404(pathOfCollectionWithoutLocalePart, pageID);
             } else if (page.routePath) {
@@ -137,7 +143,7 @@ export class PageService {
             }
         });
 
-        return page$;
+        return pageBase$;
     }
 
     /**

@@ -20,25 +20,11 @@ export const APP_UNIT_TEST_CONFIG: InterfaceAppConfig = {
 /** InjectionToken for APP_CONFIG */
 export let APP_CONFIG = new InjectionToken<InterfaceAppConfig>('app.config');
 
-/** interface of locale object */
-export interface InterfaceLocale {
-    /** code of locale */
-    code: string;
-    /** text of locale */
-    text: string;
-}
-
-/** supported locale object array */
-export const locales: Array<InterfaceLocale> = [
-    {
-        code: 'en',
-        text: 'English'
-    },
-    {
-        code: 'tr',
-        text: 'Türkçe'
-    }
-];
+/** language names by language code */
+export const languageNames = {
+    en: 'English',
+    tr: 'Türkçe'
+};
 
 /** routerLinks for English */
 export const routerLinksEN: RouterLinksModel = {

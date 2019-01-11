@@ -15,6 +15,8 @@ import { AlertService } from '../../services';
 export class LastJokesComponent implements OnInit {
     /** limit number of jokes to show */
     @Input() readonly jokeLimit = 10;
+    /** css class of header */
+    @Input() readonly headerCssClass = '';
 
     /** joke object array */
     jokes$: Observable<Array<JokeModel>>;
