@@ -4,3 +4,4 @@ export * from './activated-route-stub.spec';
 export * from './angular-fireauth-stub.spec';
 export * from './angular-firestore-stub.spec';
 export * from './angular-firestorage-stub.spec';
+export * from './angulartics-stub.spec';

@@ -67,6 +67,7 @@
     "@angular/service-worker": "7.1.4",
     "@fortawesome/fontawesome-free": "^5.6.3",
     "@ng-bootstrap/ng-bootstrap": "4.0.1",
+    "angulartics2": "^7.4.0",
     "bootstrap": "^4.2.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.1",
