@@ -29,3 +29,17 @@ export const writeResultToFile = (pathOfDataJson, dataFirestore) => {
             console.log(colors.bold(colors.green('File Saved Successfully!')));
         });
 };
+
+export const isDirectory = (source) => fs.lstatSync(source).isDirectory();
+
+export const getDirectories = (source) =>
+    fs.readdirSync(source)
+        .map((name) => path.join(source, name))
+        .filter(isDirectory);
+
+export const getDirectoriesRecursive = (source) => [
+    source,
+    ...getDirectories(source)
+        .map(getDirectoriesRecursive)
+        .reduce((a, b) => a.concat(b), [])
+];

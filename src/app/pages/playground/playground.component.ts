@@ -92,7 +92,7 @@ export class PlaygroundComponent implements OnInit {
             description: this.title
         });
 
-        const ref = this.storage.ref('blogs/bad, very bad angel.gif');
+        const ref = this.storage.ref('publicFiles/bad, very bad angel.gif');
         if (isPlatformBrowser(this.platformId)) {
             // following lines are not working on server side because of undefined XMLHttpRequest
             this.imgURL$ = ref.getDownloadURL();

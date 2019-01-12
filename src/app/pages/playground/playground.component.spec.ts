@@ -51,7 +51,7 @@ describe('PlaygroundComponent', () => {
             fixture.detectChanges();
             expect(comp.imgURL)
                 .toEqual('https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com' +
-                    '/o/blogs%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=382c3835-1ee6-4d2f-81b3-570e0a1f3086');
+                    '/o/publicFiles%2Fbad%2C%20very%20bad%20angel.gif?alt=media&token=f2f41a6f-dc13-47f4-85d4-853c0ff16898');
         });
         tick();
         fixture.detectChanges();
