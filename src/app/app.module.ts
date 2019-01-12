@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Angulartics2Module } from 'angulartics2';
 import { environment } from '../environments/environment';
 import { firebaseConfig } from '../environments/firebase.config';
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
@@ -91,6 +92,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
 
         AppRoutingModule,
+        Angulartics2Module.forRoot(environment.Angulartics2),
 
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],

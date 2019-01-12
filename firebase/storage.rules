@@ -1,9 +1,5 @@
 service firebase.storage {
   match /b/{bucket}/o {
-    match /blogs/{allPaths=**} {
-      allow read: if true;
-      allow write: if false;
-    }
     match /publicFiles/{allPaths=**} {
       allow read: if true;
       allow write: if false;

@@ -10,5 +10,10 @@ export const environment = {
         'twitter:creator': undefined,
         'fb:app_id': undefined,
         'fb:admins': undefined
+    },
+    Angulartics2: {
+        gst: {
+            trackingIds: ['UA-8121050-6']
+        }
     }
 };

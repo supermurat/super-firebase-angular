@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
 import { HttpStatusModel } from '../../models';
 import { AlertService, PaginationService, SeoService } from '../../services';
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      * @param pagination: PaginationService
+     * @param angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(DOCUMENT) doc: Document,
@@ -34,7 +36,9 @@ export class AppComponent implements OnInit {
                 public router: Router,
                 public seo: SeoService,
                 public alert: AlertService,
-                public pagination: PaginationService) {
+                public pagination: PaginationService,
+                angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag) {
+        angulartics2GoogleGlobalSiteTag.startTracking();
         seo.renderer = renderer;
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
     }
