@@ -12,4 +12,6 @@ export class FirstResponseModel {
     content?: string;
     /** expire date */
     expireDate?: any;
+    /** last update date */
+    changed?: any;
 }

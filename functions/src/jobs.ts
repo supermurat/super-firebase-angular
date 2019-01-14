@@ -49,7 +49,7 @@ export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel)
                 urls: urlList
             });
 
-            return db.collection('dynamicFiles')
+            return db.collection('firstResponses')
                 .doc('sitemap.xml')
                 .set({content: sm.toString(), changed: new Date()}, {merge: true})
                 // tslint:disable-next-line:promise-function-async

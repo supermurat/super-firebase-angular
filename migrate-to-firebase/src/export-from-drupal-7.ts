@@ -37,8 +37,8 @@ dataFirestore[`${cnoJokes}_en-US`] = {};
 const cnoQuotes = 'quotes';
 dataFirestore[`${cnoQuotes}_tr-TR`] = {};
 dataFirestore[`${cnoQuotes}_en-US`] = {};
-const collectionNameOfRedirectionRecords = 'redirectionRecords';
-dataFirestore[collectionNameOfRedirectionRecords] = {};
+const collectionNameOfFirstResponses = 'firstResponses';
+dataFirestore[collectionNameOfFirstResponses] = {};
 
 /* region Fix Data */
 
@@ -62,12 +62,12 @@ const removeUnneededFields = (newData: any): any => {
 
 /* region Add to Export Object */
 
-const addToRedirectionRecords = (lang: string, element: any, url: string): void => {
+const addToFirstResponses = (lang: string, element: any, url: string): void => {
     if (lang + String(element.alias) !== lang + url + String(element.documentID)) {
-        dataFirestore[collectionNameOfRedirectionRecords][(lang + String(element.alias)).replace(/\//gi, '\\')]
+        dataFirestore[collectionNameOfFirstResponses][(lang + String(element.alias)).replace(/\//gi, '\\')]
             = {code: 301, url: `/${lang}${url}${element.documentID}`};
         if (lang === 'tr/') {
-            dataFirestore[collectionNameOfRedirectionRecords][(element.alias).replace(/\//gi, '\\')]
+            dataFirestore[collectionNameOfFirstResponses][(element.alias).replace(/\//gi, '\\')]
                 = {code: 301, url: `/${lang}${url}${element.documentID}`};
         }
     }
@@ -77,11 +77,11 @@ const addToTaxonomy = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/tag';
-        addToRedirectionRecords('en/', element, 'tag/');
+        addToFirstResponses('en/', element, 'tag/');
         newData.title = `Related Contents to "${newData.tagName}"`;
     } else if (lang === '_tr-TR') {
         newData.routePath = '/etiket';
-        addToRedirectionRecords('tr/', element, 'etiket/');
+        addToFirstResponses('tr/', element, 'etiket/');
         newData.title = `"${newData.tagName}" ile Alakalı İçerikler`;
     }
     newData.changed = newData.created;
@@ -179,10 +179,10 @@ const addToBlogs = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/blog';
-        addToRedirectionRecords('en/', element, 'blog/');
+        addToFirstResponses('en/', element, 'blog/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/gunluk';
-        addToRedirectionRecords('tr/', element, 'gunluk/');
+        addToFirstResponses('tr/', element, 'gunluk/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -195,10 +195,10 @@ const addToArticles = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/article';
-        addToRedirectionRecords('en/', element, 'article/');
+        addToFirstResponses('en/', element, 'article/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/makale';
-        addToRedirectionRecords('tr/', element, 'makale/');
+        addToFirstResponses('tr/', element, 'makale/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -211,10 +211,10 @@ const addToJokes = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/joke';
-        addToRedirectionRecords('en/', element, 'joke/');
+        addToFirstResponses('en/', element, 'joke/');
     } else if (lang === '_tr-TR') {
         newData.routePath = element.type === 'sogukespriler' ? '/soguk-espri' : '/fikra';
-        addToRedirectionRecords('tr/', element, 'fikra/');
+        addToFirstResponses('tr/', element, 'fikra/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -227,10 +227,10 @@ const addToQuotes = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/quote';
-        addToRedirectionRecords('en/', element, 'quote/');
+        addToFirstResponses('en/', element, 'quote/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/alinti';
-        addToRedirectionRecords('tr/', element, 'alinti/');
+        addToFirstResponses('tr/', element, 'alinti/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);

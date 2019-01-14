@@ -108,7 +108,6 @@ export const myData = {
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         }
     },
-    dynamicFiles: {},
     'jokes_en-US': {
         'first-joke': {
             id: 'first-joke', routePath: '/joke', orderNo: -1, i18nKey: 'first-joke',
@@ -341,7 +340,7 @@ export const myData = {
             orderNo: -1
         }
     },
-    redirectionRecords: {},
+    firstResponses: {},
     'quotes_en-US': {
         'first-quote': {
             id: 'first-quote', routePath: '/quote', orderNo: -1, i18nKey: 'first-quote',
@@ -505,12 +504,11 @@ export const noData = {
     'articles_tr-TR': {},
     'blogs_en-US': {},
     'blogs_tr-TR': {},
-    dynamicFiles: {},
     'jokes_en-US': {},
     'jokes_tr-TR': {},
     'pages_en-US': {},
     'pages_tr-TR': {},
-    redirectionRecords: {},
+    firstResponses: {},
     'quotes_en-US': {},
     'quotes_tr-TR': {},
     'taxonomy_en-US': {},
