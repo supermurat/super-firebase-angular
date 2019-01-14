@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, LOCALE_ID, Renderer2, RendererFactory2 } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -113,6 +113,25 @@ export class PageService {
                     if (pageItem) {
                         this.state.set(ssrPageKey, pageItem);
                     }
+                }),
+                startWith(existPage)
+            );
+    }
+
+    /**
+     * get collection from firestore
+     * @param path: path of collection to load from Firestore
+     * @param queryFn: QueryFn
+     * @param uniqueKey: unique key for TransferState, if path is already unique without order and limit, no need to use this
+     */
+    getCollectionFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
+        const ssrCollectioKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
+        const existPage = this.state.get(ssrCollectioKey, []);
+
+        return this.afs.collection<T>(path, queryFn)
+            .valueChanges()
+            .pipe(tap(docs => {
+                    this.state.set(ssrCollectioKey, docs);
                 }),
                 startWith(existPage)
             );
