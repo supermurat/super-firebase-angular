@@ -490,6 +490,56 @@ export const myData = {
             changed: {seconds: 1544207666}
         }
     },
+    configs: {
+        'public_en-US': {
+            mainMenuItems: [
+                {
+                    url: '/home',
+                    text: 'Home'
+                },
+                {
+                    url: '/blogs',
+                    text: 'Blog'
+                },
+                {
+                    url: '/articles',
+                    text: 'Articles'
+                },
+                {
+                    url: '/jokes',
+                    text: 'Jokes'
+                },
+                {
+                    url: '/quotes',
+                    text: 'Quotes'
+                }
+            ]
+        },
+        'public_tr-TR': {
+            mainMenuItems: [
+                {
+                    url: '/home',
+                    text: 'Anasayfa'
+                },
+                {
+                    url: '/gunlukler',
+                    text: 'Günlük'
+                },
+                {
+                    url: '/makaleler',
+                    text: 'Makaleler'
+                },
+                {
+                    url: '/eglence',
+                    text: 'Eğlence'
+                },
+                {
+                    url: '/alintilar',
+                    text: 'Alıntılar'
+                }
+            ]
+        }
+    },
     users: {
         'super-user': {
             uid: 'super-user',

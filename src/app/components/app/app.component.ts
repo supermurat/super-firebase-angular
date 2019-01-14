@@ -3,8 +3,8 @@ import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@a
 import { Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
-import { HttpStatusModel } from '../../models';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { ConfigModel, HttpStatusModel } from '../../models';
+import { AlertService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
 
 /**
  * App Component
@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      * @param pagination: PaginationService
+     * @param configService: ConfigService
+     * @param pageService: PageService
      * @param angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
@@ -37,10 +39,16 @@ export class AppComponent implements OnInit {
                 public seo: SeoService,
                 public alert: AlertService,
                 public pagination: PaginationService,
+                public configService: ConfigService,
+                public pageService: PageService,
                 angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag) {
         angulartics2GoogleGlobalSiteTag.startTracking();
         seo.renderer = renderer;
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
+        pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${locale}`)
+            .subscribe(config => {
+                configService.init(config);
+            });
     }
 
     /**

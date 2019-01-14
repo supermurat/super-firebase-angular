@@ -4,8 +4,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/internal/operators';
 import { languageNames } from '../../app-config';
-import { LanguageModel, PageBaseModel } from '../../models';
-import { PageService } from '../../services';
+import { ConfigModel, LanguageModel, PageBaseModel } from '../../models';
+import { ConfigService, PageService } from '../../services';
 
 /**
  * Nav Menu Component
@@ -20,6 +20,8 @@ export class NavMenuComponent implements OnInit {
     private readonly languages = new Subject<Array<LanguageModel>>();
     /** observable languages */
     languages$ = this.languages.asObservable();
+    /** main menu items */
+    mainMenuItems = [];
 
     /**
      * constructor of NavMenuComponent
@@ -27,18 +29,24 @@ export class NavMenuComponent implements OnInit {
      * @param locale: LOCALE_ID
      * @param router: Router
      * @param pageService: PageService
+     * @param configService: ConfigService
      */
     constructor(
         @Inject(PLATFORM_ID) private readonly platformId: string,
         @Inject(LOCALE_ID) public locale: string,
         public router: Router,
-        public pageService: PageService) {
+        public pageService: PageService,
+        public configService: ConfigService) {
     }
 
     /**
      * ngOnInit
      */
     ngOnInit(): void {
+        this.configService.getConfig()
+            .subscribe((config: ConfigModel) => {
+                this.mainMenuItems = config.mainMenuItems;
+            });
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {

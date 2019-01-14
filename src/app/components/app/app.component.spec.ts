@@ -7,7 +7,8 @@ import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { environment } from '../../../environments/environment';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
-import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
+import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
 import { angulartics2GoogleGlobalSiteTagStub } from '../../testing/angulartics-stub.spec';
 import { AlertComponent } from '../alert/alert.component';
 import { CarouselComponent } from '../carousel/carousel.component';
@@ -32,9 +33,9 @@ describe('AppComponent', () => {
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
@@ -85,9 +86,9 @@ describe('AppComponentSeoService', () => {
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
@@ -274,9 +275,9 @@ describe('AppComponentAlertService', () => {
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
@@ -415,9 +416,9 @@ describe('AppComponentServer', () => {
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: {}},
+                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: PLATFORM_ID, useValue: 'server'}

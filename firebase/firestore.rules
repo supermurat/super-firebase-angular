@@ -52,6 +52,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+    match /configs/public_en-US {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /configs/public_tr-TR {
+      allow read: if true;
+      allow write: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }

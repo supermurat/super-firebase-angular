@@ -37,7 +37,8 @@ import { QuoteDetailComponent } from './pages/quote-detail/quote-detail.componen
 import { QuoteListComponent } from './pages/quote-list/quote-list.component';
 import { SearchComponent } from './pages/search/search.component';
 import { TaxonomyComponent } from './pages/taxonomy/taxonomy.component';
-import { AlertService, AuthService, CarouselService, PagerService, PageService, PaginationService, SeoService } from './services';
+import { AlertService, AuthService, CarouselService, ConfigService,
+    PagerService, PageService, PaginationService, SeoService } from './services';
 import { ActiveTagsComponent } from './widgets/active-tags/active-tags.component';
 import { LastJokesComponent } from './widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
@@ -104,6 +105,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         PagerService,
         CarouselService,
         PageService,
+        ConfigService,
         {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
     ],
     bootstrap: [AppComponent]
