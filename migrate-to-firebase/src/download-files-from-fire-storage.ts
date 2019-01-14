@@ -19,7 +19,7 @@ const pathOfFiles = `${pathOfData + path.sep}files`;
 
 checkDirectory(pathOfFiles);
 
-const downloadFromStorage = async () => {
+const downloadFromStorage = async (): Promise<any> => {
     const allFiles = await bucket.getFiles({
         autoPaginate: false
     });

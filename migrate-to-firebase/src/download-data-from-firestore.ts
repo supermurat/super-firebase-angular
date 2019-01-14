@@ -21,7 +21,7 @@ const dataFirestore = {};
 
 checkDirectory(pathOfData);
 
-const downloadFromFirestore = async () => {
+const downloadFromFirestore = async (): Promise<any> => {
     const mainCollectionSnapshot = await db.listCollections();
     for (const mainCollection of mainCollectionSnapshot) {
 

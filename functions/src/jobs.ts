@@ -9,7 +9,7 @@ import { SiteMapUrlModel } from './site-map-url-model';
 
 const db = admin.firestore();
 
-export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel) => {
+export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -70,7 +70,7 @@ export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel) => {
+export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -113,7 +113,7 @@ export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel) => {
+export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateLocales is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -183,7 +183,7 @@ export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel) => {
+export const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -233,7 +233,10 @@ export const generateDescription = async (snap: DocumentSnapshot, jobData: JobMo
         });
 };
 
-export const jobRunner = functions.firestore
+export const jobRunner = functions
+    // .region('europe-west1')
+    // .runWith({ memory: '1GB', timeoutSeconds: 120 })
+    .firestore
     .document('jobs/{jobId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) => {

@@ -58,7 +58,7 @@ const getDocumentID = (req: express.Request): string => {
     return decodeURIComponent(url);
 };
 
-const respondToSSR = (res: express.Response, html: string) => {
+const respondToSSR = (res: express.Response, html: string): void => {
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
     if (newUrlInfo) {
         const newUrl = newUrlInfo[0]
@@ -72,7 +72,7 @@ const respondToSSR = (res: express.Response, html: string) => {
     }
 };
 
-const getSSR = (req: express.Request, res: express.Response) => {
+const getSSR = (req: express.Request, res: express.Response): void => {
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
     // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
     const locale = (matches && serverJS.hasOwnProperty(matches[1]) && indexHtml.hasOwnProperty(matches[1])) ?
@@ -101,8 +101,8 @@ const getSSR = (req: express.Request, res: express.Response) => {
     });
 };
 
-const checkFirstResponse = async (req: express.Request, res: express.Response) =>
-    new Promise<FirstResponseModel>((resolve, reject) => {
+const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
+    new Promise<FirstResponseModel>((resolve, reject): void => {
         const documentID = getDocumentID(req);
         if (documentID) {
             db.collection('firstResponses')
@@ -151,4 +151,7 @@ app.get('**', (req: express.Request, res: express.Response) => {
         });
 });
 
-export const ssr = functions.https.onRequest(app);
+export const ssr = functions
+    // .region('europe-west1')
+    // .runWith({ memory: '1GB', timeoutSeconds: 120 })
+    .https.onRequest(app);
