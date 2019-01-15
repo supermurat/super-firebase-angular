@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
@@ -59,6 +59,19 @@ describe('HomeComponent', () => {
     it('trackByIndex(2) should return 2', async(() => {
         expect(comp.pageService.trackByIndex(2, {}))
             .toBe(2);
+    }));
+
+    it('should load home page contents properly with uniqueKey for TransferState', fakeAsync(() => {
+        const contents$ = comp.pageService.getCollectionFromFirestore(`pages_${comp.locale}/home/contents`,
+            ref => ref.orderBy('orderNo')
+                .limit(3), 'unit-test');
+        let lastContents = [];
+        contents$.subscribe(values => {
+            lastContents = values;
+        });
+        tick();
+        expect(lastContents.length)
+            .toBe(3);
     }));
 
 });

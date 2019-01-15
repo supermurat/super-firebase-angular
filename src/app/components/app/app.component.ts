@@ -33,8 +33,8 @@ export class AppComponent implements OnInit {
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(DOCUMENT) doc: Document,
-                @Inject(LOCALE_ID) locale: string,
-                renderer: Renderer2,
+                @Inject(LOCALE_ID) readonly locale: string,
+                private readonly renderer: Renderer2,
                 public router: Router,
                 public seo: SeoService,
                 public alert: AlertService,
@@ -45,16 +45,16 @@ export class AppComponent implements OnInit {
         angulartics2GoogleGlobalSiteTag.startTracking();
         seo.renderer = renderer;
         renderer.setAttribute(doc.documentElement, 'lang', locale.substr(0, 2));
-        pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${locale}`)
-            .subscribe(config => {
-                configService.init(config);
-            });
     }
 
     /**
      * ngOnInit
      */
     ngOnInit(): void {
+        this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)
+            .subscribe(config => {
+                this.configService.init(config);
+            });
         this.httpStatus$ = this.seo.getHttpStatus();
     }
 }

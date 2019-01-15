@@ -68,6 +68,17 @@ describe('AppComponent', () => {
             .toContain('Super Murat');
     }));
 
+    it('should load main menu items', fakeAsync(() => {
+        // tslint:disable-next-line:no-life-cycle-call
+        comp.ngOnInit();
+        tick();
+        fixture.detectChanges();
+        expect(comp)
+            .toBeTruthy();
+        expect(fixture.nativeElement.querySelector('.navbar-nav .nav-link span').textContent)
+            .toContain('Home');
+    }));
+
 });
 
 describe('AppComponentSeoService', () => {
