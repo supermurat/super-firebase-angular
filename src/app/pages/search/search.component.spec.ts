@@ -5,9 +5,10 @@ import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
 import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { SearchComponent } from './search.component';
@@ -23,10 +24,11 @@ describe('SearchComponent', () => {
                 SideBarComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],

@@ -40,6 +40,7 @@ import { TaxonomyComponent } from './pages/taxonomy/taxonomy.component';
 import { AlertService, AuthService, CarouselService, ConfigService,
     PagerService, PageService, PaginationService, SeoService } from './services';
 import { ActiveTagsComponent } from './widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from './widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from './widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
 
@@ -73,7 +74,8 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         CarouselComponent,
         ActiveTagsComponent,
         LastJokesComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        CustomHtmlComponent
     ],
     imports: [
         CommonModule,

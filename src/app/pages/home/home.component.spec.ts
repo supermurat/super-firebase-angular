@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
 import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -23,10 +24,11 @@ describe('HomeComponent', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],
@@ -87,10 +89,11 @@ describe('HomeComponentNoData', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
             ],

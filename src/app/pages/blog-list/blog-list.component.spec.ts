@@ -9,9 +9,10 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { PagerComponent } from '../../components/pager/pager.component';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
-import { AlertService, CarouselService, PagerService, PageService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PagerService, PageService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -34,10 +35,11 @@ describe('BlogListComponent', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -136,10 +138,11 @@ describe('BlogListComponentNoData', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -189,10 +192,11 @@ describe('BlogListComponent_tr-TR', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},

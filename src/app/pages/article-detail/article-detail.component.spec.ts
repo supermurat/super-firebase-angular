@@ -9,9 +9,10 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ArticleModel } from '../../models';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
 import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -33,10 +34,11 @@ describe('ArticleDetailComponent', () => {
                 NotFoundComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
@@ -151,10 +153,11 @@ describe('ArticleDetailComponent_tr-TR', () => {
                 NotFoundComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},

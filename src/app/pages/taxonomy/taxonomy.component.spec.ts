@@ -8,9 +8,10 @@ import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { ScrollableDirective } from '../../directives';
 import { TaxonomyModel } from '../../models';
-import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
+import { AlertService, CarouselService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
 import { ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -31,10 +32,11 @@ describe('TaxonomyComponent', () => {
                 ActiveTagsComponent,
                 LastJokesComponent,
                 SearchBarComponent,
-                NotFoundComponent
+                NotFoundComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService,
+                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
                 {provide: ActivatedRoute, useValue: activatedRouteStub},
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},

@@ -1,18 +1,12 @@
 import { PLATFORM_ID } from '@angular/core';
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { TransferState } from '@angular/platform-browser';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { environment } from '../../../environments/environment';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
-import { AlertService, CarouselService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
-import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
 import { angulartics2GoogleGlobalSiteTagStub } from '../../testing/angulartics-stub.spec';
-import { AlertComponent } from '../alert/alert.component';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { CarouselComponent } from '../carousel/carousel.component';
-import { FooterComponent } from '../footer/footer.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { AppComponent } from './app.component';
@@ -26,20 +20,14 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent,
-                NotFoundComponent,
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
                     {path: 'unit-test', component: NavMenuComponent}
@@ -90,20 +78,14 @@ describe('AppComponentSeoService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent,
-                NotFoundComponent,
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
                     {path: 'unit-test', component: NavMenuComponent}
@@ -279,20 +261,14 @@ describe('AppComponentAlertService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent,
-                NotFoundComponent,
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
                     {path: 'unit-test', component: NavMenuComponent}
@@ -420,21 +396,15 @@ describe('AppComponentServer', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                AlertComponent,
                 LoadingSpinnerComponent,
-                FooterComponent,
-                NotFoundComponent,
                 CarouselComponent
             ],
             providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: Angulartics2GoogleGlobalSiteTag, useValue: angulartics2GoogleGlobalSiteTagStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: PLATFORM_ID, useValue: 'server'}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
                     {path: 'unit-test', component: NavMenuComponent},

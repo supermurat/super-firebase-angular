@@ -3,9 +3,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService } from '../../services';
+import { AlertService, ConfigService } from '../../services';
 import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
 import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
+import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
 import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
 import { SideBarComponent } from './side-bar.component';
@@ -20,10 +21,11 @@ describe('SideBarComponent', () => {
                 SideBarComponent,
                 ActiveTagsComponent,
                 LastJokesComponent,
-                SearchBarComponent
+                SearchBarComponent,
+                CustomHtmlComponent
             ],
             providers: [
-                AlertService,
+                AlertService, ConfigService,
                 {provide: ComponentFixtureAutoDetect, useValue: true},
                 {provide: AngularFirestore, useValue: angularFirestoreStub},
                 {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
