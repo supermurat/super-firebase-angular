@@ -22,7 +22,7 @@ import { SearchBarComponent } from '../widgets/search-bar/search-bar.component';
 import { ActivatedRouteStub } from './activated-route-stub.spec';
 import { angularFirestoreStub } from './angular-firestore-stub.spec';
 
-const activatedRouteStub = new ActivatedRouteStub();
+export const activatedRouteStub = new ActivatedRouteStub();
 
 /**
  * Test Helper Module

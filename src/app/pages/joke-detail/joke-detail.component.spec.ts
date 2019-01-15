@@ -1,24 +1,10 @@
 import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { JokeModel } from '../../models';
-import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { JokeDetailComponent } from './joke-detail.component';
-
-const activatedRouteStub = new ActivatedRouteStub();
 
 describe('JokeDetailComponent', () => {
     let fixture: ComponentFixture<JokeDetailComponent>;
@@ -27,24 +13,11 @@ describe('JokeDetailComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                JokeDetailComponent,
-                FooterComponent,
-                SideBarComponent,
-                AlertComponent,
-                NotFoundComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                CustomHtmlComponent
+                JokeDetailComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: 'joke/:id', component: JokeDetailComponent},
                     {path: 'jokes', component: JokeDetailComponent},
@@ -146,25 +119,13 @@ describe('JokeDetailComponent_tr-TR', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                JokeDetailComponent,
-                FooterComponent,
-                SideBarComponent,
-                AlertComponent,
-                NotFoundComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                CustomHtmlComponent
+                JokeDetailComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: LOCALE_ID, useValue: 'tr-TR'}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: 'joke/:id', component: JokeDetailComponent},
                     {path: 'jokes', component: JokeDetailComponent},
