@@ -6,7 +6,7 @@ import { CustomHtmlModel } from '../../models';
  */
 @Component({
     selector: 'app-custom-html',
-    templateUrl: './custom-html.html'
+    templateUrl: './custom-html.component.html'
 })
 export class CustomHtmlComponent {
     /** widget title */

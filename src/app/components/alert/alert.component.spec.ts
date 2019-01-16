@@ -1,7 +1,6 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertService } from '../../services';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { AlertComponent } from './alert.component';
 
 describe('AlertComponent', () => {
@@ -10,14 +9,10 @@ describe('AlertComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                AlertComponent
-            ],
-            providers: [
-                AlertService,
-                {provide: ComponentFixtureAutoDetect, useValue: true}
-            ],
+            declarations: [],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([{path: '', component: AlertComponent}])
             ]
         })

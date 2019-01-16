@@ -1,11 +1,8 @@
 import { PLATFORM_ID } from '@angular/core';
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { By, TransferState } from '@angular/platform-browser';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
-import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NavMenuComponent } from './nav-menu.component';
 
 describe('NavMenuComponent', () => {
@@ -17,13 +14,9 @@ describe('NavMenuComponent', () => {
             declarations: [
                 NavMenuComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: NavMenuComponent},
                     {path: 'unit-test', component: NavMenuComponent}
@@ -127,13 +120,10 @@ describe('NavMenuComponentServer', () => {
                 NavMenuComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: PLATFORM_ID, useValue: 'server'}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: NavMenuComponent},
                     {path: 'unit-test', component: NavMenuComponent}
