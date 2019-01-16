@@ -1,6 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ConfigModel } from '../../models';
 import { angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
 import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -58,6 +59,16 @@ describe('HomeComponent', () => {
         tick();
         expect(lastContents.length)
             .toBe(3);
+    }));
+
+    it('should load config properly', fakeAsync(() => {
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+            .subscribe(config => {
+                comp.configService.init(config);
+            });
+        tick();
+        expect(comp.customHtml.title)
+            .toBe('Project is Ready');
     }));
 
 });

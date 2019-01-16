@@ -513,7 +513,11 @@ export const myData = {
                     url: '/quotes',
                     text: 'Quotes'
                 }
-            ]
+            ],
+            primaryCustomHtmlWidget: {
+                title: 'Project is Ready',
+                content: '<b>You will get more info soon...</b>'
+            }
         },
         'public_tr-TR': {
             mainMenuItems: [
@@ -537,7 +541,11 @@ export const myData = {
                     url: '/alintilar',
                     text: 'Alıntılar'
                 }
-            ]
+            ],
+            primaryCustomHtmlWidget: {
+                title: 'Proje Hazır',
+                content: '<b>Yakında daha fazla bilgi alanacaksınız...</b>'
+            }
         }
     },
     users: {

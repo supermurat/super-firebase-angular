@@ -1,5 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ConfigModel } from '../../models';
 import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { SideBarComponent } from './side-bar.component';
 
@@ -36,5 +37,15 @@ describe('SideBarComponent', () => {
         expect(comp)
             .toBeTruthy();
     });
+
+    it('should load config properly', fakeAsync(() => {
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+            .subscribe(config => {
+                comp.configService.init(config);
+            });
+        tick();
+        expect(comp.customHtml.title)
+            .toBe('Project is Ready');
+    }));
 
 });
