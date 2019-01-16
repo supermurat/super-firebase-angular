@@ -71,6 +71,19 @@ describe('HomeComponent', () => {
             .toBe('Project is Ready');
     }));
 
+    it('should load config properly even if initialized after already got', fakeAsync(() => {
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+            .subscribe(config => {
+                comp.configService.init(config);
+            });
+        tick();
+        // tslint:disable-next-line:no-life-cycle-call
+        comp.ngOnInit();
+        tick();
+        expect(comp.customHtml.title)
+            .toBe('Project is Ready');
+    }));
+
 });
 
 describe('HomeComponentNoData', () => {
