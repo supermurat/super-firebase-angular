@@ -1,24 +1,11 @@
 import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { PagerComponent } from '../../components/pager/pager.component';
-import { SideBarComponent } from '../../components/side-bar/side-bar.component';
-import { AlertService, CarouselService, ConfigService, PagerService, PageService, SeoService } from '../../services';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/index.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { angularFirestoreStubNoData } from '../../testing/index.spec';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { JokeListComponent } from './joke-list.component';
-
-const activatedRouteStub = new ActivatedRouteStub();
 
 describe('JokeListComponent', () => {
     let fixture: ComponentFixture<JokeListComponent>;
@@ -27,25 +14,11 @@ describe('JokeListComponent', () => {
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
-                JokeListComponent,
-                FooterComponent,
-                SideBarComponent,
-                PagerComponent,
-                AlertComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                JokeListComponent
             ],
-            providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
@@ -130,25 +103,13 @@ describe('JokeListComponentNoData', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                JokeListComponent,
-                FooterComponent,
-                SideBarComponent,
-                PagerComponent,
-                AlertComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                JokeListComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: AngularFirestore, useValue: angularFirestoreStubNoData}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},
@@ -184,26 +145,13 @@ describe('JokeListComponent_tr-TR', () => {
     beforeEach(fakeAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
-                JokeListComponent,
-                FooterComponent,
-                SideBarComponent,
-                PagerComponent,
-                AlertComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                JokeListComponent
             ],
             providers: [
-                AlertService, SeoService, PagerService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: LOCALE_ID, useValue: 'tr-TR'}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', redirectTo: 'jokes/1', pathMatch: 'full'},
                     {path: 'jokes', redirectTo: 'jokes/1', pathMatch: 'full'},

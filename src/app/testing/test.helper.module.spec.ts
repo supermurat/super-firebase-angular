@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ComponentFixtureAutoDetect } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -20,6 +21,7 @@ import { CustomHtmlComponent } from '../widgets/custom-html/custom-html.componen
 import { LastJokesComponent } from '../widgets/last-jokes/last-jokes.component';
 import { SearchBarComponent } from '../widgets/search-bar/search-bar.component';
 import { ActivatedRouteStub } from './activated-route-stub.spec';
+import { angularFireStorageStub } from './angular-firestorage-stub.spec';
 import { angularFirestoreStub } from './angular-firestore-stub.spec';
 
 export const activatedRouteStub = new ActivatedRouteStub();
@@ -68,9 +70,10 @@ export const activatedRouteStub = new ActivatedRouteStub();
         PageService,
         ConfigService,
         TransferState,
-        {provide: ComponentFixtureAutoDetect, useValue: true},
+        // {provide: ComponentFixtureAutoDetect, useValue: true},
         {provide: ActivatedRoute, useValue: activatedRouteStub},
         {provide: AngularFirestore, useValue: angularFirestoreStub},
+        {provide: AngularFireStorage, useValue: angularFireStorageStub},
         {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
     ]
 })

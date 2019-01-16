@@ -1,15 +1,8 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
-import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomeComponent } from './home.component';
 
@@ -20,20 +13,11 @@ describe('HomeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                HomeComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -85,20 +69,13 @@ describe('HomeComponentNoData', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                HomeComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: AngularFirestore, useValue: angularFirestoreStubNoData}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},

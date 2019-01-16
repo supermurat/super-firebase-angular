@@ -32,7 +32,7 @@ export class ScrollableDirective {
                 this.scrollPosition.emit('bottom');
             }
 
-            if (top === 0) {
+            if (top <= 0) {
                 this.scrollPosition.emit('top');
             }
 

@@ -1,10 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
-import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {
@@ -13,15 +9,10 @@ describe('NotFoundComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                NotFoundComponent
-            ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            declarations: [],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([{path: '', component: NotFoundComponent}])
             ]
         })

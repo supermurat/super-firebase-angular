@@ -1,23 +1,9 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { SideBarComponent } from '../../components/side-bar/side-bar.component';
-import { ScrollableDirective } from '../../directives';
 import { TaxonomyModel } from '../../models';
-import { AlertService, CarouselService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
-import { ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { CustomHtmlComponent } from '../../widgets/custom-html/custom-html.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { TaxonomyComponent } from './taxonomy.component';
-
-const activatedRouteStub = new ActivatedRouteStub();
 
 describe('TaxonomyComponent', () => {
     let fixture: ComponentFixture<TaxonomyComponent>;
@@ -26,24 +12,11 @@ describe('TaxonomyComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                TaxonomyComponent,
-                SideBarComponent,
-                ScrollableDirective,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent,
-                CustomHtmlComponent
+                TaxonomyComponent
             ],
-            providers: [
-                AlertService, SeoService, PaginationService, TransferState, CarouselService, PageService, ConfigService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: TaxonomyComponent},
                     {path: 'tag/:id', component: TaxonomyComponent},
