@@ -1,8 +1,8 @@
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { PageBaseModel, PageModel } from '../../models';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
+import { ConfigModel, CustomHtmlModel, PageBaseModel, PageModel } from '../../models';
+import { AlertService, CarouselService, ConfigService, PageService, SeoService } from '../../services';
 
 /**
  * Home Component
@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
     page$: Observable<PageModel>;
     /** contents of current page */
     contents$: Observable<Array<PageBaseModel>>;
+    /** primary custom html widget */
+    customHtml: CustomHtmlModel;
 
     /**
      * constructor of HomeComponent
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
      * @param carouselService: CarouselService
      * @param afs: AngularFirestore
      * @param pageService: PageService
+     * @param configService: ConfigService
      * @param locale: LOCALE_ID
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
@@ -34,6 +37,7 @@ export class HomeComponent implements OnInit {
                 public carouselService: CarouselService,
                 private readonly afs: AngularFirestore,
                 public pageService: PageService,
+                public configService: ConfigService,
                 @Inject(LOCALE_ID) public locale: string) {
     }
 
@@ -42,10 +46,15 @@ export class HomeComponent implements OnInit {
      */
     ngOnInit(): void {
         this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'home');
-        this.contents$ = this.afs.collection(`pages_${this.locale}/home/contents`,
+
+        this.contents$ = this.pageService.getCollectionFromFirestore(`pages_${this.locale}/home/contents`,
             ref => ref.orderBy('orderNo')
-                .limit(3))
-            .valueChanges();
+                .limit(3));
+
+        this.configService.getConfig()
+            .subscribe((config: ConfigModel) => {
+                this.customHtml = config.primaryCustomHtmlWidget;
+            });
     }
 
 }

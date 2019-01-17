@@ -29,7 +29,7 @@ const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
 const pathOfFiles = `${pathOfData + path.sep}files`;
 
 // File
-const getFiles = (dir: string, files: Array<string>) => {
+const getFiles = (dir: string, files: Array<string>): Array<string> => {
     const filesWithBefore = files || [];
     const currentFiles = fs.readdirSync(dir);
     for (const currentFile of currentFiles) {
@@ -44,8 +44,8 @@ const getFiles = (dir: string, files: Array<string>) => {
     return filesWithBefore;
 };
 
-const uploadImageToStorage = async (fileContent: any, fileName: string) =>
-    new Promise<any>((resolve, reject) => {
+const uploadImageToStorage = async (fileContent: any, fileName: string): Promise<any> =>
+    new Promise<any>((resolve, reject): void => {
         const fileUpload = bucket.file(fileName);
         const blobStream = fileUpload.createWriteStream({
             metadata: {
@@ -69,8 +69,8 @@ const uploadImageToStorage = async (fileContent: any, fileName: string) =>
         blobStream.end(fileContent);
     });
 
-const uploadFileAndGetURL = async (pathOfFile: string, filePath: string) =>
-    new Promise<any>((resolve, reject) => {
+const uploadFileAndGetURL = async (pathOfFile: string, filePath: string): Promise<any> =>
+    new Promise<any>((resolve, reject): void => {
         const relativePath = filePath.replace(pathOfFile, '').replace(/\\/g, '/');
         const destinationPath = remoteFilePath ? remoteFilePath + path.basename(filePath) : relativePath;
 
@@ -97,8 +97,8 @@ const uploadFileAndGetURL = async (pathOfFile: string, filePath: string) =>
             });
     });
 
-const uploadFilesAndFixFilePaths = async () =>
-    new Promise<any>((resolve, reject) => {
+const uploadFilesAndFixFilePaths = async (): Promise<any> =>
+    new Promise<any>((resolve, reject): void => {
         let dataString = JSON.stringify(data);
         if (!fs.existsSync(pathOfFiles)) {
             resolve();
@@ -127,7 +127,7 @@ const uploadFilesAndFixFilePaths = async () =>
     });
 // End OF File
 
-const fixTimestamps = (nestedData: any) => {
+const fixTimestamps = (nestedData: any): any => {
     if (typeof nestedData === 'string') {
         // tslint:disable-next-line: max-line-length
         if (nestedData.match(/^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01])[ T](00|[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])\.\d\d\d[Z]?$/gi)
@@ -147,7 +147,7 @@ const fixTimestamps = (nestedData: any) => {
     return nestedData;
 };
 
-const importIntoFirestore = () => {
+const importIntoFirestore = (): void => {
     if (data) {
         Object.keys(data).forEach((key) => {
             const nestedContent = data[key];

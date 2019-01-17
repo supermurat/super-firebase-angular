@@ -9,7 +9,7 @@ import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
 import { FUNCTIONS_CONFIG } from './config';
-import { RedirectionRecordModel } from './redirection-record-model';
+import { FirstResponseModel } from './first-response-model';
 
 const db = admin.firestore();
 
@@ -40,40 +40,39 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
     !indexHtml.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode)) {
     throw new Error(`Default Language Code (${
         FUNCTIONS_CONFIG.defaultLanguageCode
-    }) should be in loaded languages (serverJS:${
+        }) should be in loaded languages (serverJS:${
         Object.keys(serverJS).toString()
-    }, indexHtml:${
+        }, indexHtml:${
         Object.keys(indexHtml).toString()
-    })!`);
+        })!`);
 }
 
 enableProdMode();
 
 const app = express();
 
-const getDynamicFile = (req: express.Request, res: express.Response) => {
-    const fileName = req.url.replace(/\//gi, '');
-    const fileExt = `.${fileName.split('.')[1]}`;
-    db.collection('dynamicFiles').doc(fileName).get()
-        .then((snapshot) => {
-            if (!snapshot.exists) {
-                console.log('No such file:', fileName);
-                res.status(404)
-                    .send(`404 : No such file:${fileName}`);
-            } else {
-                res.status(200)
-                    .type(fileExt)
-                    .send(snapshot.data().content.replace(/\\r\\n/g, '\r\n'));
-            }
-        })
-        .catch((err) => {
-            console.log('Error in getDynamicFile:', err);
-            res.status(500)
-                .send(err);
-        });
+const getDocumentID = (req: express.Request): string => {
+    // firestore doesn't allow "/" to be in document ID
+    const url = req.url.substring(1).replace(/\//gi, '\\');
+
+    return decodeURIComponent(url);
 };
 
-const getSSR = (req: express.Request, res: express.Response) => {
+const respondToSSR = (res: express.Response, html: string): void => {
+    const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
+    if (newUrlInfo) {
+        const newUrl = newUrlInfo[0]
+            .replace(/--end-of-http-redirect-301--/gi, '')
+            .replace(/--http-redirect-301--/gi, '');
+        res.redirect(301, newUrl);
+    } else {
+        // thing about redirect to 404 but maybe keeping current url is more cool
+        res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200)
+            .send(html);
+    }
+};
+
+const getSSR = (req: express.Request, res: express.Response): void => {
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
     // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
     const locale = (matches && serverJS.hasOwnProperty(matches[1]) && indexHtml.hasOwnProperty(matches[1])) ?
@@ -83,42 +82,43 @@ const getSSR = (req: express.Request, res: express.Response) => {
         url: req.path,
         document: indexHtml[locale]
     }).then((html) => {
-            const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
-            if (newUrlInfo) {
-                const newUrl = newUrlInfo[0]
-                    .replace(/--end-of-http-redirect-301--/gi, '')
-                    .replace(/--http-redirect-301--/gi, '');
-                res.redirect(301, newUrl);
-            } else {
-                // thing about redirect to 404 but maybe keeping current url is more cool
-                res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200)
-                    .send(html);
-            }
+        respondToSSR(res, html);
+        const documentID = getDocumentID(req);
+        if (documentID) {
+            const expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() + 30); // add days
+            db.collection('firstResponses')
+                .doc(documentID)
+                .set({code: 200, type: 'cache', content: html, expireDate})
+                .catch((error) => {
+                    console.error('Error in getSSR.db.collection.set()', documentID, error);
+                });
         }
-    ).catch((err) => {
-        console.log('Error in getSSR:', err);
+    }).catch((err) => {
+        console.error('Error in getSSR:', err);
+        res.status(500)
+            .send(err);
     });
 };
 
-const checkRedirection = async (req: express.Request, res: express.Response) =>
-    new Promise<RedirectionRecordModel>((resolve, reject) => {
-        // firestore doesn't allow "/" to be in document ID
-        const url = req.url.substring(1).replace(/\//gi, '\\');
-        const documentID = decodeURIComponent(url);
+const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
+    new Promise<FirstResponseModel>((resolve, reject): void => {
+        const documentID = getDocumentID(req);
         if (documentID) {
-            db.collection('redirectionRecords')
+            db.collection('firstResponses')
                 .doc(documentID)
                 .get()
                 .then((snapshot) => {
                     if (!snapshot.exists) {
-                        console.log('!snapshot.exists:', documentID);
                         resolve();
                     } else {
-                        resolve(snapshot.data());
+                        const id = snapshot.id;
+                        const data = snapshot.data();
+                        resolve({id, ...data});
                     }
                 })
                 .catch((err) => {
-                    console.log('Error in checkRedirection:', err);
+                    console.error('Error in db.collection(firstResponses):', err);
                     resolve(); // let's handle this error with SSR
                 });
         } else {
@@ -127,23 +127,31 @@ const checkRedirection = async (req: express.Request, res: express.Response) =>
     });
 
 app.get('**', (req: express.Request, res: express.Response) => {
-    const matchesDynamicFiles = req.url.match(/^\/([a-zA-Z0-9]*(\.)[a-zA-Z0-9]*)$/);
-    if (matchesDynamicFiles && req.url.length > 3) {
-        getDynamicFile(req, res);
-    } else {
-        checkRedirection(req, res)
-            .then((redirectionRecord: RedirectionRecordModel) => {
-                if (redirectionRecord) {
-                    console.log('redirectionRecord:', redirectionRecord);
-                    res.redirect(redirectionRecord.code, redirectionRecord.url);
-                } else {
-                    getSSR(req, res);
-                }
-            })
-            .catch((err) => {
-                console.log('Error in app.get**:', err);
-            });
-    }
+    checkFirstResponse(req, res)
+        .then((firstResponse: FirstResponseModel) => {
+            if (firstResponse && firstResponse.code === 301) {
+                res.redirect(firstResponse.code, firstResponse.url);
+            } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
+                const fileNameParts = firstResponse.id.split('.');
+                const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
+                res.status(200)
+                    .type(fileExt)
+                    .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
+            } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
+                (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
+                respondToSSR(res, firstResponse.content);
+            } else {
+                getSSR(req, res);
+            }
+        })
+        .catch((err) => {
+            console.error('Error in checkFirstResponse:', err);
+            res.status(500)
+                .send(err);
+        });
 });
 
-export const ssr = functions.https.onRequest(app);
+export const ssr = functions
+    // .region('europe-west1')
+    // .runWith({ memory: '1GB', timeoutSeconds: 120 })
+    .https.onRequest(app);

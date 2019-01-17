@@ -1,14 +1,9 @@
 import { PLATFORM_ID } from '@angular/core';
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { By, TransferState } from '@angular/platform-browser';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { ScrollableDirective } from '../../directives';
-import { AlertService, CarouselService, PageService, PaginationService, SeoService } from '../../services';
-import { angularFireStorageStub, angularFirestoreStub } from '../../testing/index.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { PlaygroundComponent } from './playground.component';
 
 describe('PlaygroundComponent', () => {
@@ -18,17 +13,11 @@ describe('PlaygroundComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PlaygroundComponent,
-                ScrollableDirective
+                PlaygroundComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
                 NgbModule
             ]
@@ -171,8 +160,8 @@ describe('PlaygroundComponent', () => {
             countOfItem = result.length;
         });
         const div = fixture.debugElement.query(By.css('.content'));
-        div.nativeElement.scrollTop = 0;
-        div.triggerEventHandler('scroll', {target: {scrollTop: 0}});
+        div.nativeElement.scrollTop = -2;
+        div.triggerEventHandler('scroll', {target: {scrollTop: -2}});
         tick();
         expect(countOfItem)
             .toEqual(2);
@@ -187,17 +176,11 @@ describe('PlaygroundComponentAsync', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                PlaygroundComponent,
-                ScrollableDirective
+                PlaygroundComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
                 NgbModule
             ]
@@ -214,6 +197,7 @@ describe('PlaygroundComponentAsync', () => {
     }));
 
     it("should render 'Browser side rendering with Firebase 🔥' in a h2", async(() => {
+        fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('h2').textContent)
             .toContain('Browser side rendering with Firebase 🔥');
     }));
@@ -283,14 +267,10 @@ describe('PlaygroundComponentServer', () => {
                 PlaygroundComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService, PaginationService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: PLATFORM_ID, useValue: 'server'},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: AngularFireStorage, useValue: angularFireStorageStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: PLATFORM_ID, useValue: 'server'}
             ],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([{path: '', component: PlaygroundComponent}]),
                 NgbModule
             ]

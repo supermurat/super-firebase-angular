@@ -2,7 +2,7 @@ import * as colors from 'colors';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export const checkDirectory = (directoryPath: string) => {
+export const checkDirectory = (directoryPath: string): void => {
     if (!fs.existsSync(directoryPath)) {
         directoryPath.split(path.sep)
             .reduce(
@@ -18,7 +18,7 @@ export const checkDirectory = (directoryPath: string) => {
     }
 };
 
-export const writeResultToFile = (pathOfDataJson, dataFirestore) => {
+export const writeResultToFile = (pathOfDataJson, dataFirestore): void => {
     fs.writeFile(
         pathOfDataJson,
         JSON.stringify(dataFirestore, undefined, 2),
@@ -30,14 +30,14 @@ export const writeResultToFile = (pathOfDataJson, dataFirestore) => {
         });
 };
 
-export const isDirectory = (source) => fs.lstatSync(source).isDirectory();
+export const isDirectory = (source): boolean => fs.lstatSync(source).isDirectory();
 
-export const getDirectories = (source) =>
+export const getDirectories = (source): Array<string> =>
     fs.readdirSync(source)
         .map((name) => path.join(source, name))
         .filter(isDirectory);
 
-export const getDirectoriesRecursive = (source) => [
+export const getDirectoriesRecursive = (source): Array<string> => [
     source,
     ...getDirectories(source)
         .map(getDirectoriesRecursive)

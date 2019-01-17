@@ -15,7 +15,8 @@
     "typedef": [
       true,
       "call-signature",
-      "property-declaration"
+      "property-declaration",
+      "arrow-call-signature"
     ],
     "comment-format": [
       true,

@@ -7,29 +7,10 @@
 
         <div class="collapse navbar-collapse" id="navbar-supported-content">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show">
-                    <a class="nav-link" [routerLink]="['/home']">
-                        <span i18n>Home</span> <span class="sr-only" i18n>(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show">
-                    <a class="nav-link" [routerLink]="[pageService.routerLinks.blogs]">
-                        <span i18n>Blog</span>
-                    </a>
-                </li>
-                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show">
-                    <a class="nav-link" [routerLink]="[pageService.routerLinks.articles]">
-                        <span i18n>Articles</span>
-                    </a>
-                </li>
-                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show">
-                    <a class="nav-link" [routerLink]="[pageService.routerLinks.jokes]">
-                        <span i18n>Jokes</span>
-                    </a>
-                </li>
-                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show">
-                    <a class="nav-link" [routerLink]="[pageService.routerLinks.quotes]">
-                        <span i18n>Quotes</span>
+                <li class="nav-item" [routerLinkActive]="['active']" data-toggle="collapse" data-target=".navbar-collapse.show"
+                    *ngFor="let mainMenuItem of mainMenuItems; trackBy:pageService.trackByIndex">
+                    <a class="nav-link" [routerLink]="mainMenuItem.url">
+                        <span>{{ mainMenuItem.text }}</span> <span class="sr-only" i18n>(current)</span>
                     </a>
                 </li>
             </ul>

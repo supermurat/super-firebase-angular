@@ -21,7 +21,7 @@ const dataFirestore = {};
 
 checkDirectory(pathOfData);
 
-const downloadFromFirestore = async () => {
+const downloadFromFirestore = async (): Promise<any> => {
     const mainCollectionSnapshot = await db.listCollections();
     for (const mainCollection of mainCollectionSnapshot) {
 
@@ -35,6 +35,7 @@ const downloadFromFirestore = async () => {
 
             if (checkForSubCollectionsOnTheseCollectionList.length > 0 &&
                 checkForSubCollectionsOnTheseCollectionList.indexOf(mainCollection.id) === -1) {
+                console.log(mainCollection.id, mainDoc.id);
                 continue;
             }
             const subCollectionSnapshot = await db.collection(mainCollection.id)

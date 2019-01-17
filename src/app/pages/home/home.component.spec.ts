@@ -1,14 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
-import { angularFirestoreStub, angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { ConfigModel } from '../../models';
+import { angularFirestoreStubNoData } from '../../testing/angular-firestore-stub.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { HomeComponent } from './home.component';
 
@@ -19,19 +14,11 @@ describe('HomeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent
+                HomeComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},
@@ -61,6 +48,42 @@ describe('HomeComponent', () => {
             .toBe(2);
     }));
 
+    it('should load home page contents properly with uniqueKey for TransferState', fakeAsync(() => {
+        const contents$ = comp.pageService.getCollectionFromFirestore(`pages_${comp.locale}/home/contents`,
+            ref => ref.orderBy('orderNo')
+                .limit(3), 'unit-test');
+        let lastContents = [];
+        contents$.subscribe(values => {
+            lastContents = values;
+        });
+        tick();
+        expect(lastContents.length)
+            .toBe(3);
+    }));
+
+    it('should load config properly', fakeAsync(() => {
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+            .subscribe(config => {
+                comp.configService.init(config);
+            });
+        tick();
+        expect(comp.customHtml.title)
+            .toBe('Project is Ready');
+    }));
+
+    it('should load config properly even if initialized after already got', fakeAsync(() => {
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+            .subscribe(config => {
+                comp.configService.init(config);
+            });
+        tick();
+        // tslint:disable-next-line:no-life-cycle-call
+        comp.ngOnInit();
+        tick();
+        expect(comp.customHtml.title)
+            .toBe('Project is Ready');
+    }));
+
 });
 
 describe('HomeComponentNoData', () => {
@@ -70,19 +93,13 @@ describe('HomeComponentNoData', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                HomeComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent,
-                NotFoundComponent
+                HomeComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
-                {provide: AngularFirestore, useValue: angularFirestoreStubNoData},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
+                {provide: AngularFirestore, useValue: angularFirestoreStubNoData}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: HomeComponent},
                     {path: 'http-404', component: NotFoundComponent},

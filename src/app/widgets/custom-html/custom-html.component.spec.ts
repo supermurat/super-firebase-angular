@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestHelperModule } from '../../testing/test.helper.module.spec';
-import { NotFoundComponent } from './not-found.component';
+import { CustomHtmlComponent } from './custom-html.component';
 
-describe('NotFoundComponent', () => {
-    let fixture: ComponentFixture<NotFoundComponent>;
-    let comp: NotFoundComponent;
+describe('CustomHtmlComponent', () => {
+    let fixture: ComponentFixture<CustomHtmlComponent>;
+    let comp: CustomHtmlComponent;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -13,12 +13,14 @@ describe('NotFoundComponent', () => {
             providers: [],
             imports: [
                 TestHelperModule,
-                RouterTestingModule.withRoutes([{path: '', component: NotFoundComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: '', component: CustomHtmlComponent}
+                ])
             ]
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(NotFoundComponent);
+                fixture = TestBed.createComponent(CustomHtmlComponent);
                 comp = fixture.componentInstance;
                 fixture.detectChanges();
             })
@@ -28,14 +30,9 @@ describe('NotFoundComponent', () => {
             });
     }));
 
-    it('should create the app', async(() => {
+    it('should create', () => {
         expect(comp)
             .toBeTruthy();
-    }));
-
-    it("should render 'Page not found' in a h1", async(() => {
-        expect(fixture.nativeElement.querySelector('h1').textContent)
-            .toContain('Page not found');
-    }));
+    });
 
 });

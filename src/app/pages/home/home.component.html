@@ -14,7 +14,8 @@
 
 <div class="col-12">
     <div class="card-deck">
-        <app-active-tags class="card mb-4" [tagLimit]="20" [headerCssClass]="'pt-0 pb-1'"></app-active-tags>
+        <app-active-tags class="card mb-4" [tagLimit]="10" [headerCssClass]="'pt-0 pb-1'"></app-active-tags>
         <app-search-bar class="card mb-4" [headerCssClass]="'pt-0 pb-1'"></app-search-bar>
+        <app-custom-html class="card mb-4" *ngIf="customHtml" [headerCssClass]="'pt-0 pb-1'" [customHtml]="customHtml"></app-custom-html>
     </div>
 </div>

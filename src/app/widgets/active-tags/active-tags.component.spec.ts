@@ -1,11 +1,6 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { AlertService } from '../../services';
-import { angularFirestoreStub } from '../../testing/angular-firestore-stub.spec';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { ActiveTagsComponent } from './active-tags.component';
 
 describe('ActiveTagsComponent', () => {
@@ -14,18 +9,10 @@ describe('ActiveTagsComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                ActiveTagsComponent,
-                AlertComponent
-            ],
-            providers: [
-                AlertService,
-                {provide: ComponentFixtureAutoDetect, useValue: true},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            declarations: [],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: ActiveTagsComponent}
                 ])

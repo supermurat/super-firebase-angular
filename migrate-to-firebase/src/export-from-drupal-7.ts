@@ -37,14 +37,14 @@ dataFirestore[`${cnoJokes}_en-US`] = {};
 const cnoQuotes = 'quotes';
 dataFirestore[`${cnoQuotes}_tr-TR`] = {};
 dataFirestore[`${cnoQuotes}_en-US`] = {};
-const collectionNameOfRedirectionRecords = 'redirectionRecords';
-dataFirestore[collectionNameOfRedirectionRecords] = {};
+const collectionNameOfFirstResponses = 'firstResponses';
+dataFirestore[collectionNameOfFirstResponses] = {};
 
 /* region Fix Data */
 
-const fixDocID = (docID: string) => latinize(docID).replace(/\//gi, '-').replace(/\\/gi, '-');
+const fixDocID = (docID: string): string => latinize(docID).replace(/\//gi, '-').replace(/\\/gi, '-');
 
-const removeUnneededFields = (newData: any) => {
+const removeUnneededFields = (newData: any): any => {
     delete newData.language;
     delete newData.alias;
     delete newData.nid;
@@ -62,26 +62,26 @@ const removeUnneededFields = (newData: any) => {
 
 /* region Add to Export Object */
 
-const addToRedirectionRecords = (lang: string, element: any, url: string) => {
+const addToFirstResponses = (lang: string, element: any, url: string): void => {
     if (lang + String(element.alias) !== lang + url + String(element.documentID)) {
-        dataFirestore[collectionNameOfRedirectionRecords][(lang + String(element.alias)).replace(/\//gi, '\\')]
+        dataFirestore[collectionNameOfFirstResponses][(lang + String(element.alias)).replace(/\//gi, '\\')]
             = {code: 301, url: `/${lang}${url}${element.documentID}`};
         if (lang === 'tr/') {
-            dataFirestore[collectionNameOfRedirectionRecords][(element.alias).replace(/\//gi, '\\')]
+            dataFirestore[collectionNameOfFirstResponses][(element.alias).replace(/\//gi, '\\')]
                 = {code: 301, url: `/${lang}${url}${element.documentID}`};
         }
     }
 };
 
-const addToTaxonomy = (lang: string, element: any) => {
+const addToTaxonomy = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/tag';
-        addToRedirectionRecords('en/', element, 'tag/');
+        addToFirstResponses('en/', element, 'tag/');
         newData.title = `Related Contents to "${newData.tagName}"`;
     } else if (lang === '_tr-TR') {
         newData.routePath = '/etiket';
-        addToRedirectionRecords('tr/', element, 'etiket/');
+        addToFirstResponses('tr/', element, 'etiket/');
         newData.title = `"${newData.tagName}" ile Alakalı İçerikler`;
     }
     newData.changed = newData.created;
@@ -92,7 +92,7 @@ const addToTaxonomy = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoTaxonomy + lang]).length) * -1;
 };
 
-const addToTaxonomyContentsCollection = (lang: string, taxonomyDocID: string, element: any) => {
+const addToTaxonomyContentsCollection = (lang: string, taxonomyDocID: string, element: any): void => {
     const newData = removeUnneededFields({...element});
     const docID = `${newData.routePath.replace('/', '_')}_${element.documentID}`;
     newData.path = element.documentID;
@@ -103,7 +103,7 @@ const addToTaxonomyContentsCollection = (lang: string, taxonomyDocID: string, el
         = (Object.keys(dataFirestore[cnoTaxonomy + lang][taxonomyDocID].__collection__contents).length) * -1;
 };
 
-const generateTaxonomy = (lang: string, newData: any) => {
+const generateTaxonomy = (lang: string, newData: any): void => {
     const taxonomy = {};
     if (newData.tagTitles && newData.tagLinks) {
         const tagTitleList = newData.tagTitles.split('|');
@@ -125,7 +125,7 @@ const generateTaxonomy = (lang: string, newData: any) => {
     newData.taxonomy = taxonomy;
 };
 
-const getSummary = (content: string, currentLength: number) => {
+const getSummary = (content: string, currentLength: number): string => {
     // tslint:disable-next-line: prefer-conditional-expression
     if (content.startsWith('<p>') &&
         content.indexOf('</p>') > -1 &&
@@ -153,7 +153,7 @@ const getSummary = (content: string, currentLength: number) => {
     }
 };
 
-const generateCommonFields = (newData: any) => {
+const generateCommonFields = (newData: any): void => {
     newData.createdBy = 'Murat Demir';
     newData.changedBy = 'Murat Demir';
     newData.i18nKey = newData.documentID; // i18nKey should be matched with translations
@@ -175,14 +175,14 @@ const generateCommonFields = (newData: any) => {
     }
 };
 
-const addToBlogs = (lang: string, element: any) => {
+const addToBlogs = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/blog';
-        addToRedirectionRecords('en/', element, 'blog/');
+        addToFirstResponses('en/', element, 'blog/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/gunluk';
-        addToRedirectionRecords('tr/', element, 'gunluk/');
+        addToFirstResponses('tr/', element, 'gunluk/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -191,14 +191,14 @@ const addToBlogs = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoBlogs + lang]).length) * -1;
 };
 
-const addToArticles = (lang: string, element: any) => {
+const addToArticles = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/article';
-        addToRedirectionRecords('en/', element, 'article/');
+        addToFirstResponses('en/', element, 'article/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/makale';
-        addToRedirectionRecords('tr/', element, 'makale/');
+        addToFirstResponses('tr/', element, 'makale/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -207,14 +207,14 @@ const addToArticles = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoArticles + lang]).length) * -1;
 };
 
-const addToJokes = (lang: string, element: any) => {
+const addToJokes = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/joke';
-        addToRedirectionRecords('en/', element, 'joke/');
+        addToFirstResponses('en/', element, 'joke/');
     } else if (lang === '_tr-TR') {
         newData.routePath = element.type === 'sogukespriler' ? '/soguk-espri' : '/fikra';
-        addToRedirectionRecords('tr/', element, 'fikra/');
+        addToFirstResponses('tr/', element, 'fikra/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -223,14 +223,14 @@ const addToJokes = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoJokes + lang]).length) * -1;
 };
 
-const addToQuotes = (lang: string, element: any) => {
+const addToQuotes = (lang: string, element: any): void => {
     const newData = {...element};
     if (lang === '_en-US') {
         newData.routePath = '/quote';
-        addToRedirectionRecords('en/', element, 'quote/');
+        addToFirstResponses('en/', element, 'quote/');
     } else if (lang === '_tr-TR') {
         newData.routePath = '/alinti';
-        addToRedirectionRecords('tr/', element, 'alinti/');
+        addToFirstResponses('tr/', element, 'alinti/');
     }
     generateCommonFields(newData);
     generateTaxonomy(lang, newData);
@@ -239,7 +239,7 @@ const addToQuotes = (lang: string, element: any) => {
         = (Object.keys(dataFirestore[cnoQuotes + lang]).length) * -1;
 };
 
-const addToDialogs = (lang: string, element: any) => {
+const addToDialogs = (lang: string, element: any): void => {
     const newData = {...element};
     const persons = {};
     const personsList = newData.persons.split('|');
@@ -260,7 +260,7 @@ const addToDialogs = (lang: string, element: any) => {
 
 /* region Files */
 
-const downloadFiles = (htmlContent: string) => {
+const downloadFiles = (htmlContent: string): void => {
     const fileMatchList = htmlContent.match(/<img src=[\\]?"[\w\d\/\-_\\]*\.[\w\d]*[\\]?"/gi);
     if (fileMatchList) {
         fileMatchList.forEach((fileMatch) => {
@@ -288,7 +288,7 @@ const downloadFiles = (htmlContent: string) => {
 
 /* region Get From Database */
 
-const getTaxonomy = () => {
+const getTaxonomy = (): void => {
     connection.query(
         `SELECT u.language, u.alias, t.tid, t.name AS 'tagName',
 (SELECT FROM_UNIXTIME(MIN(ti.created)) FROM taxonomy_index ti WHERE ti.tid=t.tid) AS 'created'
@@ -322,7 +322,7 @@ ORDER BY t.tid ASC`,
         });
 };
 
-const getCommonContents = () => {
+const getCommonContents = (): void => {
     connection.query(
         `SELECT u.language, u.alias, n.nid, n.type, n.status,
 FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created',
@@ -386,7 +386,7 @@ ORDER BY n.created ASC`,
         });
 };
 
-const getQuotes = () => {
+const getQuotes = (): void => {
     connection.query(
         `SELECT u.language, u.alias, n.nid, n.type, n.status,
 FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created',
@@ -434,7 +434,7 @@ ORDER BY n.created ASC`,
         });
 };
 
-const getDialogs = () => {
+const getDialogs = (): void => {
     connection.query(
         `SELECT u.language, u.alias, n.nid, n.type, n.status,
 FROM_UNIXTIME(n.changed) AS 'changed', FROM_UNIXTIME(n.created) AS 'created',
@@ -488,7 +488,7 @@ ORDER BY n.created ASC`,
 
 getTaxonomy();
 
-const saveToFile = () => {
+const saveToFile = (): void => {
     writeResultToFile(pathOfDataJson, dataFirestore);
     connection.end();
 };

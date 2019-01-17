@@ -1,23 +1,10 @@
 import { LOCALE_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
-import { TransferState } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../../app-config';
-import { AlertComponent } from '../../components/alert/alert.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { SideBarComponent } from '../../components/side-bar/side-bar.component';
 import { BlogModel } from '../../models';
-import { AlertService, CarouselService, PageService, SeoService } from '../../services';
-import { ActivatedRoute, ActivatedRouteStub, angularFirestoreStub } from '../../testing/index.spec';
-import { ActiveTagsComponent } from '../../widgets/active-tags/active-tags.component';
-import { LastJokesComponent } from '../../widgets/last-jokes/last-jokes.component';
-import { SearchBarComponent } from '../../widgets/search-bar/search-bar.component';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NotFoundComponent } from '../not-found/not-found.component';
 import { BlogDetailComponent } from './blog-detail.component';
-
-const activatedRouteStub = new ActivatedRouteStub();
 
 describe('BlogDetailComponent', () => {
     let fixture: ComponentFixture<BlogDetailComponent>;
@@ -26,23 +13,11 @@ describe('BlogDetailComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent,
-                FooterComponent,
-                SideBarComponent,
-                AlertComponent,
-                NotFoundComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent
+                BlogDetailComponent
             ],
-            providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG}
-            ],
+            providers: [],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: 'blog/:id', component: BlogDetailComponent},
                     {path: 'blogs', component: BlogDetailComponent},
@@ -144,24 +119,13 @@ describe('BlogDetailComponent_tr-TR', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [
-                BlogDetailComponent,
-                FooterComponent,
-                SideBarComponent,
-                AlertComponent,
-                NotFoundComponent,
-                ActiveTagsComponent,
-                LastJokesComponent,
-                SearchBarComponent
+                BlogDetailComponent
             ],
             providers: [
-                AlertService, SeoService, TransferState, CarouselService, PageService,
-                {provide: ActivatedRoute, useValue: activatedRouteStub},
-                {provide: AngularFirestore, useValue: angularFirestoreStub},
-                {provide: APP_CONFIG, useValue: APP_UNIT_TEST_CONFIG},
                 {provide: LOCALE_ID, useValue: 'tr-TR'}
             ],
             imports: [
-                FormsModule,
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: 'blog/:id', component: BlogDetailComponent},
                     {path: 'blogs', component: BlogDetailComponent},

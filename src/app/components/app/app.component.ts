@@ -3,8 +3,8 @@ import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@a
 import { Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
-import { HttpStatusModel } from '../../models';
-import { AlertService, PaginationService, SeoService } from '../../services';
+import { ConfigModel, HttpStatusModel } from '../../models';
+import { AlertService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
 
 /**
  * App Component
@@ -27,16 +27,20 @@ export class AppComponent implements OnInit {
      * @param seo: SeoService
      * @param alert: AlertService
      * @param pagination: PaginationService
+     * @param configService: ConfigService
+     * @param pageService: PageService
      * @param angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(DOCUMENT) doc: Document,
-                @Inject(LOCALE_ID) locale: string,
-                renderer: Renderer2,
+                @Inject(LOCALE_ID) readonly locale: string,
+                private readonly renderer: Renderer2,
                 public router: Router,
                 public seo: SeoService,
                 public alert: AlertService,
                 public pagination: PaginationService,
+                public configService: ConfigService,
+                public pageService: PageService,
                 angulartics2GoogleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag) {
         angulartics2GoogleGlobalSiteTag.startTracking();
         seo.renderer = renderer;
@@ -47,6 +51,10 @@ export class AppComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
+        this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)
+            .subscribe(config => {
+                this.configService.init(config);
+            });
         this.httpStatus$ = this.seo.getHttpStatus();
     }
 }

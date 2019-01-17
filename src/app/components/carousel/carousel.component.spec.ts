@@ -1,6 +1,6 @@
-import { async, ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CarouselService } from '../../services';
+import { TestHelperModule } from '../../testing/test.helper.module.spec';
 import { CarouselComponent } from './carousel.component';
 
 describe('CarouselComponent', () => {
@@ -9,12 +9,12 @@ describe('CarouselComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [CarouselComponent],
-            providers: [
-                CarouselService,
-                {provide: ComponentFixtureAutoDetect, useValue: true}
+            declarations: [
+                CarouselComponent
             ],
+            providers: [],
             imports: [
+                TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: CarouselComponent},
                     {path: 'unit-test', component: CarouselComponent}

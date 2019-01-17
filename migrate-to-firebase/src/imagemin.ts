@@ -8,10 +8,9 @@ const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
 const pathOfSourceImages = `${pathOfData + path.sep}files`;
 checkDirectory(pathOfSourceImages);
 
-export const convertToWebp = async () => {
+export const convertToWebp = async (): Promise<any> => {
     const imageDirs = getDirectoriesRecursive(pathOfSourceImages);
-    // tslint:disable-next-line:forin
-    for (const i in imageDirs) {
+    for (let i = 0; i < imageDirs.length; i++) {
         const dirPath = imageDirs[i];
         await imagemin([`${dirPath + path.sep}*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}`], dirPath + path.sep, {
             use: [
