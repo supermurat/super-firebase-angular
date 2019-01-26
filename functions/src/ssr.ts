@@ -51,12 +51,8 @@ enableProdMode();
 
 const app = express();
 
-const getDocumentID = (req: express.Request): string => {
-    // firestore doesn't allow "/" to be in document ID
-    const url = req.url.substring(1).replace(/\//gi, '\\');
-
-    return decodeURIComponent(url);
-};
+const getDocumentID = (req: express.Request): string =>
+    decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\'); // firestore doesn't allow "/" to be in document ID
 
 const respondToSSR = (res: express.Response, html: string): void => {
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
@@ -84,7 +80,7 @@ const getSSR = (req: express.Request, res: express.Response): void => {
     }).then((html) => {
         respondToSSR(res, html);
         const documentID = getDocumentID(req);
-        if (documentID) {
+        if (FUNCTIONS_CONFIG.cacheResponses && documentID) {
             const expireDate = new Date();
             expireDate.setDate(expireDate.getDate() + 30); // add days
             db.collection('firstResponses')
@@ -126,7 +122,30 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
         }
     });
 
+const ifUrlIsInvalidPrint404Page = (req: express.Request, res: express.Response): boolean => {
+    if (req.url.startsWith('/?')) {
+        // this is only for old php web site but keeping them forever would be better in case of search engines
+        // a url like that won't be ok anymore
+        res.status(404)
+            .send('<!DOCTYPE html><html><head>' +
+                '<meta charset="utf-8">' +
+                '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+                '<title>Page Not Found</title>' +
+                '</head><body>' +
+                '<h1>404 - Page Not Found</h1>' +
+                '<a href="/"><h2>Go to Home Page</h2></a>' +
+                '</body></html>');
+
+        return true;
+    }
+
+    return false;
+};
+
 app.get('**', (req: express.Request, res: express.Response) => {
+    if (ifUrlIsInvalidPrint404Page(req, res)) {
+        return;
+    }
     checkFirstResponse(req, res)
         .then((firstResponse: FirstResponseModel) => {
             if (firstResponse && firstResponse.code === 301) {
@@ -137,7 +156,8 @@ app.get('**', (req: express.Request, res: express.Response) => {
                 res.status(200)
                     .type(fileExt)
                     .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
-            } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
+            } else if (FUNCTIONS_CONFIG.cacheResponses &&
+                firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
                 (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
                 respondToSSR(res, firstResponse.content);
             } else {
