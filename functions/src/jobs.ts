@@ -233,6 +233,46 @@ export const generateDescription = async (snap: DocumentSnapshot, jobData: JobMo
         });
 };
 
+export const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+    console.log('clearCaches is started');
+    let processedDocCount = 0;
+    let expireDate;
+    if (jobData.customData !== undefined && Number(jobData.customData) > -1) {
+        expireDate = new Date();
+        expireDate.setDate(Number(expireDate.getDate()) + Number(jobData.customData)); // add days
+    }
+
+    return db.collection('firstResponses')
+        .where('type', '==', 'cache')
+        .get()
+        .then(async (mainDocsSnapshot) =>
+            Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                if (expireDate && mainDoc.data().expireDate > expireDate) {
+                    // to keep newly created caches
+                    return Promise.resolve();
+                }
+
+                return mainDoc.ref.delete()
+                    .then(() => {
+                        processedDocCount++;
+                    })
+                    .catch((err) => {
+                        console.error('mainDoc.ref.delete()', err);
+                    });
+            })))
+        .then(async (values) =>
+            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log('clearCaches is finished');
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
 export const jobRunner = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
@@ -250,6 +290,8 @@ export const jobRunner = functions
             return generateLocales(snap, jobData);
         } else if (jobData.actionKey === 'generateDescription') {
             return generateDescription(snap, jobData);
+        } else if (jobData.actionKey === 'clearCaches') {
+            return clearCaches(snap, jobData);
         }
 
         return Promise.resolve();
