@@ -51,8 +51,16 @@ enableProdMode();
 
 const app = express();
 
-const getDocumentID = (req: express.Request): string =>
-    req.url.substring(1).replace(/\//gi, '\\'); // firestore doesn't allow "/" to be in document ID
+const getDocumentID = (req: express.Request): string => {
+    // firestore doesn't allow "/" to be in document ID
+    try {
+        return decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
+    } catch (e) {
+        console.error(e);
+
+        return req.url.substring(1).replace(/\//gi, '\\');
+    }
+};
 
 const respondToSSR = (res: express.Response, html: string): void => {
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
