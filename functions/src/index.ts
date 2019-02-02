@@ -5,8 +5,7 @@ import * as functions from 'firebase-functions';
 dotenv.config();
 admin.initializeApp(functions.config().firebase);
 admin.app()
-    .firestore()
-    .settings({timestampsInSnapshots: true});
+    .firestore();
 
 import { jobRunner } from './jobs';
 import { ssr } from './ssr';
