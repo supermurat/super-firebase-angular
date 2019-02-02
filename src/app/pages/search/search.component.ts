@@ -35,8 +35,8 @@ export class SearchComponent implements OnInit {
     ngOnInit(): void {
         this.pageService.initPage({
             title: 'Search Result',
-            description: 'Search Result',
-            seo: {names: {robots: 'noindex, nofollow'}}
+            description: 'Search Result'
+            // seo: {names: {robots: 'noindex, nofollow'}}
         });
 
         this.gcseSearchBox = this.sanitizer.bypassSecurityTrustHtml(
