@@ -19,8 +19,8 @@ export class NotFoundComponent {
     ) {
         this.pageService.initPage({
             title: '404 - Page not found',
-            description: '404 - Page not found',
-            seo: {names: {robots: 'noindex, nofollow'}}
+            description: '404 - Page not found'
+            // seo: {names: {robots: 'noindex, nofollow'}}
         });
     }
 
