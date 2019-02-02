@@ -11,7 +11,6 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
 });
-admin.app().firestore().settings({timestampsInSnapshots: true});
 const bucketName = `${serviceAccount.project_id}.appspot.com`;
 const bucket = admin.storage().bucket(bucketName);
 const pathOfData = `${path.dirname(__dirname) + path.sep}data`;
