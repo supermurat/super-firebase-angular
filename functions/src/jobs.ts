@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import * as h2p from 'html2plaintext';
 import * as sitemap from 'sitemap';
+
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel } from './job-model';
 import { SiteMapUrlModel } from './site-map-url-model';

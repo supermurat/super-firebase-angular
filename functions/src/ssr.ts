@@ -1,6 +1,7 @@
-// tslint:disable-next-line:no-import-side-effect
+// tslint:disable-next-line:no-import-side-effect ordered-imports
 import 'zone.js/dist/zone-node';
 
+// tslint:disable-next-line:ordered-imports
 import { enableProdMode } from '@angular/core';
 import { renderModuleFactory } from '@angular/platform-server';
 import * as express from 'express';
@@ -8,6 +9,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
+
 import { FUNCTIONS_CONFIG } from './config';
 import { FirstResponseModel } from './first-response-model';
 

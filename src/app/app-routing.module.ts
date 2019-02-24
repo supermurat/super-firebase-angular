@@ -198,5 +198,6 @@ const routes: Routes = [
     })],
     exports: [RouterModule]
 })
+// istanbul ignore next
 export class AppRoutingModule {
 }
