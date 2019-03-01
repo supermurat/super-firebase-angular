@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as mysql from 'mysql';
 import * as path from 'path';
+
 import { writeResultToFile } from './helper';
 
 // tslint:disable-next-line:no-var-requires no-require-imports

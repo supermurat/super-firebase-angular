@@ -165,7 +165,7 @@ export class SeoService {
                 Object.keys(tempPage.seo.properties)
                     .forEach((prop: string) => {
                         this.meta.updateTag({property: prop, content: tempPage.seo.properties[prop]}, `property='${prop}'`);
-                        this.customSEOMetaTags.push({type: 'name', value: prop});
+                        this.customSEOMetaTags.push({type: 'property', value: prop});
                     });
             }
         }

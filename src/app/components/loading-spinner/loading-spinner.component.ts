@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
     templateUrl: './loading-spinner.component.html',
     styleUrls: ['./loading-spinner.component.scss']
 })
+// istanbul ignore next
 export class LoadingSpinnerComponent {
 }

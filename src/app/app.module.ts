@@ -112,5 +112,6 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
     ],
     bootstrap: [AppComponent]
 })
+// istanbul ignore next
 export class AppModule {
 }
