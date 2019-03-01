@@ -2,6 +2,7 @@ import * as colors from 'colors';
 import * as imagemin from 'imagemin';
 import * as imageminWebp from 'imagemin-webp';
 import * as path from 'path';
+
 import { checkDirectory, getDirectoriesRecursive } from './helper';
 
 const pathOfData = `${path.dirname(__dirname) + path.sep}data`;

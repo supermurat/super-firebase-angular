@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import * as path from 'path';
+
 import { checkDirectory, writeResultToFile } from './helper';
 
 // tslint:disable-next-line:no-var-requires no-require-imports

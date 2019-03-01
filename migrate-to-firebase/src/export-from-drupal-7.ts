@@ -4,6 +4,7 @@ import * as http from 'http';
 import * as latinize from 'latinize';
 import * as mysql from 'mysql';
 import * as path from 'path';
+
 import { checkDirectory, writeResultToFile } from './helper';
 
 // tslint:disable-next-line:no-var-requires no-require-imports
