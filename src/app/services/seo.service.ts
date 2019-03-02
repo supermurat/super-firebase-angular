@@ -182,11 +182,13 @@ export class SeoService {
      * @param tempPage: current page
      */
     setJsonLD(tempPage: PageBaseModel): void {
-        if (tempPage.hasOwnProperty('jsonLD')) {
-            if (tempPage.jsonLD) {
-                const json = tempPage.jsonLD ? JSON.stringify(tempPage.jsonLD, undefined, 2) : '';
-                const jsonLD = this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">${json}</script>`);
-                this.jsonLD$.next(jsonLD);
+        if (tempPage.hasOwnProperty('jsonLDs')) {
+            let jsonLDList = '';
+            for (const jsonLD of tempPage.jsonLDs) {
+                jsonLDList += `<script type="application/ld+json">${JSON.stringify(jsonLD, undefined, 0)}</script>`;
+            }
+            if (jsonLDList) {
+                this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(jsonLDList));
             } else {
                 this.jsonLD$.next(undefined);
             }

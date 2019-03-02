@@ -47,6 +47,6 @@ export class PageBaseModel {
     /** seo data of record */
     seo?: PageSeoModel;
 
-    /** Json-LD data of record */
-    jsonLD?: any;
+    /** array of Json-LD data of record */
+    jsonLDs?: Array<any>;
 }
