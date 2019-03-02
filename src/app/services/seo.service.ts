@@ -185,10 +185,13 @@ export class SeoService {
         if (tempPage.hasOwnProperty('jsonLDs')) {
             let jsonLDList = '';
             for (const jsonLD of tempPage.jsonLDs) {
-                jsonLDList += `<script type="application/ld+json">${JSON.stringify(jsonLD, undefined, 0)}</script>`;
+                if (jsonLDList !== '') {
+                    jsonLDList += ',';
+                }
+                jsonLDList += JSON.stringify(jsonLD, undefined, 0);
             }
             if (jsonLDList) {
-                this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(jsonLDList));
+                this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">[${jsonLDList}]</script>`));
             } else {
                 this.jsonLD$.next(undefined);
             }

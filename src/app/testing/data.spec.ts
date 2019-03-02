@@ -192,7 +192,42 @@ export const myData = {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
                         caption: 'Hey, what\'s up ? '
                     }]
-            }
+            },
+            seo: {
+                names: {
+                    robots: 'index, follow',
+                    author: 'unit-test',
+                    owner: 'unit-test',
+                    copyright: 'Unit Test 2019',
+                    'twitter:title': 'Twitter : Super Murat - Let me make you smile :-)',
+                    'twitter:card': 'summary',
+                    'twitter:site': '@UnitTest',
+                    'twitter:creator': '@UnitTest'
+                },
+                properties: {
+                    'fb:app_id': '123456',
+                    'fb:admins': '000001',
+                    'og:title': 'Facebook : Super Murat - Let me make you smile :-)',
+                    'og:type': 'article',
+                    'og:site_name': 'Super Murat'
+                }
+            },
+            jsonLDs: [
+                {
+                    '@context': 'http://schema.org/',
+                    '@type': 'Person',
+                    jobTitle: 'Software Developer',
+                    name: 'Murat Demir',
+                    url: 'https://supermurat.com'
+                },
+                {
+                    '@context': 'http://schema.org/',
+                    '@type': 'Person',
+                    jobTitle: 'Software Developer',
+                    name: 'Murat Demir',
+                    url: 'https://supermurat.com'
+                }
+            ]
         },
         articles: {
             id: 'articles',
@@ -202,7 +237,15 @@ export const myData = {
             caption: 'My Articles',
             routePath: '/',
             i18nKey: 'articles',
-            orderNo: -1
+            orderNo: -1,
+            seo: {},
+            jsonLDs: [{
+                '@context': 'http://schema.org/',
+                '@type': 'Person',
+                jobTitle: 'Software Developer',
+                name: 'Murat Demir',
+                url: 'https://supermurat.com'
+            }]
         },
         blogs: {
             id: 'blogs',
@@ -213,7 +256,9 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'}
+            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'},
+            seo: {},
+            jsonLDs: []
         },
         jokes: {
             id: 'jokes',
@@ -276,7 +321,42 @@ export const myData = {
                         src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
                         caption: 'Hey, naber?'
                     }]
-            }
+            },
+            seo: {
+                names: {
+                    robots: 'index, follow',
+                    author: 'unit-test',
+                    owner: 'unit-test',
+                    copyright: 'Unit Test 2019',
+                    'twitter:title': 'Twitter : Süper Murat - İzin verin gülümseteyim :-)',
+                    'twitter:card': 'summary',
+                    'twitter:site': '@UnitTest',
+                    'twitter:creator': '@UnitTest'
+                },
+                properties: {
+                    'fb:app_id': '123456',
+                    'fb:admins': '000001',
+                    'og:title': 'Facebook : Süper Murat - İzin verin gülümseteyim :-)',
+                    'og:type': 'article',
+                    'og:site_name': 'Süper Murat'
+                }
+            },
+            jsonLDs: [
+                {
+                    '@context': 'http://schema.org/',
+                    '@type': 'Person',
+                    jobTitle: 'Software Developer',
+                    name: 'Murat Demir',
+                    url: 'https://supermurat.com'
+                },
+                {
+                    '@context': 'http://schema.org/',
+                    '@type': 'Person',
+                    jobTitle: 'Software Developer',
+                    name: 'Murat Demir',
+                    url: 'https://supermurat.com'
+                }
+            ]
         },
         makaleler: {
             id: 'makaleler',
@@ -286,7 +366,15 @@ export const myData = {
             caption: 'Makalelerim',
             routePath: '/',
             i18nKey: 'articles',
-            orderNo: -1
+            orderNo: -1,
+            seo: {},
+            jsonLDs: [{
+                '@context': 'http://schema.org/',
+                '@type': 'Person',
+                jobTitle: 'Software Developer',
+                name: 'Murat Demir',
+                url: 'https://supermurat.com'
+            }]
         },
         gunlukler: {
             id: 'gunlukler',
@@ -297,7 +385,9 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'}
+            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'},
+            seo: {},
+            jsonLDs: []
         },
         eglence: {
             id: 'eglence',

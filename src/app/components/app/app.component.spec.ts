@@ -250,6 +250,21 @@ describe('AppComponentSeoService', () => {
         environment.defaultData = currentDefaultData;
     }));
 
+    it('should insert JsonLD data to body', async(() => {
+        comp.seo.setSEOData({
+            jsonLDs: [{
+                '@context': 'http://schema.org/',
+                '@type': 'Person',
+                jobTitle: 'Software Developer',
+                name: 'Murat Demir',
+                url: 'https://supermurat.com'
+            }]
+        });
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('script[type="application/ld+json"]').textContent)
+            .toContain('Software Developer');
+    }));
+
 });
 
 describe('AppComponentAlertService', () => {
