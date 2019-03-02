@@ -188,6 +188,9 @@ export class SeoService {
                 if (jsonLDList !== '') {
                     jsonLDList += ',';
                 }
+                if (!jsonLD.hasOwnProperty('@context')) {
+                    jsonLD['@context'] = 'http://schema.org/';
+                }
                 jsonLDList += JSON.stringify(jsonLD, undefined, 0);
             }
             if (jsonLDList) {

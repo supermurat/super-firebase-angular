@@ -221,7 +221,6 @@ export const myData = {
                     url: 'https://supermurat.com'
                 },
                 {
-                    '@context': 'http://schema.org/',
                     '@type': 'Person',
                     jobTitle: 'Software Developer',
                     name: 'Murat Demir',
@@ -350,7 +349,6 @@ export const myData = {
                     url: 'https://supermurat.com'
                 },
                 {
-                    '@context': 'http://schema.org/',
                     '@type': 'Person',
                     jobTitle: 'Software Developer',
                     name: 'Murat Demir',
