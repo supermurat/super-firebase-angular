@@ -1,11 +1,12 @@
 import { DOCUMENT, isPlatformBrowser, PlatformLocation } from '@angular/common';
 import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
 import { HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
+import { AlertService } from './alert.service';
 
 /**
  * Seo Service
@@ -25,6 +26,8 @@ export class SeoService {
         value: string}>;
     /** http status */
     private readonly httpStatus$ = new Subject<HttpStatusModel>();
+    /** json-LD */
+    private readonly jsonLD$ = new Subject<SafeHtml>();
 
     /**
      * constructor of SeoService
@@ -33,6 +36,7 @@ export class SeoService {
      * @param router: Router
      * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
+     * @param sanitizer: DomSanitizer
      * @param platformId: PLATFORM_ID
      * @param appConfig: APP_CONFIG
      * @param locale: LOCALE_ID
@@ -43,6 +47,7 @@ export class SeoService {
                 private readonly router: Router,
                 private readonly rendererFactory: RendererFactory2,
                 private readonly platformLocation: PlatformLocation,
+                private readonly sanitizer: DomSanitizer,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
                 @Inject(LOCALE_ID) private readonly locale: string,
@@ -53,7 +58,7 @@ export class SeoService {
      * Set Html Tags
      * @param page: current page
      */
-    setHtmlTags(page: PageBaseModel): void {
+    setSEOData(page: PageBaseModel): void {
         const tempPage = {...page};
         this.titleService.setTitle(tempPage.title);
         this.meta.updateTag({itemprop: 'name', content: tempPage.title}, "itemprop='name'");
@@ -71,6 +76,7 @@ export class SeoService {
         this.setLocalAndUrlHtmlTags(tempPage);
         this.setProjectSpecifiedHtmlTags(tempPage);
         this.setCustomSEOHtmlTags(tempPage);
+        this.setJsonLD(tempPage);
     }
 
     /**
@@ -172,6 +178,24 @@ export class SeoService {
     }
 
     /**
+     * Set JSON-LD
+     * @param tempPage: current page
+     */
+    setJsonLD(tempPage: PageBaseModel): void {
+        if (tempPage.hasOwnProperty('jsonLD')) {
+            if (tempPage.jsonLD) {
+                const json = tempPage.jsonLD ? JSON.stringify(tempPage.jsonLD, undefined, 2) : '';
+                const jsonLD = this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">${json}</script>`);
+                this.jsonLD$.next(jsonLD);
+            } else {
+                this.jsonLD$.next(undefined);
+            }
+        } else {
+            this.jsonLD$.next(undefined);
+        }
+    }
+
+    /**
      * add or update link to head of document
      * @param linkObject: tags of link
      * @param attrSelector: selector to remove old link elements
@@ -269,5 +293,12 @@ export class SeoService {
      */
     getHttpStatus(): Observable<HttpStatusModel> {
         return this.httpStatus$.asObservable();
+    }
+
+    /**
+     * get json-LD
+     */
+    getJsonLD(): Observable<SafeHtml> {
+        return this.jsonLD$.asObservable();
     }
 }
