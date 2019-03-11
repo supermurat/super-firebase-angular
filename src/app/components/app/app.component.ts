@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
@@ -16,6 +17,8 @@ import { AlertService, ConfigService, PageService, PaginationService, SeoService
 export class AppComponent implements OnInit {
     /** http status */
     httpStatus$: Observable<HttpStatusModel>;
+    /** json-LD */
+    jsonLD$: Observable<SafeHtml>;
 
     /**
      * constructor of AppComponent
@@ -56,5 +59,6 @@ export class AppComponent implements OnInit {
                 this.configService.init(config);
             });
         this.httpStatus$ = this.seo.getHttpStatus();
+        this.jsonLD$ = this.seo.getJsonLD();
     }
 }

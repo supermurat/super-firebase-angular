@@ -71,7 +71,7 @@ export class PageService {
      */
     initPage(page: PageBaseModel): void {
         this.page$.next(page);
-        this.seo.setHtmlTags(page);
+        this.seo.setSEOData(page);
         this.carouselService.init(page.carousel);
         if (page.backgroundCoverImage) {
             this.renderer.setStyle(this.document.body, 'background-image', `url(${page.backgroundCoverImage.src})`);

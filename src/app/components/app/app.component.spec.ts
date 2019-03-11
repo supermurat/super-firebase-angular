@@ -105,7 +105,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set title as 'My Unit Test Title'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             title: 'My Unit Test Title'
         });
         fixture.detectChanges();
@@ -114,7 +114,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta og:type as 'article'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             title: 'My Unit Test Title',
             seo: {
                 properties: {
@@ -129,7 +129,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta og:title as 'My Unit Test Title'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             title: 'My Unit Test Title',
             locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
             seo: {
@@ -148,7 +148,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta twitter:card as 'summary'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             title: 'My Unit Test Title',
             seo: {
                 names: {
@@ -163,7 +163,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta twitter:title as 'My Unit Test Title'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             title: 'My Unit Test Title',
             seo: {
                 names: {
@@ -182,7 +182,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta robots as 'index,follow'", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
             seo: {
                 names: {
@@ -204,7 +204,7 @@ describe('AppComponentSeoService', () => {
     }));
 
     it("should set meta robots as 'index,follow' and remove them next meta tag set even if new data is empty", async(() => {
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             locales: [{cultureCode: 'tr-TR', slug: '/tr/unit-test'}],
             seo: {
                 names: {
@@ -223,7 +223,7 @@ describe('AppComponentSeoService', () => {
         expect(comp.seo.getMeta()
             .getTag('name="robots"').content)
             .toContain('index, follow');
-        comp.seo.setHtmlTags({});
+        comp.seo.setSEOData({});
         fixture.detectChanges();
         expect(comp.seo.getMeta()
             .getTag('name="robots"'))
@@ -240,7 +240,7 @@ describe('AppComponentSeoService', () => {
             'fb:app_id': '123456',
             'fb:admins': '000001'
         };
-        comp.seo.setHtmlTags({
+        comp.seo.setSEOData({
             seo: {}
         });
         fixture.detectChanges();
@@ -248,6 +248,21 @@ describe('AppComponentSeoService', () => {
             .getTag('name="twitter:site"').content)
             .toContain('@UnitTest');
         environment.defaultData = currentDefaultData;
+    }));
+
+    it('should insert JsonLD data to body', async(() => {
+        comp.seo.setSEOData({
+            jsonLDs: [{
+                '@context': 'http://schema.org/',
+                '@type': 'Person',
+                jobTitle: 'Software Developer',
+                name: 'Murat Demir',
+                url: 'https://supermurat.com'
+            }]
+        });
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('script[type="application/ld+json"]').textContent)
+            .toContain('Software Developer');
     }));
 
 });
