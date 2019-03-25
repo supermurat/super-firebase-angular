@@ -5,8 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
-import { HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
-import { AlertService } from './alert.service';
+import { ConfigSeoModel, HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
 
 /**
  * Seo Service
@@ -24,6 +23,10 @@ export class SeoService {
         type: string,
         /** value of name or property, NOT content value */
         value: string}>;
+
+    /** config for SEO */
+    configSEO: ConfigSeoModel = {};
+
     /** http status */
     private readonly httpStatus$ = new Subject<HttpStatusModel>();
     /** json-LD */
@@ -94,11 +97,13 @@ export class SeoService {
         const languageCode = this.locale.substr(0, 2);
         const slug = this.platformLocation.pathname;
 
-        this.updateLink({rel: 'canonical', href: `${protocol}${host}${slug}`}, "link[rel='canonical']");
+        tempPage.canonicalUrl = `${protocol}${host}${slug}`;
+
+        this.updateLink({rel: 'canonical', href: tempPage.canonicalUrl}, "link[rel='canonical']");
 
         this.meta.updateTag({httpEquiv: 'Content-Language', content: languageCode}, "httpEquiv='Content-Language'");
 
-        this.meta.updateTag({property: 'og:url', content: `${protocol}${host}${slug}`}, "property='og:url'");
+        this.meta.updateTag({property: 'og:url', content: tempPage.canonicalUrl}, "property='og:url'");
         this.meta.updateTag({property: 'og:locale', content: cultureCode.replace('-', '_')},
             "property='og:locale'");
 
@@ -114,12 +119,12 @@ export class SeoService {
         }
         this.updateLink({
             rel: 'alternate',
-            href: `${protocol}${host}${slug}`,
+            href: tempPage.canonicalUrl,
             hreflang: cultureCode
         });
         this.updateLink({
             rel: 'alternate',
-            href: `${protocol}${host}${slug}`,
+            href: tempPage.canonicalUrl,
             hreflang: 'x-default'
         });
     }
@@ -178,26 +183,92 @@ export class SeoService {
     }
 
     /**
+     * Get Plaintext by Html
+     * @param htmlContent: html content
+     */
+    getPlaintextByHtml(htmlContent: string): string {
+        return htmlContent ? String(htmlContent)
+            .replace(/<[^>]+>/gm, '') : '';
+    }
+
+    /**
+     * Get JSON-LDs by content of current page
+     * @param tempPage: current page
+     */
+    getJsonLDByContentOfCurrentPage(tempPage: any): Array<any> {
+        const jsonLDs = [];
+        const images = [];
+        const image = tempPage.image ? tempPage.image :
+            this.configSEO.defaultImageForSEO ? this.configSEO.defaultImageForSEO : undefined;
+        if (image) {
+            if (image.src1x1) {
+                images.push(image.src1x1);
+            }
+            if (image.src4x3) {
+                images.push(image.src4x3);
+            }
+            if (image.src16x9) {
+                images.push(image.src16x9);
+            }
+            if (image.src) {
+                images.push(image.src);
+            }
+        }
+        const publisher = this.configSEO.defaultPublisher ? this.configSEO.defaultPublisher : undefined;
+        if (['/quote', '/alinti'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('whoSaidThat')) {
+            jsonLDs.push({
+                '@type': 'Quotation',
+                creator: {
+                    '@type': 'Person',
+                    name: this.getPlaintextByHtml(tempPage.whoSaidThat)
+                },
+                text: this.getPlaintextByHtml(tempPage.content),
+                image: images,
+                mainEntityOfPage: tempPage.canonicalUrl
+            });
+        } else if (['/blog', '/gunluk'].indexOf(tempPage.routePath) > -1) {
+            jsonLDs.push({
+                '@type': 'BlogPosting',
+                author: {
+                    '@type': 'Person',
+                    name: this.getPlaintextByHtml(tempPage.createdBy)
+                },
+                publisher: {...{'@type': 'Organization'}, ...publisher},
+                dateCreated: new Date(tempPage.created.seconds * 1000),
+                dateModified: new Date(tempPage.changed.seconds * 1000),
+                datePublished: new Date(tempPage.created.seconds * 1000),
+                headline: this.getPlaintextByHtml(tempPage.title),
+                // description: '',
+                image: images,
+                mainEntityOfPage: tempPage.canonicalUrl
+            });
+        }
+
+        return jsonLDs;
+    }
+
+    /**
      * Set JSON-LD
      * @param tempPage: current page
      */
     setJsonLD(tempPage: PageBaseModel): void {
         if (tempPage.hasOwnProperty('jsonLDs')) {
-            let jsonLDList = '';
-            for (const jsonLD of tempPage.jsonLDs) {
-                if (jsonLDList !== '') {
-                    jsonLDList += ',';
-                }
-                if (!jsonLD.hasOwnProperty('@context')) {
-                    jsonLD['@context'] = 'http://schema.org/';
-                }
-                jsonLDList += JSON.stringify(jsonLD, undefined, 0);
+            tempPage.jsonLDs.push(...this.getJsonLDByContentOfCurrentPage(tempPage));
+        } else {
+            tempPage.jsonLDs = this.getJsonLDByContentOfCurrentPage(tempPage);
+        }
+        let jsonLDList = '';
+        for (const jsonLD of tempPage.jsonLDs) {
+            if (jsonLDList !== '') {
+                jsonLDList += ',';
             }
-            if (jsonLDList) {
-                this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">[${jsonLDList}]</script>`));
-            } else {
-                this.jsonLD$.next(undefined);
+            if (!jsonLD.hasOwnProperty('@context')) {
+                jsonLD['@context'] = 'http://schema.org/';
             }
+            jsonLDList += JSON.stringify(jsonLD, undefined, 0);
+        }
+        if (jsonLDList) {
+            this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">[${jsonLDList}]</script>`));
         } else {
             this.jsonLD$.next(undefined);
         }
