@@ -181,15 +181,15 @@ export const myData = {
             carousel: {
                 carouselItems: [
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         caption: 'Welcome to endless world!'
                     },
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-2.jpg',
                         caption: 'Isn\'t it beautiful?'
                     },
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-23.jpg',
                         caption: 'Hey, what\'s up ? '
                     }]
             },
@@ -255,7 +255,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'},
+            backgroundCoverImage: {src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-2.jpg'},
             seo: {},
             jsonLDs: []
         },
@@ -309,15 +309,15 @@ export const myData = {
             carousel: {
                 carouselItems: [
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-1.jpg?alt=media&token=5a18eb58-5278-4f33-8968-142ad8c11fd0',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         caption: 'Sonsuz dünyaya hoşgeldiniz!'
                     },
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-2.jpg',
                         caption: 'Harika değil mi?'
                     },
                     {
-                        src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-3.jpg?alt=media&token=58e0292e-d1c5-4216-b17b-cf276d338124',
+                        src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-23.jpg',
                         caption: 'Hey, naber?'
                     }]
             },
@@ -383,7 +383,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://firebasestorage.googleapis.com/v0/b/supermurat-com.appspot.com/o/publicFiles%2Fcarousels%2Fcarousel-2.jpg?alt=media&token=648dfdad-1bba-4ff0-a36a-0af5d6cb99a3'},
+            backgroundCoverImage: {src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-2.jpg'},
             seo: {},
             jsonLDs: []
         },
@@ -443,7 +443,8 @@ export const myData = {
         'third-quote': {
             id: 'third-quote', routePath: '/quote', orderNo: -3, i18nKey: 'third-quote',
             title: 'Third Quote', content: 'this is the best quote',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            whoSaidThat: 'Super Murat'
         },
         'only-in-en-quote': {
             id: 'only-in-en-quote', routePath: '/quote', orderNo: -5, i18nKey: 'only-in-en-quote',
@@ -465,7 +466,8 @@ export const myData = {
         'ucuncu-guzel-soz': {
             id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3, i18nKey: 'third-quote',
             title: 'Üçüncü Güzel Söz', content: 'bu en güzel söz',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            whoSaidThat: 'Super Murat'
         },
         'sadece-turkce-alinti': {
             id: 'sadece-turkce-alinti', routePath: '/alinti', orderNo: -5, i18nKey: 'sadece-turkce-alinti',
@@ -605,6 +607,23 @@ export const myData = {
             primaryCustomHtmlWidget: {
                 title: 'Project is Ready',
                 content: '<b>You will get more info soon...</b>'
+            },
+            configSEO: {
+                defaultImageForSEO: {
+                    src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/HamsiManager-256.png',
+                    src1x1: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/HamsiManager-256.png',
+                    src4x3: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/HamsiManager-256.png',
+                    src16x9: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/HamsiManager-256.png'
+                },
+                defaultPublisher: {
+                    logo: {
+                        '@type': 'ImageObject',
+                        height: 60,
+                        url: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        width: 600
+                    },
+                    name: 'Murat Demir'
+                }
             }
         },
         'public_tr-TR': {
@@ -633,6 +652,20 @@ export const myData = {
             primaryCustomHtmlWidget: {
                 title: 'Proje Hazır',
                 content: '<b>Yakında daha fazla bilgi alanacaksınız...</b>'
+            },
+            configSEO: {
+                defaultImageForSEO: {
+                    src: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/HamsiManager-256.png'
+                },
+                defaultPublisher: {
+                    logo: {
+                        '@type': 'ImageObject',
+                        height: 60,
+                        url: 'https://storage.googleapis.com/supermurat-com.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        width: 600
+                    },
+                    name: 'Murat Demir'
+                }
             }
         }
     },
