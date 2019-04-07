@@ -10,6 +10,8 @@ export class JobModel {
     result?: string;
     /** do you want to overwrite current data */
     overwrite?: string;
+    /** limit to get documents */
+    limit?: number;
     /** custom data for job */
     customData?: any;
 }

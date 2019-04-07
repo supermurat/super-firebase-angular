@@ -332,9 +332,13 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         expireDate = new Date();
         expireDate.setDate(Number(expireDate.getDate()) + Number(jobData.customData)); // add days
     }
+    if (jobData.limit === undefined) {
+        jobData.limit = 5000;
+    }
 
     return db.collection('firstResponses')
         .where('type', '==', 'cache')
+        .limit(jobData.limit)
         .get()
         .then(async (mainDocsSnapshot) =>
             Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
@@ -354,7 +358,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
-                    console.log('clearCaches is finished');
+                    console.log(`clearCaches is finished. Count of processed documents: ${processedDocCount}`);
                 })
                 .catch((err) => {
                     console.error('snap.ref.set()', err);
