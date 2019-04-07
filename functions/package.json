@@ -31,6 +31,7 @@
     "@angular/router": "7.2.6",
     "@angular/service-worker": "7.2.6",
     "@fortawesome/fontawesome-free": "5.7.2",
+    "@google-cloud/storage": "2.4.2",
     "@ng-bootstrap/ng-bootstrap": "4.0.4",
     "angulartics2": "7.4.1",
     "bootstrap": "4.3.1",

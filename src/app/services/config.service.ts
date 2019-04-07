@@ -32,7 +32,8 @@ export class ConfigService {
                 }),
                 startWith(this.lastConfig ? this.lastConfig : {
                     mainMenuItems: [],
-                    primaryCustomHtmlWidget: undefined
+                    primaryCustomHtmlWidget: undefined,
+                    defaultImageForSEO: undefined
                 })
             );
     }

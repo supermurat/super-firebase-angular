@@ -19,7 +19,7 @@ export class PageBaseModel {
     title?: string;
     /** description of record */
     description?: string;
-    /** image url of content */
+    /** image of content */
     image?: ImageModel;
     /** html content of page */
     content?: any;
@@ -49,4 +49,6 @@ export class PageBaseModel {
 
     /** array of Json-LD data of record */
     jsonLDs?: Array<any>;
+    /** canonical url of page */
+    canonicalUrl?: string;
 }

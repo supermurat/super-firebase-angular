@@ -57,6 +57,7 @@ export class AppComponent implements OnInit {
         this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)
             .subscribe(config => {
                 this.configService.init(config);
+                this.seo.configSEO = config.configSEO;
             });
         this.httpStatus$ = this.seo.getHttpStatus();
         this.jsonLD$ = this.seo.getJsonLD();
