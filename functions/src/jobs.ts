@@ -1,3 +1,4 @@
+import { Storage } from '@google-cloud/storage';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
@@ -10,7 +11,7 @@ import { SiteMapUrlModel } from './site-map-url-model';
 
 const db = admin.firestore();
 
-export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
     const urlList: Array<SiteMapUrlModel> = [];
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -57,7 +58,7 @@ export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel)
                 .then(() =>
                     snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true})
                         .then(() => {
-                            console.log('generateSiteMap is finished');
+                            console.log(`generateSiteMap is finished. Count of urls: ${urlList.length}`);
                         })
                         .catch((err) => {
                             console.error('snap.ref.set()', err);
@@ -71,7 +72,7 @@ export const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -104,7 +105,7 @@ export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel)
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
-                    console.log('generateSEOData is finished');
+                    console.log(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`);
                 })
                 .catch((err) => {
                     console.error('snap.ref.set()', err);
@@ -114,7 +115,51 @@ export const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+    console.log('generateJsonLDs is started');
+    let processedDocCount = 0;
+    const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
+
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
+        Promise.all(collections.map(async (collectionPrefix) =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async (mainDocsSnapshot) =>
+                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                        const mData = mainDoc.data();
+                        const routePath = mData.hasOwnProperty('routePath') ? mData.routePath : '';
+                        if (!mData.hasOwnProperty('jsonLDs') || jobData.overwrite) {
+                            const jsonLDs = [];
+
+                            return mainDoc.ref.set({jsonLDs}, {merge: true})
+                                .then(() => {
+                                    processedDocCount++;
+                                })
+                                .catch((err) => {
+                                    console.error('mainDoc.ref.set()', err);
+                                });
+                        }
+
+                        return Promise.resolve();
+                    })))
+                .catch((err) => {
+                    console.error('db.collection().get()', err);
+                })
+        ))
+    ))
+        .then(async (values) =>
+            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`);
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
+const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateLocales is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -174,7 +219,7 @@ export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel)
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
-                    console.log('generateLocales is finished');
+                    console.log(`generateLocales is finished. Count of processed documents: ${processedDocCount}`);
                 })
                 .catch((err) => {
                     console.error('snap.ref.set()', err);
@@ -184,7 +229,7 @@ export const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel)
         });
 };
 
-export const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -224,7 +269,7 @@ export const generateDescription = async (snap: DocumentSnapshot, jobData: JobMo
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
-                    console.log('generateDescription is finished');
+                    console.log(`generateDescription is finished. Count of processed documents: ${processedDocCount}`);
                 })
                 .catch((err) => {
                     console.error('snap.ref.set()', err);
@@ -234,7 +279,52 @@ export const generateDescription = async (snap: DocumentSnapshot, jobData: JobMo
         });
 };
 
-export const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+    console.log('fixPublicFilesPermissions is started');
+    const storage = new Storage();
+    const bucketName = `${process.env.GCP_PROJECT}.appspot.com`;
+    const bucket = admin.storage().bucket(bucketName);
+
+    let processedDocCount = 0;
+
+    return bucket.getFiles({
+        prefix: 'publicFiles',
+        autoPaginate: false
+    })
+         .then(async (allFiles) => {
+             const files = allFiles[0];
+
+             return Promise.all(files.map(async (file) => {
+                     if (file.name.endsWith('/')) {
+                         return Promise.resolve();
+                     }
+
+                     return file.acl.add({
+                         entity: 'allUsers',
+                         role: storage.acl.READER_ROLE
+                     }).then((info) => {
+                         // console.log(info); // this "info" contains lots of cool info about file
+                         processedDocCount++;
+                     }).catch((err) => {
+                         console.error('file.acl.add()', err);
+                     });
+                 }
+             ));
+         })
+         .then(async (values) =>
+            snap.ref.set({result: `Count of processed files: ${processedDocCount}`}, {merge: true})
+                .then(() => {
+                    console.log(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`);
+                })
+                .catch((err) => {
+                    console.error('snap.ref.set()', err);
+                }))
+        .catch((err) => {
+            console.error('Promise.all', err);
+        });
+};
+
+const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('clearCaches is started');
     let processedDocCount = 0;
     let expireDate;
@@ -287,10 +377,14 @@ export const jobRunner = functions
             return generateSiteMap(snap, jobData);
         } else if (jobData.actionKey === 'generateSEOData') {
             return generateSEOData(snap, jobData);
+        } else if (jobData.actionKey === 'generateJsonLDs') {
+            return generateJsonLDs(snap, jobData);
         } else if (jobData.actionKey === 'generateLocales') {
             return generateLocales(snap, jobData);
         } else if (jobData.actionKey === 'generateDescription') {
             return generateDescription(snap, jobData);
+        } else if (jobData.actionKey === 'fixPublicFilesPermissions') {
+            return fixPublicFilesPermissions(snap, jobData);
         } else if (jobData.actionKey === 'clearCaches') {
             return clearCaches(snap, jobData);
         }
