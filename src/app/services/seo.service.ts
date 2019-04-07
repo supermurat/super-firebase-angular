@@ -4,7 +4,7 @@ import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
+import { APP_CONFIG, InterfaceAppConfig, languageNames } from '../app-config';
 import { ConfigSeoModel, HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
 
 /**
@@ -215,7 +215,7 @@ export class SeoService {
             }
         }
         const publisher = this.configSEO.defaultPublisher ? this.configSEO.defaultPublisher : undefined;
-        if (['/quote', '/alinti'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('whoSaidThat')) {
+        if (['/quote', '/alinti', 'guzel-soz'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('whoSaidThat')) {
             jsonLDs.push({
                 '@type': 'Quotation',
                 creator: {
@@ -226,6 +226,46 @@ export class SeoService {
                 image: images,
                 mainEntityOfPage: tempPage.canonicalUrl
             });
+        } else if (['/quote', '/alinti', 'guzel-soz'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('persons')) {
+            const persons = [];
+            Object.keys(tempPage.persons)
+                .forEach(key => {
+                    persons.push({
+                        '@type': 'Person',
+                        name: tempPage.persons[key]
+                    });
+                });
+            if (persons.length > 1) {
+                jsonLDs.push({
+                    '@type': 'Conversation',
+                    name: this.getPlaintextByHtml(tempPage.title),
+                    hasPart: [
+                        {
+                            '@type': 'Message',
+                            sender: persons[0],
+                            recipient: persons[1],
+                            about: {
+                                '@type': 'Thing',
+                                name: '...'
+                            },
+                            datePublished: new Date(tempPage.created.seconds * 1000)
+                        },
+                        {
+                            '@type': 'Message',
+                            sender: persons[1],
+                            recipient: persons[0],
+                            about: {
+                                '@type': 'Thing',
+                                name: '...'
+                            },
+                            datePublished: new Date(tempPage.created.seconds * 1000)
+                        }
+                    ],
+                    text: this.getPlaintextByHtml(tempPage.content),
+                    image: images,
+                    mainEntityOfPage: tempPage.canonicalUrl
+                });
+            }
         } else if (['/blog', '/gunluk'].indexOf(tempPage.routePath) > -1) {
             jsonLDs.push({
                 '@type': 'BlogPosting',
@@ -238,7 +278,39 @@ export class SeoService {
                 dateModified: new Date(tempPage.changed.seconds * 1000),
                 datePublished: new Date(tempPage.created.seconds * 1000),
                 headline: this.getPlaintextByHtml(tempPage.title),
-                // description: '',
+                description: tempPage.description,
+                image: images,
+                mainEntityOfPage: tempPage.canonicalUrl
+            });
+        } else if (['/article', '/makale'].indexOf(tempPage.routePath) > -1) {
+            jsonLDs.push({
+                '@type': 'Article',
+                author: {
+                    '@type': 'Person',
+                    name: this.getPlaintextByHtml(tempPage.createdBy)
+                },
+                publisher: {...{'@type': 'Organization'}, ...publisher},
+                dateCreated: new Date(tempPage.created.seconds * 1000),
+                dateModified: new Date(tempPage.changed.seconds * 1000),
+                datePublished: new Date(tempPage.created.seconds * 1000),
+                headline: this.getPlaintextByHtml(tempPage.title),
+                description: tempPage.description,
+                image: images,
+                mainEntityOfPage: tempPage.canonicalUrl
+            });
+        } else if (['/joke', '/eglence', '/fikra', '/saka', '/espri', '/soguk-espri'].indexOf(tempPage.routePath) > -1) {
+            jsonLDs.push({
+                '@type': 'SocialMediaPosting',
+                author: {
+                    '@type': 'Person',
+                    name: this.getPlaintextByHtml(tempPage.createdBy)
+                },
+                publisher: {...{'@type': 'Organization'}, ...publisher},
+                dateCreated: new Date(tempPage.created.seconds * 1000),
+                dateModified: new Date(tempPage.changed.seconds * 1000),
+                datePublished: new Date(tempPage.created.seconds * 1000),
+                headline: this.getPlaintextByHtml(tempPage.title),
+                description: tempPage.description,
                 image: images,
                 mainEntityOfPage: tempPage.canonicalUrl
             });

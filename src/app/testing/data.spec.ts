@@ -433,7 +433,11 @@ export const myData = {
         'first-quote': {
             id: 'first-quote', routePath: '/quote', orderNo: -1, i18nKey: 'first-quote',
             title: 'First Quote', content: 'this is good quote', contentSummary: 'good quote',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            persons: {
+                'Person 1': 'First Person',
+                'Person 2': 'Other Person'
+            }
         },
         'second-quote': {
             id: 'second-quote', routePath: '/quote', orderNo: -2, i18nKey: 'second-quote',
@@ -456,7 +460,11 @@ export const myData = {
         'ilk-alinti': {
             id: 'ilk-alinti', routePath: '/alinti', orderNo: -1, i18nKey: 'first-quote',
             title: 'İlk Alıntı', content: 'bu güzel bir alıntı', contentSummary: 'güzel alıntı',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            persons: {
+                'Kisi 1': 'İlk Kişi',
+                'Kisi 2': 'Diğer Kişi'
+            }
         },
         'ikinci-guzel-soz': {
             id: 'ikinci-guzel-soz', routePath: '/guzel-soz', orderNo: -2, i18nKey: 'second-quote',
@@ -692,5 +700,9 @@ export const noData = {
     'quotes_tr-TR': {},
     'taxonomy_en-US': {},
     'taxonomy_tr-TR': {},
+    configs: {
+        'public_en-US': {},
+        'public_tr-TR': {}
+    },
     users: {}
 };
