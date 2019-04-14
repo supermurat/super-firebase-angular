@@ -5,7 +5,7 @@ import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { environment } from '../../../environments/environment';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
 import { angulartics2GoogleGlobalSiteTagStub } from '../../testing/angulartics-stub.spec';
-import { TestHelperModule } from '../../testing/test.helper.module.spec';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
@@ -30,7 +30,9 @@ describe('AppComponent', () => {
                 TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
-                    {path: 'unit-test', component: NavMenuComponent}
+                    {path: 'unit-test', component: AppComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
                 ])
             ]
         })
@@ -61,10 +63,20 @@ describe('AppComponent', () => {
         comp.ngOnInit();
         tick();
         fixture.detectChanges();
+        tick();
         expect(comp)
             .toBeTruthy();
         expect(fixture.nativeElement.querySelector('.navbar-nav .nav-link span').textContent)
             .toContain('Home');
+    }));
+
+    it('should redirect to http-404 for not-found-page', fakeAsync(() => {
+        activatedRouteStub.navigate(fixture, comp.router, ['not-found-page']);
+        fixture.detectChanges();
+        tick(1000);
+
+        expect(comp.router.url)
+            .toEqual('/not-found-page/http-404');
     }));
 
 });
@@ -88,7 +100,7 @@ describe('AppComponentSeoService', () => {
                 TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
-                    {path: 'unit-test', component: NavMenuComponent}
+                    {path: 'unit-test', component: AppComponent}
                 ])
             ]
         })
@@ -286,7 +298,7 @@ describe('AppComponentAlertService', () => {
                 TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
-                    {path: 'unit-test', component: NavMenuComponent}
+                    {path: 'unit-test', component: AppComponent}
                 ])
             ]
         })
@@ -422,7 +434,7 @@ describe('AppComponentServer', () => {
                 TestHelperModule,
                 RouterTestingModule.withRoutes([
                     {path: '', component: AppComponent},
-                    {path: 'unit-test', component: NavMenuComponent},
+                    {path: 'unit-test', component: AppComponent},
                     {path: 'http-404', component: NotFoundComponent},
                     {path: '**', component: NotFoundComponent}
                 ])
@@ -444,8 +456,8 @@ describe('AppComponentServer', () => {
         comp.seo.http404();
         tick();
         fixture.detectChanges();
-        // tslint:disable:max-line-length
-        const element = fixture.nativeElement.querySelector('div#do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
+        const element = fixture.nativeElement.querySelector(
+            'div#do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
         expect(element.tagName)
             .toBe('DIV');
         expect(element.id)
@@ -458,6 +470,20 @@ describe('AppComponentServer', () => {
         fixture.detectChanges();
         expect(fixture.nativeElement.querySelector('div#only-for-http-status').textContent)
             .toBe('--http-redirect-301--/go-to-next-page--end-of-http-redirect-301--');
+    }));
+
+    it('should contain page not found key for not-found-page', fakeAsync(() => {
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'not-found-pages', 'not-found-page');
+        activatedRouteStub.navigate(fixture, comp.router, ['not-found-page']);
+        fixture.detectChanges();
+        tick();
+        sNavEvent.unsubscribe();
+        const element = fixture.nativeElement.querySelector(
+            'div#do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
+        expect(element.tagName)
+            .toBe('DIV');
+        expect(element.id)
+            .toBe('do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
     }));
 
 });
