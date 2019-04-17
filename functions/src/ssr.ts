@@ -75,7 +75,10 @@ const getDocumentID = (req: express.Request): string => {
 const respondToSSR = (req: express.Request, res: express.Response, html: string): FirstResponseModel => {
     const expireDate = new Date();
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
-    const referer = req.header('Referer') || req.header('Referrer');
+    let referer = req.header('Referer') || req.header('Referrer');
+    if (!referer) {
+        referer = '';
+    }
     if (newUrlInfo) {
         const newUrl = newUrlInfo[0]
             .replace(/--end-of-http-redirect-301--/gi, '')
