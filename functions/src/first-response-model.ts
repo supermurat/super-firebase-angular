@@ -14,4 +14,6 @@ export class FirstResponseModel {
     expireDate?: any;
     /** last update date */
     changed?: any;
+    /** referer web site */
+    referer?: string;
 }

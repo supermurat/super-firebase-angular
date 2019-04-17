@@ -53,6 +53,14 @@ enableProdMode();
 
 const app = express();
 
+const getLocale = (req: express.Request): string => {
+    const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
+    // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
+
+    return (matches && serverJS.hasOwnProperty(matches[1]) && indexHtml.hasOwnProperty(matches[1])) ?
+        matches[1] : FUNCTIONS_CONFIG.defaultLanguageCode;
+};
+
 const getDocumentID = (req: express.Request): string => {
     // firestore doesn't allow "/" to be in document ID
     try {
@@ -64,38 +72,47 @@ const getDocumentID = (req: express.Request): string => {
     }
 };
 
-const respondToSSR = (res: express.Response, html: string): void => {
+const respondToSSR = (req: express.Request, res: express.Response, html: string): FirstResponseModel => {
+    const expireDate = new Date();
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
+    const referer = req.header('Referer') || req.header('Referrer');
     if (newUrlInfo) {
         const newUrl = newUrlInfo[0]
             .replace(/--end-of-http-redirect-301--/gi, '')
             .replace(/--http-redirect-301--/gi, '');
         res.redirect(301, newUrl);
-    } else {
+        expireDate.setDate(expireDate.getDate() + 365); // add days
+
+        return {code: 301, type: 'cache', url: newUrl, expireDate, referer};
+    } else if (html.indexOf(uniqueKeyFor404) > -1) {
         // thing about redirect to 404 but maybe keeping current url is more cool
-        res.status(html.indexOf(uniqueKeyFor404) > -1 ? 404 : 200)
+        res.status(404)
             .send(html);
+        expireDate.setDate(expireDate.getDate() + 365); // add days
+
+        return {code: 404, type: 'cache', expireDate, referer};
+    } else {
+        res.status(200)
+            .send(html);
+        expireDate.setDate(expireDate.getDate() + 30); // add days
+
+        return {code: 200, type: 'cache', content: html, expireDate, referer};
     }
 };
 
 const getSSR = (req: express.Request, res: express.Response): void => {
-    const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
-    // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
-    const locale = (matches && serverJS.hasOwnProperty(matches[1]) && indexHtml.hasOwnProperty(matches[1])) ?
-        matches[1] : FUNCTIONS_CONFIG.defaultLanguageCode;
+    const locale = getLocale(req);
 
     renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
         url: req.path,
         document: indexHtml[locale]
     }).then((html) => {
-        respondToSSR(res, html);
+        const firstResponse = respondToSSR(req, res, html);
         const documentID = getDocumentID(req);
-        if (FUNCTIONS_CONFIG.cacheResponses && documentID) {
-            const expireDate = new Date();
-            expireDate.setDate(expireDate.getDate() + 30); // add days
+        if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
             db.collection('firstResponses')
                 .doc(documentID)
-                .set({code: 200, type: 'cache', content: html, expireDate})
+                .set(firstResponse)
                 .catch((error) => {
                     console.error('Error in getSSR.db.collection.set()', documentID, error);
                 });
@@ -132,19 +149,23 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
         }
     });
 
-const ifUrlIsInvalidPrint404Page = (req: express.Request, res: express.Response): boolean => {
-    if (req.url.startsWith('/?')) {
+const send404Page = (req: express.Request, res: express.Response): void => {
+    const locale = getLocale(req);
+    const baseHtml = indexHtml[locale]
+        .replace(/<title>[^<]*<\/title>/g, '<title>404 - Page not found</title>')
+        .replace(
+            '<app-root></app-root>',
+            '<app-root><h1>404 - Page Not Found</h1><a href="/"><h2>Go to Home Page</h2></a></app-root>');
+
+    res.status(404)
+        .send(baseHtml);
+};
+
+const ifUrlIsInvalidSend404Page = (req: express.Request, res: express.Response): boolean => {
+    if (req.url.startsWith('/?') || req.url.indexOf('?page') > -1 || req.url.indexOf('.php?') > -1) {
         // this is only for old php web site but keeping them forever would be better in case of search engines
         // a url like that won't be ok anymore
-        res.status(404)
-            .send('<!DOCTYPE html><html><head>' +
-                '<meta charset="utf-8">' +
-                '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-                '<title>Page Not Found</title>' +
-                '</head><body>' +
-                '<h1>404 - Page Not Found</h1>' +
-                '<a href="/"><h2>Go to Home Page</h2></a>' +
-                '</body></html>');
+        send404Page(req, res);
 
         return true;
     }
@@ -153,13 +174,15 @@ const ifUrlIsInvalidPrint404Page = (req: express.Request, res: express.Response)
 };
 
 app.get('**', (req: express.Request, res: express.Response) => {
-    if (ifUrlIsInvalidPrint404Page(req, res)) {
+    if (ifUrlIsInvalidSend404Page(req, res)) {
         return;
     }
     checkFirstResponse(req, res)
         .then((firstResponse: FirstResponseModel) => {
             if (firstResponse && firstResponse.code === 301) {
                 res.redirect(firstResponse.code, firstResponse.url);
+            } else if (firstResponse && firstResponse.code === 404) {
+                send404Page(req, res);
             } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
                 const fileNameParts = firstResponse.id.split('.');
                 const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
@@ -169,7 +192,7 @@ app.get('**', (req: express.Request, res: express.Response) => {
             } else if (FUNCTIONS_CONFIG.cacheResponses &&
                 firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
                 (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
-                respondToSSR(res, firstResponse.content);
+                respondToSSR(req, res, firstResponse.content);
             } else {
                 getSSR(req, res);
             }

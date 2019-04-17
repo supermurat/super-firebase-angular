@@ -56,6 +56,9 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)
             .subscribe(config => {
+                if (!config.configSEO) {
+                    config.configSEO = {};
+                }
                 this.configService.init(config);
                 this.seo.configSEO = config.configSEO;
             });

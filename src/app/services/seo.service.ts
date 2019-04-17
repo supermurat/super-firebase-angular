@@ -4,7 +4,7 @@ import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { APP_CONFIG, InterfaceAppConfig, languageNames } from '../app-config';
+import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
 import { ConfigSeoModel, HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
 
 /**

@@ -328,18 +328,34 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
     console.log('clearCaches is started');
     let processedDocCount = 0;
     let expireDate;
-    if (jobData.customData !== undefined && Number(jobData.customData) > -1) {
-        expireDate = new Date();
-        expireDate.setDate(Number(expireDate.getDate()) + Number(jobData.customData)); // add days
+    let codeListToDelete;
+    if (jobData.customData !== undefined) {
+        if (jobData.customData.hasOwnProperty('expireDate')) {
+            expireDate = jobData.customData.expireDate;
+        }
+        if (jobData.customData.hasOwnProperty('expireDateDayDiff')) {
+            expireDate = new Date();
+            expireDate.setDate(Number(expireDate.getDate()) + Number(jobData.customData.expireDateDayDiff)); // add days
+        }
+        if (jobData.customData.hasOwnProperty('codeListToDelete')) {
+            codeListToDelete = jobData.customData.codeListToDelete;
+        }
+    }
+    if (jobData.limit === undefined) {
+        jobData.limit = 5000;
     }
 
     return db.collection('firstResponses')
         .where('type', '==', 'cache')
+        .limit(jobData.limit)
         .get()
         .then(async (mainDocsSnapshot) =>
             Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
                 if (expireDate && mainDoc.data().expireDate > expireDate) {
                     // to keep newly created caches
+                    return Promise.resolve();
+                }
+                if (codeListToDelete && codeListToDelete.indexOf(mainDoc.data().code) === -1) {
                     return Promise.resolve();
                 }
 
@@ -354,7 +370,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         .then(async (values) =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
                 .then(() => {
-                    console.log('clearCaches is finished');
+                    console.log(`clearCaches is finished. Count of processed documents: ${processedDocCount}`);
                 })
                 .catch((err) => {
                     console.error('snap.ref.set()', err);
