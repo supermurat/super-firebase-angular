@@ -278,6 +278,16 @@ export const myData = {
             routePath: '/',
             i18nKey: 'quotes',
             orderNo: -1
+        },
+        contact: {
+            id: 'contact',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Contact',
+            caption: 'Contact',
+            routePath: '/',
+            i18nKey: 'contact',
+            orderNo: -1
         }
     },
     'pages_tr-TR': {
@@ -425,6 +435,16 @@ export const myData = {
             caption: 'Güzel Sözlerim',
             routePath: '/',
             i18nKey: 'quotes',
+            orderNo: -1
+        },
+        iletisim: {
+            id: 'iletisim',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - İletişim',
+            caption: 'İletişim',
+            routePath: '/',
+            i18nKey: 'contact',
             orderNo: -1
         }
     },
