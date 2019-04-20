@@ -11,8 +11,8 @@ const buildForLocal = ("Local" + (new Date()).getFullYear() + ((new Date()).getM
     (new Date()).getDate() + (new Date()).getHours() + (new Date()).getMinutes());
 
 exports.config = {
-    allScriptsTimeout: 1000 * 60 * 2,
-    getPageTimeout: 1000 * 60 * 2,
+    allScriptsTimeout: 60000 * 2,
+    getPageTimeout: 60000 * 2,
     maxSessions: 2,
     specs: [
         "./**/*.e2e-spec.ts"
@@ -52,7 +52,7 @@ exports.config = {
     framework: "jasmine",
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 120000,
+        defaultTimeoutInterval: 60000 * 2,
         print() {
         }
     },
