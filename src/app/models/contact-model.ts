@@ -9,7 +9,7 @@ export class ContactModel {
     /** message */
     message?: string;
     /** is send copy to owner */
-    isSendCopyToOwner?: number;
+    isSendCopyToOwner?: boolean;
     /** is privacy policy agreed */
-    isAgreed?: string;
+    isAgreed?: boolean;
 }

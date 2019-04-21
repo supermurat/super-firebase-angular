@@ -608,6 +608,24 @@ export const myData = {
             changed: {seconds: 1544207666}
         }
     },
+    'messages_en-US': {
+        '1q2w3e4r5t6y7u8i9o0pEn': {
+            userLongName: 'Unit Test',
+            email: 'unit@test.com',
+            message: 'This is for test!',
+            isSendCopyToOwner: true,
+            isAgreed: true
+        }
+    },
+    'messages_tr-TR': {
+        '1q2w3e4r5t6y7u8i9o0pTr': {
+            userLongName: 'Unit Test',
+            email: 'unit@test.com',
+            message: 'Bu test içindir!',
+            isSendCopyToOwner: true,
+            isAgreed: true
+        }
+    },
     configs: {
         'public_en-US': {
             mainMenuItems: [
@@ -720,6 +738,8 @@ export const noData = {
     'quotes_tr-TR': {},
     'taxonomy_en-US': {},
     'taxonomy_tr-TR': {},
+    'messages_en-US': {},
+    'messages_tr-TR': {},
     configs: {
         'public_en-US': {},
         'public_tr-TR': {}

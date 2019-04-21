@@ -55,7 +55,8 @@ export class ContactComponent implements OnInit {
                 this.isShowThankYou = true;
                 this.contact = {};
             })
-            .catch(reason => {
+            .catch(// istanbul ignore next
+                reason => {
                 this.alert.error(reason);
             });
     }

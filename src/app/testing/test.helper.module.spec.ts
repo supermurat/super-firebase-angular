@@ -52,7 +52,8 @@ export const activatedRouteStub = new ActivatedRouteStub();
         ActiveTagsComponent,
         LastJokesComponent,
         SearchBarComponent,
-        CustomHtmlComponent
+        CustomHtmlComponent,
+        FormsModule
     ],
     imports: [
         CommonModule,
