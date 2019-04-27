@@ -6,8 +6,8 @@ import * as h2p from 'html2plaintext';
 import * as sitemap from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { JobModel } from './job-model';
-import { SiteMapUrlModel } from './site-map-url-model';
+import { JobModel } from './models/job-model';
+import { SiteMapUrlModel } from './models/site-map-url-model';
 
 const db = admin.firestore();
 

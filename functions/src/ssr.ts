@@ -11,7 +11,7 @@ import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { FirstResponseModel } from './first-response-model';
+import { FirstResponseModel } from './models/first-response-model';
 
 const db = admin.firestore();
 
