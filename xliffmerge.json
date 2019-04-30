@@ -11,7 +11,7 @@
     "removeUnusedIds": true,
     "supportNgxTranslate": false,
     "ngxTranslateExtractionPattern": "@@|ngx-translate",
-    "useSourceAsTarget": true,
+    "useSourceAsTarget": false,
     "targetPraefix": "",
     "targetSuffix": "",
     "beautifyOutput": false,
