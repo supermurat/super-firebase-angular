@@ -4,6 +4,7 @@ export * from './carousel-model';
 export * from './carousel-item-model';
 export * from './config-model';
 export * from './config-seo-model';
+export * from './contact-model';
 export * from './image-model';
 export * from './custom-html-model';
 export * from './html-link-element-model';

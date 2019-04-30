@@ -52,6 +52,14 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
+    match /messages_en-US/{document=**} {
+      allow read, update, delete: if exists(/databases/$(database)/documents/users/request.auth.uid);
+      allow create: if true;
+    }
+    match /messages_tr-TR/{document=**} {
+      allow read, update, delete: if exists(/databases/$(database)/documents/users/request.auth.uid);
+      allow create: if true;
+    }
     match /configs/public_en-US {
       allow read: if true;
       allow write: if false;

@@ -18,7 +18,7 @@ export const APP_UNIT_TEST_CONFIG: InterfaceAppConfig = {
 };
 
 /** InjectionToken for APP_CONFIG */
-export let APP_CONFIG = new InjectionToken<InterfaceAppConfig>('app.config');
+export const APP_CONFIG = new InjectionToken<InterfaceAppConfig>('app.config');
 
 /** language names by language code */
 export const languageNames = {

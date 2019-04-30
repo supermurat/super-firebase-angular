@@ -278,6 +278,16 @@ export const myData = {
             routePath: '/',
             i18nKey: 'quotes',
             orderNo: -1
+        },
+        contact: {
+            id: 'contact',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - Contact',
+            caption: 'Contact',
+            routePath: '/',
+            i18nKey: 'contact',
+            orderNo: -1
         }
     },
     'pages_tr-TR': {
@@ -425,6 +435,16 @@ export const myData = {
             caption: 'Güzel Sözlerim',
             routePath: '/',
             i18nKey: 'quotes',
+            orderNo: -1
+        },
+        iletisim: {
+            id: 'iletisim',
+            changed: {seconds: 1544207666},
+            created: {seconds: 1544207666},
+            title: 'Super Murat - İletişim',
+            caption: 'İletişim',
+            routePath: '/',
+            i18nKey: 'contact',
             orderNo: -1
         }
     },
@@ -588,6 +608,24 @@ export const myData = {
             changed: {seconds: 1544207666}
         }
     },
+    'messages_en-US': {
+        '1q2w3e4r5t6y7u8i9o0pEn': {
+            userLongName: 'Unit Test',
+            email: 'unit@test.com',
+            message: 'This is for test!',
+            isSendCopyToOwner: true,
+            isAgreed: true
+        }
+    },
+    'messages_tr-TR': {
+        '1q2w3e4r5t6y7u8i9o0pTr': {
+            userLongName: 'Unit Test',
+            email: 'unit@test.com',
+            message: 'Bu test içindir!',
+            isSendCopyToOwner: true,
+            isAgreed: true
+        }
+    },
     configs: {
         'public_en-US': {
             mainMenuItems: [
@@ -700,6 +738,8 @@ export const noData = {
     'quotes_tr-TR': {},
     'taxonomy_en-US': {},
     'taxonomy_tr-TR': {},
+    'messages_en-US': {},
+    'messages_tr-TR': {},
     configs: {
         'public_en-US': {},
         'public_tr-TR': {}

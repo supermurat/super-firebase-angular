@@ -5,6 +5,7 @@ import { ArticleDetailComponent } from './pages/article-detail/article-detail.co
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
 import { BlogListComponent } from './pages/blog-list/blog-list.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { JokeDetailComponent } from './pages/joke-detail/joke-detail.component';
 import { JokeListComponent } from './pages/joke-list/joke-list.component';
@@ -25,6 +26,9 @@ const routes: Routes = [
     },
     // endregion
     // region en-US paths
+    {
+        path: 'contact', component: ContactComponent
+    },
     {
         path: 'blogs', redirectTo: 'blogs/1', pathMatch: 'full'
     },
@@ -78,6 +82,9 @@ const routes: Routes = [
     },
     // endregion
     // region tr-TR paths
+    {
+        path: 'iletisim', component: ContactComponent
+    },
     {
         path: 'gunlukler', redirectTo: 'gunlukler/1', pathMatch: 'full'
     },

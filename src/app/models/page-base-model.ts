@@ -44,6 +44,9 @@ export class PageBaseModel {
     /** locale object array of page */
     locales?: Array<LocaleModel>;
 
+    /** privacy policy of page */
+    privacyPolicy?: string;
+
     /** seo data of record */
     seo?: PageSeoModel;
 

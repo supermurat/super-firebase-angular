@@ -1,5 +1,5 @@
 <!-- Carousel -->
-<div *ngIf="carouselModel && carouselModel.carouselItems.length > 0" id="carousel-main-indicators" class="carousel slide" data-ride="carousel">
+<div *ngIf="carouselModel && carouselModel.carouselItems.length > 0" id="carousel-main-indicators" class="carousel slide" data-ride="carousel" data-interval="10000">
     <ol class="carousel-indicators">
         <li data-target="#carousel-main-indicators"
             [attr.data-slide-to]="i"

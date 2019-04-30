@@ -279,7 +279,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./e2e/protractor.conf.js",
-            "devServerTarget": "super-firebase-angular:serve"
+            "devServerTarget": "super-firebase-angular:serve:production"
           },
           "configurations": {
             "browserstack": {

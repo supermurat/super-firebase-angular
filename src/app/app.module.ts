@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
@@ -28,6 +28,7 @@ import { ArticleDetailComponent } from './pages/article-detail/article-detail.co
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
 import { BlogListComponent } from './pages/blog-list/blog-list.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { HomeComponent } from './pages/home/home.component';
 import { JokeDetailComponent } from './pages/joke-detail/joke-detail.component';
 import { JokeListComponent } from './pages/joke-list/joke-list.component';
@@ -75,7 +76,8 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         ActiveTagsComponent,
         LastJokesComponent,
         SearchBarComponent,
-        CustomHtmlComponent
+        CustomHtmlComponent,
+        ContactComponent
     ],
     imports: [
         CommonModule,
@@ -108,7 +110,8 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         CarouselService,
         PageService,
         ConfigService,
-        {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
+        {provide: APP_CONFIG, useValue: APP_DI_CONFIG},
+        {provide: FirestoreSettingsToken, useValue: {}}
     ],
     bootstrap: [AppComponent]
 })

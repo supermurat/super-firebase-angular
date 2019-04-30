@@ -4,7 +4,7 @@ import {
     getArrayStartAfterByDocument,
     getArrayStartByNumberField, getArrayWhereByField,
     getDataByPath,
-    getFirestoreSnap,
+    getFirestoreSnap, getRandomKey,
     getSortedArrayByNumberKey
 } from './helpers.spec';
 
@@ -31,82 +31,84 @@ const angularFirestoreStubEmpty = {
         let tData = tDataFull.slice();
         let tDataSnap = getFirestoreSnap(tData);
 
-        queryFn({
-            orderBy(fieldPath): any {
-                tData = getSortedArrayByNumberKey(tData, fieldPath);
-                tDataSnap = getFirestoreSnap(tData);
+        if (queryFn) {
+            queryFn({
+                orderBy(fieldPath): any {
+                    tData = getSortedArrayByNumberKey(tData, fieldPath);
+                    tDataSnap = getFirestoreSnap(tData);
 
-                return {
-                    limit(limitNumber): any {
-                        limitNumberValue = limitNumber;
+                    return {
+                        limit(limitNumber): any {
+                            limitNumberValue = limitNumber;
 
-                        return {
-                            startAfter(startAfterDoc): any {
-                                tData = getArrayStartAfterByDocument(tData, startAfterDoc);
-                                tData = tData.slice(0, limitNumber);
-                                tDataSnap = getFirestoreSnap(tData);
+                            return {
+                                startAfter(startAfterDoc): any {
+                                    tData = getArrayStartAfterByDocument(tData, startAfterDoc);
+                                    tData = tData.slice(0, limitNumber);
+                                    tDataSnap = getFirestoreSnap(tData);
 
-                                return {
-                                    snapshotChanges(): any {
-                                        return from([tDataSnap]);
-                                    }
-                                };
-                            },
-                            snapshotChanges(): any {
-                                tData = tData.slice(0, limitNumber);
-                                tDataSnap = getFirestoreSnap(tData);
+                                    return {
+                                        snapshotChanges(): any {
+                                            return from([tDataSnap]);
+                                        }
+                                    };
+                                },
+                                snapshotChanges(): any {
+                                    tData = tData.slice(0, limitNumber);
+                                    tDataSnap = getFirestoreSnap(tData);
 
-                                return from([tDataSnap]);
-                            }
-                        };
-                    },
-                    startAt(startAtValue): any {
-                        tData = getArrayStartByNumberField(tData, fieldPath, startAtValue);
-                        tDataSnap = getFirestoreSnap(tData);
+                                    return from([tDataSnap]);
+                                }
+                            };
+                        },
+                        startAt(startAtValue): any {
+                            tData = getArrayStartByNumberField(tData, fieldPath, startAtValue);
+                            tDataSnap = getFirestoreSnap(tData);
 
-                        return {
-                            limit(limitNumber): any {
-                                limitNumberValue = limitNumber;
-                                tData = tData.slice(0, limitNumber);
-                                tDataSnap = getFirestoreSnap(tData);
+                            return {
+                                limit(limitNumber): any {
+                                    limitNumberValue = limitNumber;
+                                    tData = tData.slice(0, limitNumber);
+                                    tDataSnap = getFirestoreSnap(tData);
 
-                                return {fieldPath};
-                            }
-                        };
-                    }
-                };
-            },
-            where(fieldPath, opStr, value): any {
-                tData = getArrayWhereByField(tData, fieldPath, opStr, value);
-                tDataSnap = getFirestoreSnap(tData);
+                                    return {fieldPath};
+                                }
+                            };
+                        }
+                    };
+                },
+                where(fieldPath, opStr, value): any {
+                    tData = getArrayWhereByField(tData, fieldPath, opStr, value);
+                    tDataSnap = getFirestoreSnap(tData);
 
-                return {
-                    limit(limitNumber): any {
-                        limitNumberValue = limitNumber;
+                    return {
+                        limit(limitNumber): any {
+                            limitNumberValue = limitNumber;
 
-                        return {
-                            startAfter(startAfterDoc): any {
-                                tData = getArrayStartAfterByDocument(tData, startAfterDoc);
-                                tData = tData.slice(0, limitNumber);
-                                tDataSnap = getFirestoreSnap(tData);
+                            return {
+                                startAfter(startAfterDoc): any {
+                                    tData = getArrayStartAfterByDocument(tData, startAfterDoc);
+                                    tData = tData.slice(0, limitNumber);
+                                    tDataSnap = getFirestoreSnap(tData);
 
-                                return {
-                                    snapshotChanges(): any {
-                                        return from([tDataSnap]);
-                                    }
-                                };
-                            },
-                            snapshotChanges(): any {
-                                tData = tData.slice(0, limitNumber);
-                                tDataSnap = getFirestoreSnap(tData);
+                                    return {
+                                        snapshotChanges(): any {
+                                            return from([tDataSnap]);
+                                        }
+                                    };
+                                },
+                                snapshotChanges(): any {
+                                    tData = tData.slice(0, limitNumber);
+                                    tDataSnap = getFirestoreSnap(tData);
 
-                                return from([tDataSnap]);
-                            }
-                        };
-                    }
-                };
-            }
-        });
+                                    return from([tDataSnap]);
+                                }
+                            };
+                        }
+                    };
+                }
+            });
+        }
         if (limitNumberValue > -1) {
             tData = tData.slice(0, limitNumberValue);
             tDataSnap = getFirestoreSnap(tData);
@@ -148,6 +150,16 @@ const angularFirestoreStubEmpty = {
                         return from([tDataSnap]);
                     }
                 };
+            },
+            add(newData: any): any {
+                const newID = getRandomKey(32);
+
+                return new Promise((resolve, reject) => {
+                    resolve({
+                        id: newID,
+                        path: `${path}/${newID}`
+                    });
+                });
             }
         };
     }

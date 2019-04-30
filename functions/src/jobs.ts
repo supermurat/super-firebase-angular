@@ -6,8 +6,8 @@ import * as h2p from 'html2plaintext';
 import * as sitemap from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { JobModel } from './job-model';
-import { SiteMapUrlModel } from './site-map-url-model';
+import { JobModel } from './models/job-model';
+import { SiteMapUrlModel } from './models/site-map-url-model';
 
 const db = admin.firestore();
 
@@ -391,17 +391,23 @@ export const jobRunner = functions
         const jobData = snap.data() as JobModel;
         if (jobData.actionKey === 'generateSiteMap') {
             return generateSiteMap(snap, jobData);
-        } else if (jobData.actionKey === 'generateSEOData') {
+        }
+        if (jobData.actionKey === 'generateSEOData') {
             return generateSEOData(snap, jobData);
-        } else if (jobData.actionKey === 'generateJsonLDs') {
+        }
+        if (jobData.actionKey === 'generateJsonLDs') {
             return generateJsonLDs(snap, jobData);
-        } else if (jobData.actionKey === 'generateLocales') {
+        }
+        if (jobData.actionKey === 'generateLocales') {
             return generateLocales(snap, jobData);
-        } else if (jobData.actionKey === 'generateDescription') {
+        }
+        if (jobData.actionKey === 'generateDescription') {
             return generateDescription(snap, jobData);
-        } else if (jobData.actionKey === 'fixPublicFilesPermissions') {
+        }
+        if (jobData.actionKey === 'fixPublicFilesPermissions') {
             return fixPublicFilesPermissions(snap, jobData);
-        } else if (jobData.actionKey === 'clearCaches') {
+        }
+        if (jobData.actionKey === 'clearCaches') {
             return clearCaches(snap, jobData);
         }
 

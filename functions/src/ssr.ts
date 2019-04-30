@@ -11,7 +11,7 @@ import { existsSync, readFileSync } from 'fs';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { FirstResponseModel } from './first-response-model';
+import { FirstResponseModel } from './models/first-response-model';
 
 const db = admin.firestore();
 
@@ -87,20 +87,20 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
         expireDate.setDate(expireDate.getDate() + 365); // add days
 
         return {code: 301, type: 'cache', url: newUrl, expireDate, referer};
-    } else if (html.indexOf(uniqueKeyFor404) > -1) {
+    }
+    if (html.indexOf(uniqueKeyFor404) > -1) {
         // thing about redirect to 404 but maybe keeping current url is more cool
         res.status(404)
             .send(html);
         expireDate.setDate(expireDate.getDate() + 365); // add days
 
         return {code: 404, type: 'cache', expireDate, referer};
-    } else {
-        res.status(200)
-            .send(html);
-        expireDate.setDate(expireDate.getDate() + 30); // add days
-
-        return {code: 200, type: 'cache', content: html, expireDate, referer};
     }
+    res.status(200)
+        .send(html);
+    expireDate.setDate(expireDate.getDate() + 30); // add days
+
+    return {code: 200, type: 'cache', content: html, expireDate, referer};
 };
 
 const getSSR = (req: express.Request, res: express.Response): void => {

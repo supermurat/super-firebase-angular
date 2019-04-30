@@ -144,3 +144,17 @@ export const getArrayWhereByField = (array: Array<any>, fieldPath: string, nopSt
 
     return tData;
 };
+
+/**
+ * get random key
+ * @param length: length of key
+ */
+export const getRandomKey = (length = 16): string => {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+};

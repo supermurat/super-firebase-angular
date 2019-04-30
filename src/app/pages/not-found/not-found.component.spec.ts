@@ -13,7 +13,11 @@ describe('NotFoundComponent', () => {
             providers: [],
             imports: [
                 TestHelperModule,
-                RouterTestingModule.withRoutes([{path: '', component: NotFoundComponent}])
+                RouterTestingModule.withRoutes([
+                    {path: '', component: NotFoundComponent},
+                    {path: 'http-404', component: NotFoundComponent},
+                    {path: '**', component: NotFoundComponent}
+                ])
             ]
         })
             .compileComponents()

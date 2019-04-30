@@ -7,8 +7,6 @@ admin.initializeApp(functions.config().firebase);
 admin.app()
     .firestore();
 
-import { jobRunner } from './jobs';
-import { ssr } from './ssr';
-
-exports.jobRunner = jobRunner;
-exports.ssr = ssr;
+export * from './jobs';
+export * from './ssr';
+export * from './triggers';
