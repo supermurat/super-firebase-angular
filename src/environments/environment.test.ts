@@ -2,7 +2,7 @@
 export const environment = {
     production: true,
     protocol: 'https://',
-    host: 'supermurat.com',
+    host: 'test.supermurat.com',
     defaultData: {
         defaultTitle: '',
         defaultDescription: '',
@@ -13,7 +13,7 @@ export const environment = {
     },
     Angulartics2: {
         gst: {
-            trackingIds: ['UA-8121050-6']
+            trackingIds: ['UA-8121050-11']
         }
     },
     firebaseConfig: {
