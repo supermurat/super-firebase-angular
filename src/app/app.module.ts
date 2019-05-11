@@ -89,7 +89,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         FormsModule,
         NgbModule,
 
-        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule.enablePersistence(),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,

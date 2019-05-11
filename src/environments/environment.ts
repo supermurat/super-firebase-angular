@@ -21,12 +21,13 @@ export const environment = {
             trackingIds: ['UA-8121050-11']
         }
     },
-    firebaseConfig: {
-        apiKey: 'AIzaSyAt3I_Wnzm7_iMsXG0rM77FPAcTEAFCRHs',
-        authDomain: 'supermurat-com.firebaseapp.com',
-        databaseURL: 'https://supermurat-com.firebaseio.com',
-        projectId: 'supermurat-com',
-        storageBucket: 'supermurat-com.appspot.com',
-        messagingSenderId: '200768028544'
+    firebase: {
+        apiKey: 'AIzaSyDkD6ALB_-iPZET61nR97SAjLs25gPkkcQ',
+        authDomain: 'super-murat-test.firebaseapp.com',
+        databaseURL: 'https://super-murat-test.firebaseio.com',
+        projectId: 'super-murat-test',
+        storageBucket: 'super-murat-test.appspot.com',
+        messagingSenderId: '544136229746',
+        appId: '1:544136229746:web:b98d5ab00ff8a989'
     }
 };
