@@ -6,11 +6,14 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
-    "serve": "npm run build && firebase serve --only functions",
-    "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "serve:test": "npm run build && firebase serve --project super-murat-test --only functions",
+    "serve:prod": "npm run build && firebase serve --project super-murat-prod --only functions",
+    "shell:test": "npm run build && firebase functions:shell --project super-murat-test",
+    "shell:prod": "npm run build && firebase functions:shell --project super-murat-prod",
+    "deploy:test": "firebase deploy --project super-murat-test --only functions",
+    "deploy:prod": "firebase deploy --project super-murat-prod --only functions",
+    "logs:test": "firebase functions:log --project super-murat-test",
+    "logs:prod": "firebase functions:log --project super-murat-prod"
   },
   "main": "lib/index.js",
   "dependencies": {

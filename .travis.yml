@@ -32,9 +32,9 @@ script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
   - if [[ "$TRAVIS_BRANCH" == "test" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run deploy:prepare:test; else echo "!Skipped to run deploy:prepare:test!"; fi
-  - if [[ "$TRAVIS_BRANCH" == "test" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:test!"; fi
+  - if [[ "$TRAVIS_BRANCH" == "test" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project super-murat-test --token "$FIREBASE_TOKEN" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:test!"; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run deploy:prepare:prod; else echo "!Skipped to run deploy:prepare:prod!"; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:prod!"; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then firebase deploy --project super-murat-prod --token "$FIREBASE_TOKEN" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:prod!"; fi
 after_success:
   - echo "!after_success!"
 after_failure:

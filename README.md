@@ -59,14 +59,17 @@ npm run test
 npm run e2e
 ```
 
-## Production
+## Deployment
 
 Build files and deploy to Firebase Hosting 
 (Includes all of firebase rules, indexed etc.)
-
+### Deploy to Test Environment
 ```sh
-npm run test:cover
-firebase deploy
+npm run deploy:test
+```
+### Deploy to Prod Environment
+```sh
+npm run deploy:prod
 ```
 
 ## Angular CLI

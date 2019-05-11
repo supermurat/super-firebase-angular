@@ -3,7 +3,7 @@ const { config } = require("./protractor.browserstack.base.conf.js");
 
 exports.config = {
     ...config,
-    baseUrl: "https://supermurat-com.firebaseapp.com/"
+    baseUrl: "https://supermurat.com/"
 };
 
 exports.config.multiCapabilities.push({
