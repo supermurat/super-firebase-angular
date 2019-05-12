@@ -3,7 +3,8 @@ const { config } = require("./protractor.browserstack.base.conf.js");
 
 exports.config = {
     ...config,
-    baseUrl: "https://supermurat.com/"
+    baseUrl: "https://supermurat.com/",
+    maxSessions: 4
 };
 
 exports.config.multiCapabilities.push({
