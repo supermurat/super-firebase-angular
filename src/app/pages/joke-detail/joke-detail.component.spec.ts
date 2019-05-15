@@ -54,11 +54,8 @@ describe('JokeDetailComponent', () => {
             .subscribe(joke => {
                 lastJoke = joke;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'first-joke']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', 'first-joke']);
         expect(lastJoke.id)
             .toEqual('first-joke');
     }));
@@ -69,61 +66,43 @@ describe('JokeDetailComponent', () => {
             .subscribe(joke => {
                 lastJoke = joke;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'second-joke']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', 'second-joke']);
         expect(lastJoke.id)
             .toEqual('second-joke');
     }));
 
     it("should redirect to '/joke/first-joke' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: '-1'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', '-1']);
         expect(comp.router.url)
             .toEqual('/joke/first-joke');
     }));
 
     it("should redirect to '/joke/third-joke' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.setParamMap({id: '-4'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', '-4']);
         expect(comp.router.url)
             .toEqual('/joke/third-joke');
     }));
 
     it('should redirect to translation of ilk-saka', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'ilk-saka']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', 'ilk-saka']);
         expect(comp.router.url)
             .toEqual('/en/joke/first-joke');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'not-found-page']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', 'not-found-page']);
         expect(comp.router.url)
             .toEqual('/joke/not-found-page/http-404');
     }));
 
     it('should redirect to translation of sadece-turkce-fikra', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
-        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'sadece-turkce-fikra']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'jokes', 'joke',
+            ['/joke', 'sadece-turkce-fikra']);
         expect(comp.router.url)
             .toEqual('/tr/fikra/sadece-turkce-fikra');
     }));
@@ -178,21 +157,15 @@ describe('JokeDetailComponent_tr-TR', () => {
     }));
 
     it('should redirect to translation of first-joke', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'sakalar', 'saka');
-        activatedRouteStub.navigate(fixture, comp.router, ['/saka', 'first-joke']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'sakalar', 'saka',
+            ['/saka', 'first-joke']);
         expect(comp.router.url)
             .toEqual('/tr/saka/ilk-saka');
     }));
 
     it('should redirect to origin route of ilk-saka', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'fikralar', 'fikra');
-        activatedRouteStub.navigate(fixture, comp.router, ['/fikra', 'ilk-saka']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'fikralar', 'fikra',
+            ['/fikra', 'ilk-saka']);
         expect(comp.router.url)
             .toEqual('/tr/saka/ilk-saka');
     }));

@@ -54,11 +54,8 @@ describe('QuoteDetailComponent', () => {
             .subscribe(quote => {
                 lastQuote = quote;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'first-quote']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', 'first-quote']);
         expect(lastQuote.id)
             .toEqual('first-quote');
     }));
@@ -69,61 +66,43 @@ describe('QuoteDetailComponent', () => {
             .subscribe(quote => {
                 lastQuote = quote;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'second-quote']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', 'second-quote']);
         expect(lastQuote.id)
             .toEqual('second-quote');
     }));
 
     it("should redirect to '/quote/first-quote' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: '-1'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', '-1']);
         expect(comp.router.url)
             .toEqual('/quote/first-quote');
     }));
 
     it("should redirect to '/quote/third-quote' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.setParamMap({id: '-4'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', '-4']);
         expect(comp.router.url)
             .toEqual('/quote/third-quote');
     }));
 
     it('should redirect to translation of ilk-alinti', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'ilk-alinti']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', 'ilk-alinti']);
         expect(comp.router.url)
             .toEqual('/en/quote/first-quote');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'not-found-page']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', 'not-found-page']);
         expect(comp.router.url)
             .toEqual('/quote/not-found-page/http-404');
     }));
 
     it('should redirect to translation of sadece-turkce-alinti', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
-        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'sadece-turkce-alinti']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'quotes', 'quote',
+            ['/quote', 'sadece-turkce-alinti']);
         expect(comp.router.url)
             .toEqual('/tr/alinti/sadece-turkce-alinti');
     }));
@@ -178,21 +157,15 @@ describe('QuoteDetailComponent_tr-TR', () => {
     }));
 
     it('should redirect to translation of first-quote', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'alintilar', 'alinti');
-        activatedRouteStub.navigate(fixture, comp.router, ['/alinti', 'first-quote']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'alintilar', 'alinti',
+            ['/alinti', 'first-quote']);
         expect(comp.router.url)
             .toEqual('/tr/alinti/ilk-alinti');
     }));
 
     it('should redirect to origin route of ilk-alinti', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'guzel-sozler', 'guzel-soz');
-        activatedRouteStub.navigate(fixture, comp.router, ['/guzel-soz', 'ilk-alinti']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'guzel-sozler', 'guzel-soz',
+            ['/guzel-soz', 'ilk-alinti']);
         expect(comp.router.url)
             .toEqual('/tr/alinti/ilk-alinti');
     }));

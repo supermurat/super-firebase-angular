@@ -54,11 +54,8 @@ describe('BlogDetailComponent', () => {
             .subscribe(blog => {
                 lastBlog = blog;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'first-blog']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', 'first-blog']);
         expect(lastBlog.id)
             .toEqual('first-blog');
     }));
@@ -69,61 +66,43 @@ describe('BlogDetailComponent', () => {
             .subscribe(blog => {
                 lastBlog = blog;
             });
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'second-blog']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', 'second-blog']);
         expect(lastBlog.id)
             .toEqual('second-blog');
     }));
 
     it("should redirect to '/blog/first-blog' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: '-1'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', '-1']);
         expect(comp.router.url)
             .toEqual('/blog/first-blog');
     }));
 
     it("should redirect to '/blog/third-blog' if id is -4", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.setParamMap({id: '-4'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', '-4']);
         expect(comp.router.url)
             .toEqual('/blog/third-blog');
     }));
 
     it('should redirect to translation of ilk-gunluk', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'ilk-gunluk']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', 'ilk-gunluk']);
         expect(comp.router.url)
             .toEqual('/en/blog/first-blog');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'not-found-page']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', 'not-found-page']);
         expect(comp.router.url)
             .toEqual('/blog/not-found-page/http-404');
     }));
 
     it('should redirect to translation of sadece-turkce-gunluk', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
-        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'sadece-turkce-gunluk']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'blogs', 'blog',
+            ['/blog', 'sadece-turkce-gunluk']);
         expect(comp.router.url)
             .toEqual('/tr/gunluk/sadece-turkce-gunluk');
     }));
@@ -178,11 +157,8 @@ describe('BlogDetailComponent_tr-TR', () => {
     }));
 
     it('should redirect to translation of first-blog', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'gunlukler', 'gunluk');
-        activatedRouteStub.navigate(fixture, comp.router, ['/gunluk', 'first-blog']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'gunlukler', 'gunluk',
+            ['/gunluk', 'first-blog']);
         expect(comp.router.url)
             .toEqual('/tr/gunluk/ilk-gunluk');
     }));

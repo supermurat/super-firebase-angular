@@ -482,11 +482,8 @@ describe('AppComponentServer', () => {
     }));
 
     it('should contain page not found key for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'not-found-pages', 'not-found-page');
-        activatedRouteStub.navigate(fixture, comp.router, ['not-found-page']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'not-found-pages', 'not-found-page',
+            ['not-found-page']);
         const element = fixture.nativeElement.querySelector(
             'div#do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key');
         expect(element.tagName)
