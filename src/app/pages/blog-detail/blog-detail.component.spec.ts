@@ -49,25 +49,31 @@ describe('BlogDetailComponent', () => {
     }));
 
     it('should load first-blog', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-blog'});
-        fixture.detectChanges();
         let lastBlog = new BlogModel();
-        comp.blog$.subscribe(blog => {
-            lastBlog = blog;
-        });
+        comp.pageService.getPage()
+            .subscribe(blog => {
+                lastBlog = blog;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'first-blog']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastBlog.id)
             .toEqual('first-blog');
     }));
 
     it('should load second-blog', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'second-blog'});
-        fixture.detectChanges();
         let lastBlog = new BlogModel();
-        comp.blog$.subscribe(blog => {
-            lastBlog = blog;
-        });
+        comp.pageService.getPage()
+            .subscribe(blog => {
+                lastBlog = blog;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'blogs', 'blog');
+        activatedRouteStub.navigate(fixture, comp.router, ['/blog', 'second-blog']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastBlog.id)
             .toEqual('second-blog');
     }));

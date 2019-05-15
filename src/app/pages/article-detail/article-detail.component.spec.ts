@@ -49,25 +49,31 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it('should load first-article', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-article'});
-        fixture.detectChanges();
         let lastArticle = new ArticleModel();
-        comp.article$.subscribe(article => {
-            lastArticle = article;
-        });
+        comp.pageService.getPage()
+            .subscribe(article => {
+                lastArticle = article;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'first-article']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastArticle.id)
             .toEqual('first-article');
     }));
 
     it('should load second-article', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'second-article'});
-        fixture.detectChanges();
         let lastArticle = new ArticleModel();
-        comp.article$.subscribe(article => {
-            lastArticle = article;
-        });
+        comp.pageService.getPage()
+            .subscribe(article => {
+                lastArticle = article;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
+        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'second-article']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastArticle.id)
             .toEqual('second-article');
     }));

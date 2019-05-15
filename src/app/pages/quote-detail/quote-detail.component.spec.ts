@@ -49,25 +49,31 @@ describe('QuoteDetailComponent', () => {
     }));
 
     it('should load first-quote', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-quote'});
-        fixture.detectChanges();
         let lastQuote = new QuoteModel();
-        comp.quote$.subscribe(quote => {
-            lastQuote = quote;
-        });
+        comp.pageService.getPage()
+            .subscribe(quote => {
+                lastQuote = quote;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
+        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'first-quote']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastQuote.id)
             .toEqual('first-quote');
     }));
 
     it('should load second-quote', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'second-quote'});
-        fixture.detectChanges();
         let lastQuote = new QuoteModel();
-        comp.quote$.subscribe(quote => {
-            lastQuote = quote;
-        });
+        comp.pageService.getPage()
+            .subscribe(quote => {
+                lastQuote = quote;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'quotes', 'quote');
+        activatedRouteStub.navigate(fixture, comp.router, ['/quote', 'second-quote']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastQuote.id)
             .toEqual('second-quote');
     }));

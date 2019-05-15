@@ -49,25 +49,31 @@ describe('JokeDetailComponent', () => {
     }));
 
     it('should load first-joke', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-joke'});
-        fixture.detectChanges();
         let lastJoke = new JokeModel();
-        comp.joke$.subscribe(joke => {
-            lastJoke = joke;
-        });
+        comp.pageService.getPage()
+            .subscribe(joke => {
+                lastJoke = joke;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'first-joke']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastJoke.id)
             .toEqual('first-joke');
     }));
 
     it('should load second-joke', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'second-joke'});
-        fixture.detectChanges();
         let lastJoke = new JokeModel();
-        comp.joke$.subscribe(joke => {
-            lastJoke = joke;
-        });
+        comp.pageService.getPage()
+            .subscribe(joke => {
+                lastJoke = joke;
+            });
+        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'jokes', 'joke');
+        activatedRouteStub.navigate(fixture, comp.router, ['/joke', 'second-joke']);
+        fixture.detectChanges();
         tick();
+        sNavEvent.unsubscribe();
         expect(lastJoke.id)
             .toEqual('second-joke');
     }));
