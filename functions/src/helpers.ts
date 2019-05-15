@@ -75,7 +75,7 @@ const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel)
 </center>
 </body></html>`;
     body = body.replace(/%siteURL%/g, privateConfig.mail.siteURL)
-        .replace(/%logoOrName%/g,privateConfig.mail.logoURL ?
+        .replace(/%logoOrName%/g, privateConfig.mail.logoURL ?
                 `<img src='${privateConfig.mail.logoURL}' alt='${privateConfig.mail.siteName}' style='margin: 0;'>` :
             privateConfig.mail.siteName)
         .replace(/%siteName%/g, privateConfig.mail.siteName)

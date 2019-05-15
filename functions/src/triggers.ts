@@ -8,7 +8,7 @@ import { PrivateConfigModel } from './models/private-config-model';
 const db = admin.firestore();
 
 const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<any> =>
-    db.doc(`configs/private_en-US`)
+    db.doc('configs/private_en-US')
         .get()
         .then(async (doc) => {
             if (doc.exists) {
@@ -53,7 +53,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
         });
 
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
-    db.doc(`configs/private_tr-TR`)
+    db.doc('configs/private_tr-TR')
         .get()
         .then(async (doc) => {
             if (doc.exists) {

@@ -60,6 +60,18 @@ describe('ArticleDetailComponent', () => {
             .toEqual('first-article');
     }));
 
+    it('should load second-article', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'second-article'});
+        fixture.detectChanges();
+        let lastArticle = new ArticleModel();
+        comp.article$.subscribe(article => {
+            lastArticle = article;
+        });
+        tick();
+        expect(lastArticle.id)
+            .toEqual('second-article');
+    }));
+
     it("should redirect to '/article/first-article' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();

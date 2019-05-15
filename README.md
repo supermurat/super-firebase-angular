@@ -79,6 +79,14 @@ ng generate [`angular-cli/wiki/generate`](https://github.com/angular/angular-cli
 
 stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki/stories)
 
+## Contributing
+- Fork this repository to your GitHub account
+- Clone the forked repository
+- Create your feature branch
+- Commit your changes
+- Push to the remote branch
+- Open a Pull Request
+
 ## Licence
 
 MIT

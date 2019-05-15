@@ -4,7 +4,8 @@ export const myData = {
         'first-article': {
             id: 'first-article', routePath: '/article', orderNo: -1, i18nKey: 'first-article',
             title: 'First Article', content: 'this is good article', contentSummary: 'good article',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            image: { alt: '' }
         },
         'second-article': {
             id: 'second-article', routePath: '/article', orderNo: -2, i18nKey: 'second-article',
@@ -36,7 +37,8 @@ export const myData = {
         'ilk-makale': {
             id: 'ilk-makale', routePath: '/makale', orderNo: -1, i18nKey: 'first-article',
             title: 'İlk Makale', content: 'bu güzel bir makale', contentSummary: 'güzel makale',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            image: { alt: '' }
         },
         'ikinci-makale': {
             id: 'ikinci-makale', routePath: '/makale', orderNo: -2, i18nKey: 'second-article',
@@ -462,7 +464,10 @@ export const myData = {
         'second-quote': {
             id: 'second-quote', routePath: '/quote', orderNo: -2, i18nKey: 'second-quote',
             title: 'Second Quote', content: 'this is better quote',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            persons: {
+                Person: 'Only Person'
+            }
         },
         'third-quote': {
             id: 'third-quote', routePath: '/quote', orderNo: -3, i18nKey: 'third-quote',
@@ -489,7 +494,10 @@ export const myData = {
         'ikinci-guzel-soz': {
             id: 'ikinci-guzel-soz', routePath: '/guzel-soz', orderNo: -2, i18nKey: 'second-quote',
             title: 'İkinci Güzel Söz', content: 'bu daha güzel bir söz',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            persons: {
+                Kisi: 'Tek Kişi'
+            }
         },
         'ucuncu-guzel-soz': {
             id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3, i18nKey: 'third-quote',

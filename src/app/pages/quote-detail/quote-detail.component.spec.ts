@@ -60,6 +60,18 @@ describe('QuoteDetailComponent', () => {
             .toEqual('first-quote');
     }));
 
+    it('should load second-quote', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'second-quote'});
+        fixture.detectChanges();
+        let lastQuote = new QuoteModel();
+        comp.quote$.subscribe(quote => {
+            lastQuote = quote;
+        });
+        tick();
+        expect(lastQuote.id)
+            .toEqual('second-quote');
+    }));
+
     it("should redirect to '/quote/first-quote' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();

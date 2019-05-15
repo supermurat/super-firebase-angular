@@ -60,6 +60,18 @@ describe('BlogDetailComponent', () => {
             .toEqual('first-blog');
     }));
 
+    it('should load second-blog', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'second-blog'});
+        fixture.detectChanges();
+        let lastBlog = new BlogModel();
+        comp.blog$.subscribe(blog => {
+            lastBlog = blog;
+        });
+        tick();
+        expect(lastBlog.id)
+            .toEqual('second-blog');
+    }));
+
     it("should redirect to '/blog/first-blog' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();

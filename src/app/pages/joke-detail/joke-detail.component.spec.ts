@@ -60,6 +60,18 @@ describe('JokeDetailComponent', () => {
             .toEqual('first-joke');
     }));
 
+    it('should load second-joke', fakeAsync(() => {
+        activatedRouteStub.setParamMap({id: 'second-joke'});
+        fixture.detectChanges();
+        let lastJoke = new JokeModel();
+        comp.joke$.subscribe(joke => {
+            lastJoke = joke;
+        });
+        tick();
+        expect(lastJoke.id)
+            .toEqual('second-joke');
+    }));
+
     it("should redirect to '/joke/first-joke' if id is -1", fakeAsync(() => {
         activatedRouteStub.setParamMap({id: '-1'});
         fixture.detectChanges();
