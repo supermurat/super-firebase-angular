@@ -4,10 +4,14 @@ import 'zone.js/dist/zone-node';
 // tslint:disable-next-line:ordered-imports
 import { enableProdMode } from '@angular/core';
 import { renderModuleFactory } from '@angular/platform-server';
+import * as compression from 'compression';
+import * as cors from 'cors';
 import * as express from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
+import * as helmet from 'helmet';
+import * as csp from 'helmet-csp';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
@@ -52,6 +56,18 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
 enableProdMode();
 
 const app = express();
+
+app.use(compression());
+app.use(cors({ origin: true }));
+app.use(helmet());
+app.use(csp({
+    directives: {
+        defaultSrc: ["'self'", '*.googleapis.com', '*.google-analytics.com'],
+        imgSrc: ["'self'", 'data:', '*.googleapis.com', '*.google.com', '*.google.com.tr', '*.google-analytics.com', '*.doubleclick.net'],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", '*.googletagmanager.com', '*.google-analytics.com']
+    }
+}));
 
 const getLocale = (req: express.Request): string => {
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
