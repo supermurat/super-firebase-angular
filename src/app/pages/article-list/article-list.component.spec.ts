@@ -62,7 +62,6 @@ describe('ArticleListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/articles/2');
-        fixture.detectChanges();
     }));
 
     it('should redirect to page 1 if pageNo is lower than 0', fakeAsync(() => {
@@ -71,7 +70,6 @@ describe('ArticleListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/articles/1');
-        fixture.detectChanges();
     }));
 
     it('should redirect to page 1 if pageNo is not Number', fakeAsync(() => {
@@ -80,7 +78,6 @@ describe('ArticleListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/articles/1');
-        fixture.detectChanges();
     }));
 
     it('count of records should be 2 on page 2', fakeAsync(() => {
@@ -103,7 +100,6 @@ describe('ArticleListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/articles/2');
-        fixture.detectChanges();
     }));
 
 });
