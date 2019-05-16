@@ -39,7 +39,7 @@ describe('PlaygroundComponent', () => {
             tick();
             fixture.detectChanges();
             expect(comp.imgURL)
-                .toEqual('https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/bad%2C%20very%20bad%20angel.gif');
+                .toEqual('https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/bad%2C%20very%20bad%20angel.gif');
         });
         tick();
         fixture.detectChanges();

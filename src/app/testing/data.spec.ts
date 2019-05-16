@@ -183,15 +183,15 @@ export const myData = {
             carousel: {
                 carouselItems: [
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         caption: 'Welcome to endless world!'
                     },
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-2.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-2.jpg',
                         caption: 'Isn\'t it beautiful?'
                     },
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-23.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-23.jpg',
                         caption: 'Hey, what\'s up ? '
                     }]
             },
@@ -257,7 +257,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-2.jpg'},
+            backgroundCoverImage: {src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-2.jpg'},
             seo: {},
             jsonLDs: []
         },
@@ -321,15 +321,15 @@ export const myData = {
             carousel: {
                 carouselItems: [
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         caption: 'Sonsuz dünyaya hoşgeldiniz!'
                     },
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-2.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-2.jpg',
                         caption: 'Harika değil mi?'
                     },
                     {
-                        src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-23.jpg',
+                        src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-23.jpg',
                         caption: 'Hey, naber?'
                     }]
             },
@@ -395,7 +395,7 @@ export const myData = {
             routePath: '/',
             i18nKey: 'blogs',
             orderNo: -1,
-            backgroundCoverImage: {src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-2.jpg'},
+            backgroundCoverImage: {src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-2.jpg'},
             seo: {},
             jsonLDs: []
         },
@@ -664,16 +664,16 @@ export const myData = {
             },
             configSEO: {
                 defaultImageForSEO: {
-                    src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/HamsiManager-256.png',
-                    src1x1: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/HamsiManager-256.png',
-                    src4x3: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/HamsiManager-256.png',
-                    src16x9: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/HamsiManager-256.png'
+                    src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/HamsiManager-256.png',
+                    src1x1: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/HamsiManager-256.png',
+                    src4x3: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/HamsiManager-256.png',
+                    src16x9: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/HamsiManager-256.png'
                 },
                 defaultPublisher: {
                     logo: {
                         '@type': 'ImageObject',
                         height: 60,
-                        url: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        url: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         width: 600
                     },
                     name: 'Murat Demir'
@@ -709,13 +709,13 @@ export const myData = {
             },
             configSEO: {
                 defaultImageForSEO: {
-                    src: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/HamsiManager-256.png'
+                    src: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/HamsiManager-256.png'
                 },
                 defaultPublisher: {
                     logo: {
                         '@type': 'ImageObject',
                         height: 60,
-                        url: 'https://storage.googleapis.com/super-murat-test.appspot.com/publicFiles/carousels/carousel-1.jpg',
+                        url: 'https://storage.googleapis.com/super-murat-beta.appspot.com/publicFiles/carousels/carousel-1.jpg',
                         width: 600
                     },
                     name: 'Murat Demir'

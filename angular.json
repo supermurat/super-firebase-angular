@@ -67,7 +67,7 @@
                 }
               ]
             },
-            "test": {
+            "beta": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -80,12 +80,12 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 }
               ],
               "serviceWorker": true
             },
-            "test-en": {
+            "beta-en": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -98,15 +98,15 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 },
                 {
                   "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.en.test.json"
+                  "with": "src/environments/manifest.en.beta.json"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/environments/index.en.test.html"
+                  "with": "src/environments/index.en.beta.html"
                 }
               ],
               "serviceWorker": true,
@@ -117,7 +117,7 @@
               "i18nLocale": "en-US",
               "i18nMissingTranslation": "error"
             },
-            "test-tr": {
+            "beta-tr": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -130,15 +130,15 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 },
                 {
                   "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.tr.test.json"
+                  "with": "src/environments/manifest.tr.beta.json"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/environments/index.tr.test.html"
+                  "with": "src/environments/index.tr.beta.html"
                 }
               ],
               "serviceWorker": true,
@@ -245,14 +245,14 @@
             "tr": {
               "browserTarget": "super-firebase-angular:build:tr"
             },
-            "test": {
-              "browserTarget": "super-firebase-angular:build:test"
+            "beta": {
+              "browserTarget": "super-firebase-angular:build:beta"
             },
-            "test-en": {
-              "browserTarget": "super-firebase-angular:build:test-en"
+            "beta-en": {
+              "browserTarget": "super-firebase-angular:build:beta-en"
             },
-            "test-tr": {
-              "browserTarget": "super-firebase-angular:build:test-tr"
+            "beta-tr": {
+              "browserTarget": "super-firebase-angular:build:beta-tr"
             },
             "production": {
               "browserTarget": "super-firebase-angular:build:production"
@@ -324,16 +324,16 @@
               "i18nFormat": "xlf",
               "i18nLocale": "tr-TR"
             },
-            "test": {
+            "beta": {
               "outputPath": "functions/dist/server",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 }
               ]
             },
-            "test-en": {
+            "beta-en": {
               "outputPath": "functions/dist/server/en",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
@@ -341,11 +341,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 }
               ]
             },
-            "test-tr": {
+            "beta-tr": {
               "outputPath": "functions/dist/server/tr",
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
@@ -353,7 +353,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "with": "src/environments/environment.beta.ts"
                 }
               ]
             },
@@ -403,7 +403,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./e2e/protractor.conf.js",
-            "devServerTarget": "super-firebase-angular:serve:test"
+            "devServerTarget": "super-firebase-angular:serve:beta"
           },
           "configurations": {
             "browserstack": {

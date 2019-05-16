@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Firebase Serve i18n - Test" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/package.json" />
+  <configuration default="false" name="Firebase Functions : Shell - Beta" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/functions/package.json" />
     <command value="run" />
     <scripts>
-      <script value="serve:test:i18n" />
+      <script value="shell:beta" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

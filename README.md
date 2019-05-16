@@ -63,9 +63,9 @@ npm run e2e
 
 Build files and deploy to Firebase Hosting 
 (Includes all of firebase rules, indexed etc.)
-### Deploy to Test Environment
+### Deploy to Beta Environment
 ```sh
-npm run deploy:test
+npm run deploy:beta
 ```
 ### Deploy to Prod Environment
 ```sh

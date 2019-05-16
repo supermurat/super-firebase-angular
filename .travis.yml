@@ -28,12 +28,12 @@ script:
   - commitlint-travis
   - npm run lint
   - npm run e2e:browserstack
-  - if [[ ($TRAVIS_BRANCH != "test" && $TRAVIS_BRANCH != "master") || "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run test:cover; else echo "!Skipped to run test:cover!"; fi
-  - if [[ $TRAVIS_BRANCH == "test" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:test; else echo "!Skipped to run deploy:prepare:test!"; fi
+  - if [[ ($TRAVIS_BRANCH != "beta" && $TRAVIS_BRANCH != "master") || "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run test:cover; else echo "!Skipped to run test:cover!"; fi
+  - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:beta; else echo "!Skipped to run deploy:prepare:beta!"; fi
   - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:prod; else echo "!Skipped to run deploy:prepare:prod!"; fi
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
-  - if [[ $TRAVIS_BRANCH == "test" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-test --token "$FIREBASE_TOKEN_TEST" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:test!"; fi
+  - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-beta --token "$FIREBASE_TOKEN_BETA" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:beta!"; fi
   - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-prod --token "$FIREBASE_TOKEN_PROD" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:prod!"; fi
 after_success:
   - echo "!after_success!"
