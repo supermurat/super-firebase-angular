@@ -224,6 +224,6 @@ app.get('**', (req: express.Request, res: express.Response) => {
 });
 
 export const ssr = functions
-    // .region('europe-west1')
+    .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
     .https.onRequest(app);
