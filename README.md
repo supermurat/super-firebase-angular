@@ -59,14 +59,17 @@ npm run test
 npm run e2e
 ```
 
-## Production
+## Deployment
 
 Build files and deploy to Firebase Hosting 
 (Includes all of firebase rules, indexed etc.)
-
+### Deploy to Beta Environment
 ```sh
-npm run test:cover
-firebase deploy
+npm run deploy:beta
+```
+### Deploy to Prod Environment
+```sh
+npm run deploy:prod
 ```
 
 ## Angular CLI
@@ -75,6 +78,14 @@ get more info [`angular-cli/wiki`](https://github.com/angular/angular-cli/wiki)
 ng generate [`angular-cli/wiki/generate`](https://github.com/angular/angular-cli/wiki/generate)
 
 stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki/stories)
+
+## Contributing
+- Fork this repository to your GitHub account
+- Clone the forked repository
+- Create your feature branch
+- Commit your changes
+- Push to the remote branch
+- Open a Pull Request
 
 ## Licence
 

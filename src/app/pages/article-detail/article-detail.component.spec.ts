@@ -49,63 +49,60 @@ describe('ArticleDetailComponent', () => {
     }));
 
     it('should load first-article', fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: 'first-article'});
-        fixture.detectChanges();
         let lastArticle = new ArticleModel();
-        comp.article$.subscribe(article => {
-            lastArticle = article;
-        });
-        tick();
+        comp.pageService.getPage()
+            .subscribe(article => {
+                lastArticle = article;
+            });
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', 'first-article']);
         expect(lastArticle.id)
             .toEqual('first-article');
     }));
 
+    it('should load second-article', fakeAsync(() => {
+        let lastArticle = new ArticleModel();
+        comp.pageService.getPage()
+            .subscribe(article => {
+                lastArticle = article;
+            });
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', 'second-article']);
+        expect(lastArticle.id)
+            .toEqual('second-article');
+    }));
+
     it("should redirect to '/article/first-article' if id is -1", fakeAsync(() => {
-        activatedRouteStub.setParamMap({id: '-1'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', '-1']);
         expect(comp.router.url)
             .toEqual('/article/first-article');
     }));
 
     it("should redirect to '/article/fifth-article' if id is -6", fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
-        activatedRouteStub.setParamMap({id: '-6'});
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', '-6']);
         expect(comp.router.url)
             .toEqual('/article/fifth-article');
     }));
 
     it('should redirect to translation of ilk-makale', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
-        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'ilk-makale']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', 'ilk-makale']);
         expect(comp.router.url)
             .toEqual('/en/article/first-article');
     }));
 
     it('should redirect to http-404 for not-found-page', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
-        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'not-found-page']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', 'not-found-page']);
         expect(comp.router.url)
             .toEqual('/article/not-found-page/http-404');
     }));
 
     it('should redirect to translation of sadece-turkce-makale', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'articles', 'article');
-        activatedRouteStub.navigate(fixture, comp.router, ['/article', 'sadece-turkce-makale']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'articles', 'article',
+            ['/article', 'sadece-turkce-makale']);
         expect(comp.router.url)
             .toEqual('/tr/makale/sadece-turkce-makale');
     }));
@@ -160,11 +157,8 @@ describe('ArticleDetailComponent_tr-TR', () => {
     }));
 
     it('should redirect to translation of first-article', fakeAsync(() => {
-        const sNavEvent = activatedRouteStub.initNavigation(fixture, comp.router, 'makaleler', 'makale');
-        activatedRouteStub.navigate(fixture, comp.router, ['/makale', 'first-article']);
-        fixture.detectChanges();
-        tick();
-        sNavEvent.unsubscribe();
+        activatedRouteStub.initAndNavigate(fixture, comp.router, 'makaleler', 'makale',
+            ['/makale', 'first-article']);
         expect(comp.router.url)
             .toEqual('/tr/makale/ilk-makale');
     }));

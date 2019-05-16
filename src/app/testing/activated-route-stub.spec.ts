@@ -76,4 +76,26 @@ export class ActivatedRouteStub {
             });
     }
 
+    /**
+     * init Navigation and navigate to url
+     * @param fixture: ComponentFixture<any>
+     * @param router: Router
+     * @param routeForPageNoParam: in oder to use 'pageNo' parameter, url need to contains this
+     * @param routeForIdParam: in oder to use 'id' parameter, url need to contains this
+     * @param commands: Array<any>
+     * @param extras: NavigationExtras
+     */
+    initAndNavigate(fixture: ComponentFixture<any>, router: Router, routeForPageNoParam: string, routeForIdParam: string,
+                    commands: Array<any>, extras?: NavigationExtras): void {
+        const sNavEvent = this.initNavigation(fixture, router, routeForPageNoParam, routeForIdParam);
+        router.navigate(commands, extras)
+            .catch(reason => {
+                console.error(reason);
+            });
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        sNavEvent.unsubscribe();
+    }
+
 }

@@ -1,8 +1,6 @@
 /** Functions Config */
 
 const FUNCTIONS_CONFIG_LOCAL = {
-    /** hostname */
-    hostname: 'https://supermurat.com',
     /** supported culture codes; ['en', 'tr'] */
     supportedCultureCodes: ['en-US', 'tr-TR'],
     /** supported language codes; ['en', 'tr'] */
@@ -14,8 +12,6 @@ const FUNCTIONS_CONFIG_LOCAL = {
 };
 
 const FUNCTIONS_CONFIG_PROD = {
-    /** hostname */
-    hostname: 'https://supermurat.com',
     /** supported culture codes; ['en', 'tr'] */
     supportedCultureCodes: ['en-US', 'tr-TR'],
     /** supported language codes; ['en', 'tr'] */

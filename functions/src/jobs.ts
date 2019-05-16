@@ -13,12 +13,19 @@ const db = admin.firestore();
 
 const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
-    const urlList: Array<SiteMapUrlModel> = [];
+    let urlList: Array<SiteMapUrlModel> = [];
+    let hostname: string;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
     if (jobData.hasOwnProperty('customData')) {
-        for (const smUrl of jobData.customData) {
-            urlList.push(smUrl);
+        if (jobData.customData.hasOwnProperty('urlList')) {
+            urlList = jobData.customData.urlList;
         }
+        if (jobData.customData.hasOwnProperty('hostname')) {
+            hostname = jobData.customData.hostname;
+        }
+    }
+    if (!hostname) {
+        console.error('You have to provide a hostname with customData for sitemap!');
     }
 
     return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
@@ -46,7 +53,7 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
     ))
         .then(async (values) => {
             const sm = sitemap.createSitemap({
-                hostname: FUNCTIONS_CONFIG.hostname,
+                hostname,
                 cacheTime: 600000, // 600 sec - cache purge period
                 urls: urlList
             });
@@ -381,7 +388,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
 };
 
 export const jobRunner = functions
-    // .region('europe-west1')
+    .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
     .firestore
     .document('jobs/{jobId}')

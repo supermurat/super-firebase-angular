@@ -62,7 +62,6 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/blogs/2');
-        fixture.detectChanges();
     }));
 
     it('should redirect to page 1 if pageNo is lower than 0', fakeAsync(() => {
@@ -71,7 +70,6 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/blogs/1');
-        fixture.detectChanges();
     }));
 
     it('should redirect to page 1 if pageNo is not Number', fakeAsync(() => {
@@ -80,7 +78,6 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/blogs/1');
-        fixture.detectChanges();
     }));
 
     it('pagerService should work properly even if we set "pagerModel.pagePath" manually', fakeAsync(() => {
@@ -91,7 +88,6 @@ describe('BlogListComponent', () => {
         fixture.detectChanges();
         expect(comp.router.url)
             .toEqual('/blogs/2');
-        fixture.detectChanges();
     }));
 
 });

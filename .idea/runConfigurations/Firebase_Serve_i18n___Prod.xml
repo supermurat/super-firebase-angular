@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Firebase Deploy" type="js.build_tools.npm" factoryName="npm">
+  <configuration default="false" name="Firebase Serve i18n - Prod" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="deploy" />
+      <script value="serve:production:i18n" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

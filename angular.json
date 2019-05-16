@@ -67,6 +67,88 @@
                 }
               ]
             },
+            "beta": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ],
+              "serviceWorker": true
+            },
+            "beta-en": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                },
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.en.beta.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.en.beta.html"
+                }
+              ],
+              "serviceWorker": true,
+              "outputPath": "functions/dist/browser/en/",
+              "baseHref": "/en/",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en-US",
+              "i18nMissingTranslation": "error"
+            },
+            "beta-tr": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                },
+                {
+                  "replace": "src/manifest.json",
+                  "with": "src/environments/manifest.tr.beta.json"
+                },
+                {
+                  "replace": "src/index.html",
+                  "with": "src/environments/index.tr.beta.html"
+                }
+              ],
+              "serviceWorker": true,
+              "outputPath": "functions/dist/browser/tr/",
+              "baseHref": "/tr/",
+              "i18nFile": "src/locale/messages.tr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "tr-TR",
+              "i18nMissingTranslation": "error"
+            },
             "production": {
               "optimization": true,
               "outputHashing": "all",
@@ -102,11 +184,11 @@
                 },
                 {
                   "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.en.json"
+                  "with": "src/environments/manifest.en.prod.json"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/environments/index.en.html"
+                  "with": "src/environments/index.en.prod.html"
                 }
               ],
               "serviceWorker": true,
@@ -134,11 +216,11 @@
                 },
                 {
                   "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.tr.json"
+                  "with": "src/environments/manifest.tr.prod.json"
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/environments/index.tr.html"
+                  "with": "src/environments/index.tr.prod.html"
                 }
               ],
               "serviceWorker": true,
@@ -162,6 +244,15 @@
             },
             "tr": {
               "browserTarget": "super-firebase-angular:build:tr"
+            },
+            "beta": {
+              "browserTarget": "super-firebase-angular:build:beta"
+            },
+            "beta-en": {
+              "browserTarget": "super-firebase-angular:build:beta-en"
+            },
+            "beta-tr": {
+              "browserTarget": "super-firebase-angular:build:beta-tr"
             },
             "production": {
               "browserTarget": "super-firebase-angular:build:production"
@@ -233,6 +324,39 @@
               "i18nFormat": "xlf",
               "i18nLocale": "tr-TR"
             },
+            "beta": {
+              "outputPath": "functions/dist/server",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ]
+            },
+            "beta-en": {
+              "outputPath": "functions/dist/server/en",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en-US",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ]
+            },
+            "beta-tr": {
+              "outputPath": "functions/dist/server/tr",
+              "i18nFile": "src/locale/messages.tr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "tr-TR",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.beta.ts"
+                }
+              ]
+            },
             "production": {
               "outputPath": "functions/dist/server",
               "fileReplacements": [
@@ -279,7 +403,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./e2e/protractor.conf.js",
-            "devServerTarget": "super-firebase-angular:serve:production"
+            "devServerTarget": "super-firebase-angular:serve:beta"
           },
           "configurations": {
             "browserstack": {

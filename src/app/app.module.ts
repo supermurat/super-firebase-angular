@@ -11,7 +11,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Angulartics2Module } from 'angulartics2';
 import { environment } from '../environments/environment';
-import { firebaseConfig } from '../environments/firebase.config';
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from './components/alert/alert.component';
@@ -90,7 +89,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         FormsModule,
         NgbModule,
 
-        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule.enablePersistence(),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features,

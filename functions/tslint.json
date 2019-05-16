@@ -1,11 +1,10 @@
 {
   "extends": "tslint:all",
   "rules": {
-    "quotemark": [true, "single", "avoid-escape"],
+    "quotemark": [true, "single", "avoid-template", "avoid-escape"],
     "interface-name": [false],
     "variable-name": [true, "check-format", "allow-leading-underscore"],
     "object-literal-sort-keys": false,
-    "whitespace": [true],
     "member-access": [false],
     "no-console": [false],
     "no-namespace": [false],
@@ -35,10 +34,6 @@
       "allow-mix",
       "allow-boolean-or-undefined"
     ],
-    "arrow-return-shorthand": [
-      true,
-      "multiline"
-    ],
     "file-name-casing": [
       true,
       "kebab-case"
@@ -62,6 +57,10 @@
     "array-type": [
       true,
       "generic"
+    ],
+    "max-line-length": [
+      true,
+      140
     ]
   }
 }

@@ -34,11 +34,11 @@ exports.config = {
         "browserName": "Chrome"
     }, {
         "browserName": "Firefox"
-    } /*,{
+    } ,{
         "os" : "Windows",
         "os_version" : "7",
         "browserName": "IE",
-        "browser_version" : "10.0",
+        "browser_version" : "11.0",
     }, {
         "browserName": "android",
         "device": "Samsung Galaxy S9 Plus",
@@ -47,7 +47,7 @@ exports.config = {
         "browserName": "android",
         "device": "Google Pixel 2",
         "realMobile": true
-    }*/],
+    }],
     seleniumAddress: "http://hub-cloud.browserstack.com/wd/hub",
     framework: "jasmine",
     jasmineNodeOpts: {
