@@ -33,7 +33,8 @@ export class ConfigService {
                 startWith(this.lastConfig ? this.lastConfig : {
                     mainMenuItems: [],
                     primaryCustomHtmlWidget: undefined,
-                    configSEO: {}
+                    configSEO: {},
+                    footerBlocks: []
                 })
             );
     }
