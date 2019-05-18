@@ -7,13 +7,13 @@
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
     "serve:beta": "npm run build && firebase serve --project super-murat-beta --only functions",
-    "serve:prod": "npm run build && firebase serve --project super-murat-prod --only functions",
+    "serve:prod": "npm run build && firebase serve --project supermurat-com --only functions",
     "shell:beta": "npm run build && firebase functions:shell --project super-murat-beta",
-    "shell:prod": "npm run build && firebase functions:shell --project super-murat-prod",
+    "shell:prod": "npm run build && firebase functions:shell --project supermurat-com",
     "deploy:beta": "firebase deploy --project super-murat-beta --only functions",
-    "deploy:prod": "firebase deploy --project super-murat-prod --only functions",
+    "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
-    "logs:prod": "firebase functions:log --project super-murat-prod"
+    "logs:prod": "firebase functions:log --project supermurat-com"
   },
   "main": "lib/index.js",
   "dependencies": {

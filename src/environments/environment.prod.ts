@@ -17,12 +17,12 @@ export const environment = {
         }
     },
     firebase: {
-        apiKey: 'AIzaSyBVj-tYpt71UKnxWR-vQKvrBli_-_4Pwb0',
-        authDomain: 'super-murat-prod.firebaseapp.com',
-        databaseURL: 'https://super-murat-prod.firebaseio.com',
-        projectId: 'super-murat-prod',
-        storageBucket: 'super-murat-prod.appspot.com',
-        messagingSenderId: '130699905933',
-        appId: '1:130699905933:web:018d488d5454ec7a'
+        apiKey: 'AIzaSyAt3I_Wnzm7_iMsXG0rM77FPAcTEAFCRHs',
+        authDomain: 'supermurat-com.firebaseapp.com',
+        databaseURL: 'https://supermurat-com.firebaseio.com',
+        projectId: 'supermurat-com',
+        storageBucket: 'supermurat-com.appspot.com',
+        messagingSenderId: '200768028544',
+        appId: '1:200768028544:web:afa4062f3e780479'
     }
 };
