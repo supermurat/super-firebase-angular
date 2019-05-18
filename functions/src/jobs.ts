@@ -388,7 +388,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
 };
 
 export const jobRunner = functions
-    .region('europe-west1')
+    // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
     .firestore
     .document('jobs/{jobId}')

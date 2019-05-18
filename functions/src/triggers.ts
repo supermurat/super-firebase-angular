@@ -98,7 +98,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
     });
 
 export const newMessageEn = functions
-    .region('europe-west1')
+    // .region('europe-west1')
     .firestore
     .document('messages_en-US/{messageId}')
     // tslint:disable-next-line:promise-function-async
@@ -106,7 +106,7 @@ export const newMessageEn = functions
         sendMailForNewMessageEn(snap.data()));
 
 export const newMessageTr = functions
-    .region('europe-west1')
+    // .region('europe-west1')
     .firestore
     .document('messages_tr-TR/{messageId}')
     // tslint:disable-next-line:promise-function-async
