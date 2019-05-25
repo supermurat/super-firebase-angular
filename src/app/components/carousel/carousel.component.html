@@ -12,8 +12,11 @@
              *ngFor="let carouselItem of carouselModel.carouselItems; trackBy:trackByIndex; let i = index">
             <img class="d-block w-100" [src]="carouselItem.src" alt="{{ carouselItem.alt }}" />
             <div class="carousel-caption d-none d-md-block">
-                <h5>{{ carouselItem.caption }}</h5>
+                <h1>{{ carouselItem.caption }}</h1>
                 <p>{{ carouselItem.text }}</p>
+            </div>
+            <div class="carousel-caption d-block d-md-none">
+                <h5>{{ carouselItem.caption }}</h5>
             </div>
         </div>
     </div>
