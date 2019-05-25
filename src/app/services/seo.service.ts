@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser, PlatformLocation } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID, PLATFORM_ID, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID, NgZone, PLATFORM_ID, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -37,6 +37,7 @@ export class SeoService {
      * @param meta: Meta
      * @param titleService: Title
      * @param router: Router
+     * @param ngZone: NgZone
      * @param rendererFactory: RendererFactory2
      * @param platformLocation: PlatformLocation
      * @param sanitizer: DomSanitizer
@@ -48,6 +49,7 @@ export class SeoService {
     constructor(private readonly meta: Meta,
                 private readonly titleService: Title,
                 private readonly router: Router,
+                private readonly ngZone: NgZone,
                 private readonly rendererFactory: RendererFactory2,
                 private readonly platformLocation: PlatformLocation,
                 private readonly sanitizer: DomSanitizer,
@@ -408,11 +410,13 @@ export class SeoService {
                 // this.router.navigate can't work because it is out of base url
                 window.location.href = destURL;
             } else {
-                this.router.navigate([destURL])
-                    .catch(// istanbul ignore next
-                        reason => {
-                        console.error(reason);
-                    });
+                this.ngZone.run(() => {
+                    this.router.navigate([destURL])
+                        .catch(// istanbul ignore next
+                            reason => {
+                                console.error(reason);
+                            });
+                });
             }
         } else {
             this.httpStatus$.next({
@@ -427,11 +431,13 @@ export class SeoService {
      */
     http404(): void {
         if (isPlatformBrowser(this.platformId)) {
-            this.router.navigate([this.router.url, 'http-404'])
-                .catch(// istanbul ignore next
-                    reason => {
-                    console.error(reason);
-                });
+            this.ngZone.run(() => {
+                this.router.navigate([this.router.url, 'http-404'])
+                    .catch(// istanbul ignore next
+                        reason => {
+                            console.error(reason);
+                        });
+            });
         } else {
             this.httpStatus$.next({
                 code: 404

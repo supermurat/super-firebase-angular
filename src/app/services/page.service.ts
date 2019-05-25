@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, LOCALE_ID, Renderer2, RendererFactory2 } from '@angular/core';
+import { Inject, Injectable, LOCALE_ID, NgZone, Renderer2, RendererFactory2 } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
@@ -32,6 +32,7 @@ export class PageService {
      * @param state: TransferState
      * @param afs: AngularFirestore
      * @param router: Router
+     * @param ngZone: NgZone
      * @param rendererFactory: RendererFactory2
      * @param document: DOCUMENT
      * @param locale: LOCALE_ID
@@ -42,6 +43,7 @@ export class PageService {
                 private readonly state: TransferState,
                 private readonly afs: AngularFirestore,
                 public router: Router,
+                private readonly ngZone: NgZone,
                 private readonly rendererFactory: RendererFactory2,
                 @Inject(DOCUMENT) private readonly document,
                 @Inject(LOCALE_ID) public locale: string) {
@@ -185,28 +187,32 @@ export class PageService {
             )
                 .snapshotChanges()
                 .subscribe(data => {
-                    if (data && data.length > 0) {
-                        data.map(pld => {
-                            const pageItem = pld.payload.doc.data() as PageBaseModel;
-                            this.router.navigate([pageItem.routePath, pld.payload.doc.id])
+                    this.ngZone.run(() => {
+                        if (data && data.length > 0) {
+                            data.map(pld => {
+                                const pageItem = pld.payload.doc.data() as PageBaseModel;
+                                this.ngZone.run(() => {
+                                    this.router.navigate([pageItem.routePath, pld.payload.doc.id])
+                                        .catch(// istanbul ignore next
+                                            reason => {
+                                                this.alert.error(reason);
+                                            });
+                                });
+                            });
+                        } else if (pID === 0) {
+                            this.router.navigate([pathOfListPage])
                                 .catch(// istanbul ignore next
                                     reason => {
                                         this.alert.error(reason);
                                     });
-                        });
-                    } else if (pID === 0) {
-                        this.router.navigate([pathOfListPage])
-                            .catch(// istanbul ignore next
-                                reason => {
-                                    this.alert.error(reason);
-                                });
-                    } else {
-                        this.router.navigate([pathOfDetailPage, pID + 1])
-                            .catch(// istanbul ignore next
-                                reason => {
-                                    this.alert.error(reason);
-                                });
-                    }
+                        } else {
+                            this.router.navigate([pathOfDetailPage, pID + 1])
+                                .catch(// istanbul ignore next
+                                    reason => {
+                                        this.alert.error(reason);
+                                    });
+                        }
+                    });
                 });
 
             return true;

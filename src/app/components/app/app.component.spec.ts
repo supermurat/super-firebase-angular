@@ -344,11 +344,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.success('My success message', false);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -360,11 +356,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.success('My success message', true);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -393,11 +385,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.error('My error message', false);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -409,11 +397,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.error('My error message', true);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);

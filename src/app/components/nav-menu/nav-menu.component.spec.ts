@@ -2,7 +2,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TestHelperModule } from '../../testing/test.helper.module.spec';
+import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { NavMenuComponent } from './nav-menu.component';
 
 describe('NavMenuComponent', () => {
@@ -46,12 +46,7 @@ describe('NavMenuComponent', () => {
     }));
 
     it("should redirect to '/unit-test'", fakeAsync(() => {
-        comp.router.initialNavigation();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -68,12 +63,7 @@ describe('NavMenuComponent', () => {
         window.scrollTo(0, 600);
         expect(window.pageYOffset)
             .toBe(600);
-        comp.router.initialNavigation();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -148,12 +138,7 @@ describe('NavMenuComponentServer', () => {
     }));
 
     it('should not make a scroll movement after route changes for ssr', fakeAsync(() => {
-        comp.router.initialNavigation();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
