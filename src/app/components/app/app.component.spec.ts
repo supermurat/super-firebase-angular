@@ -7,7 +7,6 @@ import { NotFoundComponent } from '../../pages/not-found/not-found.component';
 import { angulartics2GoogleGlobalSiteTagStub } from '../../testing/angulartics-stub.spec';
 import { activatedRouteStub, TestHelperModule } from '../../testing/test.helper.module.spec';
 import { CarouselComponent } from '../carousel/carousel.component';
-import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { AppComponent } from './app.component';
 
@@ -20,7 +19,6 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                LoadingSpinnerComponent,
                 CarouselComponent
             ],
             providers: [
@@ -99,7 +97,6 @@ describe('AppComponentSeoService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                LoadingSpinnerComponent,
                 CarouselComponent
             ],
             providers: [
@@ -297,7 +294,6 @@ describe('AppComponentAlertService', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                LoadingSpinnerComponent,
                 CarouselComponent
             ],
             providers: [
@@ -344,11 +340,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.success('My success message', false);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -360,11 +352,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.success('My success message', true);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -393,11 +381,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.error('My error message', false);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -409,11 +393,7 @@ describe('AppComponentAlertService', () => {
         comp.router.initialNavigation();
         comp.alert.error('My error message', true);
         fixture.detectChanges();
-        comp.router.navigate(['unit-test'])
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
-            });
+        activatedRouteStub.navigate(fixture, comp.router, ['unit-test']);
         tick(1000);
         fixture.detectChanges();
         tick(1000);
@@ -432,7 +412,6 @@ describe('AppComponentServer', () => {
             declarations: [
                 AppComponent,
                 NavMenuComponent,
-                LoadingSpinnerComponent,
                 CarouselComponent
             ],
             providers: [

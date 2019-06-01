@@ -210,43 +210,16 @@
       <trans-unit id="eb98135e35af26a9a326ee69bd8ff104d36dd8ec" datatype="html">
         <source>(current)</source><target state="final">(current)</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/pager/pager.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit><trans-unit id="013acfd8797bf5ade4a15c71fa24178f913c4cae" datatype="html">
-        <source>Blog</source><target state="final">Blog</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="3b6143a528c6f4586e60e9af4ced8ac0fbe08251" datatype="html">
-        <source>Articles</source><target state="final">Articles</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="eeb8cd10ca7b7cab87834315a306497d949b8ac5" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/components/pager/pager.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit><trans-unit id="eeb8cd10ca7b7cab87834315a306497d949b8ac5" datatype="html">
         <source>Jokes</source><target state="final">Jokes</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">37</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="3456d619280ed601d193191043de44adf8d8d021" datatype="html">
-        <source>Developer Zone</source><target state="final">Developer Zone</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit><trans-unit id="8563dea6c78c71d1d4ffce4798fe3c9f736dd09c" datatype="html">
-        <source>Quotes</source><target state="final">Quotes</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
         <source> (Home)</source><target state="final"> (Home)</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="0ecc108931da4b40feabdbe99280c2f19278421f" datatype="html">
-        <source>Playground</source><target state="final">Playground</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="87db0e34d254b2408f1365a96f14b99f4c48ca54" datatype="html">
-        <source>Coverage</source><target state="final">Coverage</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="fcfd4675b4c90f08d18d3abede9a9a4dff4cfdc7" datatype="html">
-        <source>Documentation</source><target state="final">Documentation</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="fa186f53e0c9ed8b4819ce03939a134058c712a2" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="fa186f53e0c9ed8b4819ce03939a134058c712a2" datatype="html">
         <source>Copyright © Super Murat 2005-2019</source><target state="final">Copyright © Super Murat 2005-2019</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">69</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source><target state="final">Page not found</target>
         
@@ -268,37 +241,7 @@
       <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="6f21558313038c924127b3ff527b6a6ec2ec17d7" datatype="html">
         <source>Login with Google</source><target state="final">Login with Google</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">
-        <source>About</source><target state="final">About</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit><trans-unit id="91e43855f15e813a740e3868bbac1d98224ea341" datatype="html">
-        <source>This is my personal web site so it is all about me :-)</source><target state="final">This is my personal web site so it is all about me :-)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit><trans-unit id="5f4234fde7008fef126728fe6891c9294b3ee7b0" datatype="html">
-        <source>Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</source><target state="final">Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit><trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
-        <source>Content</source><target state="final">Content</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit><trans-unit id="82fe39600ad951ab88b6493b510d2bc9cc4ec807" datatype="html">
-        <source>Fun</source><target state="final">Fun</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit><trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
         <source>Search</source><target state="final">Search</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">1</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="6e3c5ff3699b5e53bdfdb0d9206f34bf811e8c58" datatype="html">
@@ -462,17 +405,11 @@
         </context-group>
       </trans-unit><trans-unit id="680d5c75b7fd8d37961083608b9fcdc4167b4c43" datatype="html">
         <source>Previous</source><target state="final">Previous</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit><trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/carousel/carousel.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit><trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
         <source>Next</source><target state="final">Next</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/carousel/carousel.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/components/carousel/carousel.component.html</context><context context-type="linenumber">29</context></context-group></trans-unit>
       <trans-unit id="701174153757adf13e7c24a248c8a873ac9f5193" datatype="html">
         <source>Angular logo</source>
         <target>Angular logo</target>

@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { scan, take, tap } from 'rxjs/operators';
+import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
 
 /**
  * options to reproduce firestore queries consistently
@@ -40,8 +42,14 @@ export class PaginationService {
     /**
      * constructor of PaginationService
      * @param afs: AngularFirestore
+     * @param ngZone: NgZone
+     * @param loadingBar: LoadingBarService
+     * @param appConfig: APP_CONFIG
      */
-    constructor(private readonly afs: AngularFirestore) {
+    constructor(private readonly afs: AngularFirestore,
+                private readonly ngZone: NgZone,
+                private readonly loadingBar: LoadingBarService,
+                @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig) {
     }
 
     /**
@@ -102,6 +110,11 @@ export class PaginationService {
     reset(): void {
         this._data.next([]);
         this.done.next(false);
+        // istanbul ignore next
+        if (!this.appConfig.isUnitTest) {
+            // I do not want to add 'tick(x)' to all of end of unit test cases just for loading bar
+            this.loadingBar.complete();
+        }
         this.loading.next(false);
     }
 
@@ -128,6 +141,11 @@ export class PaginationService {
         }
 
         // loading
+        // istanbul ignore next
+        if (!this.appConfig.isUnitTest) {
+            // I do not want to add 'tick(x)' to all of end of unit test cases just for loading bar
+            this.loadingBar.start();
+        }
         this.loading.next(true);
 
         // map snapshot with doc ref (needed for cursor)
@@ -146,6 +164,11 @@ export class PaginationService {
 
                 // update source with new values, done loading
                 this._data.next(values);
+                // istanbul ignore next
+                if (!this.appConfig.isUnitTest) {
+                    // I do not want to add 'tick(x)' to all of end of unit test cases just for loading bar
+                    this.loadingBar.complete();
+                }
                 this.loading.next(false);
 
                 // no more values, mark done

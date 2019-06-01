@@ -2,67 +2,29 @@
 <footer class="py-3 bg-dark text-light">
     <div class="container text-center text-md-left">
         <div class="row">
-            <div class="col-md-3 mr-auto my-md-4 my-0 mt-4 mb-1">
-                <h5 class="font-weight-bold mb-2" i18n>About</h5>
-                <p i18n>This is my personal web site so it is all about me :-)</p>
-                <p i18n>Also, this is an open source project. Here is the keywords : angular, firebase, firebase hosting, firebase functions, cloud firestore, GCP</p>
-            </div>
-            <hr class="clearfix w-100 d-md-none"/>
-            <div class="col-md-3 mx-auto my-md-4 my-0 mt-4 mb-1">
-                <h5 class="font-weight-bold mb-2" i18n>Content</h5>
-                <ul class="list-unstyled">
-                    <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="[pageService.routerLinks.blogs]">
-                            <span i18n>Blog</span>
-                        </a>
-                    </li>
-                    <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="[pageService.routerLinks.articles]">
-                            <span i18n>Articles</span>
-                        </a>
-                    </li>
-                    <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="[pageService.routerLinks.quotes]">
-                            <span i18n>Quotes</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <hr class="clearfix w-100 d-md-none"/>
-            <div class="col-md-3 mx-auto my-md-4 my-0 mt-4 mb-1">
-                <h5 class="font-weight-bold mb-2" i18n>Fun</h5>
-                <ul class="list-unstyled">
-                    <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="[pageService.routerLinks.jokes]">
-                            <span i18n>Jokes</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <hr class="clearfix w-100 d-md-none"/>
-            <div class="col-md-3 mx-auto my-md-4 my-0 mt-4 mb-1">
-                <h5 class="font-weight-bold mb-2" i18n>Developer Zone</h5>
-                <ul class="list-unstyled">
-                    <li [routerLinkActive]="['active']">
-                        <a class="text-light" [routerLink]="['/playground']">
-                            <span i18n>Playground</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="text-light" href="/coverage" target="_blank" rel="noopener">
-                            <span i18n>Coverage</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="text-light" href="/documentation" target="_blank" rel="noopener">
-                            <span i18n>Documentation</span>
-                        </a>
-                    </li>
-                </ul>
-                <a class="text-light" href="https://github.com/supermurat/super-firebase-angular"
-                   target="_blank" rel="noopener" title="GitHub">
-                    <i class="fab fa-github fa-3x"></i>
-                </a>
+            <div class="col-12">
+                <div class="card-deck">
+                    <div class="card mt-4 mb-1 text-white bg-dark card-fix-width"
+                         *ngFor="let footerBlock of footerBlocks; trackBy:pageService.trackByIndex">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ footerBlock.title }}</h5>
+                            <div [innerHTML]="footerBlock.content"></div>
+                            <div *ngIf="footerBlock.menuItems.length > 0">
+                                <ul class="list-unstyled">
+                                    <li [routerLinkActive]="['active']"
+                                        *ngFor="let menuItem of footerBlock.menuItems; trackBy:pageService.trackByIndex">
+                                        <a class="text-light" [routerLink]="[menuItem.url]" *ngIf="!menuItem.target">
+                                            <span>{{ menuItem.text }}</span>
+                                        </a>
+                                        <a class="text-light" href="{{ menuItem.url }}" target="{{ menuItem.target }}" rel="{{ menuItem.rel }}" *ngIf="menuItem.target">
+                                            <span>{{ menuItem.text }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

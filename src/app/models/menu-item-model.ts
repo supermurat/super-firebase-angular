@@ -6,4 +6,8 @@ export class MenuItemModel {
     url: string;
     /** text of menu item */
     text: string;
+    /** target of menu item */
+    target?: string;
+    /** rel menu item */
+    rel?: string;
 }

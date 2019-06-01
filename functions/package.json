@@ -36,6 +36,8 @@
     "@fortawesome/fontawesome-free": "5.8.1",
     "@google-cloud/storage": "2.5.0",
     "@ng-bootstrap/ng-bootstrap": "4.1.1",
+    "@ngx-loading-bar/core": "4.2.0",
+    "@ngx-loading-bar/router": "4.2.0",
     "angulartics2": "7.5.1",
     "bootstrap": "4.3.1",
     "classlist.js": "1.1.20150312",

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { PageService } from '../../services';
+import { Component, OnInit } from '@angular/core';
+import { BlockModel, ConfigModel } from '../../models';
+import { ConfigService, PageService } from '../../services';
 
 /**
  * Footer Component
@@ -8,12 +9,27 @@ import { PageService } from '../../services';
     selector: 'app-footer',
     templateUrl: './footer.component.html'
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
 
+    /** footer blocks */
+    footerBlocks: Array<BlockModel> = [];
     /**
      * constructor of FooterComponent
      * @param pageService: PageService
+     * @param configService: ConfigService
      */
-    constructor(public pageService: PageService) {
+    constructor(public pageService: PageService,
+                public configService: ConfigService) {
     }
+
+    /**
+     * ngOnInit
+     */
+    ngOnInit(): void {
+        this.configService.getConfig()
+            .subscribe((config: ConfigModel) => {
+                this.footerBlocks = config.footerBlocks;
+            });
+    }
+
 }
