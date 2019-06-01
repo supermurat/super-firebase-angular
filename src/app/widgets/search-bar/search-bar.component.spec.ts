@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestHelperModule } from '../../testing/test.helper.module.spec';
@@ -39,7 +40,10 @@ describe('SearchBarComponent', () => {
 
     it('should redirect to "/search" for "Searched For Me"', fakeAsync(() => {
         comp.searchFor = 'Searched For Me';
-        comp.onClickSearch();
+        fixture.debugElement.injector.get(NgZone)
+            .run(() => {
+                comp.onClickSearch();
+            });
         tick();
         fixture.detectChanges();
         expect(comp.router.url)

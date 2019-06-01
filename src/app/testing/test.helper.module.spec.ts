@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../app-config';
 import { AlertComponent } from '../components/alert/alert.component';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -53,13 +55,15 @@ export const activatedRouteStub = new ActivatedRouteStub();
         LastJokesComponent,
         SearchBarComponent,
         CustomHtmlComponent,
-        FormsModule
+        FormsModule,
+        LoadingBarModule
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        LoadingBarModule
     ],
     providers: [
         AlertService,

@@ -1,4 +1,5 @@
 export * from './article-model';
+export * from './block-model';
 export * from './blog-model';
 export * from './carousel-model';
 export * from './carousel-item-model';

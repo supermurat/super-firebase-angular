@@ -19,6 +19,15 @@ body {
   display: none;
 }
 
+#loading-bar-spinner {
+  top: 22px !important;
+  right: 36px !important;
+}
+
+#loading-bar-spinner .spinner-icon {
+  float: right;
+}
+
 .content {
   overflow-y: scroll;
   max-height: 100vh;
@@ -169,4 +178,8 @@ body {
 .privacy-policy-small {
   height: 150px;
   font-size: small;
+}
+
+.card-fix-width {
+  min-width: 220px;
 }

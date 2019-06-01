@@ -1,6 +1,5 @@
 // export for convenience.
-export { ActivatedRoute } from '@angular/router';
-
+import { NgZone } from '@angular/core';
 import { ComponentFixture, tick } from '@angular/core/testing';
 import { convertToParamMap, NavigationEnd, NavigationExtras, ParamMap, Params, Router } from '@angular/router';
 import { ReplaySubject, Subscription } from 'rxjs';
@@ -70,9 +69,12 @@ export class ActivatedRouteStub {
      */
     navigate(fixture: ComponentFixture<any>, router: Router, commands: Array<any>, extras?: NavigationExtras): void {
         router.initialNavigation();
-        router.navigate(commands, extras)
-            .catch(reason => {
-                console.error(reason);
+        fixture.debugElement.injector.get(NgZone)
+            .run(() => {
+                router.navigate(commands, extras)
+                    .catch(reason => {
+                        console.error(reason);
+                    });
             });
     }
 
@@ -88,9 +90,12 @@ export class ActivatedRouteStub {
     initAndNavigate(fixture: ComponentFixture<any>, router: Router, routeForPageNoParam: string, routeForIdParam: string,
                     commands: Array<any>, extras?: NavigationExtras): void {
         const sNavEvent = this.initNavigation(fixture, router, routeForPageNoParam, routeForIdParam);
-        router.navigate(commands, extras)
-            .catch(reason => {
-                console.error(reason);
+        fixture.debugElement.injector.get(NgZone)
+            .run(() => {
+                router.navigate(commands, extras)
+                    .catch(reason => {
+                        console.error(reason);
+                    });
             });
         fixture.detectChanges();
         tick();

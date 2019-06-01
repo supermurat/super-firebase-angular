@@ -1,6 +1,8 @@
+import { BlockModel } from './block-model';
 import { ConfigSeoModel } from './config-seo-model';
 import { CustomHtmlModel } from './custom-html-model';
 import { MenuItemModel } from './menu-item-model';
+
 /**
  * Config Class
  */
@@ -10,5 +12,7 @@ export class ConfigModel {
     /** primary custom html widget */
     primaryCustomHtmlWidget: CustomHtmlModel;
     /** config for SEO */
-    configSEO?: ConfigSeoModel;
+    configSEO: ConfigSeoModel;
+    /** footer blocks */
+    footerBlocks: Array<BlockModel>;
 }

@@ -9,7 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { Angulartics2Module } from 'angulartics2';
+
 import { environment } from '../environments/environment';
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +20,6 @@ import { AlertComponent } from './components/alert/alert.component';
 import { AppComponent } from './components/app/app.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { PagerComponent } from './components/pager/pager.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
@@ -60,7 +62,6 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         ArticleListComponent,
         ArticleDetailComponent,
         ScrollableDirective,
-        LoadingSpinnerComponent,
         AdminLoginComponent,
         FooterComponent,
         SideBarComponent,
@@ -97,6 +98,8 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
 
         AppRoutingModule,
         Angulartics2Module.forRoot(environment.Angulartics2),
+        LoadingBarRouterModule,
+        LoadingBarModule,
 
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],

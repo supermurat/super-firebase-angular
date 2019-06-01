@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -149,10 +150,13 @@ describe('AdminLoginComponentAuthService', () => {
                     .toBeUndefined();
             });
         tick();
-        comp.auth.signOut()
-            .catch(reason => {
-                expect(reason)
-                    .toBeUndefined();
+        fixture.debugElement.injector.get(NgZone)
+            .run(() => {
+                comp.auth.signOut()
+                    .catch(reason => {
+                        expect(reason)
+                            .toBeUndefined();
+                    });
             });
         tick();
         expect(lastUser)
