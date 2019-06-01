@@ -7,14 +7,14 @@ addons:
     access_key: "$BROWSERSTACK_ACCESS_KEY"
 language: node_js
 node_js:
-  - "8"
+  - "10"
 before_install:
   - echo "TRAVIS_BRANCH:$TRAVIS_BRANCH"
   - echo "TRAVIS_PULL_REQUEST:$TRAVIS_PULL_REQUEST"
   - echo "TRAVIS_PULL_REQUEST_BRANCH:$TRAVIS_PULL_REQUEST_BRANCH"
   - echo "TRAVIS_TAG:$TRAVIS_TAG"
-  - nvm install 8
-  - npm i -g firebase-tools@6.3.1 @angular/cli@7.3.0 selenium-webdriver @commitlint/travis-cli
+  - nvm install 10
+  - npm i -g firebase-tools@6.10.0 @angular/cli@8.0.1 selenium-webdriver @commitlint/travis-cli
 install:
   - npm i -g ncp del-cli @compodoc/compodoc
   - npm install

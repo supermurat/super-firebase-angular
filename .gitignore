@@ -101,8 +101,6 @@ dist-ssr
 /functions/lib
 /.firebase
 /.firebaserc
-/functions/package-lock.json
-/package-lock.json
 /temp
 /documentation
 /browserstack.err
