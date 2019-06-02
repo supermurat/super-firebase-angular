@@ -99,6 +99,7 @@ dist-ssr
 /out-tsc
 /public
 /functions/lib
+/functions/test
 /.firebase
 /.firebaserc
 /temp

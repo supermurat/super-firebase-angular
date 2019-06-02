@@ -3,18 +3,19 @@
     "lib": ["es6", "dom"],
     "module": "commonjs",
     "noImplicitReturns": true,
-    "outDir": "lib",
+    "outDir": "test",
     "sourceMap": true,
     "target": "es6",
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "types": [
+      "mocha",
+      "node"
     ]
   },
-  "compileOnSave": true,
   "include": [
-    "./src/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.d.ts"
   ]
 }

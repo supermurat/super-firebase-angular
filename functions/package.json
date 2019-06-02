@@ -5,7 +5,7 @@
   },
   "scripts": {
     "lint": "tslint --project tsconfig.json",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.json",
     "serve:beta": "npm run build && firebase serve --project super-murat-beta --only functions",
     "serve:prod": "npm run build && firebase serve --project supermurat-com --only functions",
     "shell:beta": "npm run build && firebase functions:shell --project super-murat-beta",
@@ -13,7 +13,8 @@
     "deploy:beta": "firebase deploy --project super-murat-beta --only functions",
     "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
-    "logs:prod": "firebase functions:log --project supermurat-com"
+    "logs:prod": "firebase functions:log --project supermurat-com",
+    "test": "npm run build && tsc --project tsconfig.spec.json && mocha --reporter spec test/index.spec.js --exit"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -58,9 +59,13 @@
     "sitemap": "2.2.0"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
     "firebase-functions-test": "^0.1.6",
     "jquery": "~3.4.1",
+    "mocha": "^6.1.4",
     "popper.js": "~1.15.0",
+    "sinon": "^7.3.2",
     "tslint": "~5.17.0",
     "typescript": "3.4.5"
   },
