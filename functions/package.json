@@ -26,7 +26,6 @@
     "@angular/core": "8.0.0",
     "@angular/fire": "5.2.1",
     "@angular/forms": "8.0.0",
-    "@angular/http": "7.2.15",
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
