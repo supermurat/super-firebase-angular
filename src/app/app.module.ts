@@ -7,10 +7,12 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { CookieLawModule } from 'angular2-cookie-law';
 import { Angulartics2Module } from 'angulartics2';
 
 import { environment } from '../environments/environment';
@@ -89,6 +91,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         ReactiveFormsModule,
         FormsModule,
         NgbModule,
+        BrowserAnimationsModule,
 
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule.enablePersistence(),
@@ -100,6 +103,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         Angulartics2Module.forRoot(environment.Angulartics2),
         LoadingBarRouterModule,
         LoadingBarModule,
+        CookieLawModule,
 
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],

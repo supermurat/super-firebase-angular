@@ -197,7 +197,17 @@
         <source>AM</source>
         <target>AM</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
+        <source>
+    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+</source><target state="final">
+    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/app/app.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
         <source>Super Murat</source><target state="final">Super Murat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>

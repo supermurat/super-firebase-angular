@@ -197,7 +197,15 @@
         <source>AM</source>
         <target>ÖÖ</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
+        <source>
+    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
+</source><target state="translated"><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>Gezinmeye devam ederek, çerezleri kullanmamızı kabul ediyorsunuz.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/app/app.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
         <source>Super Murat</source><target state="translated">Süper Murat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
@@ -416,9 +424,9 @@
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="482ecf35df28e21d3372449451f43b2d3c961442" datatype="html">
         <source>
-        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Sample alert.
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Warning!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Sample alert.
     </source><target state="translated">
-        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/>Dikkat!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> Örnek uyarı.
+        <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Dikkat!<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> Örnek uyarı.
     </target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit>
