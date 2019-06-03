@@ -61,6 +61,10 @@
     "max-line-length": [
       true,
       140
+    ],
+    "arrow-parens": [
+      true,
+      "ban-single-arg-parens"
     ]
   }
 }

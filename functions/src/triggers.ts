@@ -10,7 +10,7 @@ const db = admin.firestore();
 const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_en-US')
         .get()
-        .then(async (doc) => {
+        .then(async doc => {
             if (doc.exists) {
                 const privateConfig = doc.data() as PrivateConfigModel;
                 const mailContent = `Hi Admin, <br><br> You have got a message from ${
@@ -33,7 +33,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
                     subject: `You Have Got a Message - ${privateConfig.mail.siteName}`,
                     html: mailContent
                 },              privateConfig)
-                    .then(async (value) => {
+                    .then(async value => {
                         if (newMessageData.isSendCopyToOwner) {
                             return sendMail({
                                 to: newMessageData.email,
@@ -48,14 +48,14 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
             }
 
             return Promise.reject('There is no private config!');
-        }).catch((error) => {
+        }).catch(error => {
             console.log('Error getting document:', error);
         });
 
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_tr-TR')
         .get()
-        .then(async (doc) => {
+        .then(async doc => {
             if (doc.exists) {
                 const privateConfig = doc.data() as PrivateConfigModel;
                 const mailContent = `Merhaba Admin, <br><br> ${
@@ -78,7 +78,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
                     subject: `Bir Mesajınız Var - ${privateConfig.mail.siteName}`,
                     html: mailContent
                 },              privateConfig)
-                    .then(async (value) => {
+                    .then(async value => {
                         if (newMessageData.isSendCopyToOwner) {
                             return sendMail({
                                 to: newMessageData.email,
@@ -93,7 +93,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
             }
 
             return Promise.reject('There is no private config!');
-        }).catch((error) => {
+        }).catch(error => {
         console.log('Error getting document:', error);
     });
 

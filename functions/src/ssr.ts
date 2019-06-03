@@ -125,18 +125,18 @@ const getSSR = (req: express.Request, res: express.Response): void => {
     renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
         url: req.path,
         document: indexHtml[locale]
-    }).then((html) => {
+    }).then(html => {
         const firstResponse = respondToSSR(req, res, html);
         const documentID = getDocumentID(req);
         if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
             db.collection('firstResponses')
                 .doc(documentID)
                 .set(firstResponse)
-                .catch((error) => {
+                .catch(error => {
                     console.error('Error in getSSR.db.collection.set()', documentID, error);
                 });
         }
-    }).catch((err) => {
+    }).catch(err => {
         console.error('Error in getSSR:', err);
         res.status(500)
             .send(err);
@@ -150,7 +150,7 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
             db.collection('firstResponses')
                 .doc(documentID)
                 .get()
-                .then((snapshot) => {
+                .then(snapshot => {
                     if (!snapshot.exists) {
                         resolve();
                     } else {
@@ -159,7 +159,7 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
                         resolve({id, ...data});
                     }
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.error('Error in db.collection(firstResponses):', err);
                     resolve(); // let's handle this error with SSR
                 });
@@ -216,7 +216,7 @@ app.get('**', (req: express.Request, res: express.Response) => {
                 getSSR(req, res);
             }
         })
-        .catch((err) => {
+        .catch(err => {
             console.error('Error in checkFirstResponse:', err);
             res.status(500)
                 .send(err);

@@ -14,7 +14,7 @@
     "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
     "logs:prod": "firebase functions:log --project supermurat-com",
-    "test": "npm run build && tsc --project tsconfig.spec.json && mocha --reporter spec test/index.spec.js --exit"
+    "test": "tsc --project tsconfig.spec.json && mocha --reporter spec --recursive \"./test/**/*.spec.js\" --exit"
   },
   "main": "lib/index.js",
   "dependencies": {
