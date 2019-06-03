@@ -4,14 +4,14 @@ import * as sinon from 'sinon';
 const assert = chai.assert;
 
 import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
 
 import * as fTest from 'firebase-functions-test';
 import { JobModel } from './models/job-model';
+import { firestoreStub } from './testing/index.spec';
 
 const test = fTest();
 
-describe('Firebase Functions', () => {
+describe('Jobs', () => {
     let myFunctions;
     let adminInitStub;
 
@@ -23,16 +23,16 @@ describe('Firebase Functions', () => {
         adminInitStub = sinon.stub(admin, 'initializeApp');
 
         const appStub = sinon.stub();
-        const firestoreStub = sinon.stub();
         Object.defineProperty(admin, 'app', { get: (): any => appStub });
         appStub.returns(appStub);
 
-        Object.defineProperty(appStub, 'firestore', { get: (): any => firestoreStub });
-        firestoreStub.returns(firestoreStub);
+        const firestoreVirtualStub = sinon.stub();
+        Object.defineProperty(appStub, 'firestore', { get: (): any => firestoreVirtualStub });
+        firestoreVirtualStub.returns(firestoreStub);
 
         // Now we can require index.js and save the exports inside a namespace called myFunctions.
         // tslint:disable-next-line:no-require-imports
-        myFunctions = require('../lib/index');
+        myFunctions = require('./index');
     });
 
     after(() => {
@@ -42,15 +42,29 @@ describe('Firebase Functions', () => {
         test.cleanup();
     });
 
-    describe('jobRunner', () => {
-        // Test Case: setting jobRunner/{jobId}
-        it('should call only jobRunner', async () => {
-            const snap = {
-                data: (): JobModel => ({actionKey: ''})
-            };
-            const wrapped = test.wrap(myFunctions.jobRunner);
+    it('should call only jobRunner', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: ''})
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), undefined);
-        });
+        return assert.equal(await wrapped(snap), undefined);
     });
+
+    it('should call generateSiteMap', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'generateSiteMap', customData: {hostname: 'https:unittest.com'}}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of urls: 56');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'generateSiteMap is finished. Count of urls: 56');
+    });
+
 });

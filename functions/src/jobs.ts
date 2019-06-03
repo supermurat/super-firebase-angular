@@ -64,9 +64,8 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 // tslint:disable-next-line:promise-function-async
                 .then(() =>
                     snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true})
-                        .then(() => {
-                            console.log(`generateSiteMap is finished. Count of urls: ${urlList.length}`);
-                        })
+                        .then(() =>
+                            Promise.resolve(`generateSiteMap is finished. Count of urls: ${urlList.length}`))
                         .catch(err => {
                             console.error('snap.ref.set()', err);
                         }))
@@ -111,9 +110,8 @@ const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promi
     ))
         .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -155,9 +153,8 @@ const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promi
     ))
         .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -225,9 +222,8 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
     ))
         .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateLocales is finished. Count of processed documents: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`generateLocales is finished. Count of processed documents: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -275,9 +271,8 @@ const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): P
     ))
         .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateDescription is finished. Count of processed documents: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`generateDescription is finished. Count of processed documents: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -320,9 +315,8 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
          })
          .then(async values =>
             snap.ref.set({result: `Count of processed files: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -376,9 +370,8 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
             })))
         .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`clearCaches is finished. Count of processed documents: ${processedDocCount}`);
-                })
+                .then(() =>
+                    Promise.resolve(`clearCaches is finished. Count of processed documents: ${processedDocCount}`))
                 .catch(err => {
                     console.error('snap.ref.set()', err);
                 }))
@@ -396,26 +389,37 @@ export const jobRunner = functions
     .onCreate((snap, context) => {
         console.log('jobRunner is started');
         const jobData = snap.data() as JobModel;
+        let job: Promise<any>;
         if (jobData.actionKey === 'generateSiteMap') {
-            return generateSiteMap(snap, jobData);
+            job = generateSiteMap(snap, jobData);
         }
         if (jobData.actionKey === 'generateSEOData') {
-            return generateSEOData(snap, jobData);
+            job = generateSEOData(snap, jobData);
         }
         if (jobData.actionKey === 'generateJsonLDs') {
-            return generateJsonLDs(snap, jobData);
+            job = generateJsonLDs(snap, jobData);
         }
         if (jobData.actionKey === 'generateLocales') {
-            return generateLocales(snap, jobData);
+            job = generateLocales(snap, jobData);
         }
         if (jobData.actionKey === 'generateDescription') {
-            return generateDescription(snap, jobData);
+            job = generateDescription(snap, jobData);
         }
         if (jobData.actionKey === 'fixPublicFilesPermissions') {
-            return fixPublicFilesPermissions(snap, jobData);
+            job = fixPublicFilesPermissions(snap, jobData);
         }
         if (jobData.actionKey === 'clearCaches') {
-            return clearCaches(snap, jobData);
+            job = clearCaches(snap, jobData);
+        }
+        if (job) {
+            return job
+                .then(value => {
+                    console.log(value);
+
+                    return value;
+                }).catch(err => {
+                    console.error('functions.onCreate', err);
+                });
         }
 
         return Promise.resolve();

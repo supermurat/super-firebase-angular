@@ -2,7 +2,6 @@
   "compilerOptions": {
     "lib": ["es6", "dom"],
     "module": "commonjs",
-    "noImplicitReturns": true,
     "outDir": "test",
     "sourceMap": true,
     "target": "es6",
@@ -15,6 +14,7 @@
     ]
   },
   "include": [
+    "**/*.ts",
     "**/*.spec.ts",
     "**/*.d.ts"
   ]
