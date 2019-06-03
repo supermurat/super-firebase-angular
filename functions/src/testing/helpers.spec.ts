@@ -9,6 +9,14 @@ export const getFirestoreQuerySnap = (tData: Array<any>): any => {
             id: value.id,
             data(): any {
                 return value;
+            },
+            ref: {
+                set(data): any {
+                    return Promise.resolve(data);
+                },
+                delete(): any {
+                    return Promise.resolve();
+                }
             }
         });
     });

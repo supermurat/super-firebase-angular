@@ -22,7 +22,7 @@ const firestoreStubEmpty = {
         const tDataFull = getDataByPath(testData, path);
         const tDataSnapFull = getFirestoreSnap(tDataFull);
 
-        const tData = tDataFull.slice();
+        let tData = tDataFull.slice();
         const tDataSnap = getFirestoreSnap(tData);
 
         return {
@@ -31,6 +31,19 @@ const firestoreStubEmpty = {
             },
             doc(pathDoc: string): any {
                 return firestoreStubEmpty.doc(testData, pathDoc);
+            },
+            where(fieldPath: string, nopStr: string, value: any): any {
+                tData = getArrayWhereByField(tData, fieldPath, nopStr, value);
+
+                return {
+                    limit(lim): any {
+                        return {
+                            get(): any {
+                                return Promise.resolve(getFirestoreQuerySnap(tData));
+                            }
+                        };
+                    }
+                };
             }
         };
     }

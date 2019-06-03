@@ -67,4 +67,84 @@ describe('Jobs', () => {
         return assert.equal(await wrapped(snap), 'generateSiteMap is finished. Count of urls: 56');
     });
 
+    it('should call generateSEOData', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'generateSEOData'}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of processed documents: 50');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'generateSEOData is finished. Count of processed documents: 50');
+    });
+
+    it('should call generateJsonLDs', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'generateJsonLDs'}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of processed documents: 50');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'generateJsonLDs is finished. Count of processed documents: 50');
+    });
+
+    it('should call generateLocales', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'generateLocales'}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of processed documents: 56');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'generateLocales is finished. Count of processed documents: 56');
+    });
+
+    it('should call generateDescription', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'generateDescription'}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of processed documents: 56');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'generateDescription is finished. Count of processed documents: 56');
+    });
+
+    it('should call clearCaches', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'clearCaches'}),
+            ref: {
+                set(data): any {
+                    assert.equal(data.result, 'Count of processed documents: 2');
+
+                    return Promise.resolve([data]);
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+
+        return assert.equal(await wrapped(snap), 'clearCaches is finished. Count of processed documents: 2');
+    });
+
 });

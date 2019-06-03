@@ -450,7 +450,14 @@ export const myData = {
             orderNo: -1
         }
     },
-    firstResponses: {},
+    firstResponses: {
+        'first-cache': {
+            id: 'first-cache', code: 200, type: 'cache', content: '<html></html>'
+        },
+        'second-cache': {
+            id: 'second-cache', code: 404, type: 'cache'
+        }
+    },
     'quotes_en-US': {
         'first-quote': {
             id: 'first-quote', routePath: '/quote', orderNo: -1, i18nKey: 'first-quote',
