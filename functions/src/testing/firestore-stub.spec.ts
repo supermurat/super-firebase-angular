@@ -13,6 +13,9 @@ const firestoreStubEmpty = {
         const tDataSnap = getFirestoreSnap(tData);
 
         return {
+            get(): any {
+                return Promise.resolve(getFirestoreQuerySnap(tData).docs[0]);
+            },
             set(data): any {
                 return Promise.resolve([data]);
             }

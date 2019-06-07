@@ -43,7 +43,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
                             },              privateConfig);
                         }
 
-                        return Promise.resolve();
+                        return Promise.resolve(value);
                     });
             }
 
@@ -88,14 +88,14 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
                             },              privateConfig);
                         }
 
-                        return Promise.resolve();
+                        return Promise.resolve(value);
                     });
             }
 
             return Promise.reject('There is no private config!');
         }).catch(error => {
-        console.log('Error getting document:', error);
-    });
+            console.log('Error getting document:', error);
+        });
 
 export const newMessageEn = functions
     // .region('europe-west1')

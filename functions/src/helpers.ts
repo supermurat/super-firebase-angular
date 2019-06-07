@@ -92,9 +92,9 @@ export const sendMail = async (mailContent: MailModel, privateConfig: PrivateCon
     new Promise<any>(async (resolve, reject): Promise<any> => {
         // create reusable transporter object using the default SMTP transport
         if (privateConfig.smtp === undefined || privateConfig.mail === undefined || !privateConfig.mail.isSendMail) {
-            console.log('Mail send skipped: %s', mailContent.subject);
+            console.log(`Mail send skipped: ${mailContent.to}`);
 
-            resolve();
+            resolve(`Mail send skipped: ${mailContent.to}`);
         } else {
             const smtpConfig = JSON.parse(JSON.stringify(privateConfig.smtp));
             const transporter = nodemailer.createTransport(smtpConfig);
@@ -108,14 +108,13 @@ export const sendMail = async (mailContent: MailModel, privateConfig: PrivateCon
             }
             mailContent.html = getHTMLTemplate(mailContent.html ? mailContent.html : mailContent.text, privateConfig);
 
-            const info = await transporter.sendMail(mailContent);
-            console.log('Mail send "%s", result: %s', mailContent.subject, JSON.stringify(info));
-            if (info.err) {
-                reject(info.err);
-            } else if (info.response) {
-                resolve(info.response);
+            const result = await transporter.sendMail(mailContent);
+            if (result.err) {
+                console.log(`Mail send failed: ${mailContent.to}, error: ${JSON.stringify(result.err)}`);
+                reject(result.err);
             } else {
-                resolve(info.info);
+                console.log(`Mail send succeed: ${mailContent.to}, result: ${JSON.stringify(result)}`);
+                resolve(`Mail send succeed: ${mailContent.to}`);
             }
         }
     });

@@ -17,7 +17,8 @@ export const getFirestoreQuerySnap = (tData: Array<any>): any => {
                 delete(): any {
                     return Promise.resolve();
                 }
-            }
+            },
+            exists: true
         });
     });
 

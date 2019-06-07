@@ -642,6 +642,44 @@ export const myData = {
         }
     },
     configs: {
+        'private_en-US': {
+            mail: {
+                siteURL: 'https://unittest.com',
+                mailFrom: 'from@unittest.com',
+                siteName: 'Super Unit Test',
+                automaticallyGeneratedEmailNote: 'This is an automatically generated email.',
+                mailAddressOfAdmin: 'admin@unittest.com',
+                isSendMail: true
+            },
+            smtp: {
+                port: 465,
+                host: 'smtp.unittest.com',
+                secure: true,
+                auth: {
+                    user: 'sender@unittest.com',
+                    pass: 'unittest'
+                }
+            }
+        },
+        'private_tr-TR': {
+            mail: {
+                siteURL: 'https://unittest.com',
+                mailFrom: 'from@unittest.com',
+                siteName: 'Süper Unit Test',
+                automaticallyGeneratedEmailNote: 'Bu e-posta size otomatik olarak gönderilmiştir.',
+                mailAddressOfAdmin: 'admin@unittest.com',
+                isSendMail: true
+            },
+            smtp: {
+                port: 465,
+                host: 'smtp.unittest.com',
+                secure: true,
+                auth: {
+                    user: 'sender@unittest.com',
+                    pass: 'unittest'
+                }
+            }
+        },
         'public_en-US': {
             mainMenuItems: [
                 {
@@ -685,7 +723,66 @@ export const myData = {
                     },
                     name: 'Murat Demir'
                 }
-            }
+            },
+            footerBlocks: [
+                {
+                    title: 'About',
+                    menuItems: [
+                        ''
+                    ],
+                    content: '<p>This is sample</p>'
+                },
+                {
+                    content: '',
+                    title: 'Content',
+                    menuItems: [
+                        {
+                            text: 'Blog',
+                            url: '/blogs'
+                        },
+                        {
+                            text: 'Articles',
+                            url: '/articles'
+                        },
+                        {
+                            text: 'Quotes',
+                            url: '/quotes'
+                        }
+                    ]
+                },
+                {
+                    content: '',
+                    title: 'Jokes',
+                    menuItems: [
+                        {
+                            text: 'Jokes',
+                            url: '/jokes'
+                        }
+                    ]
+                },
+                {
+                    content: '',
+                    title: 'Developer Zone',
+                    menuItems: [
+                        {
+                            text: 'Playground',
+                            url: '/playground'
+                        },
+                        {
+                            url: '/coverage',
+                            rel: 'noopener',
+                            target: '_blank',
+                            text: 'Coverage'
+                        },
+                        {
+                            rel: 'noopener',
+                            target: '_blank',
+                            text: 'Documentation',
+                            url: '/documentation'
+                        }
+                    ]
+                }
+            ]
         },
         'public_tr-TR': {
             mainMenuItems: [
@@ -727,7 +824,66 @@ export const myData = {
                     },
                     name: 'Murat Demir'
                 }
-            }
+            },
+            footerBlocks: [
+                {
+                    content: '<p>Bu bir örnek</p>',
+                    title: 'Hakkında',
+                    menuItems: [
+                        ''
+                    ]
+                },
+                {
+                    content: '',
+                    title: 'İçerik',
+                    menuItems: [
+                        {
+                            text: 'Günlük',
+                            url: '/gunlukler'
+                        },
+                        {
+                            text: 'Makaleler',
+                            url: '/makaleler'
+                        },
+                        {
+                            text: 'Alıntılar',
+                            url: '/alintilar'
+                        }
+                    ]
+                },
+                {
+                    content: '',
+                    title: 'Eğlence',
+                    menuItems: [
+                        {
+                            text: 'Şakalar',
+                            url: '/eglence'
+                        }
+                    ]
+                },
+                {
+                    content: '',
+                    title: 'Developer Zone',
+                    menuItems: [
+                        {
+                            text: 'Playground',
+                            url: '/playground'
+                        },
+                        {
+                            text: 'Coverage',
+                            url: '/coverage',
+                            rel: 'noopener',
+                            target: '_blank'
+                        },
+                        {
+                            target: '_blank',
+                            text: 'Documentation',
+                            url: '/documentation',
+                            rel: 'noopener'
+                        }
+                    ]
+                }
+            ]
         }
     },
     users: {
