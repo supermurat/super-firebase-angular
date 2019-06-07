@@ -727,9 +727,7 @@ export const myData = {
             footerBlocks: [
                 {
                     title: 'About',
-                    menuItems: [
-                        ''
-                    ],
+                    menuItems: [],
                     content: '<p>This is sample</p>'
                 },
                 {
@@ -809,7 +807,7 @@ export const myData = {
             ],
             primaryCustomHtmlWidget: {
                 title: 'Proje Hazır',
-                content: '<b>Yakında daha fazla bilgi alanacaksınız...</b>'
+                content: '<b>Yakında daha fazla bilgi alacaksınız...</b>'
             },
             configSEO: {
                 defaultImageForSEO: {
@@ -829,9 +827,7 @@ export const myData = {
                 {
                     content: '<p>Bu bir örnek</p>',
                     title: 'Hakkında',
-                    menuItems: [
-                        ''
-                    ]
+                    menuItems: []
                 },
                 {
                     content: '',

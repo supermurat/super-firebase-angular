@@ -8,7 +8,7 @@ import * as fTest from 'firebase-functions-test';
 
 import { ContactModel } from './models/contact-model';
 import { JobModel } from './models/job-model';
-import { firestoreStub } from './testing/index.spec';
+import { firestoreStub, storageStub } from './testing/index.spec';
 
 const assert = chai.assert;
 const test = fTest();
@@ -30,7 +30,11 @@ describe('Firebase Functions', function(): void {
         Object.defineProperty(appStub, 'firestore', { get: (): any => firestoreVirtualStub, configurable: true });
         firestoreVirtualStub.returns(firestoreStub);
 
-        sandbox = sinon.sandbox.create();
+        const storageVirtualStub = sinon.stub();
+        Object.defineProperty(appStub, 'storage', { get: (): any => storageVirtualStub, configurable: true });
+        storageVirtualStub.returns(storageStub);
+
+        sandbox = sinon.createSandbox();
         const transport = {
             sendMail: (data): Promise<any> =>
                 // console.log(data);
@@ -46,7 +50,7 @@ describe('Firebase Functions', function(): void {
     });
 
     // tslint:disable-next-line:only-arrow-functions
-    describe('Jobs', (): void => {
+    describe('Jobs - Firestore', (): void => {
         let myFunctions;
 
         before(() => {
@@ -162,7 +166,34 @@ describe('Firebase Functions', function(): void {
     });
 
     // tslint:disable-next-line:only-arrow-functions
-    describe('Triggers', (): void => {
+    describe('Jobs - Storage', (): void => {
+        let myFunctions;
+
+        before(() => {
+            // tslint:disable-next-line:no-require-imports
+            myFunctions = require('./index');
+        });
+
+        it('should call fixPublicFilesPermissions', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'fixPublicFilesPermissions'}),
+                ref: {
+                    set(data): any {
+                        assert.equal(data.result, 'Count of processed files: 1');
+
+                        return Promise.resolve([data]);
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+
+            return assert.equal(await wrapped(snap), 'fixPublicFilesPermissions is finished. Count of processed docs: 1');
+        });
+
+    });
+
+    // tslint:disable-next-line:only-arrow-functions
+    describe('Triggers - Firestore', (): void => {
         let myFunctions;
 
         before(() => {

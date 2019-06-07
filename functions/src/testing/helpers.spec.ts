@@ -185,3 +185,23 @@ export const getRandomKey = (length = 16): string => {
 
     return text;
 };
+
+/**
+ * get storage file list
+ * @param tData: to get storage file list of it
+ */
+export const getStorageFiles = (tData: Array<string>): Array<any> => {
+    const tDataFile: Array<any> = [];
+    tData.forEach(value => {
+        tDataFile.push({
+            name: value,
+            acl: {
+                add(data): any {
+                    return Promise.resolve({});
+                }
+            }
+        });
+    });
+
+    return tDataFile;
+};
