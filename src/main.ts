@@ -4,7 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import '@fortawesome/fontawesome-free';
 // tslint:disable:no-import-side-effect
 import 'bootstrap';
-import { AppModule } from './app/app.module';
+import { AppBrowserModule } from './app/modules/app.browser.module';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -14,7 +14,7 @@ if (environment.production) {
 // This event listener is for loading TransferState on Client. Without this; browser does not load state
 document.addEventListener('DOMContentLoaded', () => {
     platformBrowserDynamic()
-        .bootstrapModule(AppModule)
+        .bootstrapModule(AppBrowserModule)
         .catch(reason => {
             console.error(reason);
         });
