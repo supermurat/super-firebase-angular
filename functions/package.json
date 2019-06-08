@@ -64,6 +64,7 @@
     "firebase-functions-test": "^0.1.6",
     "jquery": "~3.4.1",
     "mocha": "^6.1.4",
+    "node-mocks-http": "^1.7.5",
     "popper.js": "~1.15.0",
     "sinon": "^7.3.2",
     "tslint": "~5.17.0",

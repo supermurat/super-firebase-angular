@@ -14,7 +14,14 @@ const firestoreStubEmpty = {
 
         return {
             get(): any {
-                return Promise.resolve(getFirestoreQuerySnap(tData).docs[0]);
+                const firstDoc = getFirestoreQuerySnap(tData).docs[0];
+                if (firstDoc) {
+                    return Promise.resolve(firstDoc);
+                }
+
+                return Promise.resolve({
+                    exists: false
+                });
             },
             set(data): any {
                 return Promise.resolve([data]);
@@ -33,7 +40,7 @@ const firestoreStubEmpty = {
                 return Promise.resolve(getFirestoreQuerySnap(tData));
             },
             doc(pathDoc: string): any {
-                return firestoreStubEmpty.doc(testData, pathDoc);
+                return firestoreStubEmpty.doc(tData, pathDoc);
             },
             where(fieldPath: string, nopStr: string, value: any): any {
                 tData = getArrayWhereByField(tData, fieldPath, nopStr, value);

@@ -1,6 +1,7 @@
 // tslint:disable:no-implicit-dependencies
 import * as chai from 'chai';
 import * as admin from 'firebase-admin';
+import * as httpMocks from 'node-mocks-http';
 import * as nodemailer from 'nodemailer';
 import * as sinon from 'sinon';
 
@@ -8,7 +9,7 @@ import * as fTest from 'firebase-functions-test';
 
 import { ContactModel } from './models/contact-model';
 import { JobModel } from './models/job-model';
-import { firestoreStub, storageStub } from './testing/index.spec';
+import { firestoreStub, sleepToGetData, storageStub } from './testing/index.spec';
 
 const assert = chai.assert;
 const test = fTest();
@@ -64,7 +65,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), undefined);
+            return assert.strictEqual(await wrapped(snap), undefined);
         });
 
         it('should call generateSiteMap', async () => {
@@ -72,7 +73,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'generateSiteMap', customData: {hostname: 'https:unittest.com'}}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of urls: 56');
+                        assert.strictEqual(data.result, 'Count of urls: 56');
 
                         return Promise.resolve([data]);
                     }
@@ -80,7 +81,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'generateSiteMap is finished. Count of urls: 56');
+            return assert.strictEqual(await wrapped(snap), 'generateSiteMap is finished. Count of urls: 56');
         });
 
         it('should call generateSEOData', async () => {
@@ -88,7 +89,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'generateSEOData'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed documents: 50');
+                        assert.strictEqual(data.result, 'Count of processed documents: 50');
 
                         return Promise.resolve([data]);
                     }
@@ -96,7 +97,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'generateSEOData is finished. Count of processed documents: 50');
+            return assert.strictEqual(await wrapped(snap), 'generateSEOData is finished. Count of processed documents: 50');
         });
 
         it('should call generateJsonLDs', async () => {
@@ -104,7 +105,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'generateJsonLDs'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed documents: 50');
+                        assert.strictEqual(data.result, 'Count of processed documents: 50');
 
                         return Promise.resolve([data]);
                     }
@@ -112,7 +113,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'generateJsonLDs is finished. Count of processed documents: 50');
+            return assert.strictEqual(await wrapped(snap), 'generateJsonLDs is finished. Count of processed documents: 50');
         });
 
         it('should call generateLocales', async () => {
@@ -120,7 +121,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'generateLocales'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed documents: 56');
+                        assert.strictEqual(data.result, 'Count of processed documents: 56');
 
                         return Promise.resolve([data]);
                     }
@@ -128,7 +129,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'generateLocales is finished. Count of processed documents: 56');
+            return assert.strictEqual(await wrapped(snap), 'generateLocales is finished. Count of processed documents: 56');
         });
 
         it('should call generateDescription', async () => {
@@ -136,7 +137,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'generateDescription'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed documents: 56');
+                        assert.strictEqual(data.result, 'Count of processed documents: 56');
 
                         return Promise.resolve([data]);
                     }
@@ -144,7 +145,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'generateDescription is finished. Count of processed documents: 56');
+            return assert.strictEqual(await wrapped(snap), 'generateDescription is finished. Count of processed documents: 56');
         });
 
         it('should call clearCaches', async () => {
@@ -152,7 +153,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'clearCaches'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed documents: 2');
+                        assert.strictEqual(data.result, 'Count of processed documents: 2');
 
                         return Promise.resolve([data]);
                     }
@@ -160,7 +161,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'clearCaches is finished. Count of processed documents: 2');
+            return assert.strictEqual(await wrapped(snap), 'clearCaches is finished. Count of processed documents: 2');
         });
 
     });
@@ -179,7 +180,7 @@ describe('Firebase Functions', function(): void {
                 data: (): JobModel => ({actionKey: 'fixPublicFilesPermissions'}),
                 ref: {
                     set(data): any {
-                        assert.equal(data.result, 'Count of processed files: 1');
+                        assert.strictEqual(data.result, 'Count of processed files: 1');
 
                         return Promise.resolve([data]);
                     }
@@ -187,7 +188,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
 
-            return assert.equal(await wrapped(snap), 'fixPublicFilesPermissions is finished. Count of processed docs: 1');
+            return assert.strictEqual(await wrapped(snap), 'fixPublicFilesPermissions is finished. Count of processed docs: 1');
         });
 
     });
@@ -211,7 +212,7 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.newMessageEn);
 
-            return assert.equal(await wrapped(snap), 'Mail send succeed: mw@unittest.com');
+            return assert.strictEqual(await wrapped(snap), 'Mail send succeed: mw@unittest.com');
         });
 
         it('should call newMessageTr', async () => {
@@ -224,7 +225,45 @@ describe('Firebase Functions', function(): void {
             };
             const wrapped = test.wrap(myFunctions.newMessageTr);
 
-            return assert.equal(await wrapped(snap), 'Mail send succeed: mw@unittest.com');
+            return assert.strictEqual(await wrapped(snap), 'Mail send succeed: mw@unittest.com');
+        });
+
+    });
+
+    // tslint:disable-next-line:only-arrow-functions
+    describe('SSR', (): void => {
+        // https://www.npmjs.com/package/node-mocks-http
+        let myFunctions;
+
+        before(() => {
+            // tslint:disable-next-line:no-require-imports
+            myFunctions = require('./index');
+        });
+
+        it('should get 404 for invalid url', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/test.php?invalid=true'
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+
+            assert.strictEqual(res._getStatusCode(), 404);
+        });
+
+        it('should get 404 for not exist url', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/tr/not-exist-url-for-test'
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+            await sleepToGetData(res);
+
+            // assert.strictEqual(res._getData(), 404);
+            assert.strictEqual(res._getStatusCode(), 404);
         });
 
     });

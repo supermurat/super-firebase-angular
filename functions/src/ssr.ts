@@ -119,27 +119,20 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
     return {code: 200, type: 'cache', content: html, expireDate, referer};
 };
 
-const getSSR = (req: express.Request, res: express.Response): void => {
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
 
-    renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
+    await renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
         url: req.path,
         document: indexHtml[locale]
-    }).then(html => {
+    }).then(async html => {
         const firstResponse = respondToSSR(req, res, html);
         const documentID = getDocumentID(req);
         if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-            db.collection('firstResponses')
+            await db.collection('firstResponses')
                 .doc(documentID)
-                .set(firstResponse)
-                .catch(error => {
-                    console.error('Error in getSSR.db.collection.set()', documentID, error);
-                });
+                .set(firstResponse);
         }
-    }).catch(err => {
-        console.error('Error in getSSR:', err);
-        res.status(500)
-            .send(err);
     });
 };
 
@@ -168,7 +161,7 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
         }
     });
 
-const send404Page = (req: express.Request, res: express.Response): void => {
+const send404Page = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
     const baseHtml = indexHtml[locale]
         .replace(/<title>[^<]*<\/title>/g, '<title>404 - Page not found</title>')
@@ -178,46 +171,49 @@ const send404Page = (req: express.Request, res: express.Response): void => {
 
     res.status(404)
         .send(baseHtml);
+
+    return Promise.resolve();
 };
 
-const ifUrlIsInvalidSend404Page = (req: express.Request, res: express.Response): boolean => {
+const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
     if (req.url.startsWith('/?') || req.url.indexOf('?page') > -1 || req.url.indexOf('.php?') > -1) {
         // this is only for old php web site but keeping them forever would be better in case of search engines
         // a url like that won't be ok anymore
-        send404Page(req, res);
+        await send404Page(req, res);
 
-        return true;
+        return Promise.resolve(false);
     }
 
-    return false;
+    return Promise.resolve(true);
 };
 
 app.get('**', (req: express.Request, res: express.Response) => {
-    if (ifUrlIsInvalidSend404Page(req, res)) {
-        return;
-    }
-    checkFirstResponse(req, res)
-        .then((firstResponse: FirstResponseModel) => {
-            if (firstResponse && firstResponse.code === 301) {
-                res.redirect(firstResponse.code, firstResponse.url);
-            } else if (firstResponse && firstResponse.code === 404) {
-                send404Page(req, res);
-            } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
-                const fileNameParts = firstResponse.id.split('.');
-                const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
-                res.status(200)
-                    .type(fileExt)
-                    .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
-            } else if (FUNCTIONS_CONFIG.cacheResponses &&
-                firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
-                (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
-                respondToSSR(req, res, firstResponse.content);
-            } else {
-                getSSR(req, res);
+    isUrlValid(req, res)
+        .then(async isValid => {
+            if (isValid) {
+                await checkFirstResponse(req, res)
+                    .then(async (firstResponse: FirstResponseModel): Promise<void> => {
+                        if (firstResponse && firstResponse.code === 301) {
+                            res.redirect(firstResponse.code, firstResponse.url);
+                        } else if (firstResponse && firstResponse.code === 404) {
+                            await send404Page(req, res);
+                        } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
+                            const fileNameParts = firstResponse.id.split('.');
+                            const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
+                            res.status(200)
+                                .type(fileExt)
+                                .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
+                        } else if (FUNCTIONS_CONFIG.cacheResponses &&
+                            firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
+                            (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
+                            respondToSSR(req, res, firstResponse.content);
+                        } else {
+                            await getSSR(req, res);
+                        }
+                    });
             }
-        })
-        .catch(err => {
-            console.error('Error in checkFirstResponse:', err);
+        }).catch(err => {
+            console.error(err);
             res.status(500)
                 .send(err);
         });

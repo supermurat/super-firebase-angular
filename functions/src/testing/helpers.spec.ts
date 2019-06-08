@@ -205,3 +205,21 @@ export const getStorageFiles = (tData: Array<string>): Array<any> => {
 
     return tDataFile;
 };
+
+/**
+ * sleep
+ * @param ms
+ */
+export const sleep = (ms: number): Promise<void> =>
+    new Promise<void>((resolve): any =>
+        setTimeout(resolve, ms));
+
+/**
+ * sleep until got response data
+ * @param res
+ */
+export const sleepToGetData = async (res: any): Promise<void> => {
+    while (res._getData() === '') {
+        await sleep(10);
+    }
+};
