@@ -7,6 +7,7 @@ import * as sitemap from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel } from './models/job-model';
+import { LocaleAlternateModel } from './models/locale-alternate-model';
 import { SiteMapUrlModel } from './models/site-map-url-model';
 
 const db = admin.firestore();
