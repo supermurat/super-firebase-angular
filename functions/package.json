@@ -14,7 +14,9 @@
     "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
     "logs:prod": "firebase functions:log --project supermurat-com",
-    "test": "tsc --project tsconfig.spec.json && mocha --reporter spec --recursive \"./test/**/*.spec.js\" --exit"
+    "test": "mocha --require ts-node/register src/**/*.spec.ts --exit",
+    "test:cover": "del-cli \"./coverage\" && nyc mocha --require ts-node/register src/**/*.spec.ts --exit",
+    "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\""
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -59,16 +61,39 @@
     "sitemap": "2.2.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "firebase-functions-test": "^0.1.6",
     "jquery": "~3.4.1",
     "mocha": "^6.1.4",
     "node-mocks-http": "^1.7.5",
+    "nyc": "^14.1.1",
     "popper.js": "~1.15.0",
     "sinon": "^7.3.2",
     "tslint": "~5.17.0",
+    "ts-node": "^8.2.0",
     "typescript": "3.4.5"
   },
-  "private": true
+  "private": true,
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/*.spec.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  }
 }
