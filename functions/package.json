@@ -14,8 +14,8 @@
     "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
     "logs:prod": "firebase functions:log --project supermurat-com",
-    "test": "mocha --require ts-node/register src/**/*.spec.ts --exit",
-    "test:cover": "del-cli \"./coverage\" && nyc mocha --require ts-node/register src/**/*.spec.ts --exit",
+    "test": "jasmine-ts --config=./jasmine.json",
+    "test:cover": "del-cli \"./coverage\" && nyc jasmine --config=./jasmine.json",
     "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\""
   },
   "main": "lib/index.js",
@@ -61,16 +61,16 @@
     "sitemap": "2.2.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.7",
-    "chai": "^4.2.0",
+    "@types/jasmine": "~3.3.13",
+    "@types/node": "~12.0.4",
     "firebase-functions-test": "^0.1.6",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "jasmine-ts": "^0.3.0",
     "jquery": "~3.4.1",
-    "mocha": "^6.1.4",
     "node-mocks-http": "^1.7.5",
     "nyc": "^14.1.1",
     "popper.js": "~1.15.0",
-    "sinon": "^7.3.2",
     "tslint": "~5.17.0",
     "ts-node": "^8.2.0",
     "typescript": "3.4.5"
@@ -90,8 +90,10 @@
       "ts-node/register"
     ],
     "reporter": [
+      "html",
+      "lcovonly",
       "text-summary",
-      "html"
+      "json-summary"
     ],
     "sourceMap": true,
     "instrument": true

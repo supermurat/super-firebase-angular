@@ -65,7 +65,13 @@ export const firestoreStub = {
     },
     collection(path: string, queryFn?: any): any {
         return firestoreStubEmpty.collection(myData, path, queryFn);
-    }
+    },
+    settings: undefined,
+    collectionGroup: undefined,
+    getAll: undefined,
+    listCollections: undefined,
+    runTransaction: undefined,
+    batch: undefined
 };
 
 export const firestoreStubNoData = {
@@ -74,5 +80,11 @@ export const firestoreStubNoData = {
     },
     collection(path: string, queryFn?: any): any {
         return firestoreStubEmpty.collection(noData, path, queryFn);
-    }
+    },
+    settings: undefined,
+    collectionGroup: undefined,
+    getAll: undefined,
+    listCollections: undefined,
+    runTransaction: undefined,
+    batch: undefined
 };

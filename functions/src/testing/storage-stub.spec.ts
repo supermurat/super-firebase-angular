@@ -10,5 +10,6 @@ export const storageStub = {
                 return Promise.resolve([getStorageFiles(tData)]);
             }
         };
-    }
+    },
+    app: undefined
 };
