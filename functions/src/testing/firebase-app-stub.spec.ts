@@ -1,7 +1,7 @@
-import { firestoreStub } from './firestore-stub.spec';
+import { firestoreStub, firestoreStubNoData } from './firestore-stub.spec';
 import { storageStub } from './storage-stub.spec';
 
-export const firebaseAppStub = {
+export const firebaseAppStubEmpty = {
     name: 'unit-test-app',
     options: {},
     auth: undefined,
@@ -9,9 +9,21 @@ export const firebaseAppStub = {
     instanceId: undefined,
     messaging: undefined,
     projectManagement: undefined,
-    delete: undefined,
+    delete: undefined
+};
+
+export const firebaseAppStub = {...firebaseAppStubEmpty, ...{
+        firestore: (): any =>
+            firestoreStub,
+        storage: (): any =>
+            storageStub
+    }
+};
+
+export const firebaseAppStubNoData = {...firebaseAppStubEmpty, ...{
     firestore: (): any =>
-        firestoreStub,
+        firestoreStubNoData,
     storage: (): any =>
         storageStub
+    }
 };

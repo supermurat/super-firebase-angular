@@ -48,8 +48,6 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
             }
 
             return Promise.reject('There is no private config!');
-        }).catch(error => {
-            console.log('Error getting document:', error);
         });
 
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
@@ -93,8 +91,6 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
             }
 
             return Promise.reject('There is no private config!');
-        }).catch(error => {
-            console.log('Error getting document:', error);
         });
 
 export const newMessageEn = functions
@@ -103,7 +99,18 @@ export const newMessageEn = functions
     .document('messages_en-US/{messageId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) =>
-        sendMailForNewMessageEn(snap.data()));
+        sendMailForNewMessageEn(snap.data())
+            .then(value => {
+                console.log(value);
+
+                return value;
+            })
+            .catch(err => {
+                console.error('functions.onCreate', err);
+
+                return err;
+            })
+    );
 
 export const newMessageTr = functions
     // .region('europe-west1')
@@ -111,4 +118,15 @@ export const newMessageTr = functions
     .document('messages_tr-TR/{messageId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) =>
-        sendMailForNewMessageTr(snap.data()));
+        sendMailForNewMessageTr(snap.data())
+            .then(value => {
+                console.log(value);
+
+                return value;
+            })
+            .catch(err => {
+                console.error('functions.onCreate', err);
+
+                return err;
+            })
+    );

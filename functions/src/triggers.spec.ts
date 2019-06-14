@@ -4,7 +4,7 @@ import * as fTest from 'firebase-functions-test';
 import * as nodemailer from 'nodemailer';
 
 import { ContactModel } from './models/contact-model';
-import { firebaseAppStub, firestoreStub } from './testing/index.spec';
+import { firebaseAppStub, firebaseAppStubNoData, firestoreStub, firestoreStubNoData } from './testing/index.spec';
 
 let test = fTest();
 
@@ -30,32 +30,60 @@ describe('Triggers - Firestore', (): void => {
         test.cleanup();
     });
 
-    it('should call newMessageEn', async () => {
+    it('should send e-mail to both of admin and owner when got a message for en-US', async () => {
         const snap = {
             data: (): ContactModel => (
                 {
-                    userLongName: 'Unit Test', email: 'mw@unittest.com',
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
                     message: 'Hello from Unit Test', isSendCopyToOwner: true, isAgreed: true
                 })
         };
         const wrapped = test.wrap(myFunctions.newMessageEn);
 
         expect(await wrapped(snap))
-            .toEqual('Mail send succeed: mw@unittest.com');
+            .toEqual('Mail send succeed: my@unittest.com');
     });
 
-    it('should call newMessageTr', async () => {
+    it('should send e-mail to only admin when got a message for en-US', async () => {
         const snap = {
             data: (): ContactModel => (
                 {
-                    userLongName: 'Unit Test', email: 'mw@unittest.com',
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
+                    message: 'Hello from Unit Test', isSendCopyToOwner: false, isAgreed: false
+                })
+        };
+        const wrapped = test.wrap(myFunctions.newMessageEn);
+
+        expect(await wrapped(snap))
+            .toEqual('Mail send succeed: admin@unittest.com');
+    });
+
+    it('should send e-mail to both of admin and owner when got a message for tr-TR', async () => {
+        const snap = {
+            data: (): ContactModel => (
+                {
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
                     message: 'Unit Test`ten Merhaba', isSendCopyToOwner: true, isAgreed: true
                 })
         };
         const wrapped = test.wrap(myFunctions.newMessageTr);
 
         expect(await wrapped(snap))
-            .toEqual('Mail send succeed: mw@unittest.com');
+            .toEqual('Mail send succeed: my@unittest.com');
+    });
+
+    it('should send e-mail to only admin when got a message for tr-TR', async () => {
+        const snap = {
+            data: (): ContactModel => (
+                {
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
+                    message: 'Unit Test`ten Merhaba', isSendCopyToOwner: false, isAgreed: false
+                })
+        };
+        const wrapped = test.wrap(myFunctions.newMessageTr);
+
+        expect(await wrapped(snap))
+            .toEqual('Mail send succeed: admin@unittest.com');
     });
 
 });
