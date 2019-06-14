@@ -26,7 +26,7 @@ const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr
 
 if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     // tslint:disable-next-line:no-var-requires no-require-imports
-    serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require('../dist/server/main');
+    serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require(`../dist/server/main${''}`); // ${''}: to fix dynamic import issue of karma
     indexHtml[FUNCTIONS_CONFIG.defaultLanguageCode] = readFileSync(
         path.resolve(__dirname, '../dist/browser/index.html'), 'utf8')
         .toString();
