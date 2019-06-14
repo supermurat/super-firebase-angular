@@ -19,13 +19,23 @@ export const myData = {
         },
         'fourth-article': {
             id: 'fourth-article', routePath: '/article', orderNo: -4, i18nKey: 'fourth-article',
-            title: 'Fourth Article', content: 'this is the best article',
+            title: 'Fourth Article', content: 'this is the best article, this is the best article, this is the best article,' +
+                'this is the best article, this is the best article, this is the best article, this is the best article' +
+                'this is the best article, this is the best article, this is the best article, this is the best article' +
+                'this is the best article, this is the best article, this is the best article, this is the best article',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'fifth-article': {
             id: 'fifth-article', routePath: '/article', orderNo: -5, i18nKey: 'fifth-article',
             title: 'Fifth Article', content: 'this is the best article',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            locales: [
+                {
+                    cultureCode: 'tr-TR',
+                    slug: 'tr/makale/besinci-makale'
+                }
+            ],
+            description: 'Perfect article ever, you have to check out this!'
         },
         'only-in-en-article': {
             id: 'only-in-en-article', routePath: '/article', orderNo: -5, i18nKey: 'only-in-en-article',
@@ -52,13 +62,23 @@ export const myData = {
         },
         'dorduncu-makale': {
             id: 'dorduncu-makale', routePath: '/makale', orderNo: -4, i18nKey: 'fourth-article',
-            title: 'Dördüncü Makale', content: 'bu en güzel makale',
+            title: 'Dördüncü Makale', content: 'bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, ' +
+                'bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, ' +
+                'bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, ' +
+                'bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale, bu en güzel makale',
             created: {seconds: 1544207668}, changed: {seconds: 1544207666}
         },
         'besinci-makale': {
             id: 'besinci-makale', routePath: '/makale', orderNo: -5, i18nKey: 'fifth-article',
             title: 'Beşinci Makale', content: 'bu en güzel makale',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            locales: [
+                {
+                    cultureCode: 'en-US',
+                    slug: 'en/article/fifth-article'
+                }
+            ],
+            description: 'Gelmiş geçmiş en iyi makale, mutlaka bir göz atmalısınız!'
         },
         'sadece-turkce-makale': {
             id: 'sadece-turkce-makale', routePath: '/makale', orderNo: -5, i18nKey: 'sadece-turkce-makale',
@@ -452,10 +472,16 @@ export const myData = {
     },
     firstResponses: {
         'first-cache': {
-            id: 'first-cache', code: 200, type: 'cache', content: '<html></html>'
+            id: 'first-cache', code: 200, type: 'cache', content: '<html></html>',
+            expireDate: new Date().setDate(Number(new Date().getDate()) + 30)
         },
         'second-cache': {
-            id: 'second-cache', code: 404, type: 'cache'
+            id: 'second-cache', code: 404, type: 'cache',
+            expireDate: new Date().setDate(Number(new Date().getDate()) + 15)
+        },
+        'third-cache': {
+            id: 'third-cache', code: 404, type: 'cache',
+            expireDate: new Date().setDate(Number(new Date().getDate()) - 10)
         }
     },
     'quotes_en-US': {

@@ -46,7 +46,9 @@ const firestoreStubEmpty = {
                 tData = getArrayWhereByField(tData, fieldPath, nopStr, value);
 
                 return {
-                    limit(lim): any {
+                    limit(limitNumber): any {
+                        tData = tData.slice(0, limitNumber);
+
                         return {
                             get(): any {
                                 return Promise.resolve(getFirestoreQuerySnap(tData));
