@@ -19,7 +19,6 @@ describe('Triggers - Firestore', (): void => {
         spyOn(admin, 'firestore').and.returnValue(firestoreStub);
         spyOn(nodemailer, 'createTransport').and.returnValue({
             sendMail: (data): Promise<any> =>
-                // console.log(data);
                 Promise.resolve({unitTest: true})
         });
 
@@ -100,7 +99,6 @@ describe('Triggers - Firestore - NoData', (): void => {
         spyOn(admin, 'firestore').and.returnValue(firestoreStub);
         spyOn(nodemailer, 'createTransport').and.returnValue({
             sendMail: (data): Promise<any> =>
-                // console.log(data);
                 Promise.resolve({unitTest: true})
         });
         currentConfigs = myData.configs;

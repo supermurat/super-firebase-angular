@@ -90,7 +90,6 @@ const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel)
 
 export const sendMail = async (mailContent: MailModel, privateConfig: PrivateConfigModel): Promise<any> =>
     new Promise<any>(async (resolve, reject): Promise<any> => {
-        // create reusable transporter object using the default SMTP transport
         if (privateConfig.smtp === undefined || privateConfig.mail === undefined || !privateConfig.mail.isSendMail) {
             console.log(`Mail send skipped: ${mailContent.to}`);
 
@@ -98,8 +97,6 @@ export const sendMail = async (mailContent: MailModel, privateConfig: PrivateCon
         } else {
             const smtpConfig = JSON.parse(JSON.stringify(privateConfig.smtp));
             const transporter = nodemailer.createTransport(smtpConfig);
-            // setup email data with unicode symbols
-            // send mail with defined transport object
             if (!mailContent.from) {
                 mailContent.from = privateConfig.mail.mailFrom;
             }
