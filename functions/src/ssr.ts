@@ -24,6 +24,7 @@ const indexHtml: any = {};
 
 const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key"';
 
+// istanbul ignore next
 if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     // tslint:disable-next-line:no-var-requires no-require-imports
     serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require(`../dist/server/main${''}`); // ${''}: to fix dynamic import issue of karma
@@ -32,6 +33,7 @@ if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
         .toString();
 } else {
     for (const supportedLanguageCode of FUNCTIONS_CONFIG.supportedLanguageCodes) {
+        // istanbul ignore next
         if (existsSync(path.resolve(__dirname, `../dist/browser/${supportedLanguageCode}/index.html`))) {
             // tslint:disable-next-line:no-var-requires no-require-imports
             serverJS[supportedLanguageCode] = require(`../dist/server/${supportedLanguageCode}/main`);
@@ -42,6 +44,7 @@ if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     }
 }
 
+// istanbul ignore next
 if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
     !indexHtml.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode)) {
     throw new Error(`Default Language Code (${
@@ -80,11 +83,21 @@ const getLocale = (req: express.Request): string => {
 const getDocumentID = (req: express.Request): string => {
     // firestore doesn't allow "/" to be in document ID
     try {
-        return decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
-    } catch (e) {
-        console.error(e);
+        const id = decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
+        if (id === '.' ||
+            id === '..' ||
+            Buffer.byteLength(id, 'utf8') > 1500 ||
+            new RegExp('__.*__').test(id)) {
+            return undefined;
+        }
 
-        return req.url.substring(1).replace(/\//gi, '\\');
+        return id;
+    } catch (e) {
+        // istanbul ignore next
+        console.error(e, 'req.url:', req.url);
+
+        // istanbul ignore next
+        return undefined;
     }
 };
 
@@ -139,6 +152,7 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
     new Promise<FirstResponseModel>((resolve, reject): void => {
         const documentID = getDocumentID(req);
+        // istanbul ignore next
         if (documentID) {
             db.collection('firstResponses')
                 .doc(documentID)
@@ -152,10 +166,11 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
                         resolve({id, ...data});
                     }
                 })
-                .catch(err => {
-                    console.error('Error in db.collection(firstResponses):', err);
-                    resolve(); // let's handle this error with SSR
-                });
+                .catch(// istanbul ignore next
+                    err => {
+                        console.error('Error in db.collection(firstResponses):', err);
+                        resolve(); // let's handle this error with SSR
+                    });
         } else {
             resolve();
         }
@@ -205,18 +220,24 @@ app.get('**', (req: express.Request, res: express.Response) => {
                                 .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
                         } else if (FUNCTIONS_CONFIG.cacheResponses &&
                             firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
-                            (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
+                            (firstResponse.expireDate === undefined || firstResponse.expireDate > new Date())) {
                             respondToSSR(req, res, firstResponse.content);
                         } else {
                             await getSSR(req, res);
                         }
+
+                        return Promise.resolve();
                     });
             }
-        }).catch(err => {
-            console.error(err);
-            res.status(500)
-                .send(err);
-        });
+
+            return Promise.resolve();
+        }).catch(
+            // istanbul ignore next
+            err => {
+                console.error(err);
+                res.status(500)
+                    .send(err);
+            });
 });
 
 export const ssr = functions

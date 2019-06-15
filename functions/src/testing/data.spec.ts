@@ -472,7 +472,7 @@ export const myData = {
     },
     firstResponses: {
         'first-cache': {
-            id: 'first-cache', code: 200, type: 'cache', content: '<html></html>',
+            id: 'first-cache', code: 200, type: 'cache', content: '<html>First Cache</html>',
             expireDate: new Date().setDate(Number(new Date().getDate()) + 30)
         },
         'second-cache': {
@@ -482,6 +482,16 @@ export const myData = {
         'third-cache': {
             id: 'third-cache', code: 404, type: 'cache',
             expireDate: new Date().setDate(Number(new Date().getDate()) - 10)
+        },
+        'forth-cache': {
+            id: 'forth-cache', code: 301, type: 'cache', url: '/first-cache',
+            expireDate: new Date().setDate(Number(new Date().getDate()) - 5)
+        },
+        'fifth-cache': {
+            id: 'fifth-cache', code: 200, type: 'cache', content: '<html>Fifth Cache</html>'
+        },
+        'robots.txt': {
+            id: 'robots.txt', code: 200, type: 'file', content: 'User-Agent: *\r\nDisallow: / \r\n\r\n\r\n'
         }
     },
     'quotes_en-US': {

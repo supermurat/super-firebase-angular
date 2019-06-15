@@ -22,6 +22,8 @@ const FUNCTIONS_CONFIG_PROD = {
     cacheResponses: true
 };
 
+// istanbul ignore next
 export const FUNCTIONS_CONFIG = process.env.IS_RUNNING_ON_LOCALHOST ? FUNCTIONS_CONFIG_LOCAL : FUNCTIONS_CONFIG_PROD;
 
+// istanbul ignore next
 console.log('FUNCTIONS_CONFIG IN USE:', process.env.IS_RUNNING_ON_LOCALHOST ? '_LOCAL' : '_PROD');

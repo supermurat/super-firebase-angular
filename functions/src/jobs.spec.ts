@@ -237,7 +237,7 @@ describe('Jobs - Firestore', (): void => {
                 ref: {
                     set(data): any {
                         expect(data.result)
-                            .toEqual('Count of processed documents: 3');
+                            .toEqual('Count of processed documents: 5');
 
                         return Promise.resolve([data]);
                     }
@@ -246,7 +246,7 @@ describe('Jobs - Firestore', (): void => {
             const wrapped = test.wrap(myFunctions.jobRunner);
 
             expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 3');
+                .toEqual('clearCaches is finished. Count of processed documents: 5');
         });
 
         it('should clear only expired caches with expireDate param', async () => {
@@ -260,7 +260,7 @@ describe('Jobs - Firestore', (): void => {
                 ref: {
                     set(data): any {
                         expect(data.result)
-                            .toEqual('Count of processed documents: 2');
+                            .toEqual('Count of processed documents: 4');
 
                         return Promise.resolve([data]);
                     }
@@ -269,7 +269,7 @@ describe('Jobs - Firestore', (): void => {
             const wrapped = test.wrap(myFunctions.jobRunner);
 
             expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 2');
+                .toEqual('clearCaches is finished. Count of processed documents: 4');
         });
 
         it('should clear only expired caches with expireDateDayDiff param', async () => {
@@ -283,7 +283,7 @@ describe('Jobs - Firestore', (): void => {
                 ref: {
                     set(data): any {
                         expect(data.result)
-                            .toEqual('Count of processed documents: 2');
+                            .toEqual('Count of processed documents: 4');
 
                         return Promise.resolve([data]);
                     }
@@ -292,7 +292,7 @@ describe('Jobs - Firestore', (): void => {
             const wrapped = test.wrap(myFunctions.jobRunner);
 
             expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 2');
+                .toEqual('clearCaches is finished. Count of processed documents: 4');
         });
 
         it('should clear caches which only specified codes with codeListToDelete param', async () => {
@@ -306,7 +306,7 @@ describe('Jobs - Firestore', (): void => {
                 ref: {
                     set(data): any {
                         expect(data.result)
-                            .toEqual('Count of processed documents: 1');
+                            .toEqual('Count of processed documents: 2');
 
                         return Promise.resolve([data]);
                     }
@@ -315,7 +315,7 @@ describe('Jobs - Firestore', (): void => {
             const wrapped = test.wrap(myFunctions.jobRunner);
 
             expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 1');
+                .toEqual('clearCaches is finished. Count of processed documents: 2');
         });
 
         it('should clear caches as much as specified with limit param', async () => {

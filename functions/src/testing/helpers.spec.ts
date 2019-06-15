@@ -55,39 +55,74 @@ export const getFirestoreSnap = (tData: Array<any>): Array<any> => {
 export const getDataByPath = (testData: any, path: string): Array<any> => {
     const paths = path.split('/');
     const tData: Array<any> = [];
-    Object.keys(testData)
-        .forEach((prop: string) => {
-            if (paths[0] === prop) {
-                Object.keys(testData[prop])
-                    .forEach((subProp: string) => {
-                        if (paths.length > 1) {
+    if (testData instanceof Array) {
+        testData.forEach(value => {
+            if (paths[0] === value.id) {
+                if (paths.length > 1) {
+                    Object.keys(value)
+                        .forEach((subProp: string) => {
                             if (paths[1] === subProp) {
                                 if (paths.length > 2) {
-                                    Object.keys(testData[prop][subProp])
+                                    Object.keys(value[subProp])
                                         .forEach((subProp2: string) => {
                                             if (`__collection__${paths[2]}` === subProp2) {
-                                                Object.keys(testData[prop][subProp][subProp2])
+                                                Object.keys(value[subProp][subProp2])
                                                     .forEach((subProp3: string) => {
-                                                        tData.push(testData[prop][subProp][subProp2][subProp3]);
+                                                        tData.push(value[subProp][subProp2][subProp3]);
                                                     });
 
                                                 return tData;
                                             }
                                         });
                                 } else {
-                                    tData.push(testData[prop][subProp]);
+                                    tData.push(value[subProp]);
 
                                     return tData;
                                 }
                             }
-                        } else {
-                            tData.push(testData[prop][subProp]);
-                        }
-                    });
+                        });
+                } else {
+                    tData.push(value);
+                }
 
                 return tData;
             }
         });
+    } else {
+        Object.keys(testData)
+            .forEach((prop: string) => {
+                if (paths[0] === prop) {
+                    Object.keys(testData[prop])
+                        .forEach((subProp: string) => {
+                            if (paths.length > 1) {
+                                if (paths[1] === subProp) {
+                                    if (paths.length > 2) {
+                                        Object.keys(testData[prop][subProp])
+                                            .forEach((subProp2: string) => {
+                                                if (`__collection__${paths[2]}` === subProp2) {
+                                                    Object.keys(testData[prop][subProp][subProp2])
+                                                        .forEach((subProp3: string) => {
+                                                            tData.push(testData[prop][subProp][subProp2][subProp3]);
+                                                        });
+
+                                                    return tData;
+                                                }
+                                            });
+                                    } else {
+                                        tData.push(testData[prop][subProp]);
+
+                                        return tData;
+                                    }
+                                }
+                            } else {
+                                tData.push(testData[prop][subProp]);
+                            }
+                        });
+
+                    return tData;
+                }
+            });
+    }
 
     return tData;
 };
@@ -219,7 +254,7 @@ export const sleep = (ms: number): Promise<void> =>
  * @param res
  */
 export const sleepToGetData = async (res: any): Promise<void> => {
-    while (res._getData() === '') {
+    while (res._getData() === '' && res._getStatusCode() !== 301) {
         await sleep(10);
     }
 };
