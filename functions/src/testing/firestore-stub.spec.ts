@@ -1,4 +1,4 @@
-import { myData, noData } from './data.spec';
+import { myData } from './data.spec';
 import {
     getArrayStartAfterByDocument,
     getArrayStartByNumberField, getArrayWhereByField,
@@ -67,21 +67,6 @@ export const firestoreStub = {
     },
     collection(path: string, queryFn?: any): any {
         return firestoreStubEmpty.collection(myData, path, queryFn);
-    },
-    settings: undefined,
-    collectionGroup: undefined,
-    getAll: undefined,
-    listCollections: undefined,
-    runTransaction: undefined,
-    batch: undefined
-};
-
-export const firestoreStubNoData = {
-    doc(path: string): any {
-        return firestoreStubEmpty.doc(noData, path);
-    },
-    collection(path: string, queryFn?: any): any {
-        return firestoreStubEmpty.collection(noData, path, queryFn);
     },
     settings: undefined,
     collectionGroup: undefined,

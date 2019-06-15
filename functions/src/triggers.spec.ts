@@ -4,7 +4,8 @@ import * as fTest from 'firebase-functions-test';
 import * as nodemailer from 'nodemailer';
 
 import { ContactModel } from './models/contact-model';
-import { firebaseAppStub, firebaseAppStubNoData, firestoreStub, firestoreStubNoData } from './testing/index.spec';
+import { myData } from './testing/data.spec';
+import { firebaseAppStub, firestoreStub } from './testing/index.spec';
 
 let test = fTest();
 
@@ -84,6 +85,63 @@ describe('Triggers - Firestore', (): void => {
 
         expect(await wrapped(snap))
             .toEqual('Mail send succeed: admin@unittest.com');
+    });
+
+});
+
+describe('Triggers - Firestore - NoData', (): void => {
+    let myFunctions;
+    let currentConfigs;
+
+    beforeAll(() => {
+        test = fTest();
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
+        spyOn(nodemailer, 'createTransport').and.returnValue({
+            sendMail: (data): Promise<any> =>
+                // console.log(data);
+                Promise.resolve({unitTest: true})
+        });
+        currentConfigs = myData.configs;
+        delete myData.configs['private_en-US'];
+        delete myData.configs['private_tr-TR'];
+
+        // tslint:disable-next-line:no-require-imports
+        myFunctions = require('./index');
+    });
+
+    afterAll(() => {
+        test.cleanup();
+        myData.configs = currentConfigs;
+    });
+
+    it('should not send e-mail without configs/private_en-US', async () => {
+        const snap = {
+            data: (): ContactModel => (
+                {
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
+                    message: 'Hello from Unit Test', isSendCopyToOwner: true, isAgreed: true
+                })
+        };
+        const wrapped = test.wrap(myFunctions.newMessageEn);
+
+        expect(await wrapped(snap))
+            .toEqual(new Error('There is no private config!'));
+    });
+
+    it('should not send e-mail without configs/private_tr-TR', async () => {
+        const snap = {
+            data: (): ContactModel => (
+                {
+                    userLongName: 'Unit Test', email: 'my@unittest.com',
+                    message: 'Unit Test`ten Merhaba', isSendCopyToOwner: true, isAgreed: true
+                })
+        };
+        const wrapped = test.wrap(myFunctions.newMessageTr);
+
+        expect(await wrapped(snap))
+            .toEqual(new Error('There is no private config!'));
     });
 
 });

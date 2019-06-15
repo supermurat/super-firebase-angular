@@ -916,26 +916,3 @@ export const myData = {
         }
     }
 };
-
-export const noData = {
-    'articles_en-US': {},
-    'articles_tr-TR': {},
-    'blogs_en-US': {},
-    'blogs_tr-TR': {},
-    'jokes_en-US': {},
-    'jokes_tr-TR': {},
-    'pages_en-US': {},
-    'pages_tr-TR': {},
-    firstResponses: {},
-    'quotes_en-US': {},
-    'quotes_tr-TR': {},
-    'taxonomy_en-US': {},
-    'taxonomy_tr-TR': {},
-    'messages_en-US': {},
-    'messages_tr-TR': {},
-    configs: {
-        'public_en-US': {},
-        'public_tr-TR': {}
-    },
-    users: {}
-};

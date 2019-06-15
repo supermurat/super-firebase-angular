@@ -47,7 +47,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
                     });
             }
 
-            return Promise.reject('There is no private config!');
+            throw new Error('There is no private config!');
         });
 
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
@@ -90,7 +90,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
                     });
             }
 
-            return Promise.reject('There is no private config!');
+            throw new Error('There is no private config!');
         });
 
 export const newMessageEn = functions
