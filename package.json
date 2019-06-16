@@ -15,15 +15,18 @@
     "server:i18n": "ng run super-firebase-angular:server:en && ng run super-firebase-angular:server:tr",
     "server:beta:i18n": "ng run super-firebase-angular:server:beta-en && ng run super-firebase-angular:server:beta-tr",
     "server:production:i18n": "ng run super-firebase-angular:server:production-en && ng run super-firebase-angular:server:production-tr",
-    "deploy:prepare:beta": "npm run build:beta:i18n && npm run server:beta:i18n && npm run copyToPublic && npm run test:cover && npm run copyCoverageToPublic && npm run compodoc && npm run copyDocumentationToPublic",
-    "deploy:prepare:prod": "npm run build:production:i18n && npm run server:production:i18n && npm run copyToPublic && npm run test:cover && npm run copyCoverageToPublic && npm run compodoc && npm run copyDocumentationToPublic",
+    "deploy:prepare:beta": "npm run build:beta:i18n && npm run server:beta:i18n && npm run copyToPublic && npm run test:cover && npm run copyCoverageToPublic && npm run compodoc && npm run copyDocumentationToPublic && deploy:prepare:functions",
+    "deploy:prepare:prod": "npm run build:production:i18n && npm run server:production:i18n && npm run copyToPublic && npm run test:cover && npm run copyCoverageToPublic && npm run compodoc && npm run copyDocumentationToPublic && deploy:prepare:functions",
+    "deploy:prepare:functions": "npm run build:functions && npm run test:cover:functions && npm run copyFunctionsCoverageToPublic",
     "deploy:beta": "npm run deploy:prepare:beta && firebase deploy --project super-murat-beta",
     "deploy:prod": "npm run deploy:prepare:prod && firebase deploy --project supermurat-com",
     "test": "ng test",
     "test:cover": "del-cli \"./coverage\" && ng test --watch=false --code-coverage",
     "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\"",
+    "test:cover:functions": "npm --prefix \"./functions\" run test:cover",
+    "test:cover:all": "npm run test:cover && npm run test:cover:functions",
     "lint:all": "npm run lint && npm run lint:functions",
-    "lint": "ng lint && npm run stylelint&& npm run lint:html && npm run lint:md",
+    "lint": "ng lint && npm run stylelint && npm run lint:html && npm run lint:md",
     "lint:functions": "npm --prefix \"./functions\" run lint",
     "lint:md": "remark .",
     "lint:html": "htmlhint \"src\" --config .htmlhintrc",
@@ -32,7 +35,7 @@
     "e2e:browserstack": "ng e2e --configuration=browserstack",
     "e2e:browserstack:prod": "protractor e2e/protractor.browserstack.prod.conf.js",
     "e2e:browserstack:beta": "protractor e2e/protractor.browserstack.beta.conf.js",
-    "build:functions": "npm run lint:functions && npm --prefix \"./functions\" run build",
+    "build:functions": "npm --prefix \"./functions\" run build",
     "serve": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build && npm run server && npm run copyToPublic && firebase serve --project super-murat-beta",
     "serve:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:i18n && npm run server:i18n && npm run copyToPublic && firebase serve --project super-murat-beta",
     "serve:beta:i18n": "del-cli \"./functions/dist/*\" && npm run build:functions && npm run build:beta:i18n && npm run server:beta:i18n && npm run copyToPublic && firebase serve --project super-murat-beta",
@@ -42,6 +45,7 @@
     "copyToPublic": "del-cli \"./public/*\" && ncp \"./functions/dist/browser\" \"./public\" && npm run deleteIndexFromPublic",
     "copyCoverageToPublic": "ncp \"./coverage\" \"./public/coverage\"",
     "copyDocumentationToPublic": "ncp \"./documentation\" \"./public/documentation\"",
+    "copyFunctionsCoverageToPublic": "ncp \"./functions/coverage\" \"./public/functions-coverage\"",
     "deleteIndexFromPublic": "del-cli \"./public/index.html\" && del-cli \"./public/en/index.html\" && del-cli \"./public/tr/index.html\"",
     "extract:i18n": "ng xi18n --output-path locale && xliffmerge --profile xliffmerge.json",
     "stats": "ng build --stats-json && webpack-bundle-analyzer \"./functions/dist/browser/stats-es2015.json\" --host 127.0.0.1 --port 8042",
@@ -141,7 +145,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "echo 'Pre-commit: running lint...' && npm run lint && npm run lint:functions"
+      "pre-commit": "echo 'Pre-commit: running lint...' && npm run lint:all"
     }
   },
   "commitlint": {
