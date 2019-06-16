@@ -35,7 +35,7 @@
     "test:cover": "del-cli \"./coverage\" && ng test --watch=false --code-coverage",
     "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\"",
     "test:cover:functions": "npm --prefix \"./functions\" run test:cover",
-    "test:cover:all": "npm run test:cover && npm run test:cover:functions && npm run test:combine:all",
+    "test:cover:all": "npm run test:cover && npm run build:i18n && npm run server:i18n && npm run test:cover:functions && npm run test:combine:all",
     "test:combine:all": "del-cli \"./public/all-coverage\" && istanbul-combine -d \"./public/all-coverage\" -p summary -b \"./\" -r lcov -r html \"./coverage/coverage-final.json\" \"./functions/coverage/coverage-final.json\"",
     "lint:all": "npm run lint && npm run lint:functions",
     "lint": "ng lint && npm run stylelint && npm run lint:html && npm run lint:md",
