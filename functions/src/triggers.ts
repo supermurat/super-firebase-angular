@@ -5,8 +5,10 @@ import { sendMail } from './helpers';
 import { ContactModel } from './models/contact-model';
 import { PrivateConfigModel } from './models/private-config-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** send mail for new message in en-US */
 const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_en-US')
         .get()
@@ -50,6 +52,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
             throw new Error('There is no private config!');
         });
 
+/** send mail for new message in tr-TR */
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_tr-TR')
         .get()
@@ -93,6 +96,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
             throw new Error('There is no private config!');
         });
 
+/** new message trigger function for en-US */
 export const newMessageEn = functions
     // .region('europe-west1')
     .firestore
@@ -112,6 +116,7 @@ export const newMessageEn = functions
             })
     );
 
+/** new message trigger function for tr-TR */
 export const newMessageTr = functions
     // .region('europe-west1')
     .firestore

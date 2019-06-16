@@ -105,3 +105,4 @@ dist-ssr
 /temp
 /documentation
 /browserstack.err
+/functions/documentation

@@ -17,11 +17,15 @@ import * as path from 'path';
 import { FUNCTIONS_CONFIG } from './config';
 import { FirstResponseModel } from './models/first-response-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** server.js objects */
 const serverJS: any = {};
+/** index.html files */
 const indexHtml: any = {};
 
+/** unique key to manage 404 pages */
 const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key"';
 
 // istanbul ignore next
@@ -58,6 +62,7 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
 
 enableProdMode();
 
+/** express app instance */
 const app = express();
 
 app.use(compression());
@@ -72,6 +77,7 @@ app.use(csp({
     }
 }));
 
+/** get current locale */
 const getLocale = (req: express.Request): string => {
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
     // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
@@ -80,6 +86,7 @@ const getLocale = (req: express.Request): string => {
         matches[1] : FUNCTIONS_CONFIG.defaultLanguageCode;
 };
 
+/** get document ID */
 const getDocumentID = (req: express.Request): string => {
     // firestore doesn't allow "/" to be in document ID
     try {
@@ -101,6 +108,7 @@ const getDocumentID = (req: express.Request): string => {
     }
 };
 
+/** respond to SSR */
 const respondToSSR = (req: express.Request, res: express.Response, html: string): FirstResponseModel => {
     const expireDate = new Date();
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
@@ -132,6 +140,7 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
     return {code: 200, type: 'cache', content: html, expireDate, referer};
 };
 
+/** get SSR result */
 const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
 
@@ -149,6 +158,7 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
     });
 };
 
+/** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
     new Promise<FirstResponseModel>((resolve, reject): void => {
         const documentID = getDocumentID(req);
@@ -176,6 +186,7 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
         }
     });
 
+/** send 404 page to request */
 const send404Page = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
     const baseHtml = indexHtml[locale]
@@ -190,6 +201,7 @@ const send404Page = async (req: express.Request, res: express.Response): Promise
     return Promise.resolve();
 };
 
+/** check if requested URL is valid */
 const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
     if (req.url.startsWith('/?') || req.url.indexOf('?page') > -1 || req.url.indexOf('.php?') > -1) {
         // this is only for old php web site but keeping them forever would be better in case of search engines
@@ -240,6 +252,7 @@ app.get('**', (req: express.Request, res: express.Response) => {
             });
 });
 
+/** ssr function */
 export const ssr = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })

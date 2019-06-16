@@ -65,6 +65,19 @@
     "arrow-parens": [
       true,
       "ban-single-arg-parens"
+    ],
+    "completed-docs": [
+      true,
+      "classes",
+      "enums",
+      "enum-members",
+      "functions",
+      "interfaces",
+      "methods",
+      "namespaces",
+      "properties",
+      "types",
+      "variables"
     ]
   }
 }

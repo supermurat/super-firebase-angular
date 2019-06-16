@@ -10,8 +10,10 @@ import { JobModel } from './models/job-model';
 import { LocaleAlternateModel } from './models/locale-alternate-model';
 import { SiteMapUrlModel } from './models/site-map-url-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** generate site map */
 const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
     let urlList: Array<SiteMapUrlModel> = [];
@@ -70,6 +72,7 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
         });
 };
 
+/** generate SEO data */
 const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
@@ -103,6 +106,7 @@ const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promi
         );
 };
 
+/** generate JsonLD */
 const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateJsonLDs is started');
     let processedDocCount = 0;
@@ -136,6 +140,7 @@ const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promi
         );
 };
 
+/** generate locales */
 const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateLocales is started');
     let processedDocCount = 0;
@@ -193,6 +198,7 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
         );
 };
 
+/** generate description */
 const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
@@ -233,6 +239,7 @@ const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): P
         );
 };
 
+/** fix public files permissions on storage */
 const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('fixPublicFilesPermissions is started');
     const storage = new Storage();
@@ -271,6 +278,7 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
          );
 };
 
+/** clear caches */
 const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('clearCaches is started');
     let processedDocCount = 0;
@@ -319,6 +327,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         );
 };
 
+/** job runner function */
 export const jobRunner = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })

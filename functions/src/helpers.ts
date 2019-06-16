@@ -3,6 +3,7 @@ import * as nodemailer from 'nodemailer';
 import { MailModel } from './models/mail-model';
 import { PrivateConfigModel } from './models/private-config-model';
 
+/** get HTML template for e-mails */
 const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel): string => {
     let body = `
 <html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>
@@ -88,6 +89,7 @@ const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel)
     return body;
 };
 
+/** send E-Mail */
 export const sendMail = async (mailContent: MailModel, privateConfig: PrivateConfigModel): Promise<any> =>
     new Promise<any>(async (resolve, reject): Promise<any> => {
         if (privateConfig.smtp === undefined || privateConfig.mail === undefined || !privateConfig.mail.isSendMail) {

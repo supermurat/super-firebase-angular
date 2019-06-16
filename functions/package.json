@@ -16,7 +16,9 @@
     "logs:prod": "firebase functions:log --project supermurat-com",
     "test": "jasmine-ts --config=./jasmine.json",
     "test:cover": "del-cli \"./coverage\" && nyc jasmine --config=./jasmine.json",
-    "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\""
+    "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\"",
+    "typedoc": "del-cli \"./documentation\" && typedoc --tsconfig tsconfig.json --exclude **/*.spec.ts --name \"super-firebase-angular functions documentation\" --gitRevision master --out documentation ./src",
+    "typedoc:open": "npm run typedoc && open-cli \"./documentation/index.html\""
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -73,6 +75,7 @@
     "popper.js": "~1.15.0",
     "tslint": "~5.17.0",
     "ts-node": "^8.2.0",
+    "typedoc": "^0.14.2",
     "typescript": "3.4.5"
   },
   "private": true,
