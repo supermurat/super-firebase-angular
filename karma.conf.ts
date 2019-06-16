@@ -20,7 +20,7 @@ module.exports = config => {
         },
         coverageIstanbulReporter: {
             dir: require('path').join(__dirname, 'coverage'),
-            reports: ['html', 'lcovonly', 'text-summary', 'json-summary'],
+            reports: ['html', 'lcovonly', 'text-summary', 'json-summary', 'json'],
             fixWebpackSourcePaths: true
         },
         angularCli: {

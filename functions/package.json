@@ -96,7 +96,8 @@
       "html",
       "lcovonly",
       "text-summary",
-      "json-summary"
+      "json-summary",
+      "json"
     ],
     "sourceMap": true,
     "instrument": true
