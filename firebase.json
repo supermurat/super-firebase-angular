@@ -7,9 +7,7 @@
     "indexes": "firebase/firestore.indexes.json"
   },
   "functions": {
-    "predeploy": [
-      "npm run build:functions"
-    ]
+    "predeploy": []
   },
   "hosting": {
     "public": "public",

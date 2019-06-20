@@ -5,10 +5,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TransferState } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { CookieLawModule } from 'angular2-cookie-law';
+
 import { APP_CONFIG, APP_UNIT_TEST_CONFIG } from '../app-config';
 import { AlertComponent } from '../components/alert/alert.component';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -56,14 +58,17 @@ export const activatedRouteStub = new ActivatedRouteStub();
         SearchBarComponent,
         CustomHtmlComponent,
         FormsModule,
-        LoadingBarModule
+        LoadingBarModule,
+        CookieLawModule
     ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
-        LoadingBarModule
+        BrowserAnimationsModule,
+        LoadingBarModule,
+        CookieLawModule
     ],
     providers: [
         AlertService,

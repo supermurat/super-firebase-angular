@@ -9,7 +9,7 @@ export class JobModel {
     /** result of action */
     result?: string;
     /** do you want to overwrite current data */
-    overwrite?: string;
+    overwrite?: boolean;
     /** limit to get documents */
     limit?: number;
     /** custom data for job */

@@ -17,21 +17,27 @@ import * as path from 'path';
 import { FUNCTIONS_CONFIG } from './config';
 import { FirstResponseModel } from './models/first-response-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** server.js objects */
 const serverJS: any = {};
+/** index.html files */
 const indexHtml: any = {};
 
+/** unique key to manage 404 pages */
 const uniqueKeyFor404 = '"do-not-remove-me-this-is-for-only-get-404-error-on-ssr-with-unique-and-hidden-key"';
 
+// istanbul ignore next
 if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     // tslint:disable-next-line:no-var-requires no-require-imports
-    serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require('../dist/server/main');
+    serverJS[FUNCTIONS_CONFIG.defaultLanguageCode] = require(`../dist/server/main${''}`); // ${''}: to fix dynamic import issue of karma
     indexHtml[FUNCTIONS_CONFIG.defaultLanguageCode] = readFileSync(
         path.resolve(__dirname, '../dist/browser/index.html'), 'utf8')
         .toString();
 } else {
     for (const supportedLanguageCode of FUNCTIONS_CONFIG.supportedLanguageCodes) {
+        // istanbul ignore next
         if (existsSync(path.resolve(__dirname, `../dist/browser/${supportedLanguageCode}/index.html`))) {
             // tslint:disable-next-line:no-var-requires no-require-imports
             serverJS[supportedLanguageCode] = require(`../dist/server/${supportedLanguageCode}/main`);
@@ -42,6 +48,7 @@ if (existsSync(path.resolve(__dirname, '../dist/browser/index.html'))) {
     }
 }
 
+// istanbul ignore next
 if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
     !indexHtml.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode)) {
     throw new Error(`Default Language Code (${
@@ -55,6 +62,7 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
 
 enableProdMode();
 
+/** express app instance */
 const app = express();
 
 app.use(compression());
@@ -69,6 +77,7 @@ app.use(csp({
     }
 }));
 
+/** get current locale */
 const getLocale = (req: express.Request): string => {
     const matches = req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//);
     // check if the requested url has a correct format '/locale' and matches any of the supportedLocales
@@ -77,17 +86,29 @@ const getLocale = (req: express.Request): string => {
         matches[1] : FUNCTIONS_CONFIG.defaultLanguageCode;
 };
 
+/** get document ID */
 const getDocumentID = (req: express.Request): string => {
     // firestore doesn't allow "/" to be in document ID
     try {
-        return decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
-    } catch (e) {
-        console.error(e);
+        const id = decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
+        if (id === '.' ||
+            id === '..' ||
+            Buffer.byteLength(id, 'utf8') > 1500 ||
+            new RegExp('__.*__').test(id)) {
+            return undefined;
+        }
 
-        return req.url.substring(1).replace(/\//gi, '\\');
+        return id;
+    } catch (e) {
+        // istanbul ignore next
+        console.error(e, 'req.url:', req.url);
+
+        // istanbul ignore next
+        return undefined;
     }
 };
 
+/** respond to SSR */
 const respondToSSR = (req: express.Request, res: express.Response, html: string): FirstResponseModel => {
     const expireDate = new Date();
     const newUrlInfo = html.match(/--http-redirect-301--[\w\W]*--end-of-http-redirect-301--/gi);
@@ -119,38 +140,34 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
     return {code: 200, type: 'cache', content: html, expireDate, referer};
 };
 
-const getSSR = (req: express.Request, res: express.Response): void => {
+/** get SSR result */
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
 
-    renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
+    await renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
         url: req.path,
         document: indexHtml[locale]
-    }).then((html) => {
+    }).then(async html => {
         const firstResponse = respondToSSR(req, res, html);
         const documentID = getDocumentID(req);
         if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-            db.collection('firstResponses')
+            await db.collection('firstResponses')
                 .doc(documentID)
-                .set(firstResponse)
-                .catch((error) => {
-                    console.error('Error in getSSR.db.collection.set()', documentID, error);
-                });
+                .set(firstResponse);
         }
-    }).catch((err) => {
-        console.error('Error in getSSR:', err);
-        res.status(500)
-            .send(err);
     });
 };
 
+/** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
     new Promise<FirstResponseModel>((resolve, reject): void => {
         const documentID = getDocumentID(req);
+        // istanbul ignore next
         if (documentID) {
             db.collection('firstResponses')
                 .doc(documentID)
                 .get()
-                .then((snapshot) => {
+                .then(snapshot => {
                     if (!snapshot.exists) {
                         resolve();
                     } else {
@@ -159,16 +176,18 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
                         resolve({id, ...data});
                     }
                 })
-                .catch((err) => {
-                    console.error('Error in db.collection(firstResponses):', err);
-                    resolve(); // let's handle this error with SSR
-                });
+                .catch(// istanbul ignore next
+                    err => {
+                        console.error('Error in db.collection(firstResponses):', err);
+                        resolve(); // let's handle this error with SSR
+                    });
         } else {
             resolve();
         }
     });
 
-const send404Page = (req: express.Request, res: express.Response): void => {
+/** send 404 page to request */
+const send404Page = async (req: express.Request, res: express.Response): Promise<void> => {
     const locale = getLocale(req);
     const baseHtml = indexHtml[locale]
         .replace(/<title>[^<]*<\/title>/g, '<title>404 - Page not found</title>')
@@ -178,51 +197,62 @@ const send404Page = (req: express.Request, res: express.Response): void => {
 
     res.status(404)
         .send(baseHtml);
+
+    return Promise.resolve();
 };
 
-const ifUrlIsInvalidSend404Page = (req: express.Request, res: express.Response): boolean => {
+/** check if requested URL is valid */
+const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
     if (req.url.startsWith('/?') || req.url.indexOf('?page') > -1 || req.url.indexOf('.php?') > -1) {
         // this is only for old php web site but keeping them forever would be better in case of search engines
         // a url like that won't be ok anymore
-        send404Page(req, res);
+        await send404Page(req, res);
 
-        return true;
+        return Promise.resolve(false);
     }
 
-    return false;
+    return Promise.resolve(true);
 };
 
 app.get('**', (req: express.Request, res: express.Response) => {
-    if (ifUrlIsInvalidSend404Page(req, res)) {
-        return;
-    }
-    checkFirstResponse(req, res)
-        .then((firstResponse: FirstResponseModel) => {
-            if (firstResponse && firstResponse.code === 301) {
-                res.redirect(firstResponse.code, firstResponse.url);
-            } else if (firstResponse && firstResponse.code === 404) {
-                send404Page(req, res);
-            } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
-                const fileNameParts = firstResponse.id.split('.');
-                const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
-                res.status(200)
-                    .type(fileExt)
-                    .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
-            } else if (FUNCTIONS_CONFIG.cacheResponses &&
-                firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
-                (firstResponse.expireDate === undefined || firstResponse.expireDate.toDate() > new Date())) {
-                respondToSSR(req, res, firstResponse.content);
-            } else {
-                getSSR(req, res);
+    isUrlValid(req, res)
+        .then(async isValid => {
+            if (isValid) {
+                await checkFirstResponse(req, res)
+                    .then(async (firstResponse: FirstResponseModel): Promise<void> => {
+                        if (firstResponse && firstResponse.code === 301) {
+                            res.redirect(firstResponse.code, firstResponse.url);
+                        } else if (firstResponse && firstResponse.code === 404) {
+                            await send404Page(req, res);
+                        } else if (firstResponse && firstResponse.code === 200 && firstResponse.type === 'file') {
+                            const fileNameParts = firstResponse.id.split('.');
+                            const fileExt = `.${fileNameParts[fileNameParts.length - 1]}`;
+                            res.status(200)
+                                .type(fileExt)
+                                .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
+                        } else if (FUNCTIONS_CONFIG.cacheResponses &&
+                            firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
+                            (firstResponse.expireDate === undefined || firstResponse.expireDate > new Date())) {
+                            respondToSSR(req, res, firstResponse.content);
+                        } else {
+                            await getSSR(req, res);
+                        }
+
+                        return Promise.resolve();
+                    });
             }
-        })
-        .catch((err) => {
-            console.error('Error in checkFirstResponse:', err);
-            res.status(500)
-                .send(err);
-        });
+
+            return Promise.resolve();
+        }).catch(
+            // istanbul ignore next
+            err => {
+                console.error(err);
+                res.status(500)
+                    .send(err);
+            });
 });
 
+/** ssr function */
 export const ssr = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })

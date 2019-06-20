@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
@@ -19,6 +19,12 @@ export class AppComponent implements OnInit {
     httpStatus$: Observable<HttpStatusModel>;
     /** json-LD */
     jsonLD$: Observable<SafeHtml>;
+
+    /** cookieLaw element */
+    @ViewChild('cookieLaw', { static: false }) cookieLawEl: any;
+
+    /** scroll handler */
+    private scrollHandler: any;
 
     /**
      * constructor of AppComponent
@@ -64,5 +70,13 @@ export class AppComponent implements OnInit {
             });
         this.httpStatus$ = this.seo.getHttpStatus();
         this.jsonLD$ = this.seo.getJsonLD();
+
+        this.scrollHandler = this.renderer.listen('window', 'scroll', event => {
+            // istanbul ignore next
+            if (this.cookieLawEl) {
+                this.cookieLawEl.dismiss();
+                this.scrollHandler();
+            }
+        });
     }
 }

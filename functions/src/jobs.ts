@@ -7,10 +7,13 @@ import * as sitemap from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel } from './models/job-model';
+import { LocaleAlternateModel } from './models/locale-alternate-model';
 import { SiteMapUrlModel } from './models/site-map-url-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** generate site map */
 const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
     let urlList: Array<SiteMapUrlModel> = [];
@@ -25,18 +28,18 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
         }
     }
     if (!hostname) {
-        console.error('You have to provide a hostname with customData for sitemap!');
+        throw new Error('You have to provide a hostname with customData for sitemap!');
     }
 
-    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
-        Promise.all(collections.map(async (collectionPrefix) =>
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async cultureCode =>
+        Promise.all(collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
-                .then(async (mainDocsSnapshot) =>
-                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                .then(async mainDocsSnapshot =>
+                    Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
                         const languageCode = cultureCode.substring(0, 2);
                         // tslint:disable-next-line:no-string-literal
-                        const img = mainDoc.hasOwnProperty('image') ? mainDoc['image']['src'] : undefined;
+                        const img = mData.hasOwnProperty('image') ? mData['image']['src'] : undefined;
                         urlList.push({
                             url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
                             changefreq: (collectionPrefix === 'pages' || collectionPrefix === 'taxonomy')
@@ -45,13 +48,11 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                         });
 
                         return Promise.resolve();
-                    })))
-                .catch((err) => {
-                    console.error('db.collection().get()', err);
-                })
+                    }))
+                )
         ))
     ))
-        .then(async (values) => {
+        .then(async values => {
             const sm = sitemap.createSitemap({
                 hostname,
                 cacheTime: 600000, // 600 sec - cache purge period
@@ -64,31 +65,24 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 // tslint:disable-next-line:promise-function-async
                 .then(() =>
                     snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true})
-                        .then(() => {
-                            console.log(`generateSiteMap is finished. Count of urls: ${urlList.length}`);
-                        })
-                        .catch((err) => {
-                            console.error('snap.ref.set()', err);
-                        }))
-                .catch((err) => {
-                    console.error('db.collection().doc().set()', err);
-                });
-        })
-        .catch((err) => {
-            console.error('Promise.all', err);
+                        .then(() =>
+                            Promise.resolve(`generateSiteMap is finished. Count of urls: ${urlList.length}`)
+                        )
+                );
         });
 };
 
+/** generate SEO data */
 const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
 
-    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
-        Promise.all(collections.map(async (collectionPrefix) =>
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async cultureCode =>
+        Promise.all(collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
-                .then(async (mainDocsSnapshot) =>
-                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                .then(async mainDocsSnapshot =>
+                    Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
                         if (!mData.hasOwnProperty('seo') || jobData.overwrite) {
                             const seo = {};
@@ -96,86 +90,67 @@ const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                             return mainDoc.ref.set({seo}, {merge: true})
                                 .then(() => {
                                     processedDocCount++;
-                                })
-                                .catch((err) => {
-                                    console.error('mainDoc.ref.set()', err);
                                 });
                         }
 
                         return Promise.resolve();
-                    })))
-                .catch((err) => {
-                    console.error('db.collection().get()', err);
-                })
+                    }))
+                )
         ))
     ))
-        .then(async (values) =>
+        .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`)
+                )
+        );
 };
 
+/** generate JsonLD */
 const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateJsonLDs is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
 
-    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
-        Promise.all(collections.map(async (collectionPrefix) =>
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async cultureCode =>
+        Promise.all(collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
-                .then(async (mainDocsSnapshot) =>
-                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                .then(async mainDocsSnapshot =>
+                    Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
-                        const routePath = mData.hasOwnProperty('routePath') ? mData.routePath : '';
                         if (!mData.hasOwnProperty('jsonLDs') || jobData.overwrite) {
                             const jsonLDs = [];
 
                             return mainDoc.ref.set({jsonLDs}, {merge: true})
                                 .then(() => {
                                     processedDocCount++;
-                                })
-                                .catch((err) => {
-                                    console.error('mainDoc.ref.set()', err);
                                 });
                         }
 
                         return Promise.resolve();
-                    })))
-                .catch((err) => {
-                    console.error('db.collection().get()', err);
-                })
+                    }))
+                )
         ))
     ))
-        .then(async (values) =>
+        .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`)
+                )
+        );
 };
 
+/** generate locales */
 const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateLocales is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
 
-    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
-        Promise.all(collections.map(async (collectionPrefix) =>
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async cultureCode =>
+        Promise.all(collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
-                .then(async (mainDocsSnapshot) =>
-                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                .then(async mainDocsSnapshot =>
+                    Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
                         if (!mData.hasOwnProperty('locales') || jobData.overwrite) {
                             const alternateCultureCodes = FUNCTIONS_CONFIG.supportedCultureCodes.slice();
@@ -183,12 +158,12 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                             delete alternateCultureCodes[alternateCultureCodes.indexOf(cultureCode)];
                             const locales = [] as Array<LocaleAlternateModel>;
 
-                            return Promise.all(alternateCultureCodes.map(async (cultureCodeAlt) =>
+                            return Promise.all(alternateCultureCodes.map(async cultureCodeAlt =>
                                 db.collection(`${collectionPrefix}_${cultureCodeAlt}`)
                                     .where('i18nKey', '==', mData.i18nKey)
                                     .limit(1)
                                     .get()
-                                    .then(async (documentSnapshots) => {
+                                    .then(async documentSnapshots => {
                                         if (documentSnapshots.docs.length > 0) {
                                             const languageCodeAlt = cultureCodeAlt.substring(0, 2);
                                             const mainDocAlt = documentSnapshots.docs[0];
@@ -202,50 +177,38 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
 
                                         return Promise.resolve();
                                     })
-                                    .catch((err) => {
-                                        console.error('db.collection({collectionPrefix}_{cultureCodeAlt}).get()', err);
-                                    })
-                            )).then(async (values) =>
+                            )).then(async values =>
                                 mainDoc.ref.set({locales}, {merge: true})
                                     .then(() => {
                                         processedDocCount++;
-                                    })
-                                    .catch((err) => {
-                                        console.error('mainDoc.ref.set()', err);
                                     })
                             );
                         }
 
                         return Promise.resolve();
-                    })))
-                .catch((err) => {
-                    console.error('db.collection().get()', err);
-                })
+                    }))
+                )
         ))
     ))
-        .then(async (values) =>
+        .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateLocales is finished. Count of processed documents: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`generateLocales is finished. Count of processed documents: ${processedDocCount}`)
+                )
+        );
 };
 
+/** generate description */
 const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
 
-    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async (cultureCode) =>
-        Promise.all(collections.map(async (collectionPrefix) =>
+    return Promise.all(FUNCTIONS_CONFIG.supportedCultureCodes.map(async cultureCode =>
+        Promise.all(collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
-                .then(async (mainDocsSnapshot) =>
-                    Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+                .then(async mainDocsSnapshot =>
+                    Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
                         if (!mData.hasOwnProperty('description') || jobData.overwrite) {
                             let cleanText = mData.contentSummary ? h2p(mData.contentSummary) :
@@ -260,32 +223,23 @@ const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): P
                             return mainDoc.ref.set({description}, {merge: true})
                                 .then(() => {
                                     processedDocCount++;
-                                })
-                                .catch((err) => {
-                                    console.error('mainDoc.ref.set()', err);
                                 });
                         }
 
                         return Promise.resolve();
-                    })))
-                .catch((err) => {
-                    console.error('db.collection().get()', err);
-                })
+                    }))
+                )
         ))
     ))
-        .then(async (values) =>
+        .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`generateDescription is finished. Count of processed documents: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`generateDescription is finished. Count of processed documents: ${processedDocCount}`)
+                )
+        );
 };
 
+/** fix public files permissions on storage */
 const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('fixPublicFilesPermissions is started');
     const storage = new Storage();
@@ -298,10 +252,10 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
         prefix: 'publicFiles',
         autoPaginate: false
     })
-         .then(async (allFiles) => {
+         .then(async allFiles => {
              const files = allFiles[0];
 
-             return Promise.all(files.map(async (file) => {
+             return Promise.all(files.map(async file => {
                      if (file.name.endsWith('/')) {
                          return Promise.resolve();
                      }
@@ -309,28 +263,22 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
                      return file.acl.add({
                          entity: 'allUsers',
                          role: storage.acl.READER_ROLE
-                     }).then((info) => {
+                     }).then(info => {
                          // console.log(info); // this "info" contains lots of cool info about file
                          processedDocCount++;
-                     }).catch((err) => {
-                         console.error('file.acl.add()', err);
                      });
                  }
              ));
          })
-         .then(async (values) =>
+         .then(async values =>
             snap.ref.set({result: `Count of processed files: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`)
+                )
+         );
 };
 
+/** clear caches */
 const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('clearCaches is started');
     let processedDocCount = 0;
@@ -356,8 +304,8 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         .where('type', '==', 'cache')
         .limit(jobData.limit)
         .get()
-        .then(async (mainDocsSnapshot) =>
-            Promise.all(mainDocsSnapshot.docs.map(async (mainDoc) => {
+        .then(async mainDocsSnapshot =>
+            Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                 if (expireDate && mainDoc.data().expireDate > expireDate) {
                     // to keep newly created caches
                     return Promise.resolve();
@@ -369,24 +317,17 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
                 return mainDoc.ref.delete()
                     .then(() => {
                         processedDocCount++;
-                    })
-                    .catch((err) => {
-                        console.error('mainDoc.ref.delete()', err);
                     });
             })))
-        .then(async (values) =>
+        .then(async values =>
             snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() => {
-                    console.log(`clearCaches is finished. Count of processed documents: ${processedDocCount}`);
-                })
-                .catch((err) => {
-                    console.error('snap.ref.set()', err);
-                }))
-        .catch((err) => {
-            console.error('Promise.all', err);
-        });
+                .then(() =>
+                    Promise.resolve(`clearCaches is finished. Count of processed documents: ${processedDocCount}`)
+                )
+        );
 };
 
+/** job runner function */
 export const jobRunner = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
@@ -396,26 +337,40 @@ export const jobRunner = functions
     .onCreate((snap, context) => {
         console.log('jobRunner is started');
         const jobData = snap.data() as JobModel;
+        let job: Promise<any>;
         if (jobData.actionKey === 'generateSiteMap') {
-            return generateSiteMap(snap, jobData);
+            job = generateSiteMap(snap, jobData);
         }
         if (jobData.actionKey === 'generateSEOData') {
-            return generateSEOData(snap, jobData);
+            job = generateSEOData(snap, jobData);
         }
         if (jobData.actionKey === 'generateJsonLDs') {
-            return generateJsonLDs(snap, jobData);
+            job = generateJsonLDs(snap, jobData);
         }
         if (jobData.actionKey === 'generateLocales') {
-            return generateLocales(snap, jobData);
+            job = generateLocales(snap, jobData);
         }
         if (jobData.actionKey === 'generateDescription') {
-            return generateDescription(snap, jobData);
+            job = generateDescription(snap, jobData);
         }
         if (jobData.actionKey === 'fixPublicFilesPermissions') {
-            return fixPublicFilesPermissions(snap, jobData);
+            job = fixPublicFilesPermissions(snap, jobData);
         }
         if (jobData.actionKey === 'clearCaches') {
-            return clearCaches(snap, jobData);
+            job = clearCaches(snap, jobData);
+        }
+        if (job) {
+            return job
+                .then(value => {
+                    console.log(value);
+
+                    return value;
+                })
+                .catch(err => {
+                    console.error('functions.onCreate', err);
+
+                    return err;
+                });
         }
 
         return Promise.resolve();

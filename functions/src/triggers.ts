@@ -5,12 +5,14 @@ import { sendMail } from './helpers';
 import { ContactModel } from './models/contact-model';
 import { PrivateConfigModel } from './models/private-config-model';
 
+/** firestore instance */
 const db = admin.firestore();
 
+/** send mail for new message in en-US */
 const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_en-US')
         .get()
-        .then(async (doc) => {
+        .then(async doc => {
             if (doc.exists) {
                 const privateConfig = doc.data() as PrivateConfigModel;
                 const mailContent = `Hi Admin, <br><br> You have got a message from ${
@@ -33,7 +35,7 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
                     subject: `You Have Got a Message - ${privateConfig.mail.siteName}`,
                     html: mailContent
                 },              privateConfig)
-                    .then(async (value) => {
+                    .then(async value => {
                         if (newMessageData.isSendCopyToOwner) {
                             return sendMail({
                                 to: newMessageData.email,
@@ -43,19 +45,18 @@ const sendMailForNewMessageEn = async (newMessageData: ContactModel): Promise<an
                             },              privateConfig);
                         }
 
-                        return Promise.resolve();
+                        return Promise.resolve(value);
                     });
             }
 
-            return Promise.reject('There is no private config!');
-        }).catch((error) => {
-            console.log('Error getting document:', error);
+            throw new Error('There is no private config!');
         });
 
+/** send mail for new message in tr-TR */
 const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<any> =>
     db.doc('configs/private_tr-TR')
         .get()
-        .then(async (doc) => {
+        .then(async doc => {
             if (doc.exists) {
                 const privateConfig = doc.data() as PrivateConfigModel;
                 const mailContent = `Merhaba Admin, <br><br> ${
@@ -78,7 +79,7 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
                     subject: `Bir Mesajınız Var - ${privateConfig.mail.siteName}`,
                     html: mailContent
                 },              privateConfig)
-                    .then(async (value) => {
+                    .then(async value => {
                         if (newMessageData.isSendCopyToOwner) {
                             return sendMail({
                                 to: newMessageData.email,
@@ -88,27 +89,49 @@ const sendMailForNewMessageTr = async (newMessageData: ContactModel): Promise<an
                             },              privateConfig);
                         }
 
-                        return Promise.resolve();
+                        return Promise.resolve(value);
                     });
             }
 
-            return Promise.reject('There is no private config!');
-        }).catch((error) => {
-        console.log('Error getting document:', error);
-    });
+            throw new Error('There is no private config!');
+        });
 
+/** new message trigger function for en-US */
 export const newMessageEn = functions
     // .region('europe-west1')
     .firestore
     .document('messages_en-US/{messageId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) =>
-        sendMailForNewMessageEn(snap.data()));
+        sendMailForNewMessageEn(snap.data())
+            .then(value => {
+                console.log(value);
 
+                return value;
+            })
+            .catch(err => {
+                console.error('functions.onCreate', err);
+
+                return err;
+            })
+    );
+
+/** new message trigger function for tr-TR */
 export const newMessageTr = functions
     // .region('europe-west1')
     .firestore
     .document('messages_tr-TR/{messageId}')
     // tslint:disable-next-line:promise-function-async
     .onCreate((snap, context) =>
-        sendMailForNewMessageTr(snap.data()));
+        sendMailForNewMessageTr(snap.data())
+            .then(value => {
+                console.log(value);
+
+                return value;
+            })
+            .catch(err => {
+                console.error('functions.onCreate', err);
+
+                return err;
+            })
+    );
