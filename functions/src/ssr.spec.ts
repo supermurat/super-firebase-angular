@@ -217,7 +217,7 @@ describe('SSR', (): void => {
             expect(res._getStatusCode())
                 .toEqual(200);
             expect(res._getData())
-                .toContain('<title>Super Murat Test - My Articles</title>');
+                .toContain(' - My Articles</title>');
         });
 
         it('should get articles for tr-TR', async () => {
@@ -233,7 +233,7 @@ describe('SSR', (): void => {
             expect(res._getStatusCode())
                 .toEqual(200);
             expect(res._getData())
-                .toContain('<title>Süper Murat Test - Makalelerim</title>');
+                .toContain(' - Makalelerim</title>');
         });
 
         it('should get first-cache', async () => {
