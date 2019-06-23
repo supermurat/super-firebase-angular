@@ -100,6 +100,8 @@
       "json"
     ],
     "sourceMap": true,
-    "instrument": true
+    "instrument": true,
+    "all": true,
+    "check-coverage": true
   }
 }

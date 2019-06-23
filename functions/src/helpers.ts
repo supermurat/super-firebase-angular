@@ -1,7 +1,6 @@
 import * as nodemailer from 'nodemailer';
 
-import { MailModel } from './models/mail-model';
-import { PrivateConfigModel } from './models/private-config-model';
+import { MailModel, PrivateConfigModel } from './models';
 
 /** get HTML template for e-mails */
 const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel): string => {

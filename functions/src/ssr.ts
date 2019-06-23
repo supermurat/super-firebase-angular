@@ -15,7 +15,7 @@ import * as csp from 'helmet-csp';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { FirstResponseModel } from './models/first-response-model';
+import { FirstResponseModel } from './models';
 
 /** firestore instance */
 const db = admin.firestore();
