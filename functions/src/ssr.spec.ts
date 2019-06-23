@@ -143,7 +143,7 @@ describe('SSR', (): void => {
             expect(res._getStatusCode())
                 .toEqual(200);
             expect(res._getData())
-                .toContain('<title>Super Murat Test - My Articles</title>');
+                .toContain(' - My Articles</title>');
         });
 
         it('should get makaleler for tr-TR', async () => {
@@ -159,7 +159,7 @@ describe('SSR', (): void => {
             expect(res._getStatusCode())
                 .toEqual(200);
             expect(res._getData())
-                .toContain('<title>Süper Murat Test - Makalelerim</title>');
+                .toContain(' - Makalelerim</title>');
         });
 
         it('should redirect to articles for en-US', async () => {
