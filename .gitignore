@@ -99,10 +99,10 @@ dist-ssr
 /out-tsc
 /public
 /functions/lib
+/functions/test
 /.firebase
 /.firebaserc
-/functions/package-lock.json
-/package-lock.json
 /temp
 /documentation
 /browserstack.err
+/functions/documentation

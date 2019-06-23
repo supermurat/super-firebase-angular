@@ -7,14 +7,14 @@ addons:
     access_key: "$BROWSERSTACK_ACCESS_KEY"
 language: node_js
 node_js:
-  - "8"
+  - "10"
 before_install:
   - echo "TRAVIS_BRANCH:$TRAVIS_BRANCH"
   - echo "TRAVIS_PULL_REQUEST:$TRAVIS_PULL_REQUEST"
   - echo "TRAVIS_PULL_REQUEST_BRANCH:$TRAVIS_PULL_REQUEST_BRANCH"
   - echo "TRAVIS_TAG:$TRAVIS_TAG"
-  - nvm install 8
-  - npm i -g firebase-tools@6.3.1 @angular/cli@7.3.0 selenium-webdriver @commitlint/travis-cli
+  - nvm install 10
+  - npm i -g firebase-tools@6.10.0 @angular/cli@8.0.1 selenium-webdriver @commitlint/travis-cli
 install:
   - npm i -g ncp del-cli @compodoc/compodoc
   - npm install
@@ -23,20 +23,20 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
-  - ng -v
+  - ng version
 script:
   - commitlint-travis
-  - npm run lint
+  - npm run lint:all
   - npm run e2e:browserstack
-  - if [[ ($TRAVIS_BRANCH != "beta" && $TRAVIS_BRANCH != "master") || "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run test:cover; else echo "!Skipped to run test:cover!"; fi
+  - if [[ ($TRAVIS_BRANCH != "beta" && $TRAVIS_BRANCH != "master") || "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run test:cover:all; else echo "!Skipped to run test:cover!"; fi
   - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:beta; else echo "!Skipped to run deploy:prepare:beta!"; fi
   - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:prod; else echo "!Skipped to run deploy:prepare:prod!"; fi
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
+  - cat ./public/all-coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./public/all-coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
 after_success:
   - echo "!after_success!"
-  - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-beta --token "$FIREBASE_TOKEN_BETA" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:beta!"; fi
-  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN_PROD" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to run firebase:deploy:prod!"; fi
+  - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-beta --token "$FIREBASE_TOKEN_BETA" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to deploy firebase:beta!"; fi
+  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project supermurat-com --token "$FIREBASE_TOKEN_PROD" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to deploy firebase:prod!"; fi
 after_failure:
   - echo "!after_failure!"
 after_script:

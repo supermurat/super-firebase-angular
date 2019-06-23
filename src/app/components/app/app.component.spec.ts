@@ -1,5 +1,6 @@
 import { PLATFORM_ID } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { environment } from '../../../environments/environment';
@@ -84,6 +85,20 @@ describe('AppComponent', () => {
 
         expect(comp.router.url)
             .toEqual('/http-404');
+    }));
+
+    it('window.onScroll should dismiss cookieLaw', fakeAsync(() => {
+        tick();
+        expect(comp.cookieLawEl)
+            .toBeDefined();
+        const container = fixture.debugElement.query(By.css('main.container'));
+        const newDiv = document.createElement('div');
+        newDiv.style.width = '100px';
+        newDiv.style.height = '3000px';
+        container.nativeElement.parentElement.appendChild(newDiv);
+        window.scrollTo(0, 600);
+        expect(window.pageYOffset)
+            .toBe(600);
     }));
 
 });

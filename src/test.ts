@@ -1,4 +1,4 @@
-// this file is required by karma.conf.js and loads recursively all the .spec and framework files
+// this file is required by karma.conf.ts and loads recursively all the .spec and framework files
 
 // tslint:disable:ordered-imports
 import 'zone.js/dist/long-stack-trace-zone';
