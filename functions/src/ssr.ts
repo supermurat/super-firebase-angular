@@ -232,7 +232,7 @@ app.get('**', (req: express.Request, res: express.Response) => {
                                 .send(firstResponse.content.replace(/\\r\\n/g, '\r\n'));
                         } else if (FUNCTIONS_CONFIG.cacheResponses &&
                             firstResponse && firstResponse.code === 200 && firstResponse.type === 'cache' &&
-                            (firstResponse.expireDate === undefined || firstResponse.expireDate > new Date())) {
+                            (!firstResponse.expireDate || firstResponse.expireDate.seconds * 1000 > new Date().getTime())) {
                             respondToSSR(req, res, firstResponse.content);
                         } else {
                             await getSSR(req, res);

@@ -6,7 +6,7 @@ import * as h2p from 'html2plaintext';
 import * as sitemap from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
-import { JobModel, LocaleAlternateModel, SiteMapUrlModel } from './models/';
+import { JobModel, LocaleAlternateModel } from './models/';
 
 /** firestore instance */
 const db = admin.firestore();
@@ -14,7 +14,7 @@ const db = admin.firestore();
 /** generate site map */
 const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
-    let urlList: Array<SiteMapUrlModel> = [];
+    let urlList: Array<sitemap.SitemapItemOptions> = [];
     let hostname: string;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
     if (jobData.hasOwnProperty('customData')) {
@@ -41,7 +41,7 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                         urlList.push({
                             url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
                             changefreq: (collectionPrefix === 'pages' || collectionPrefix === 'taxonomy')
-                                ? 'daily' : 'weekly',
+                                ? sitemap.EnumChangefreq.DAILY : sitemap.EnumChangefreq.WEEKLY,
                             img
                         });
 
@@ -282,9 +282,9 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
     let processedDocCount = 0;
     let expireDate;
     let codeListToDelete;
-    if (jobData.customData !== undefined) {
+    if (jobData.customData) {
         if (jobData.customData.hasOwnProperty('expireDate')) {
-            expireDate = jobData.customData.expireDate;
+            expireDate = new Date(jobData.customData.expireDate.seconds * 1000);
         }
         if (jobData.customData.hasOwnProperty('expireDateDayDiff')) {
             expireDate = new Date();
@@ -294,7 +294,7 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
             codeListToDelete = jobData.customData.codeListToDelete;
         }
     }
-    if (jobData.limit === undefined) {
+    if (!jobData.limit) {
         jobData.limit = 5000;
     }
 
@@ -304,11 +304,12 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
         .get()
         .then(async mainDocsSnapshot =>
             Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
-                if (expireDate && mainDoc.data().expireDate > expireDate) {
+                const mainDocData = mainDoc.data();
+                if (expireDate && mainDocData.expireDate && mainDocData.expireDate.seconds * 1000 > expireDate.getTime()) {
                     // to keep newly created caches
                     return Promise.resolve();
                 }
-                if (codeListToDelete && codeListToDelete.indexOf(mainDoc.data().code) === -1) {
+                if (codeListToDelete && codeListToDelete.indexOf(mainDocData.code) === -1) {
                     return Promise.resolve();
                 }
 

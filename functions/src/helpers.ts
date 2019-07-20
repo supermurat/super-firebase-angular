@@ -91,7 +91,7 @@ const getHTMLTemplate = (mailContent: string, privateConfig: PrivateConfigModel)
 /** send E-Mail */
 export const sendMail = async (mailContent: MailModel, privateConfig: PrivateConfigModel): Promise<any> =>
     new Promise<any>(async (resolve, reject): Promise<any> => {
-        if (privateConfig.smtp === undefined || privateConfig.mail === undefined || !privateConfig.mail.isSendMail) {
+        if (!privateConfig.smtp || !privateConfig.mail || !privateConfig.mail.isSendMail) {
             console.log(`Mail send skipped: ${mailContent.to}`);
 
             resolve(`Mail send skipped: ${mailContent.to}`);

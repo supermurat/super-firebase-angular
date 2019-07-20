@@ -254,7 +254,7 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({
                     actionKey: 'clearCaches',
                     customData: {
-                        expireDate: new Date().setDate(Number(new Date().getDate()) + 20)
+                        expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) + 20) / 1000)}
                     }
                 }),
                 ref: {

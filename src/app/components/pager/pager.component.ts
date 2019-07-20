@@ -49,7 +49,7 @@ export class PagerComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         this.subscription = this.pagerService.getPagerModel()
             .subscribe(pagerModel => {
-                if (pagerModel.pagePath === undefined) {
+                if (!pagerModel.pagePath) {
                     pagerModel.pagePath = this.pageService.getRoutePath();
                 }
                 if (!pagerModel.currentPageNo || pagerModel.currentPageNo < 1 || pagerModel.currentPageNo > pagerModel.maxPageNo) {

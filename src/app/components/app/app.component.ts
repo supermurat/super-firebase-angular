@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
 import { ConfigModel, HttpStatusModel } from '../../models';
-import { AlertService, ConfigService, PageService, PaginationService, SeoService } from '../../services';
+import { AlertService, ConfigService, JsonLDService, PageService, PaginationService, SeoService } from '../../services';
 
 /**
  * App Component
@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
      * @param renderer: Renderer2
      * @param router: Router
      * @param seo: SeoService
+     * @param jsonLDService: JsonLDService
      * @param alert: AlertService
      * @param pagination: PaginationService
      * @param configService: ConfigService
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
                 private readonly renderer: Renderer2,
                 public router: Router,
                 public seo: SeoService,
+                public jsonLDService: JsonLDService,
                 public alert: AlertService,
                 public pagination: PaginationService,
                 public configService: ConfigService,
@@ -69,7 +71,7 @@ export class AppComponent implements OnInit {
                 this.seo.configSEO = config.configSEO;
             });
         this.httpStatus$ = this.seo.getHttpStatus();
-        this.jsonLD$ = this.seo.getJsonLD();
+        this.jsonLD$ = this.jsonLDService.getJsonLD();
 
         this.scrollHandler = this.renderer.listen('window', 'scroll', event => {
             // istanbul ignore next
