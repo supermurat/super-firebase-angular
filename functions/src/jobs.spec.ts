@@ -2,7 +2,7 @@
 import * as admin from 'firebase-admin';
 import * as fTest from 'firebase-functions-test';
 
-import { JobModel } from './models/job-model';
+import { JobModel } from './models';
 import { firebaseAppStub, firestoreStub, storageStub } from './testing/index.spec';
 
 let test = fTest();
@@ -254,7 +254,7 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({
                     actionKey: 'clearCaches',
                     customData: {
-                        expireDate: new Date().setDate(Number(new Date().getDate()) + 20)
+                        expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) + 20) / 1000)}
                     }
                 }),
                 ref: {

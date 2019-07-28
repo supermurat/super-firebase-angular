@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+// tslint:disable:max-line-length max-file-line-count
 export const myData = {
     'articles_en-US': {
         'first-article': {

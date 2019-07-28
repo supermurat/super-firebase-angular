@@ -11,9 +11,9 @@ export class FirstResponseModel {
     /** content of object */
     content?: string;
     /** expire date */
-    expireDate?: any;
+    expireDate?: any = {seconds: undefined};
     /** last update date */
-    changed?: any;
+    changed?: any = {seconds: undefined};
     /** referer web site */
     referer?: string;
 }

@@ -189,15 +189,21 @@
         
       <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">63</context></context-group></trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
-        <source>PM</source>
+        <source><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></source>
         <target>ÖS</target>
         
       <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">71</context></context-group></trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
-        <source>AM</source>
+        <source><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></source>
         <target>ÖÖ</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context><context context-type="linenumber">72</context></context-group></trans-unit><trans-unit id="ngb.toast.close-aria" datatype="html">
+        <source>Close</source><target state="translated">Kapat</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/toast/toast.d.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit><trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
         <source>
     <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
 </source><target state="translated"><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>Gezinmeye devam ederek, çerezleri kullanmamızı kabul ediyorsunuz.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></target>

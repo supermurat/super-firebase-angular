@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import * as fTest from 'firebase-functions-test';
 import * as nodemailer from 'nodemailer';
 
-import { ContactModel } from './models/contact-model';
+import { ContactModel } from './models';
 import { myData } from './testing/data.spec';
 import { firebaseAppStub, firestoreStub } from './testing/index.spec';
 
