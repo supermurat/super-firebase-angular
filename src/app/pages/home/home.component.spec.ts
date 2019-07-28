@@ -77,7 +77,7 @@ describe('HomeComponent', () => {
                 comp.configService.init(config);
             });
         tick();
-        // tslint:disable-next-line:no-life-cycle-call
+        // tslint:disable-next-line:no-lifecycle-call
         comp.ngOnInit();
         tick();
         expect(comp.customHtml.title)

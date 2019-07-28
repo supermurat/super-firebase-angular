@@ -3,8 +3,7 @@ import * as admin from 'firebase-admin';
 import * as fTest from 'firebase-functions-test';
 import * as nodemailer from 'nodemailer';
 
-import { MailModel } from './models/mail-model';
-import { PrivateConfigModel } from './models/private-config-model';
+import { MailModel, PrivateConfigModel } from './models';
 import { firebaseAppStub, firestoreStub, storageStub } from './testing/index.spec';
 
 let test = fTest();

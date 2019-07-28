@@ -18,7 +18,7 @@
       ["app"],
       "camelCase"
     ],
-    "i18n": [
+    "template-i18n": [
       true,
       "check-text"
     ],

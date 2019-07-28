@@ -2,8 +2,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
 import { sendMail } from './helpers';
-import { ContactModel } from './models/contact-model';
-import { PrivateConfigModel } from './models/private-config-model';
+import { ContactModel, PrivateConfigModel } from './models';
 
 /** firestore instance */
 const db = admin.firestore();

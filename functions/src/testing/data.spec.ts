@@ -473,19 +473,19 @@ export const myData = {
     firstResponses: {
         'first-cache': {
             id: 'first-cache', code: 200, type: 'cache', content: '<html>First Cache</html>',
-            expireDate: new Date().setDate(Number(new Date().getDate()) + 30)
+            expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) + 30) / 1000)}
         },
         'second-cache': {
             id: 'second-cache', code: 404, type: 'cache',
-            expireDate: new Date().setDate(Number(new Date().getDate()) + 15)
+            expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) + 15) / 1000)}
         },
         'third-cache': {
             id: 'third-cache', code: 404, type: 'cache',
-            expireDate: new Date().setDate(Number(new Date().getDate()) - 10)
+            expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) - 10) / 1000)}
         },
         'forth-cache': {
             id: 'forth-cache', code: 301, type: 'cache', url: '/first-cache',
-            expireDate: new Date().setDate(Number(new Date().getDate()) - 5)
+            expireDate: {seconds: Math.round(new Date().setDate(Number(new Date().getDate()) - 5) / 1000)}
         },
         'fifth-cache': {
             id: 'fifth-cache', code: 200, type: 'cache', content: '<html>Fifth Cache</html>'

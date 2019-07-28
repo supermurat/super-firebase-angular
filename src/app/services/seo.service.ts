@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { APP_CONFIG, InterfaceAppConfig } from '../app-config';
 import { ConfigSeoModel, HtmlLinkElementModel, HttpStatusModel, PageBaseModel } from '../models';
+import { JsonLDService } from './jsonld.service';
 
 /**
  * Seo Service
@@ -29,8 +30,6 @@ export class SeoService {
 
     /** http status */
     private readonly httpStatus$ = new Subject<HttpStatusModel>();
-    /** json-LD */
-    private readonly jsonLD$ = new Subject<SafeHtml>();
 
     /**
      * constructor of SeoService
@@ -45,6 +44,7 @@ export class SeoService {
      * @param appConfig: APP_CONFIG
      * @param locale: LOCALE_ID
      * @param doc: DOCUMENT
+     * @param jsonLDService: JsonLDService
      */
     constructor(private readonly meta: Meta,
                 private readonly titleService: Title,
@@ -56,7 +56,8 @@ export class SeoService {
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
                 @Inject(LOCALE_ID) private readonly locale: string,
-                @Inject(DOCUMENT) public doc) {
+                @Inject(DOCUMENT) public doc,
+                private readonly jsonLDService: JsonLDService) {
     }
 
     /**
@@ -81,7 +82,7 @@ export class SeoService {
         this.setLocalAndUrlHtmlTags(tempPage);
         this.setProjectSpecifiedHtmlTags(tempPage);
         this.setCustomSEOHtmlTags(tempPage);
-        this.setJsonLD(tempPage);
+        this.jsonLDService.setJsonLD(tempPage, this.configSEO);
     }
 
     /**
@@ -181,170 +182,6 @@ export class SeoService {
                         this.customSEOMetaTags.push({type: 'property', value: prop});
                     });
             }
-        }
-    }
-
-    /**
-     * Get Plaintext by Html
-     * @param htmlContent: html content
-     */
-    getPlaintextByHtml(htmlContent: string): string {
-        return htmlContent ? String(htmlContent)
-            .replace(/<[^>]+>/gm, '') : '';
-    }
-
-    /**
-     * Get JSON-LDs by content of current page
-     * @param tempPage: current page
-     */
-    getJsonLDByContentOfCurrentPage(tempPage: any): Array<any> {
-        const jsonLDs = [];
-        const images = [];
-        const image = tempPage.image ? tempPage.image :
-            this.configSEO.defaultImageForSEO ? this.configSEO.defaultImageForSEO : undefined;
-        if (image) {
-            if (image.src1x1) {
-                images.push(image.src1x1);
-            }
-            if (image.src4x3) {
-                images.push(image.src4x3);
-            }
-            if (image.src16x9) {
-                images.push(image.src16x9);
-            }
-            if (image.src) {
-                images.push(image.src);
-            }
-        }
-        const publisher = this.configSEO.defaultPublisher ? this.configSEO.defaultPublisher : undefined;
-        if (['/quote', '/alinti', 'guzel-soz'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('whoSaidThat')) {
-            jsonLDs.push({
-                '@type': 'Quotation',
-                creator: {
-                    '@type': 'Person',
-                    name: this.getPlaintextByHtml(tempPage.whoSaidThat)
-                },
-                text: this.getPlaintextByHtml(tempPage.content),
-                image: images,
-                mainEntityOfPage: tempPage.canonicalUrl
-            });
-        } else if (['/quote', '/alinti', 'guzel-soz'].indexOf(tempPage.routePath) > -1 && tempPage.hasOwnProperty('persons')) {
-            const persons = [];
-            Object.keys(tempPage.persons)
-                .forEach(key => {
-                    persons.push({
-                        '@type': 'Person',
-                        name: tempPage.persons[key]
-                    });
-                });
-            if (persons.length > 1) {
-                jsonLDs.push({
-                    '@type': 'Conversation',
-                    name: this.getPlaintextByHtml(tempPage.title),
-                    hasPart: [
-                        {
-                            '@type': 'Message',
-                            sender: persons[0],
-                            recipient: persons[1],
-                            about: {
-                                '@type': 'Thing',
-                                name: '...'
-                            },
-                            datePublished: new Date(tempPage.created.seconds * 1000)
-                        },
-                        {
-                            '@type': 'Message',
-                            sender: persons[1],
-                            recipient: persons[0],
-                            about: {
-                                '@type': 'Thing',
-                                name: '...'
-                            },
-                            datePublished: new Date(tempPage.created.seconds * 1000)
-                        }
-                    ],
-                    text: this.getPlaintextByHtml(tempPage.content),
-                    image: images,
-                    mainEntityOfPage: tempPage.canonicalUrl
-                });
-            }
-        } else if (['/blog', '/gunluk'].indexOf(tempPage.routePath) > -1) {
-            jsonLDs.push({
-                '@type': 'BlogPosting',
-                author: {
-                    '@type': 'Person',
-                    name: this.getPlaintextByHtml(tempPage.createdBy)
-                },
-                publisher: {...{'@type': 'Organization'}, ...publisher},
-                dateCreated: new Date(tempPage.created.seconds * 1000),
-                dateModified: new Date(tempPage.changed.seconds * 1000),
-                datePublished: new Date(tempPage.created.seconds * 1000),
-                headline: this.getPlaintextByHtml(tempPage.title),
-                description: tempPage.description,
-                image: images,
-                mainEntityOfPage: tempPage.canonicalUrl
-            });
-        } else if (['/article', '/makale'].indexOf(tempPage.routePath) > -1) {
-            jsonLDs.push({
-                '@type': 'Article',
-                author: {
-                    '@type': 'Person',
-                    name: this.getPlaintextByHtml(tempPage.createdBy)
-                },
-                publisher: {...{'@type': 'Organization'}, ...publisher},
-                dateCreated: new Date(tempPage.created.seconds * 1000),
-                dateModified: new Date(tempPage.changed.seconds * 1000),
-                datePublished: new Date(tempPage.created.seconds * 1000),
-                headline: this.getPlaintextByHtml(tempPage.title),
-                description: tempPage.description,
-                image: images,
-                mainEntityOfPage: tempPage.canonicalUrl
-            });
-        } else if (['/joke', '/eglence', '/fikra', '/saka', '/espri', '/soguk-espri'].indexOf(tempPage.routePath) > -1) {
-            jsonLDs.push({
-                '@type': 'SocialMediaPosting',
-                author: {
-                    '@type': 'Person',
-                    name: this.getPlaintextByHtml(tempPage.createdBy)
-                },
-                publisher: {...{'@type': 'Organization'}, ...publisher},
-                dateCreated: new Date(tempPage.created.seconds * 1000),
-                dateModified: new Date(tempPage.changed.seconds * 1000),
-                datePublished: new Date(tempPage.created.seconds * 1000),
-                headline: this.getPlaintextByHtml(tempPage.title),
-                description: tempPage.description,
-                image: images,
-                mainEntityOfPage: tempPage.canonicalUrl
-            });
-        }
-
-        return jsonLDs;
-    }
-
-    /**
-     * Set JSON-LD
-     * @param tempPage: current page
-     */
-    setJsonLD(tempPage: PageBaseModel): void {
-        if (tempPage.hasOwnProperty('jsonLDs')) {
-            tempPage.jsonLDs.push(...this.getJsonLDByContentOfCurrentPage(tempPage));
-        } else {
-            tempPage.jsonLDs = this.getJsonLDByContentOfCurrentPage(tempPage);
-        }
-        let jsonLDList = '';
-        for (const jsonLD of tempPage.jsonLDs) {
-            if (jsonLDList !== '') {
-                jsonLDList += ',';
-            }
-            if (!jsonLD.hasOwnProperty('@context')) {
-                jsonLD['@context'] = 'http://schema.org/';
-            }
-            jsonLDList += JSON.stringify(jsonLD, undefined, 0);
-        }
-        if (jsonLDList) {
-            this.jsonLD$.next(this.sanitizer.bypassSecurityTrustHtml(`<script type="application/ld+json">[${jsonLDList}]</script>`));
-        } else {
-            this.jsonLD$.next(undefined);
         }
     }
 
@@ -452,10 +289,4 @@ export class SeoService {
         return this.httpStatus$.asObservable();
     }
 
-    /**
-     * get json-LD
-     */
-    getJsonLD(): Observable<SafeHtml> {
-        return this.jsonLD$.asObservable();
-    }
 }
