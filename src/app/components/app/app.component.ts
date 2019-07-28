@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
 
         this.scrollHandler = this.renderer.listen('window', 'scroll', event => {
             // istanbul ignore next
-            if (this.cookieLawEl) {
+            if (this.cookieLawEl && !this.cookieLawEl.seen) {
                 this.cookieLawEl.dismiss();
                 this.scrollHandler();
             }
