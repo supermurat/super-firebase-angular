@@ -14,7 +14,7 @@ before_install:
   - echo "TRAVIS_PULL_REQUEST_BRANCH:$TRAVIS_PULL_REQUEST_BRANCH"
   - echo "TRAVIS_TAG:$TRAVIS_TAG"
   - nvm install 10
-  - npm i -g firebase-tools@6.10.0 @angular/cli@8.0.1 selenium-webdriver @commitlint/travis-cli
+  - npm i -g firebase-tools@7.8.1 @angular/cli@8.3.19 selenium-webdriver @commitlint/travis-cli
 install:
   - npm i -g ncp del-cli @compodoc/compodoc
   - npm install
