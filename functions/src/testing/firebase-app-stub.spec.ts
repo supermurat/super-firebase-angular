@@ -10,6 +10,7 @@ export const firebaseAppStub = {
     messaging: undefined,
     projectManagement: undefined,
     delete: undefined,
+    securityRules: undefined,
     firestore: (): any =>
         firestoreStub,
     storage: (): any =>

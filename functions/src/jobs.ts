@@ -42,7 +42,9 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                             url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
                             changefreq: (collectionPrefix === 'pages' || collectionPrefix === 'taxonomy')
                                 ? sitemap.EnumChangefreq.DAILY : sitemap.EnumChangefreq.WEEKLY,
-                            img
+                            img,
+                            video: undefined,
+                            links: undefined
                         });
 
                         return Promise.resolve();
@@ -358,7 +360,7 @@ export const jobRunner = functions
         if (jobData.actionKey === 'clearCaches') {
             job = clearCaches(snap, jobData);
         }
-        if (job) {
+        if (job !== undefined) {
             return job
                 .then(value => {
                     console.log(value);
