@@ -11,7 +11,7 @@ const FUNCTIONS_CONFIG_LOCAL = {
 };
 
 /** Production Configs */
-const FUNCTIONS_CONFIG_PROD = {
+const FUNCTIONS_CONFIG_LIVE = {
     /** supported culture codes; ['en', 'tr'] */
     supportedCultureCodes: ['en-US', 'tr-TR'],
     /** supported language codes; ['en', 'tr'] */
@@ -24,7 +24,7 @@ const FUNCTIONS_CONFIG_PROD = {
 
 // istanbul ignore next
 /** Current Configs */
-export const FUNCTIONS_CONFIG = process.env.IS_RUNNING_ON_LOCALHOST ? FUNCTIONS_CONFIG_LOCAL : FUNCTIONS_CONFIG_PROD;
+export const FUNCTIONS_CONFIG = process.env.IS_RUNNING_ON_LOCALHOST ? FUNCTIONS_CONFIG_LOCAL : FUNCTIONS_CONFIG_LIVE;
 
 // istanbul ignore next
-console.log('FUNCTIONS_CONFIG IN USE:', process.env.IS_RUNNING_ON_LOCALHOST ? '_LOCAL' : '_PROD');
+console.log('FUNCTIONS_CONFIG IN USE:', process.env.IS_RUNNING_ON_LOCALHOST ? '_LOCAL' : '_LIVE');

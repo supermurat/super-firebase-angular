@@ -186,7 +186,7 @@ export const getArrayStartByNumberField = (array: Array<any>, fieldPath: string,
  * @param nopStr: filter case; <=, ==, >=, >, array-contains
  * @param value: to filter value
  */
-export const getArrayWhereByField = (array: Array<any>, fieldPath: string, nopStr: string, value: any): Array<any> => {
+export const getArrayWhereByField = (array: Array<any>, fieldPath: string, nopStr: string, value: any | Array<any>): Array<any> => {
     const tData: Array<any> = [];
     array.forEach(item => {
         if (nopStr === '<' && item[fieldPath] < value) {
@@ -200,6 +200,8 @@ export const getArrayWhereByField = (array: Array<any>, fieldPath: string, nopSt
         } else if (nopStr === '>' && item[fieldPath] > value) {
             tData.push(item);
         } else if (nopStr === 'array-contains' && item[fieldPath].includes(value)) {
+            tData.push(item);
+        } else if (nopStr === 'in' && value.indexOf(item[fieldPath]) > -1) {
             tData.push(item);
         }
     });
@@ -243,7 +245,7 @@ export const getStorageFiles = (tData: Array<string>): Array<any> => {
 
 /**
  * sleep
- * @param ms
+ * @param ms: number
  */
 export const sleep = (ms: number): Promise<void> =>
     new Promise<void>((resolve): any =>
@@ -251,7 +253,7 @@ export const sleep = (ms: number): Promise<void> =>
 
 /**
  * sleep until got response data
- * @param res
+ * @param res: any
  */
 export const sleepToGetData = async (res: any): Promise<void> => {
     while (res._getData() === '' && res._getStatusCode() !== 301) {

@@ -88,9 +88,18 @@ const getLocale = (req: express.Request): string => {
 
 /** get document ID */
 const getDocumentID = (req: express.Request): string => {
-    // firestore doesn't allow "/" to be in document ID
     try {
-        const id = decodeURIComponent(req.url).substring(1).replace(/\//gi, '\\');
+        // we do not use searchParams (req.query) on our url, we build clean url
+        // probably we get these kind of requests because of search engines or our very old web site files
+        // even if we use searchParams for any kind of case, no need to cache url with searchParams for seo (or ssr)
+        // let it load cached page and let angular client to handle that searchParams
+        // if you want to cache pages with searchParams, use "req.url" instead of "req.path" on next line
+        let id = decodeURIComponent(req.path)
+            .substring(1).replace(/\//gi, '\\'); // firestore doesn't allow "/" to be in document ID
+        if (id.endsWith('\\')) {
+            id = id.substring(0, id.length - 1);
+        }
+        // forbidden by firestore
         if (id === '.' ||
             id === '..' ||
             Buffer.byteLength(id, 'utf8') > 1500 ||
@@ -203,10 +212,30 @@ const send404Page = async (req: express.Request, res: express.Response): Promise
 
 /** check if requested URL is valid */
 const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
-    if (req.url.startsWith('/?') || req.url.indexOf('?page') > -1 || req.url.indexOf('.php?') > -1) {
-        // this is only for old php web site but keeping them forever would be better in case of search engines
-        // a url like that won't be ok anymore
+    // this is only for old php web site but keeping them forever would be better in case of search engines
+    // a url like that won't be ok anymore
+    if (req.url.startsWith('/modules/') ||
+        req.url.startsWith('/sites/') ||
+        req.url.indexOf('?page') > -1 ||
+        req.url.indexOf('.php?') > -1 ||
+        req.url.endsWith('/all/feed')) {
         await send404Page(req, res);
+
+        return Promise.resolve(false);
+    }
+    // this is for our 404 pages
+    if (req.url.endsWith('/http-404')) {
+        await send404Page(req, res);
+
+        return Promise.resolve(false);
+    }
+    // this is for lost person, we may be in attach, so no need to use more resource
+    if (req.path.indexOf('%20') > -1 || // ' '
+        req.path.indexOf('%22') > -1 || // "
+        req.path.indexOf('%27') > -1 || // '
+        req.path.indexOf('=') > -1) {
+        res.status(404)
+            .send('<p>Invalid Url!</p><p>If you lost</p> <a href="/">Go to Home Page</a>');
 
         return Promise.resolve(false);
     }
