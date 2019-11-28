@@ -73,6 +73,22 @@ describe('SSR', (): void => {
             expect(res._getData())
                 .toContain('<title>404 - Page not found</title>');
         });
+
+        it('should get 404 page for our 404 marked url even if page is actually exist', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/en/articles/http-404'
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+            await sleepToGetData(res);
+
+            expect(res._getStatusCode())
+                .toEqual(404);
+            expect(res._getData())
+                .toContain('<title>404 - Page not found</title>');
+        });
     });
 
     describe('SSR - Redirect', (): void => {
@@ -274,6 +290,57 @@ describe('SSR', (): void => {
                 .toContain('<html>Fifth Cache</html>');
         });
 
+        it('should get first-cache even if contains unneeded slash end of url', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/first-cache/',
+                headers: {
+                    Referer: 'https:unittest.com'
+                }
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+            await sleepToGetData(res);
+
+            expect(res._getStatusCode())
+                .toEqual(200);
+            expect(res._getData())
+                .toContain('<html>First Cache</html>');
+        });
+
+    });
+
+    describe('SSR - Invalid', (): void => {
+        it('should get invalid page for invalid url', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/test%20page'
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+
+            expect(res._getStatusCode())
+                .toEqual(404);
+            expect(res._getData())
+                .toContain('<p>Invalid Url!</p>');
+        });
+
+        it('should get invalid page for another invalid url', async () => {
+            const req  = httpMocks.createRequest({
+                method: 'GET',
+                url: '/test=page'
+            });
+            const res = httpMocks.createResponse();
+
+            await myFunctions.ssr(req, res);
+
+            expect(res._getStatusCode())
+                .toEqual(404);
+            expect(res._getData())
+                .toContain('<p>Invalid Url!</p>');
+        });
     });
 
 });

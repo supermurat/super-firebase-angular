@@ -299,9 +299,13 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
     if (!jobData.limit) {
         jobData.limit = 5000;
     }
+    let query = db.collection('firstResponses')
+        .where('type', '==', 'cache');
+    if (codeListToDelete) {
+        query = query.where('code', 'in', codeListToDelete);
+    }
 
-    return db.collection('firstResponses')
-        .where('type', '==', 'cache')
+    return query
         .limit(jobData.limit)
         .get()
         .then(async mainDocsSnapshot =>
@@ -309,9 +313,6 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
                 const mainDocData = mainDoc.data();
                 if (expireDate && mainDocData.expireDate && mainDocData.expireDate.seconds * 1000 > expireDate.getTime()) {
                     // to keep newly created caches
-                    return Promise.resolve();
-                }
-                if (codeListToDelete && codeListToDelete.indexOf(mainDocData.code) === -1) {
                     return Promise.resolve();
                 }
 
