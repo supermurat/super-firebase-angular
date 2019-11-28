@@ -10,8 +10,12 @@ let test = fTest();
 
 describe('Helpers', (): void => {
     const keyToThrowAnErrorOnMailSend = 'key-to-throw-an-error-on-mail-send';
+    let myModels;
 
     beforeAll(() => {
+        // tslint:disable-next-line:no-require-imports
+        myModels = require('./models/index'); // this is a trick to include models into coverage
+
         test = fTest();
         spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
         spyOn(admin, 'app').and.returnValue(firebaseAppStub);
@@ -121,6 +125,33 @@ describe('Helpers', (): void => {
                     expect(reason)
                         .toEqual('An error has been thrown!');
                 });
+        });
+    });
+
+    describe('Models - JobModel', (): void => {
+        it('should write and read started time', () => {
+            const job = new myModels.JobModel();
+            job.started = {seconds: 1574713373};
+
+            expect(job.started.seconds)
+                .toEqual(1574713373);
+        });
+    });
+
+    describe('Models - FirstResponseModel', (): void => {
+        it('should write and read expire date', () => {
+            const firstResponse = new myModels.FirstResponseModel();
+            firstResponse.expireDate = {seconds: 1574713399};
+
+            expect(firstResponse.expireDate.seconds)
+                .toEqual(1574713399);
+        });
+        it('should write and read changed time', () => {
+            const firstResponse = new myModels.FirstResponseModel();
+            firstResponse.changed = {seconds: 1574713408};
+
+            expect(firstResponse.changed.seconds)
+                .toEqual(1574713408);
         });
     });
 
