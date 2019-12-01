@@ -41,12 +41,9 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.en.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.en.html"
                 }
-              ]
+              ],
+              "index": "src/environments/en/index.html"
             },
             "tr": {
               "aot": true,
@@ -60,12 +57,9 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.tr.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.tr.html"
                 }
-              ]
+              ],
+              "index": "src/environments/tr/index.html"
             },
             "beta": {
               "optimization": true,
@@ -103,10 +97,6 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.en.beta.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.en.beta.html"
                 }
               ],
               "serviceWorker": true,
@@ -115,7 +105,8 @@
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "index": "src/environments/en/beta/index.html"
             },
             "beta-tr": {
               "optimization": true,
@@ -135,10 +126,6 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.tr.beta.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.tr.beta.html"
                 }
               ],
               "serviceWorker": true,
@@ -147,7 +134,8 @@
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "tr-TR",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "index": "src/environments/tr/beta/index.html"
             },
             "production": {
               "optimization": true,
@@ -185,10 +173,6 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.en.prod.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.en.prod.html"
                 }
               ],
               "serviceWorker": true,
@@ -197,7 +181,8 @@
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "index": "src/environments/en/prod/index.html"
             },
             "production-tr": {
               "optimization": true,
@@ -217,10 +202,6 @@
                 {
                   "replace": "src/manifest.json",
                   "with": "src/environments/manifest.tr.prod.json"
-                },
-                {
-                  "replace": "src/index.html",
-                  "with": "src/environments/index.tr.prod.html"
                 }
               ],
               "serviceWorker": true,
@@ -229,7 +210,8 @@
               "i18nFile": "src/locale/messages.tr.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "tr-TR",
-              "i18nMissingTranslation": "error"
+              "i18nMissingTranslation": "error",
+              "index": "src/environments/tr/prod/index.html"
             }
           }
         },
