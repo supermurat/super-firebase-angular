@@ -100,6 +100,6 @@ export class AuthService {
     private async updateUserData(userData: UserModel): Promise<void> {
         const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userData.uid}`);
 
-        return userRef.set(userData, {merge: true});
+        return userRef.set(JSON.parse(JSON.stringify(userData)), {merge: true});
     }
 }
