@@ -92,7 +92,7 @@ stories [`angular-cli/wiki/stories`](https://github.com/angular/angular-cli/wiki
 MIT
 
 ## Thanks to
-| [![Google Firebase](/docs/images/firebase.png "Google Firebase")](https://firebase.google.com/)              | [![JetBrains](/docs/images/jetbrains.png "JetBrains")](https://www.jetbrains.com/?from=SuperFirebaseAngular)                                                                              |
-| ---                                                                                            | ---                                                                                |
-| [![Browser Stack](/docs/images/browserstack.png "Browser Stack")](https://www.browserstack.com/) | [![Travis-CI](/docs/images/travis-ci.png "Travis-CI")](https://www.travis-ci.org/) |
-| [![Codacy](/docs/images/codacy.png "Codacy")](https://www.codacy.com/)                         | [![Coveralls](/docs/images/coveralls.png "Coveralls")](https://coveralls.io/)      |
+| [![Google Firebase](/docs/images/firebase.png "Google Firebase")](https://firebase.google.com/)  | [![JetBrains](/docs/images/jetbrains.png "JetBrains")](https://www.jetbrains.com/?from=SuperFirebaseAngular) |
+| ---                                                                                              | ---                                                                                                          |
+| [![Browser Stack](/docs/images/browserstack.png "Browser Stack")](https://www.browserstack.com/) | [![Travis-CI](/docs/images/travis-ci.png "Travis-CI")](https://www.travis-ci.org/)                           |
+| [![Codacy](/docs/images/codacy.png "Codacy")](https://www.codacy.com/)                           | [![Coveralls](/docs/images/coveralls.png "Coveralls")](https://coveralls.io/)                                |
