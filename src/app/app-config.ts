@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { RouterLinksModel } from './models/router-links-model';
+import { RouterLinksModel } from './models';
 
 /** Interface of APP_CONFIG */
 export interface InterfaceAppConfig {

@@ -17,6 +17,7 @@ export * from './locale-model';
 export * from './menu-item-model';
 export * from './page-base-model';
 export * from './pager-model';
+export * from './router-links-model';
 export * from './quote-model';
 export * from './page-model';
 export * from './taxonomy-model';

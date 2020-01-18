@@ -88,5 +88,6 @@ export const firestoreStub = {
     getAll: undefined,
     listCollections: undefined,
     runTransaction: undefined,
-    batch: undefined
+    batch: undefined,
+    terminate: undefined
 };
