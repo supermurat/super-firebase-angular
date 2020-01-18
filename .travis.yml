@@ -15,7 +15,7 @@ before_install:
   - echo "TRAVIS_TAG:$TRAVIS_TAG"
   - nvm install 10
 install:
-  - npm i -g firebase-tools@7.8.1 @angular/cli@8.3.19 selenium-webdriver @commitlint/travis-cli ncp del-cli @compodoc/compodoc
+  - npm run install:dependencies:travis
   - npm install
   - cd functions && npm install && cd ..
 before_script:
