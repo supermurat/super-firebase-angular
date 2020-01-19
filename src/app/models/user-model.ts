@@ -7,7 +7,7 @@ export class UserModel {
     /** email */
     email?: string;
     /** display name */
-    diplayName?: string;
+    displayName?: string;
     /** photo URL */
     photoURL?: string;
 }
