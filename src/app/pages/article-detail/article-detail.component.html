@@ -18,9 +18,12 @@
                 </div>
                 <hr/>
                 <div class="text-muted text-right">
-                    <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
-                    <br/>
-                    <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>
+                    <i class="fa fa-calendar-alt mx-2"></i>{{ content.created.seconds * 1000 | date:'medium' }}
+                    <i class="fa fa-user mx-2"></i>{{ content.createdBy }}
+                </div>
+                <div class="text-muted text-right" *ngIf="content.changed && content.created.seconds !== content.changed.seconds">
+                    <i class="fa fa-calendar-alt mx-2"></i>{{ content.changed.seconds * 1000 | date:'medium' }}
+                    <i class="fa fa-user mx-2"></i>{{ content.changedBy }}
                 </div>
 
             </article>

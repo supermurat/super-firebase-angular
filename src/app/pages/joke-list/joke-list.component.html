@@ -10,7 +10,8 @@
             <p [innerHTML]="content.contentSummary"></p>
             <a [routerLink]="[content.routePath, content.id]" class="btn btn-primary" i18n>Read More &rArr;</a>
             <div class="text-muted text-right">
-                <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
+                <i class="fa fa-calendar-alt mx-2"></i>{{ content.created.seconds * 1000 | date:'medium' }}
+                <i class="fa fa-user mx-2"></i>{{ content.createdBy }}
             </div>
         </article>
         <app-pager></app-pager>
