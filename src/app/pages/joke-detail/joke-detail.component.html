@@ -2,23 +2,22 @@
     <!-- Joke Column -->
     <div class="col-md-8">
         <div *ngIf="joke$ | async as content">
-            <article class="card my-4">
-                <img class="card-img-top" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
-                <div class="card-body">
-                    <h2 class="card-title"><a [routerLink]="[content.routePath, jokeID]">{{ content.title }}</a></h2>
-                    <p class="card-text" [innerHTML]="content.content"></p>
-                    <hr/>
-                    <div class="text-center tag-cloud">
-                        <ul>
-                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
-                                <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
-                                    <span>{{ tag.value }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+            <article class="my-4">
+                <img class="img-fluid" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
+                <h2><a [routerLink]="[content.routePath, jokeID]">{{ content.title }}</a></h2>
+                <p [innerHTML]="content.content"></p>
+                <hr/>
+                <div class="text-center tag-cloud">
+                    <ul>
+                        <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
+                            <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
+                                <span>{{ tag.value }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-footer text-muted">
+                <hr/>
+                <div class="text-muted text-right">
                     <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
                     <br/>
                     <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>

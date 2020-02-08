@@ -1,7 +1,4 @@
-<h5 [ngClass]="['card-header', headerCssClass]">{{ customHtml?.title }}</h5>
-<div class="card-body">
-    <div class="row">
-        <div class="col-12 side-bar-custom-html" [innerHTML]="customHtml?.content">
-        </div>
-    </div>
+<h5 [ngClass]="['col-12', headerCssClass]">{{ customHtml?.title }}</h5>
+
+<div class="col-12 side-bar-custom-html" [innerHTML]="customHtml?.content">
 </div>

@@ -1,34 +1,22 @@
 <div class="row" *ngIf="tag$ | async as tag">
-    <div class="col-md-12">
-        <div class="card py-1 px-3 mt-3">
-            <h1 i18n>Related Contents to "{{ tag?.tagName }}"</h1>
-        </div>
+    <div class="col-md-12 py-1 px-3 mt-3">
+        <h1 i18n>Related Contents to "{{ tag?.tagName }}"</h1>
     </div>
-
     <!-- Articles Column -->
-
     <div class="col-md-8 scroll-content mt-4" appScrollable (scrollPosition)="scrollHandler($event)">
-
-        <article class="card mb-4" *ngFor="let content of pagination.data | async; trackBy:pageService.trackByIndex">
-            <img class="card-img-top" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
-            <div class="card-body">
-                <h2 class="card-title"><a [routerLink]="[content.routePath, content.path]">{{ content.title }}</a></h2>
-                <p class="card-text" [innerHTML]="content.contentSummary"></p>
-                <a [routerLink]="[content.routePath, content.path]" class="btn btn-primary" i18n>Read More &rArr;</a>
-            </div>
-            <div class="card-footer text-muted">
+        <article class="my-4 border-dark border-bottom" *ngFor="let content of pagination.data | async; trackBy:pageService.trackByIndex">
+            <img class="img-fluid" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
+            <h2><a [routerLink]="[content.routePath, content.path]">{{ content.title }}</a></h2>
+            <p [innerHTML]="content.contentSummary"></p>
+            <a [routerLink]="[content.routePath, content.path]" class="btn btn-primary" i18n>Read More &rArr;</a>
+            <div class="text-muted text-right">
                 <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
             </div>
-
         </article>
-
         <p class="alert alert-warning" *ngIf="pagination.done | async" i18n>There is no more content related to "{{ tag?.tagName }}". You may want to check out active tags :-)</p>
-
     </div>
-
     <!-- Sidebar Widgets Column -->
     <aside class="col-md-4">
         <app-side-bar></app-side-bar>
     </aside>
-
 </div>

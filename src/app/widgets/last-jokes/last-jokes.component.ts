@@ -1,6 +1,5 @@
 import { Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { JokeModel } from '../../models';
 import { AlertService } from '../../services';
@@ -19,7 +18,7 @@ export class LastJokesComponent implements OnInit {
     @Input() readonly headerCssClass = '';
 
     /** joke object array */
-    jokes$: Observable<Array<JokeModel>>;
+    jokes: Array<JokeModel>;
 
     /**
      * constructor of LastJokesComponent
@@ -43,18 +42,21 @@ export class LastJokesComponent implements OnInit {
      * get jokes
      */
     getJokes(): void {
-        this.jokes$ = this.afs.collection(`jokes_${this.locale}`,
+        this.afs.collection(`jokes_${this.locale}`,
             ref => ref.orderBy('orderNo')
                 .limit(this.jokeLimit)
         )
             .snapshotChanges()
-            .pipe(map(taxonomyList =>
-                taxonomyList.map(taxonomy => {
-                    const id = taxonomy.payload.doc.id;
-                    const data = taxonomy.payload.doc.data() as JokeModel;
+            .pipe(map(jokeList =>
+                jokeList.map(joke => {
+                    const id = joke.payload.doc.id;
+                    const data = joke.payload.doc.data() as JokeModel;
 
                     return { id, ...data };
-                })));
+                })))
+            .subscribe(jokes => {
+                this.jokes = jokes;
+            });
     }
 
     /**

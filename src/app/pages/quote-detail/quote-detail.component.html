@@ -2,36 +2,35 @@
     <!-- Quote Column -->
     <div class="col-md-8">
         <div *ngIf="quote$ | async as content">
-            <article class="card my-4">
-                <img class="card-img-top" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
-                <div class="card-body">
-                    <h2 class="card-title"><a [routerLink]="[content.routePath, quoteID]">{{ content.title }}</a></h2>
-                    <p class="card-text" [innerHTML]="content.content"></p>
-                    <hr/>
-                    <div *ngIf="content.whoSaidThat">
-                        <div class="float-left mx-1" i18n>Who Said That:</div>
-                        <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
-                    </div>
-                    <div *ngIf="content.persons">
-                        <div *ngFor="let person of content.persons | keyvalue; trackBy:pageService.trackByIndex">
-                            <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
-                            <div class="font-weight-bold" [innerHTML]="person.value"></div>
-                        </div>
-                    </div>
-                    <div class="float-left mx-1" i18n>Source:</div>
-                    <div class="font-weight-bold" [innerHTML]="content.source"></div>
-                    <hr/>
-                    <div class="text-center tag-cloud">
-                        <ul>
-                            <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
-                                <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
-                                    <span>{{ tag.value }}</span>
-                                </a>
-                            </li>
-                        </ul>
+            <article class="my-4">
+                <img class="img-fluid" *ngIf="content.image" [src]="content.image.src" alt="{{ content.image.alt }}"/>
+                <h2><a [routerLink]="[content.routePath, quoteID]">{{ content.title }}</a></h2>
+                <p [innerHTML]="content.content"></p>
+                <hr/>
+                <div *ngIf="content.whoSaidThat">
+                    <div class="float-left mx-1" i18n>Who Said That:</div>
+                    <div class="font-weight-bold" [innerHTML]="content.whoSaidThat"></div>
+                </div>
+                <div *ngIf="content.persons">
+                    <div *ngFor="let person of content.persons | keyvalue; trackBy:pageService.trackByIndex">
+                        <div class="float-left mx-1" [innerHTML]="[person.key + ' :']"></div>
+                        <div class="font-weight-bold" [innerHTML]="person.value"></div>
                     </div>
                 </div>
-                <div class="card-footer text-muted">
+                <div class="float-left mx-1" i18n>Source:</div>
+                <div class="font-weight-bold" [innerHTML]="content.source"></div>
+                <hr/>
+                <div class="text-center tag-cloud">
+                    <ul>
+                        <li *ngFor="let tag of content.taxonomy | keyvalue; trackBy:pageService.trackByIndex">
+                            <a [routerLink]="[pageService.routerLinks.tag, tag.key]">
+                                <span>{{ tag.value }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <hr/>
+                <div class="text-muted text-right">
                     <span i18n>Posted on {{ content.created.seconds * 1000 | date:'medium' }} by {{ content.createdBy }}</span>
                     <br/>
                     <span *ngIf="content.changed && content.created.seconds !== content.changed.seconds" i18n>Updated on {{ content.changed.seconds * 1000 | date:'medium' }} by {{ content.changedBy }}</span>
