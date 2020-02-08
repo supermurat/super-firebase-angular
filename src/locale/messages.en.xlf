@@ -191,15 +191,11 @@
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/toast/toast.d.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
-      </trans-unit><trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
-        <source>
-    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-</source><target state="final">
-    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>By continuing to browse the site, you're agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-</target>
+      </trans-unit><trans-unit id="e95b8519ebec6805feeacb2b0784e2232dd160dc" datatype="html">
+        <source>By continuing to browse the site, you're agreeing to our use of cookies.</source><target state="final">By continuing to browse the site, you're agreeing to our use of cookies.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/app/app.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit><trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
         <source>Super Murat</source><target state="final">Super Murat</target>
@@ -217,10 +213,7 @@
       <context-group purpose="location"><context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context><context context-type="linenumber">1</context></context-group></trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
         <source> (Home)</source><target state="final"> (Home)</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="fa186f53e0c9ed8b4819ce03939a134058c712a2" datatype="html">
-        <source>Copyright © Super Murat 2005-2019</source><target state="final">Copyright © Super Murat 2005-2019</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">app/components/footer/footer.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source><target state="final">Page not found</target>
         
@@ -242,7 +235,13 @@
       <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="6f21558313038c924127b3ff527b6a6ec2ec17d7" datatype="html">
         <source>Login with Google</source><target state="final">Login with Google</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/admin-login/admin-login.component.html</context><context context-type="linenumber">11</context></context-group></trans-unit><trans-unit id="c307751de1906883c41a435f231df4cdde6867dc" datatype="html">
+        <source>Copyright © Super Murat 2005-2020</source><target state="final">Copyright © Super Murat 2005-2020</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/footer/footer.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
         <source>Search</source><target state="final">Search</target>
         
       <context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">1</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">app/widgets/search-bar/search-bar.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="6e3c5ff3699b5e53bdfdb0d9206f34bf811e8c58" datatype="html">

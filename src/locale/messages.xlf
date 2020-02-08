@@ -235,13 +235,11 @@
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
-        <source>
-    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>By continuing to browse the site, you&apos;re agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
-</source>
+      <trans-unit id="e95b8519ebec6805feeacb2b0784e2232dd160dc" datatype="html">
+        <source>By continuing to browse the site, you&apos;re agreeing to our use of cookies.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/app/app.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
@@ -593,8 +591,8 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fa186f53e0c9ed8b4819ce03939a134058c712a2" datatype="html">
-        <source>Copyright © Super Murat 2005-2019</source>
+      <trans-unit id="c307751de1906883c41a435f231df4cdde6867dc" datatype="html">
+        <source>Copyright © Super Murat 2005-2020</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">31</context>
