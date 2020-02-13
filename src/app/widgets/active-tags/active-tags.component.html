@@ -1,14 +1,11 @@
-<h5 [ngClass]="['card-header', headerCssClass]" i18n>Active Tags</h5>
-<div class="card-body">
-    <div class="row">
-        <div class="tag-cloud">
-            <ul>
-                <li *ngFor="let tag of taxonomyList$ | async; trackBy:trackByIndex">
-                    <a [routerLink]="[tag.routePath, tag.id]">
-                        <span>{{ tag.tagName }}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<h5 [ngClass]="['col-12', headerCssClass]" i18n>Active Tags</h5>
+
+<div class="tag-cloud col-12">
+    <ul>
+        <li *ngFor="let tag of taxonomyList$ | async; trackBy:trackByIndex">
+            <a [routerLink]="[tag.routePath, tag.id]">
+                <span>{{ tag.tagName }}</span>
+            </a>
+        </li>
+    </ul>
 </div>

@@ -1,14 +1,13 @@
-<h5 [ngClass]="['card-header', headerCssClass]" i18n>Jokes</h5>
-<div class="card-body">
-    <div class="row">
-        <div class="side-bar-joke-list">
-            <ul>
-                <li *ngFor="let joke of jokes$ | async; trackBy:trackByIndex">
-                    <a [routerLink]="[joke.routePath, joke.id]">
-                        <span>{{ joke.title }}</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div *ngIf="jokes?.length > 0">
+    <h5 [ngClass]="['col-12', headerCssClass]" i18n>Jokes</h5>
+
+    <div class="col-12 side-bar-joke-list">
+        <ul>
+            <li *ngFor="let joke of jokes; trackBy:trackByIndex">
+                <a [routerLink]="[joke.routePath, joke.id]">
+                    <span>{{ joke.title }}</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>

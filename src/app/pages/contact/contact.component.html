@@ -1,18 +1,14 @@
 <div class="row" *ngIf="page$ | async as page">
-    <div class="col-md-12">
-        <div class="card py-1 px-3 mt-3">
-            <h1>{{ page?.caption }}</h1>
-        </div>
+    <div class="col-md-12 py-1 px-3 mt-3">
+        <h1>{{ page?.caption }}</h1>
     </div>
-
     <!-- Page Content -->
-
     <div class="col-md-8" *ngIf="!isShowThankYou">
-        <div class="card my-4">
+        <div class="my-4">
             <form #f="ngForm" novalidate>
-                <img class="card-img-top" *ngIf="page.image" [src]="page.image.src" alt="{{ page.image.alt }}"/>
-                <div class="card-body row">
-                    <p class="card-text" [innerHTML]="page.content"></p>
+                <img class="img-fluid" *ngIf="page.image" [src]="page.image.src" alt="{{ page.image.alt }}"/>
+                <div class="row">
+                    <p [innerHTML]="page.content"></p>
                     <div class="col-lg-6">
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label" i18n>Your Name</label>
@@ -94,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-right">
+                <div class="text-right">
                     <button type="button" class="btn btn-success" [disabled]="!f.valid" (click)="onClickSend()" i18n>Send Message</button>
                 </div>
             </form>
@@ -107,7 +103,6 @@
             <button type="button" class="btn btn-link p-0 border-0 align-top" (click)="isShowThankYou = false" i18n>please click here!</button>
         </div>
     </div>
-
     <!-- Sidebar Widgets Column -->
     <aside class="col-md-4">
         <app-side-bar></app-side-bar>
