@@ -235,13 +235,11 @@
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="931eab494870bec5d99fbd1911ac5b08291c981c" datatype="html">
-        <source>
-    <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/>By continuing to browse the site, you&apos;re agreeing to our use of cookies.<x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/>
-</source>
+      <trans-unit id="e95b8519ebec6805feeacb2b0784e2232dd160dc" datatype="html">
+        <source>By continuing to browse the site, you&apos;re agreeing to our use of cookies.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/app/app.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3654544ee203aa6da2a692a24684de854431d42f" datatype="html">
@@ -274,13 +272,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/not-found/not-found.component.html</context>
           <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d6cb2af5501e2df32b21a352958076920da1b188" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:&apos;medium&apos; }}"/> - <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/home/home.component.html</context>
-          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="28ff6e82caf9645d6f918bc21ca42aa33d1e3568" datatype="html">
@@ -438,123 +429,27 @@
         <source>Read More ⇒</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/article-list/article-list.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a97c1791d078c919f71f2f5587b7087efa49fa9d" datatype="html">
-        <source>Posted on <x id="INTERPOLATION" equiv-text="{{ content.created.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.createdBy }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-list/blog-list.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/article-list/article-list.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-list/joke-list.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2352209fd9a5f4571b0b9f2c2b582e9a6a3fb307" datatype="html">
-        <source>Updated on <x id="INTERPOLATION" equiv-text="{{ content.changed.seconds * 1000 | date:&apos;medium&apos; }}"/> by <x id="INTERPOLATION_1" equiv-text="{{ content.changedBy }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
           <context context-type="linenumber">24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad14195a1c39972e9a7d9d45825dd557b608c62d" datatype="html">
         <source>⇐ Previous</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="b3349881cf3f9567b49dbb8f0462a856344e8ae2" datatype="html">
-        <source>Return to List ⇑</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4439e65963b21dee08db7f43af98573f88d1aaa0" datatype="html">
-        <source>Next ⇒</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
           <context context-type="linenumber">32</context>
@@ -570,6 +465,44 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
           <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b3349881cf3f9567b49dbb8f0462a856344e8ae2" datatype="html">
+        <source>Return to List ⇑</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4439e65963b21dee08db7f43af98573f88d1aaa0" datatype="html">
+        <source>Next ⇒</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/blog-detail/blog-detail.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/article-detail/article-detail.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/joke-detail/joke-detail.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d106826fbee9f9e017fe78864b10259e1c4f46f9" datatype="html">
@@ -593,8 +526,8 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fa186f53e0c9ed8b4819ce03939a134058c712a2" datatype="html">
-        <source>Copyright © Super Murat 2005-2019</source>
+      <trans-unit id="c307751de1906883c41a435f231df4cdde6867dc" datatype="html">
+        <source>Copyright © Super Murat 2005-2020</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">31</context>
@@ -618,36 +551,36 @@
         <source>Related Contents to &quot;<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>&quot;</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d0c966a2e7d0cb5515ca00af55583a183514bfd2" datatype="html">
         <source>There is no more content related to &quot;<x id="INTERPOLATION" equiv-text="{{ tag?.tagName }}"/>&quot;. You may want to check out active tags :-)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/taxonomy/taxonomy.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="402ebee585163f948fbd0ca49657f286127b4411" datatype="html">
         <source>Who Said That:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2f2d3537be5ad6783862d60ec1e4b6a034714783" datatype="html">
         <source>Source:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-list/quote-list.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/quote-detail/quote-detail.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="559861e17ec7786a504922f4da4eb587980bd999" datatype="html">
@@ -682,7 +615,7 @@
         <source>Jokes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/widgets/last-jokes/last-jokes.component.html</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
@@ -708,14 +641,14 @@
         <source>Your Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="308d288c59fe06075b30022a52576ca1deb155c2" datatype="html">
         <source>Murat Demir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bf1e232fb2495a4191d24cd85aa173a37a490daf" datatype="html">
@@ -724,21 +657,21 @@
                                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="034a53c006d8ecbed8d57b0df1786bc1834fbbac" datatype="html">
         <source>Your E-Mail</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b1de7c04079fdb4653a291b388237bc35a8e9a75" datatype="html">
         <source>me@gmail.com</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="061e6de6b8562354b1bf9b84521f56477c5031d3" datatype="html">
@@ -747,21 +680,21 @@
                                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347" datatype="html">
         <source>Message</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7fe680a8025f9b37b9d2b722da0a48ec009ba11f" datatype="html">
         <source>You can tell me anything you want :-)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad6635267de52f36b99ea275bf742b0dbb714da4" datatype="html">
@@ -770,28 +703,28 @@
                                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="59495ad8a6e49eb2a0022e1ec9ad296964b10292" datatype="html">
         <source>Send me a copy, too</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fa67d2cc929e21b864b7c107b8b91eabfa6fef70" datatype="html">
         <source>I have read and agree to </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="773670d361292b0ce4a21dcefaf58d274edaddea" datatype="html">
         <source>the Privacy Policy</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dfd4745b109366d4a09b31c008965aa96e7be977" datatype="html">
@@ -800,35 +733,35 @@
                                     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7d175f1b7310aecce08c1141c9ba8588b8642a99" datatype="html">
         <source>Send Message</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="65812d32a879e8830db8b1e73a33aeedf062b0b3" datatype="html">
         <source>We have got your message. Thank you for your valued time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="73b34d2d0553532b00f7091ede75ae150a762e8b" datatype="html">
         <source>If you want to send a new message, </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b76aa9d8e5a20849a35f35b7381274c61c008161" datatype="html">
         <source>please click here!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
     </body>
