@@ -12,7 +12,7 @@ import { PageService, SeoService } from '../../services';
 })
 export class NotFoundComponent {
     /**
-     * constructor of ArticleDetailComponent
+     * constructor of NotFoundComponent
      * @param pageService: PageService
      * @param router: Router
      * @param seo: SeoService
