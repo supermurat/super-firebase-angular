@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +24,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { PagerComponent } from './components/pager/pager.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { ScrollableDirective } from './directives';
-import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
@@ -41,7 +39,7 @@ import { QuoteListComponent } from './pages/quote-list/quote-list.component';
 import { SearchComponent } from './pages/search/search.component';
 import { TaxonomyComponent } from './pages/taxonomy/taxonomy.component';
 import {
-    AlertService, AuthService, CarouselService, ConfigService, JsonLDService,
+    AlertService, CarouselService, ConfigService, JsonLDService,
     PagerService, PageService, PaginationService, SeoService
 } from './services';
 import { ActiveTagsComponent } from './widgets/active-tags/active-tags.component';
@@ -65,7 +63,6 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         ArticleListComponent,
         ArticleDetailComponent,
         ScrollableDirective,
-        AdminLoginComponent,
         FooterComponent,
         SideBarComponent,
         PagerComponent,
@@ -96,7 +93,6 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule.enablePersistence(),
         AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-        AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
         AngularFireStorageModule, // imports firebase/storage only needed for storage features
 
         AppRoutingModule,
@@ -111,7 +107,6 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         AlertService,
         SeoService,
         JsonLDService,
-        AuthService,
         PaginationService,
         PagerService,
         CarouselService,

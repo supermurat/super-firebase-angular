@@ -19,7 +19,7 @@ import { SideBarComponent } from '../components/side-bar/side-bar.component';
 import { ScrollableDirective } from '../directives';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import {
-    AlertService, AuthService, CarouselService, ConfigService, JsonLDService,
+    AlertService, CarouselService, ConfigService, JsonLDService,
     PagerService, PageService, PaginationService, SeoService
 } from '../services';
 import { ActiveTagsComponent } from '../widgets/active-tags/active-tags.component';
@@ -76,7 +76,6 @@ export const activatedRouteStub = new ActivatedRouteStub();
         AlertService,
         SeoService,
         JsonLDService,
-        AuthService,
         PaginationService,
         PagerService,
         CarouselService,

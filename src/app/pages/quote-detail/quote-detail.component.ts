@@ -10,8 +10,7 @@ import { AlertService, PageService, SeoService } from '../../services';
  */
 @Component({
     selector: 'app-quote-detail',
-    templateUrl: './quote-detail.component.html',
-    styleUrls: ['./quote-detail.component.scss']
+    templateUrl: './quote-detail.component.html'
 })
 export class QuoteDetailComponent implements OnInit {
     /** current quote object */
