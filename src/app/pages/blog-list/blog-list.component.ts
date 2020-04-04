@@ -11,8 +11,7 @@ import { PagerService, PageService, SeoService } from '../../services';
  */
 @Component({
     selector: 'app-blog-list',
-    templateUrl: './blog-list.component.html',
-    styleUrls: ['./blog-list.component.scss']
+    templateUrl: './blog-list.component.html'
 })
 export class BlogListComponent implements OnInit {
     /** current page object */

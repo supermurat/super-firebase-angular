@@ -10,8 +10,7 @@ import { AlertService, PageService, SeoService } from '../../services';
  */
 @Component({
     selector: 'app-joke-detail',
-    templateUrl: './joke-detail.component.html',
-    styleUrls: ['./joke-detail.component.scss']
+    templateUrl: './joke-detail.component.html'
 })
 export class JokeDetailComponent implements OnInit {
     /** current joke object */

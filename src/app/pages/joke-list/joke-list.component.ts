@@ -11,8 +11,7 @@ import { PagerService, PageService, SeoService } from '../../services';
  */
 @Component({
     selector: 'app-joke-list',
-    templateUrl: './joke-list.component.html',
-    styleUrls: ['./joke-list.component.scss']
+    templateUrl: './joke-list.component.html'
 })
 export class JokeListComponent implements OnInit {
     /** current page object */

@@ -17,7 +17,7 @@ export class SearchBarComponent {
     searchFor = '';
 
     /**
-     * constructor of SideBarComponent
+     * constructor of SearchBarComponent
      * @param router: Router
      * @param alert: AlertService
      * @param locale: LOCALE_ID

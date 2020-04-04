@@ -22,7 +22,7 @@ export class PageBaseModel {
     /** image of content */
     image?: ImageModel;
     /** html content of page */
-    content?: any;
+    content?: string;
     /** taxonomy */
     taxonomy?: any; // key: link, value: title
     /** carousel item array of page */

@@ -15,7 +15,6 @@
 
 <!-- Page Content -->
 <main class="container">
-    <!-- /.row -->
     <div *ngIf="httpStatus$ | async as httpStatus; else defaultRouter">
         <app-not-found *ngIf="httpStatus.code === 404"></app-not-found>
         <div id="only-for-http-status"

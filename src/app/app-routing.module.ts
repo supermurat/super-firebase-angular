@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AdminLoginComponent } from './pages/admin-login/admin-login.component';
 import { ArticleDetailComponent } from './pages/article-detail/article-detail.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
@@ -179,9 +178,6 @@ const routes: Routes = [
     },
     {
         path: 'playground', component: PlaygroundComponent
-    },
-    {
-        path: 'admin-login', component: AdminLoginComponent
     },
     {
         path: 'http-404', component: NotFoundComponent

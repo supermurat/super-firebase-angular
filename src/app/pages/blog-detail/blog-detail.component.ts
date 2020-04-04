@@ -10,8 +10,7 @@ import { AlertService, PageService, SeoService } from '../../services';
  */
 @Component({
     selector: 'app-blog-detail',
-    templateUrl: './blog-detail.component.html',
-    styleUrls: ['./blog-detail.component.scss']
+    templateUrl: './blog-detail.component.html'
 })
 export class BlogDetailComponent implements OnInit {
     /** current blog object */
