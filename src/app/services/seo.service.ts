@@ -80,7 +80,7 @@ export class SeoService {
         this.meta.updateTag({name: 'apple-mobile-web-app-title', content: tempPage.title}, "name='apple-mobile-web-app-title'");
 
         this.setLocalAndUrlHtmlTags(tempPage);
-        this.setProjectSpecifiedHtmlTags(tempPage);
+        this.setProjectSpecifiedHtmlTags();
         this.setCustomSEOHtmlTags(tempPage);
         this.jsonLDService.setJsonLD(tempPage, this.configSEO);
     }
@@ -91,8 +91,7 @@ export class SeoService {
      */
     setLocalAndUrlHtmlTags(tempPage: PageBaseModel): void {
         if (!tempPage.hasOwnProperty('locales')) {
-            // tslint:disable-next-line:no-string-literal
-            tempPage['locales'] = [];
+            tempPage.locales = [];
         }
         const protocol = environment.protocol;
         const host = environment.host;
@@ -134,9 +133,8 @@ export class SeoService {
 
     /**
      * Set Project Specified Html Tags
-     * @param tempPage: current page
      */
-    setProjectSpecifiedHtmlTags(tempPage: PageBaseModel): void {
+    setProjectSpecifiedHtmlTags(): void {
         if (environment.defaultData['twitter:site']) {
             this.meta.updateTag({name: 'twitter:site', content: environment.defaultData['twitter:site']},
                 "name='twitter:site'");
