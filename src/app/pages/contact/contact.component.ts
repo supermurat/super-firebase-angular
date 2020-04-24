@@ -1,5 +1,6 @@
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { ContactModel, PageModel } from '../../models';
 import { AlertService, PageService } from '../../services';
@@ -49,6 +50,7 @@ export class ContactComponent implements OnInit {
      * on click send button
      */
     onClickSend(): void {
+        this.contact.created = firebase.firestore.FieldValue.serverTimestamp();
         this.afs.collection(`messages_${this.locale}`)
             .add(this.contact)
             .then(value => {

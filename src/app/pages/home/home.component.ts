@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
         this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', 'home');
 
         this.contents$ = this.pageService.getCollectionFromFirestore(`pages_${this.locale}/home/contents`,
-            ref => ref.orderBy('orderNo')
+            ref => ref.orderBy('created', 'desc')
                 .limit(3));
 
         this.configService.getConfig()
