@@ -76,7 +76,8 @@
     "compodoc": "del-cli \"./documentation\" && compodoc -n \"super-firebase-angular documentation\" -p src/tsconfig.app.json --unitTestCoverage ./coverage/coverage-summary.json",
     "compodoc:open": "npm run compodoc && open-cli \"./documentation/index.html\"",
     "compodoc:cover": "compodoc -p src/tsconfig.app.json --coverageTest 70",
-    "commit": "commit-wizard"
+    "commit": "commit-wizard",
+    "clean": "del-cli \"./public\" && del-cli \"./coverage\" && del-cli \"./documentation\" && del-cli \"./functions/coverage\" && del-cli \"./functions/lib\" && del-cli \"./functions/dist\" && del-cli \"./functions/documentation\""
   },
   "private": true,
   "dependencies": {
