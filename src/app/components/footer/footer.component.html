@@ -9,7 +9,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ footerBlock.title }}</h5>
                             <div [innerHTML]="footerBlock.content"></div>
-                            <div *ngIf="footerBlock.menuItems.length > 0">
+                            <div *ngIf="footerBlock.menuItems">
                                 <ul class="list-unstyled">
                                     <li [routerLinkActive]="['active']"
                                         *ngFor="let menuItem of footerBlock.menuItems; trackBy:pageService.trackByIndex">

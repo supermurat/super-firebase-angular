@@ -50,7 +50,7 @@ describe('HomeComponent', () => {
 
     it('should load home page contents properly with uniqueKey for TransferState', fakeAsync(() => {
         const contents$ = comp.pageService.getCollectionFromFirestore(`pages_${comp.locale}/home/contents`,
-            ref => ref.orderBy('orderNo')
+            ref => ref.orderBy('created', 'desc')
                 .limit(3), 'unit-test');
         let lastContents = [];
         contents$.subscribe(values => {

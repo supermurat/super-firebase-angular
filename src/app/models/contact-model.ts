@@ -1,3 +1,5 @@
+import * as firebase from 'firebase';
+
 /**
  * Contact Class
  */
@@ -12,4 +14,6 @@ export class ContactModel {
     isSendCopyToOwner?: boolean;
     /** is privacy policy agreed */
     isAgreed?: boolean;
+    /** creation date */
+    created?: firebase.firestore.Timestamp | firebase.firestore.FieldValue;
 }

@@ -214,9 +214,7 @@ const send404Page = async (req: express.Request, res: express.Response): Promise
 const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
     // this is only for old php web site but keeping them forever would be better in case of search engines
     // a url like that won't be ok anymore
-    if (req.url.startsWith('/modules/') ||
-        req.url.startsWith('/sites/') ||
-        req.url.indexOf('?page') > -1 ||
+    if (req.url.indexOf('?page') > -1 ||
         req.url.indexOf('.php?') > -1 ||
         req.url.endsWith('/all/feed')) {
         await send404Page(req, res);
@@ -233,7 +231,14 @@ const isUrlValid = async (req: express.Request, res: express.Response): Promise<
     if (req.path.indexOf('%20') > -1 || // ' '
         req.path.indexOf('%22') > -1 || // "
         req.path.indexOf('%27') > -1 || // '
-        req.path.indexOf('=') > -1) {
+        req.path.indexOf('=') > -1 ||
+        req.url.startsWith('/modules/') ||
+        req.url.startsWith('/sites/') ||
+        req.url.startsWith('/wp-') ||
+        req.url.indexOf('login.') > -1 ||
+        req.url.indexOf('admin.') > -1 ||
+        req.url.indexOf('/.env') > -1 ||
+        req.url.indexOf('.conf') > -1) {
         res.status(404)
             .send('<p>Invalid Url!</p><p>If you lost</p> <a href="/">Go to Home Page</a>');
 
