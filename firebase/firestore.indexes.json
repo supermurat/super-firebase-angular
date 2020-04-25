@@ -4,7 +4,7 @@
       "collectionGroup": "messages_en-US",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "isRead ", "order": "ASCENDING" },
+        { "fieldPath": "isRead", "order": "ASCENDING" },
         { "fieldPath": "created", "order": "ASCENDING" }
       ]
     },
@@ -12,7 +12,7 @@
       "collectionGroup": "messages_en-US",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "isRead ", "order": "DESCENDING" },
+        { "fieldPath": "isRead", "order": "DESCENDING" },
         { "fieldPath": "created", "order": "DESCENDING" }
       ]
     },
@@ -20,7 +20,7 @@
       "collectionGroup": "messages_tr-TR",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "isRead ", "order": "ASCENDING" },
+        { "fieldPath": "isRead", "order": "ASCENDING" },
         { "fieldPath": "created", "order": "ASCENDING" }
       ]
     },
@@ -28,7 +28,7 @@
       "collectionGroup": "messages_tr-TR",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "isRead ", "order": "DESCENDING" },
+        { "fieldPath": "isRead", "order": "DESCENDING" },
         { "fieldPath": "created", "order": "DESCENDING" }
       ]
     }
