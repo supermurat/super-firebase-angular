@@ -70,7 +70,7 @@
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jasmine-ts": "^0.3.0",
-    "jquery": "~3.4.1",
+    "jquery": "~3.5.0",
     "node-mocks-http": "^1.8.1",
     "nyc": "^15.0.0",
     "popper.js": "~1.16.0",
