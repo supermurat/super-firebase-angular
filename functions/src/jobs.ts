@@ -342,23 +342,17 @@ export const jobRunner = functions
         let job: Promise<any>;
         if (jobData.actionKey === 'generateSiteMap') {
             job = generateSiteMap(snap, jobData);
-        }
-        if (jobData.actionKey === 'generateSEOData') {
+        } else if (jobData.actionKey === 'generateSEOData') {
             job = generateSEOData(snap, jobData);
-        }
-        if (jobData.actionKey === 'generateJsonLDs') {
+        } else if (jobData.actionKey === 'generateJsonLDs') {
             job = generateJsonLDs(snap, jobData);
-        }
-        if (jobData.actionKey === 'generateLocales') {
+        } else if (jobData.actionKey === 'generateLocales') {
             job = generateLocales(snap, jobData);
-        }
-        if (jobData.actionKey === 'generateDescription') {
+        } else if (jobData.actionKey === 'generateDescription') {
             job = generateDescription(snap, jobData);
-        }
-        if (jobData.actionKey === 'fixPublicFilesPermissions') {
+        } else if (jobData.actionKey === 'fixPublicFilesPermissions') {
             job = fixPublicFilesPermissions(snap, jobData);
-        }
-        if (jobData.actionKey === 'clearCaches') {
+        } else if (jobData.actionKey === 'clearCaches') {
             job = clearCaches(snap, jobData);
         }
         if (job !== undefined) {

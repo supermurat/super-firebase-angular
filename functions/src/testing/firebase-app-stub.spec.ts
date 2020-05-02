@@ -11,6 +11,8 @@ export const firebaseAppStub = {
     projectManagement: undefined,
     delete: undefined,
     securityRules: undefined,
+    machineLearning: undefined,
+    remoteConfig: undefined,
     firestore: (): any =>
         firestoreStub,
     storage: (): any =>

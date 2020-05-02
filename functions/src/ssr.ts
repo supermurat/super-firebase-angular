@@ -187,7 +187,7 @@ const checkFirstResponse = async (req: express.Request, res: express.Response): 
                 })
                 .catch(// istanbul ignore next
                     err => {
-                        console.error('Error in db.collection(firstResponses):', err);
+                        console.error('Error in db.collection(firstResponses):', documentID, err);
                         resolve(); // let's handle this error with SSR
                     });
         } else {
