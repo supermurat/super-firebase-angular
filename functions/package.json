@@ -60,7 +60,7 @@
     "rxjs": "6.5.5",
     "tslib": "1.11.1",
     "zone.js": "0.10.3",
-    "sitemap": "5.1.0"
+    "sitemap": "6.1.2"
   },
   "devDependencies": {
     "@types/jasmine": "~3.5.10",

@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import * as h2p from 'html2plaintext';
-import * as sitemap from 'sitemap';
+import { EnumChangefreq, SitemapItem, SitemapStream, streamToPromise } from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel, LocaleAlternateModel } from './models/';
@@ -12,9 +12,9 @@ import { JobModel, LocaleAlternateModel } from './models/';
 const db = admin.firestore();
 
 /** generate site map */
-const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateSiteMap = async (jobData: JobModel): Promise<any> => {
     console.log('generateSiteMap is started');
-    let urlList: Array<sitemap.SitemapItemOptions> = [];
+    let urlList: Array<SitemapItem> = [];
     let hostname: string;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
     if (jobData.hasOwnProperty('customData')) {
@@ -36,12 +36,11 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                     Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
                         const mData = mainDoc.data();
                         const languageCode = cultureCode.substring(0, 2);
-                        // tslint:disable-next-line:no-string-literal
-                        const img = mData.hasOwnProperty('image') ? mData['image']['src'] : undefined;
+                        const img = mData.hasOwnProperty('image') ? mData.image.src : undefined;
                         urlList.push({
                             url: `${languageCode}/${mData.routePath}/${mainDoc.id}`.replace(/[\/]+/g, '/'),
                             changefreq: (collectionPrefix === 'pages' || collectionPrefix === 'taxonomy')
-                                ? sitemap.EnumChangefreq.DAILY : sitemap.EnumChangefreq.WEEKLY,
+                                ? EnumChangefreq.DAILY : EnumChangefreq.WEEKLY,
                             img,
                             video: undefined,
                             links: undefined
@@ -52,28 +51,27 @@ const generateSiteMap = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 )
         ))
     ))
-        .then(async values => {
-            const sm = sitemap.createSitemap({
-                hostname,
-                cacheTime: 600000, // 600 sec - cache purge period
-                urls: urlList
-            });
+        .then(async value => {
+            const sitemap = new SitemapStream({hostname});
+            for (const url of urlList) {
+                sitemap.write(url);
+            }
+            sitemap.end();
 
-            return db.collection('firstResponses')
+            return streamToPromise(sitemap);
+        })
+        .then(async sm =>
+            db.collection('firstResponses')
                 .doc('sitemap.xml')
-                .set({content: sm.toString(), changed: new Date()}, {merge: true})
+                .set({content: sm.toString(), code: 200, changed: admin.firestore.FieldValue.serverTimestamp()}, {merge: true})
                 // tslint:disable-next-line:promise-function-async
                 .then(() =>
-                    snap.ref.set({result: `Count of urls: ${urlList.length}`}, {merge: true})
-                        .then(() =>
-                            Promise.resolve(`generateSiteMap is finished. Count of urls: ${urlList.length}`)
-                        )
-                );
-        });
+                    Promise.resolve({count: urlList.length})
+                ));
 };
 
 /** generate SEO data */
-const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateSEOData = async (jobData: JobModel): Promise<any> => {
     console.log('generateSEOData is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -98,16 +96,13 @@ const generateSEOData = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 )
         ))
     ))
-        .then(async values =>
-            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`generateSEOData is finished. Count of processed documents: ${processedDocCount}`)
-                )
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
         );
 };
 
 /** generate JsonLD */
-const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateJsonLDs = async (jobData: JobModel): Promise<any> => {
     console.log('generateJsonLDs is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -132,16 +127,13 @@ const generateJsonLDs = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 )
         ))
     ))
-        .then(async values =>
-            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`generateJsonLDs is finished. Count of processed documents: ${processedDocCount}`)
-                )
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
         );
 };
 
 /** generate locales */
-const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateLocales = async (jobData: JobModel): Promise<any> => {
     console.log('generateLocales is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -177,7 +169,7 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
 
                                         return Promise.resolve();
                                     })
-                            )).then(async values =>
+                            )).then(async () =>
                                 mainDoc.ref.set({locales}, {merge: true})
                                     .then(() => {
                                         processedDocCount++;
@@ -190,16 +182,13 @@ const generateLocales = async (snap: DocumentSnapshot, jobData: JobModel): Promi
                 )
         ))
     ))
-        .then(async values =>
-            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`generateLocales is finished. Count of processed documents: ${processedDocCount}`)
-                )
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
         );
 };
 
 /** generate description */
-const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const generateDescription = async (jobData: JobModel): Promise<any> => {
     console.log('generateDescription is started');
     let processedDocCount = 0;
     const collections = ['pages', 'articles', 'blogs', 'jokes', 'quotes', 'taxonomy'];
@@ -231,16 +220,13 @@ const generateDescription = async (snap: DocumentSnapshot, jobData: JobModel): P
                 )
         ))
     ))
-        .then(async values =>
-            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`generateDescription is finished. Count of processed documents: ${processedDocCount}`)
-                )
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
         );
 };
 
 /** fix public files permissions on storage */
-const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const fixPublicFilesPermissions = async (jobData: JobModel): Promise<any> => {
     console.log('fixPublicFilesPermissions is started');
     const storage = new Storage();
     const bucketName = `${process.env.GCP_PROJECT}.appspot.com`;
@@ -252,7 +238,7 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
         prefix: 'publicFiles',
         autoPaginate: false
     })
-         .then(async allFiles => {
+        .then(async allFiles => {
              const files = allFiles[0];
 
              return Promise.all(files.map(async file => {
@@ -270,16 +256,13 @@ const fixPublicFilesPermissions = async (snap: DocumentSnapshot, jobData: JobMod
                  }
              ));
          })
-         .then(async values =>
-            snap.ref.set({result: `Count of processed files: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`fixPublicFilesPermissions is finished. Count of processed docs: ${processedDocCount}`)
-                )
-         );
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
+        );
 };
 
 /** clear caches */
-const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<any> => {
+const clearCaches = async (jobData: JobModel): Promise<any> => {
     console.log('clearCaches is started');
     let processedDocCount = 0;
     let expireDate;
@@ -321,11 +304,8 @@ const clearCaches = async (snap: DocumentSnapshot, jobData: JobModel): Promise<a
                         processedDocCount++;
                     });
             })))
-        .then(async values =>
-            snap.ref.set({result: `Count of processed documents: ${processedDocCount}`}, {merge: true})
-                .then(() =>
-                    Promise.resolve(`clearCaches is finished. Count of processed documents: ${processedDocCount}`)
-                )
+        .then(() =>
+            Promise.resolve({count: processedDocCount})
         );
 };
 
@@ -336,38 +316,50 @@ export const jobRunner = functions
     .firestore
     .document('jobs/{jobId}')
     // tslint:disable-next-line:promise-function-async
-    .onCreate((snap, context) => {
-        console.log('jobRunner is started');
+    .onCreate((snap: DocumentSnapshot, context: functions.EventContext) => {
         const jobData = snap.data() as JobModel;
-        let job: Promise<any>;
-        if (jobData.actionKey === 'generateSiteMap') {
-            job = generateSiteMap(snap, jobData);
-        } else if (jobData.actionKey === 'generateSEOData') {
-            job = generateSEOData(snap, jobData);
-        } else if (jobData.actionKey === 'generateJsonLDs') {
-            job = generateJsonLDs(snap, jobData);
-        } else if (jobData.actionKey === 'generateLocales') {
-            job = generateLocales(snap, jobData);
-        } else if (jobData.actionKey === 'generateDescription') {
-            job = generateDescription(snap, jobData);
-        } else if (jobData.actionKey === 'fixPublicFilesPermissions') {
-            job = fixPublicFilesPermissions(snap, jobData);
-        } else if (jobData.actionKey === 'clearCaches') {
-            job = clearCaches(snap, jobData);
-        }
-        if (job !== undefined) {
-            return job
-                .then(value => {
-                    console.log(value);
+        jobData.id = snap.id;
+        console.log('jobRunner is started! jobData:', jobData);
 
-                    return value;
-                })
-                .catch(err => {
-                    console.error('functions.onCreate', err);
+        return snap.ref
+            .set({started: admin.firestore.FieldValue.serverTimestamp()}, {merge: true})
+            .then(async () => {
+                if (jobData.actionKey === 'generateSiteMap') {
+                    return generateSiteMap(jobData);
+                }
+                if (jobData.actionKey === 'generateSEOData') {
+                    return generateSEOData(jobData);
+                }
+                if (jobData.actionKey === 'generateJsonLDs') {
+                    return generateJsonLDs(jobData);
+                }
+                if (jobData.actionKey === 'generateLocales') {
+                    return generateLocales(jobData);
+                }
+                if (jobData.actionKey === 'generateDescription') {
+                    return generateDescription(jobData);
+                }
+                if (jobData.actionKey === 'fixPublicFilesPermissions') {
+                    return fixPublicFilesPermissions(jobData);
+                }
+                if (jobData.actionKey === 'clearCaches') {
+                    return clearCaches(jobData);
+                }
+            })
+            .then(async value => {
+                console.log('jobRunner is finished! result:', value);
 
-                    return err;
-                });
-        }
+                return snap.ref.set(
+                    {result: value, isSucceed: true, finished: admin.firestore.FieldValue.serverTimestamp()},
+                    {merge: true});
+            })
+            .catch(async err => {
+                console.error('functions.onCreate', err);
 
-        return Promise.resolve();
+                return snap.ref.set(
+                    {
+                        result: {message: err.toString(), stack: err.stack}, isSucceed: false,
+                        finished: admin.firestore.FieldValue.serverTimestamp()},
+                    {merge: true});
+            });
     });

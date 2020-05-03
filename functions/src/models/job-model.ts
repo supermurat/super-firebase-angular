@@ -1,13 +1,25 @@
+import * as firebase from 'firebase/app';
+
 /** Job Model */
 export class JobModel {
+    /** id of record */
+    id?: string;
     /** action key to do */
     actionKey?: string;
     /** created date */
-    started?: any = {seconds: undefined};
-    /** who is want to start this job? */
-    startedBy?: string;
+    created?: firebase.firestore.Timestamp;
+    /** who is want to create this job? */
+    createdBy?: string;
+
+    /** started date */
+    started?: firebase.firestore.Timestamp;
+    /** finished date */
+    finished?: firebase.firestore.Timestamp;
     /** result of action */
-    result?: string;
+    result?: any;
+    /** is succeed? */
+    isSucceed?: boolean;
+
     /** do you want to overwrite current data */
     overwrite?: boolean;
     /** limit to get documents */
