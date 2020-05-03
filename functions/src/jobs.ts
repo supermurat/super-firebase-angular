@@ -2,6 +2,7 @@ import { Storage } from '@google-cloud/storage';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
+import { GoogleAuth } from 'google-auth-library';
 import * as h2p from 'html2plaintext';
 import { EnumChangefreq, SitemapItem, SitemapStream, streamToPromise } from 'sitemap';
 
@@ -379,6 +380,49 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
         );
 };
 
+/** backup firestore to storage */
+export const backupFirestore = async (jobData: JobModel): Promise<any> => {
+    console.log('backupFirestore is started');
+
+    const auth = new GoogleAuth({
+        scopes: [
+            'https://www.googleapis.com/auth/datastore',
+            'https://www.googleapis.com/auth/cloud-platform'
+        ]
+    });
+    const client = await auth.getClient();
+    const { storageBucket, projectId } = JSON.parse(process.env.FIREBASE_CONFIG || '{}');
+    const backupFileName = new Date().toISOString();
+    const backupUrl = `gs://${storageBucket}/backups/firestore/${backupFileName}.json`;
+    const user = await auth.getCredentials();
+
+    return client.request({
+        url: `https://firestore.googleapis.com/v1beta1/projects/${projectId}/databases/(default):exportDocuments`,
+        method: 'POST',
+        data: {outputUriPrefix: backupUrl}
+    })
+        .then(() =>
+            Promise.resolve({backupUrl})
+        ).catch(reason => {
+            console.error(`
+---------------------------------------------------------
+Please consider to check permissions of service accounts.
+---------------------------------------------------------
+https://console.cloud.google.com/iam-admin/iam
+- Give "Cloud Datastore Import Export Admin" and "Editor" roles to
+-   "${projectId}@appspot.gserviceaccount.com"
+-   "${user.client_email}"
+---------------------------------------------------------
+Please consider to check if backup directory is already exist.
+---------------------------------------------------------
+gs://${storageBucket}/backups/firestore/
+---------------------------------------------------------
+`);
+            throw reason;
+        });
+
+};
+
 /** job runner function */
 export const jobRunner = functions
     // .region('europe-west1')
@@ -427,6 +471,9 @@ export const jobRunner = functions
                 if (jobData.actionKey === 'recalculateOrderNo') {
                     return recalculateOrderNo(jobData);
                 }
+                if (jobData.actionKey === 'backupFirestore') {
+                    return backupFirestore(jobData);
+                }
             })
             .then(async value => {
                 console.log('jobRunner is finished! result:', value);
@@ -437,7 +484,7 @@ export const jobRunner = functions
                     .then(() => ({result: value, isSucceed: true}));
             })
             .catch(async err => {
-                console.error('functions.onCreate', err);
+                console.error('jobRunner', err);
 
                 return snap.ref.set(
                     {
