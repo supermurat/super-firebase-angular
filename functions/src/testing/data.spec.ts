@@ -289,7 +289,7 @@ export const myData = {
             caption: 'My Jokes',
             routePath: '/',
             i18nKey: 'jokes',
-            orderNo: -1
+            orderNo: -2
         },
         quotes: {
             id: 'quotes',
@@ -427,7 +427,7 @@ export const myData = {
             caption: 'Eğlence Zamanı',
             routePath: '/',
             i18nKey: 'jokes',
-            orderNo: -1
+            orderNo: -2
         },
         fikralar: {
             id: 'fikralar',

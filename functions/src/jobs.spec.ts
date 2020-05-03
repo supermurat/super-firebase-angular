@@ -26,31 +26,46 @@ describe('Jobs - Firestore', (): void => {
 
     it('empty actionKey should call only jobRunner', async () => {
         const snap = {
-            data: (): JobModel => ({actionKey: ''})
+            data: (): JobModel => ({actionKey: ''}),
+            ref: {
+                set(data): any {
+                    expect(data.result)
+                        .toEqual(undefined);
+
+                    return Promise.resolve([data]);
+                }
+            }
         };
         const wrapped = test.wrap(myFunctions.jobRunner);
 
-        expect(await wrapped(snap))
+        expect((await wrapped(snap)).result)
             .toEqual(undefined);
     });
 
     describe('Jobs - generateSiteMap', (): void => {
         it('should generate site map', async () => {
             const snap = {
-                data: (): JobModel => ({actionKey: 'generateSiteMap', customData: {hostname: 'https:unittest.com'}}),
+                data: (): JobModel => ({actionKey: 'generateSiteMap', customData: {hostname: 'https://unittest.com/'}}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of urls: 56');
+                        if (data.result) {
+                            expect(data.result.count)
+                                .toEqual(56);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateSiteMap is finished. Count of urls: 56');
+            expect(res.result.count)
+                .toEqual(56);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should not generate site map with out customData', async () => {
@@ -58,17 +73,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateSiteMap'}),
                 ref: {
                     set(data): any {
-                        expect(data)
-                            .toEqual(undefined);
+                        if (data.result) {
+                            expect(data.result.message)
+                                .toEqual('Error: You have to provide a hostname with customData for sitemap!');
+                            expect(data.isSucceed)
+                                .toEqual(false);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual(new Error('You have to provide a hostname with customData for sitemap!'));
+            expect(res.result.message)
+                .toEqual('Error: You have to provide a hostname with customData for sitemap!');
+            expect(res.isSucceed)
+                .toEqual(false);
         });
 
         it('should not generate site map with out customData.hostname', async () => {
@@ -76,17 +98,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateSiteMap', customData: {}}),
                 ref: {
                     set(data): any {
-                        expect(data)
-                            .toEqual(undefined);
+                        if (data.result) {
+                            expect(data.result.message)
+                                .toEqual('Error: You have to provide a hostname with customData for sitemap!');
+                            expect(data.isSucceed)
+                                .toEqual(false);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual(new Error('You have to provide a hostname with customData for sitemap!'));
+            expect(res.result.message)
+                .toEqual('Error: You have to provide a hostname with customData for sitemap!');
+            expect(res.isSucceed)
+                .toEqual(false);
         });
 
         it('should generate bigger site map with customData.urlList', async () => {
@@ -94,23 +123,30 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({
                     actionKey: 'generateSiteMap',
                     customData: {
-                        hostname: 'https:unittest.com',
+                        hostname: 'https://unittest.com/',
                         urlList: [{url: 'en/unit/test', changefreq: 'weekly'}]
                     }
                 }),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of urls: 57');
+                        if (data.result) {
+                            expect(data.result.count)
+                                .toEqual(57);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateSiteMap is finished. Count of urls: 57');
+            expect(res.result.count)
+                .toEqual(57);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
     });
 
@@ -120,17 +156,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateSEOData'}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 50');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(50);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateSEOData is finished. Count of processed documents: 50');
+            expect(res.result.processedDocCount)
+                .toEqual(50);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
     });
 
@@ -140,17 +183,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateJsonLDs'}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 50');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(50);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateJsonLDs is finished. Count of processed documents: 50');
+            expect(res.result.processedDocCount)
+                .toEqual(50);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
     });
 
@@ -160,17 +210,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateLocales'}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 54');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(54);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateLocales is finished. Count of processed documents: 54');
+            expect(res.result.processedDocCount)
+                .toEqual(54);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should generate locales of all pages with overwrite param', async () => {
@@ -178,17 +235,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateLocales', overwrite: true}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 56');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(56);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateLocales is finished. Count of processed documents: 56');
+            expect(res.result.processedDocCount)
+                .toEqual(56);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
     });
 
@@ -198,17 +262,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateDescription'}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 54');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(54);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateDescription is finished. Count of processed documents: 54');
+            expect(res.result.processedDocCount)
+                .toEqual(54);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should generate description of all pages with overwrite param', async () => {
@@ -216,17 +287,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'generateDescription', overwrite: true}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 56');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(56);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('generateDescription is finished. Count of processed documents: 56');
+            expect(res.result.processedDocCount)
+                .toEqual(56);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
     });
 
@@ -236,17 +314,24 @@ describe('Jobs - Firestore', (): void => {
                 data: (): JobModel => ({actionKey: 'clearCaches'}),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 5');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(5);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 5');
+            expect(res.result.processedDocCount)
+                .toEqual(5);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should clear only expired caches with expireDate param', async () => {
@@ -259,17 +344,24 @@ describe('Jobs - Firestore', (): void => {
                 }),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 4');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(4);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 4');
+            expect(res.result.processedDocCount)
+                .toEqual(4);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should clear only expired caches with expireDateDayDiff param', async () => {
@@ -282,17 +374,24 @@ describe('Jobs - Firestore', (): void => {
                 }),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 4');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(4);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 4');
+            expect(res.result.processedDocCount)
+                .toEqual(4);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should clear caches which only specified codes with codeListToDelete param', async () => {
@@ -305,17 +404,24 @@ describe('Jobs - Firestore', (): void => {
                 }),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 2');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(2);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 2');
+            expect(res.result.processedDocCount)
+                .toEqual(2);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
         it('should clear caches as much as specified with limit param', async () => {
@@ -326,19 +432,53 @@ describe('Jobs - Firestore', (): void => {
                 }),
                 ref: {
                     set(data): any {
-                        expect(data.result)
-                            .toEqual('Count of processed documents: 1');
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(1);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
 
-                        return Promise.resolve([data]);
+                        return Promise.resolve();
                     }
                 }
             };
             const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
 
-            expect(await wrapped(snap))
-                .toEqual('clearCaches is finished. Count of processed documents: 1');
+            expect(res.result.processedDocCount)
+                .toEqual(1);
+            expect(res.isSucceed)
+                .toEqual(true);
         });
 
+    });
+
+    describe('Jobs - recalculateOrderNo', (): void => {
+        it('should recalculate order no', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'recalculateOrderNo'}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(10);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(10);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
     });
 
 });
@@ -366,17 +506,24 @@ describe('Jobs - Storage', (): void => {
             data: (): JobModel => ({actionKey: 'fixPublicFilesPermissions'}),
             ref: {
                 set(data): any {
-                    expect(data.result)
-                        .toEqual('Count of processed files: 1');
+                    if (data.result) {
+                        expect(data.result.processedDocCount)
+                            .toEqual(1);
+                        expect(data.isSucceed)
+                            .toEqual(true);
+                    }
 
-                    return Promise.resolve([data]);
+                    return Promise.resolve();
                 }
             }
         };
         const wrapped = test.wrap(myFunctions.jobRunner);
+        const res = await wrapped(snap);
 
-        expect(await wrapped(snap))
-            .toEqual('fixPublicFilesPermissions is finished. Count of processed docs: 1');
+        expect(res.result.processedDocCount)
+            .toEqual(1);
+        expect(res.isSucceed)
+            .toEqual(true);
     });
 
 });

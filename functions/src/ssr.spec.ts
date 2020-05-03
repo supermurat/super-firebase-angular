@@ -257,7 +257,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/first-cache',
                 headers: {
-                    Referer: 'https:unittest.com'
+                    Referer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();
@@ -276,7 +276,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/fifth-cache',
                 headers: {
-                    Referrer: 'https:unittest.com'
+                    Referrer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();
@@ -295,7 +295,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/first-cache/',
                 headers: {
-                    Referer: 'https:unittest.com'
+                    Referer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();

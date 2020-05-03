@@ -20,6 +20,11 @@ export class JobModel {
     /** is succeed? */
     isSucceed?: boolean;
 
+    /** collections to process */
+    collections?: Array<string>;
+    /** cultureCodes to process */
+    cultureCodes?: Array<string>;
+
     /** do you want to overwrite current data */
     overwrite?: boolean;
     /** limit to get documents */
