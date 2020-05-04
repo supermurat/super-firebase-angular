@@ -380,6 +380,51 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
         );
 };
 
+/** fix deleted taxonomy leftovers */
+const fixDeletedTaxonomyMaps = async (jobData: JobModel): Promise<any> => {
+    console.log('fixDeletedTaxonomyMaps is started');
+    let processedDocCount = 0;
+    const processedDocs = [];
+    jobData.collections = jobData.collections.filter(item => ['pages', 'taxonomy'].indexOf(item) === -1);
+
+    return Promise.all(jobData.cultureCodes.map(async cultureCode => {
+        const allTaxonomyKeys = await db.collection(`taxonomy_${cultureCode}`).get()
+            .then(mainDocsSnapshot => mainDocsSnapshot.docs.map(shipTo => shipTo.id));
+
+        return Promise.all(jobData.collections.map(async collectionPrefix =>
+            db.collection(`${collectionPrefix}_${cultureCode}`).get()
+                .then(async mainDocsSnapshot => {
+                    await Promise.all(mainDocsSnapshot.docs.map(async mainDoc => {
+                        const mData = mainDoc.data();
+                        if (mData.hasOwnProperty('taxonomy')) {
+                            const taxonomy = {...mData.taxonomy};
+                            for (const key of Object.keys(mData.taxonomy)) {
+                                if (allTaxonomyKeys.indexOf(key) === -1) {
+                                    // tslint:disable-next-line:no-dynamic-delete
+                                    delete taxonomy[key];
+                                }
+                            }
+                            if (Object.keys(mData.taxonomy).length !== Object.keys(taxonomy).length) {
+                                await mainDoc.ref.set({...mData, ...{taxonomy}})
+                                    .then(() => {
+                                        processedDocCount++;
+                                        processedDocs.push({
+                                            path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
+                                            old: mData.taxonomy, new: taxonomy});
+                                    });
+                            }
+                        }
+                    }));
+
+                    return Promise.resolve();
+                })
+        ));
+    }))
+        .then(() =>
+            Promise.resolve({processedDocCount, processedDocs})
+        );
+};
+
 /** backup firestore to storage */
 export const backupFirestore = async (jobData: JobModel): Promise<any> => {
     console.log('backupFirestore is started');
@@ -470,6 +515,9 @@ export const jobRunner = functions
                 }
                 if (jobData.actionKey === 'recalculateOrderNo') {
                     return recalculateOrderNo(jobData);
+                }
+                if (jobData.actionKey === 'fixDeletedTaxonomyMaps') {
+                    return fixDeletedTaxonomyMaps(jobData);
                 }
                 if (jobData.actionKey === 'backupFirestore') {
                     return backupFirestore(jobData);
