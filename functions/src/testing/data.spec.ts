@@ -10,12 +10,20 @@ export const myData = {
         'second-article': {
             id: 'second-article', routePath: '/article', orderNo: -2, i18nKey: 'second-article',
             title: 'Second Article', content: 'this is better article',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'first-tag': 'First Tag',
+                'old-tag': 'Old Tag'
+            }
         },
         'third-article': {
             id: 'third-article', routePath: '/article', orderNo: -3, i18nKey: 'third-article',
             title: 'Third Article', content: 'this is the best article',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'first-tag': 'First Tag',
+                'third-tag': 'Third Tag'
+            }
         },
         'fourth-article': {
             id: 'fourth-article', routePath: '/article', orderNo: -4, i18nKey: 'fourth-article',
@@ -53,12 +61,20 @@ export const myData = {
         'ikinci-makale': {
             id: 'ikinci-makale', routePath: '/makale', orderNo: -2, i18nKey: 'second-article',
             title: 'İkinci Makale', content: 'bu daha güzel bir makale',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'ilk-etiket': 'İlk Etiket',
+                'eski-etiket': 'Eski Etiket'
+            }
         },
         'ucuncu-makale': {
             id: 'ucuncu-makale', routePath: '/makale', orderNo: -3, i18nKey: 'third-article',
             title: 'Üçüncü Makale', content: 'bu en güzel makale',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'ilk-etiket': 'İlk Etiket',
+                'ucuncu-etiket': 'Üçüncü Etiket'
+            }
         },
         'dorduncu-makale': {
             id: 'dorduncu-makale', routePath: '/makale', orderNo: -4, i18nKey: 'fourth-article',
@@ -89,13 +105,12 @@ export const myData = {
     'blogs_en-US': {
         'first-blog': {
             id: 'first-blog', routePath: '/blog', orderNo: -1, i18nKey: 'first-blog',
-            title: 'First Blog', content: 'this is good blog', contentSummary: 'good blog',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            title: 'First Blog', content: 'this is good blog', contentSummary: 'good blog'
         },
         'second-blog': {
             id: 'second-blog', routePath: '/blog', orderNo: -2, i18nKey: 'second-blog',
             title: 'Second Blog', content: 'this is better blog',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
         },
         'third-blog': {
             id: 'third-blog', routePath: '/blog', orderNo: -3, i18nKey: 'third-blog',
@@ -116,8 +131,7 @@ export const myData = {
         },
         'ikinci-gunluk': {
             id: 'ikinci-gunluk', routePath: '/gunluk', orderNo: -2, i18nKey: 'second-blog',
-            title: 'İkinci Günlük', content: 'bu daha güzel bir günlük',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            title: 'İkinci Günlük', content: 'bu daha güzel bir günlük'
         },
         'ucuncu-gunluk': {
             id: 'ucuncu-gunluk', routePath: '/gunluk', orderNo: -3, i18nKey: 'third-blog',
@@ -134,12 +148,18 @@ export const myData = {
         'first-joke': {
             id: 'first-joke', routePath: '/joke', orderNo: -1, i18nKey: 'first-joke',
             title: 'First Joke', content: 'this is good joke', contentSummary: 'good joke',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'old-tag': 'Old Tag'
+            }
         },
         'second-joke': {
             id: 'second-joke', routePath: '/joke', orderNo: -2, i18nKey: 'second-joke',
             title: 'Second Joke', content: 'this is better joke',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'first-tag': 'First Tag'
+            }
         },
         'third-joke': {
             id: 'third-joke', routePath: '/joke', orderNo: -3, i18nKey: 'third-joke',
@@ -156,12 +176,18 @@ export const myData = {
         'ilk-saka': {
             id: 'ilk-saka', routePath: '/saka', orderNo: -1, i18nKey: 'first-joke',
             title: 'İlk Şaka', content: 'bu güzel bir şaka', contentSummary: 'güzel şaka',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'eski-etiket': 'Eski Etiket'
+            }
         },
         'ikinci-fikra': {
             id: 'ikinci-fikra', routePath: '/fikra', orderNo: -2, i18nKey: 'second-joke',
             title: 'İkinci Fıkra', content: 'bu daha güzel bir fıkra',
-            created: {seconds: 1544207667}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207667}, changed: {seconds: 1544207666},
+            taxonomy: {
+                'ilk-etiket': 'İlk Etiket'
+            }
         },
         'ucuncu-espri': {
             id: 'ucuncu-espri', routePath: '/espri', orderNo: -3, i18nKey: 'third-joke',
@@ -515,7 +541,7 @@ export const myData = {
         'third-quote': {
             id: 'third-quote', routePath: '/quote', orderNo: -3, i18nKey: 'third-quote',
             title: 'Third Quote', content: 'this is the best quote',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            created: {seconds: 1544207669}, changed: {seconds: 1544207666},
             whoSaidThat: 'Super Murat'
         },
         'only-in-en-quote': {
@@ -545,7 +571,7 @@ export const myData = {
         'ucuncu-guzel-soz': {
             id: 'ucuncu-guzel-soz', routePath: '/guzel-soz', orderNo: -3, i18nKey: 'third-quote',
             title: 'Üçüncü Güzel Söz', content: 'bu en güzel söz',
-            created: {seconds: 1544207668}, changed: {seconds: 1544207666},
+            created: {seconds: 1544207669}, changed: {seconds: 1544207666},
             whoSaidThat: 'Super Murat'
         },
         'sadece-turkce-alinti': {

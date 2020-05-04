@@ -1,9 +1,10 @@
 // tslint:disable:no-implicit-dependencies
 import * as admin from 'firebase-admin';
 import * as fTest from 'firebase-functions-test';
+import * as googleAuthLib from 'google-auth-library';
 
 import { JobModel } from './models';
-import { firebaseAppStub, firestoreStub, storageStub } from './testing/index.spec';
+import { firebaseAppStub, firestoreStub, googleAuthStub, googleAuthStubConfig, storageStub } from './testing/index.spec';
 
 let test = fTest();
 
@@ -306,6 +307,81 @@ describe('Jobs - Firestore', (): void => {
             expect(res.isSucceed)
                 .toEqual(true);
         });
+
+        it('should generate description of only articles', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'generateDescription', collections: ['articles']}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(10);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(10);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
+
+        it('should generate description of only english contents', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'generateDescription', cultureCodes: ['en-US']}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(26);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(26);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
+
+        it('should generate description of only english articles', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'generateDescription', collections: ['articles'], cultureCodes: ['en-US']}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(5);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(5);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
     });
 
     describe('Jobs - clearCaches', (): void => {
@@ -462,7 +538,7 @@ describe('Jobs - Firestore', (): void => {
                     set(data): any {
                         if (data.result) {
                             expect(data.result.processedDocCount)
-                                .toEqual(10);
+                                .toEqual(14);
                             expect(data.isSucceed)
                                 .toEqual(true);
                         }
@@ -475,7 +551,34 @@ describe('Jobs - Firestore', (): void => {
             const res = await wrapped(snap);
 
             expect(res.result.processedDocCount)
-                .toEqual(10);
+                .toEqual(14);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
+    });
+
+    describe('Jobs - fixDeletedTaxonomyMaps', (): void => {
+        it('should delete leftovers of deleted taxonomies', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'fixDeletedTaxonomyMaps'}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(4);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(4);
             expect(res.isSucceed)
                 .toEqual(true);
         });
@@ -524,6 +627,74 @@ describe('Jobs - Storage', (): void => {
             .toEqual(1);
         expect(res.isSucceed)
             .toEqual(true);
+    });
+
+});
+
+describe('Jobs - GoogleAuth', (): void => {
+    let myFunctions;
+
+    beforeAll(() => {
+        test = fTest();
+        spyOn(googleAuthLib, 'GoogleAuth').and.returnValue(googleAuthStub as any);
+        // tslint:disable-next-line:no-require-imports
+        myFunctions = require('./index');
+    });
+
+    afterAll(() => {
+        googleAuthStubConfig.isFail = false;
+        test.cleanup();
+    });
+
+    it('should call backupFirestore', async () => {
+        const snap = {
+            data: (): JobModel => ({actionKey: 'backupFirestore'}),
+            ref: {
+                set(data): any {
+                    if (data.result) {
+                        expect(data.result.backupUrl)
+                            .toContain('gs://undefined.appspot.com/backups/firestore/');
+                        expect(data.isSucceed)
+                            .toEqual(true);
+                    }
+
+                    return Promise.resolve();
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+        const res = await wrapped(snap);
+
+        expect(res.result.backupUrl)
+            .toContain('gs://undefined.appspot.com/backups/firestore/');
+        expect(res.isSucceed)
+            .toEqual(true);
+    });
+
+    it('should fail backupFirestore', async () => {
+        googleAuthStubConfig.isFail = true;
+        const snap = {
+            data: (): JobModel => ({actionKey: 'backupFirestore'}),
+            ref: {
+                set(data): any {
+                    if (data.result) {
+                        expect(data.result.message)
+                            .toEqual('Marked to fail!');
+                        expect(data.isSucceed)
+                            .toEqual(false);
+                    }
+
+                    return Promise.resolve();
+                }
+            }
+        };
+        const wrapped = test.wrap(myFunctions.jobRunner);
+        const res = await wrapped(snap);
+
+        expect(res.result.message)
+            .toEqual('Marked to fail!');
+        expect(res.isSucceed)
+            .toEqual(false);
     });
 
 });

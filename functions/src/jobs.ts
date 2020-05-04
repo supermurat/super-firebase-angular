@@ -436,9 +436,10 @@ export const backupFirestore = async (jobData: JobModel): Promise<any> => {
         ]
     });
     const client = await auth.getClient();
-    const { storageBucket, projectId } = JSON.parse(process.env.FIREBASE_CONFIG || '{}');
+    const projectId = process.env.GCP_PROJECT;
+    const bucketName = `${projectId}.appspot.com`;
     const backupFileName = new Date().toISOString();
-    const backupUrl = `gs://${storageBucket}/backups/firestore/${backupFileName}.json`;
+    const backupUrl = `gs://${bucketName}/backups/firestore/${backupFileName}.json`;
     const user = await auth.getCredentials();
 
     return client.request({
@@ -460,7 +461,7 @@ https://console.cloud.google.com/iam-admin/iam
 ---------------------------------------------------------
 Please consider to check if backup directory is already exist.
 ---------------------------------------------------------
-gs://${storageBucket}/backups/firestore/
+gs://${bucketName}/backups/firestore/
 ---------------------------------------------------------
 `);
             throw reason;
