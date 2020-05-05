@@ -557,15 +557,15 @@ describe('Jobs - Firestore', (): void => {
         });
     });
 
-    describe('Jobs - fixDeletedTaxonomyMaps', (): void => {
+    describe('Jobs - fixTaxonomyMaps', (): void => {
         it('should delete leftovers of deleted taxonomies', async () => {
             const snap = {
-                data: (): JobModel => ({actionKey: 'fixDeletedTaxonomyMaps'}),
+                data: (): JobModel => ({actionKey: 'fixTaxonomyMaps'}),
                 ref: {
                     set(data): any {
                         if (data.result) {
                             expect(data.result.processedDocCount)
-                                .toEqual(4);
+                                .toEqual(6);
                             expect(data.isSucceed)
                                 .toEqual(true);
                         }
@@ -578,7 +578,7 @@ describe('Jobs - Firestore', (): void => {
             const res = await wrapped(snap);
 
             expect(res.result.processedDocCount)
-                .toEqual(4);
+                .toEqual(6);
             expect(res.isSucceed)
                 .toEqual(true);
         });

@@ -380,16 +380,16 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
         );
 };
 
-/** fix deleted taxonomy leftovers */
-const fixDeletedTaxonomyMaps = async (jobData: JobModel): Promise<any> => {
-    console.log('fixDeletedTaxonomyMaps is started');
+/** fix taxonomy leftovers */
+const fixTaxonomyMaps = async (jobData: JobModel): Promise<any> => {
+    console.log('fixTaxonomyMaps is started');
     let processedDocCount = 0;
     const processedDocs = [];
     jobData.collections = jobData.collections.filter(item => ['pages', 'taxonomy'].indexOf(item) === -1);
 
     return Promise.all(jobData.cultureCodes.map(async cultureCode => {
         const allTaxonomyKeys = await db.collection(`taxonomy_${cultureCode}`).get()
-            .then(mainDocsSnapshot => mainDocsSnapshot.docs.map(shipTo => shipTo.id));
+            .then(mainDocsSnapshot => mainDocsSnapshot.docs.map(mainDoc => mainDoc.id));
 
         return Promise.all(jobData.collections.map(async collectionPrefix =>
             db.collection(`${collectionPrefix}_${cultureCode}`).get()
@@ -400,6 +400,13 @@ const fixDeletedTaxonomyMaps = async (jobData: JobModel): Promise<any> => {
                             const taxonomy = {...mData.taxonomy};
                             for (const key of Object.keys(mData.taxonomy)) {
                                 if (allTaxonomyKeys.indexOf(key) === -1) {
+                                    // tslint:disable-next-line:no-dynamic-delete
+                                    delete taxonomy[key];
+                                    continue;
+                                }
+                                const contentID = `${mData.routePath}/${mainDoc.id}`.replace(/\//gui, '_');
+                                const docInTag = await db.doc(`taxonomy_${cultureCode}/${key}/contents/${contentID}`).get();
+                                if (!docInTag.exists) {
                                     // tslint:disable-next-line:no-dynamic-delete
                                     delete taxonomy[key];
                                 }
@@ -517,8 +524,8 @@ export const jobRunner = functions
                 if (jobData.actionKey === 'recalculateOrderNo') {
                     return recalculateOrderNo(jobData);
                 }
-                if (jobData.actionKey === 'fixDeletedTaxonomyMaps') {
-                    return fixDeletedTaxonomyMaps(jobData);
+                if (jobData.actionKey === 'fixTaxonomyMaps') {
+                    return fixTaxonomyMaps(jobData);
                 }
                 if (jobData.actionKey === 'backupFirestore') {
                     return backupFirestore(jobData);
