@@ -13,9 +13,9 @@ describe('Jobs - Firestore', (): void => {
 
     beforeAll(() => {
         test = fTest();
-        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
 
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');
@@ -591,10 +591,10 @@ describe('Jobs - Storage', (): void => {
 
     beforeAll(() => {
         test = fTest();
-        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
-        spyOn(admin, 'storage').and.returnValue(storageStub);
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
+        spyOn(admin, 'storage').and.returnValue(storageStub as any);
 
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');

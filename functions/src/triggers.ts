@@ -147,7 +147,11 @@ export const autoBackupFirestore = functions.pubsub
         return backupFirestore({})
             .then(value => {
                 console.log('autoBackupFirestore is finished! result:', value);
+
+                return value;
             }).catch(err => {
                 console.error('autoBackupFirestore', err);
+
+                return err;
             });
     });

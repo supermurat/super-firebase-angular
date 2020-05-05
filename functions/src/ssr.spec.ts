@@ -14,9 +14,9 @@ describe('SSR', (): void => {
 
     beforeAll(() => {
         test = fTest();
-        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
 
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');
