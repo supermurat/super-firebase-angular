@@ -76,6 +76,9 @@ service cloud.firestore {
     match /history/{document=**} {
       allow read, write: if exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
+    match /jobs/{document=**} {
+      allow read, write: if exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
     match /{document=**} {
       allow read, write: if false;
     }

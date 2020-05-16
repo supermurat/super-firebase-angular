@@ -3,3 +3,4 @@ export * from './data.spec';
 export * from './firebase-app-stub.spec';
 export * from './firestore-stub.spec';
 export * from './storage-stub.spec';
+export * from './google-auth-stub.spec';

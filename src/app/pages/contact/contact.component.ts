@@ -1,6 +1,6 @@
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { ContactModel, PageModel } from '../../models';
 import { AlertService, PageService } from '../../services';
