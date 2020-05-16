@@ -15,6 +15,8 @@ export class JobModel {
     started?: firebase.firestore.Timestamp;
     /** finished date */
     finished?: firebase.firestore.Timestamp;
+    /** duration as seconds */
+    duration?: number;
     /** result of action */
     result?: any;
     /** is succeed? */

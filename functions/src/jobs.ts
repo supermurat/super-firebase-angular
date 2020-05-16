@@ -4,10 +4,12 @@ import * as functions from 'firebase-functions';
 import { DocumentSnapshot } from 'firebase-functions/lib/providers/firestore';
 import { GoogleAuth } from 'google-auth-library';
 import * as h2p from 'html2plaintext';
+import * as moment from 'moment';
 import { EnumChangefreq, SitemapItem, SitemapStream, streamToPromise } from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
 import { JobModel, LocaleAlternateModel } from './models/';
+import { playAtPlayground } from './playground';
 
 /** firestore instance */
 const db = admin.firestore();
@@ -495,7 +497,8 @@ export const jobRunner = functions
         if (!jobData.limit) {
             jobData.limit = 5000;
         }
-        console.log('jobRunner is started! jobData:', jobData);
+        const startedAt = new Date();
+        console.log(moment(startedAt).format('YYYY.MM.DD HH:mm:ss'), 'jobRunner is started! jobData:', jobData);
 
         return snap.ref
             .set({started: admin.firestore.FieldValue.serverTimestamp()}, {merge: true})
@@ -530,22 +533,33 @@ export const jobRunner = functions
                 if (jobData.actionKey === 'backupFirestore') {
                     return backupFirestore(jobData);
                 }
+                if (jobData.actionKey === 'playAtPlayground') {
+                    return playAtPlayground(jobData);
+                }
             })
             .then(async value => {
-                console.log('jobRunner is finished! result:', value);
+                const finishedAt = new Date();
+                const duration = moment.duration(moment(finishedAt).diff(moment(startedAt))).asSeconds();
+                console.log(
+                    moment(finishedAt).format('YYYY.MM.DD HH:mm:ss'),
+                    'jobRunner is finished! duration:', duration, 'result:', value);
 
                 return snap.ref.set(
-                    {result: value, isSucceed: true, finished: admin.firestore.FieldValue.serverTimestamp()},
+                    {result: value, isSucceed: true, finished: admin.firestore.FieldValue.serverTimestamp(), duration},
                     {merge: true})
                     .then(() => ({result: value, isSucceed: true}));
             })
             .catch(async err => {
-                console.error('jobRunner', err);
+                const finishedAt = new Date();
+                const duration = moment.duration(moment(finishedAt).diff(moment(startedAt))).asSeconds();
+                console.error(
+                    moment(finishedAt).format('YYYY.MM.DD HH:mm:ss'),
+                    'jobRunner is failed! duration:', duration, 'error:', err);
 
                 return snap.ref.set(
                     {
                         result: {message: err.toString(), stack: err.stack}, isSucceed: false,
-                        finished: admin.firestore.FieldValue.serverTimestamp()},
+                        finished: admin.firestore.FieldValue.serverTimestamp(), duration},
                     {merge: true})
                     .then(() => ({result: {message: err.toString(), stack: err.stack}, isSucceed: false}));
             });

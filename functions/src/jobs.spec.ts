@@ -584,6 +584,33 @@ describe('Jobs - Firestore', (): void => {
         });
     });
 
+    describe('Jobs - playAtPlayground', (): void => {
+        it('should play at playground', async () => {
+            const snap = {
+                data: (): JobModel => ({actionKey: 'playAtPlayground'}),
+                ref: {
+                    set(data): any {
+                        if (data.result) {
+                            expect(data.result.processedDocCount)
+                                .toEqual(2);
+                            expect(data.isSucceed)
+                                .toEqual(true);
+                        }
+
+                        return Promise.resolve();
+                    }
+                }
+            };
+            const wrapped = test.wrap(myFunctions.jobRunner);
+            const res = await wrapped(snap);
+
+            expect(res.result.processedDocCount)
+                .toEqual(2);
+            expect(res.isSucceed)
+                .toEqual(true);
+        });
+    });
+
 });
 
 describe('Jobs - Storage', (): void => {

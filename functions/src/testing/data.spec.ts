@@ -110,7 +110,8 @@ export const myData = {
         'second-blog': {
             id: 'second-blog', routePath: '/blog', orderNo: -2, i18nKey: 'second-blog',
             title: 'Second Blog', content: 'this is better blog',
-            created: {seconds: 1544207666}, changed: {seconds: 1544207666}
+            created: {seconds: 1544207666}, changed: {seconds: 1544207666},
+            playWithMe: true
         },
         'third-blog': {
             id: 'third-blog', routePath: '/blog', orderNo: -3, i18nKey: 'third-blog',
@@ -131,7 +132,8 @@ export const myData = {
         },
         'ikinci-gunluk': {
             id: 'ikinci-gunluk', routePath: '/gunluk', orderNo: -2, i18nKey: 'second-blog',
-            title: 'İkinci Günlük', content: 'bu daha güzel bir günlük'
+            title: 'İkinci Günlük', content: 'bu daha güzel bir günlük',
+            playWithMe: true
         },
         'ucuncu-gunluk': {
             id: 'ucuncu-gunluk', routePath: '/gunluk', orderNo: -3, i18nKey: 'third-blog',
