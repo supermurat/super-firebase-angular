@@ -66,16 +66,9 @@ enableProdMode();
 const app = express();
 
 app.use(compression());
-app.use(cors({ origin: true }));
+app.use(cors(FUNCTIONS_CONFIG.cors));
 app.use(helmet());
-app.use(csp({
-    directives: {
-        defaultSrc: ["'self'", '*.googleapis.com', '*.google-analytics.com'],
-        imgSrc: ["'self'", 'data:', '*.googleapis.com', '*.google.com', '*.google.com.tr', '*.google-analytics.com', '*.doubleclick.net'],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", '*.googletagmanager.com', '*.google-analytics.com']
-    }
-}));
+app.use(csp(FUNCTIONS_CONFIG.csp));
 
 /** get current locale */
 const getLocale = (req: express.Request): string => {
@@ -211,45 +204,19 @@ const send404Page = async (req: express.Request, res: express.Response): Promise
 };
 
 /** check if requested URL is valid */
-const isUrlValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
-    // this is only for old php web site but keeping them forever would be better in case of search engines
-    // a url like that won't be ok anymore
-    if (req.url.indexOf('?page') > -1 ||
-        req.url.indexOf('.php?') > -1 ||
-        req.url.endsWith('/all/feed')) {
-        await send404Page(req, res);
-
-        return Promise.resolve(false);
-    }
+const isRequestValid = async (req: express.Request, res: express.Response): Promise<boolean> => {
     // this is for our 404 pages
     if (req.url.endsWith('/http-404')) {
         await send404Page(req, res);
 
         return Promise.resolve(false);
     }
-    // this is for lost person, we may be in attach, so no need to use more resource
-    if (req.path.indexOf('%20') > -1 || // ' '
-        req.path.indexOf('%22') > -1 || // "
-        req.path.indexOf('%27') > -1 || // '
-        req.path.indexOf('=') > -1 ||
-        req.url.startsWith('/modules/') ||
-        req.url.startsWith('/sites/') ||
-        req.url.startsWith('/wp-') ||
-        req.url.indexOf('login.') > -1 ||
-        req.url.indexOf('admin.') > -1 ||
-        req.url.indexOf('/.env') > -1 ||
-        req.url.indexOf('.conf') > -1) {
-        res.status(404)
-            .send('<p>Invalid Url!</p><p>If you lost</p> <a href="/">Go to Home Page</a>');
 
-        return Promise.resolve(false);
-    }
-
-    return Promise.resolve(true);
+    return FUNCTIONS_CONFIG.isRequestValid(req, res, send404Page);
 };
 
 app.get('**', (req: express.Request, res: express.Response) => {
-    isUrlValid(req, res)
+    isRequestValid(req, res)
         .then(async isValid => {
             if (isValid) {
                 await checkFirstResponse(req, res)
