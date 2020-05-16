@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { EnumChangefreq, SitemapItem, SitemapStream, streamToPromise } from 'sitemap';
 
 import { FUNCTIONS_CONFIG } from './config';
+import { getNullInsteadOfUndefined } from './helpers';
 import { JobModel, LocaleAlternateModel } from './models/';
 import { playAtPlayground } from './playground';
 
@@ -92,7 +93,7 @@ const generateSEOData = async (jobData: JobModel): Promise<any> => {
                                     processedDocCount++;
                                     processedDocs.push({
                                         path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
-                                        old: mData.seo, new: seo});
+                                        old: getNullInsteadOfUndefined(mData.seo), new: seo});
                                 });
                         }
 
@@ -126,7 +127,7 @@ const generateJsonLDs = async (jobData: JobModel): Promise<any> => {
                                     processedDocCount++;
                                     processedDocs.push({
                                         path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
-                                        old: mData.jsonLDs, new: jsonLDs});
+                                        old: getNullInsteadOfUndefined(mData.jsonLDs), new: jsonLDs});
                                 });
                         }
 
@@ -183,7 +184,7 @@ const generateLocales = async (jobData: JobModel): Promise<any> => {
                                         processedDocCount++;
                                         processedDocs.push({
                                             path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
-                                            old: mData.locales, new: locales});
+                                            old: getNullInsteadOfUndefined(mData.locales), new: locales});
                                     })
                             );
                         }
@@ -225,7 +226,7 @@ const generateDescription = async (jobData: JobModel): Promise<any> => {
                                     processedDocCount++;
                                     processedDocs.push({
                                         path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
-                                        old: mData.description, new: description});
+                                        old: getNullInsteadOfUndefined(mData.description), new: description});
                                 });
                         }
 
@@ -338,7 +339,7 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
                                         processedDocCount++;
                                         processedDocs.push({
                                             path: `${collectionPrefix}_${cultureCode}/${mainDoc.id}`,
-                                            old: mainDoc.data().orderNo, new: -1});
+                                            old: getNullInsteadOfUndefined(mainDoc.data().orderNo), new: -1});
                                     });
                             }
                         }));
@@ -367,7 +368,7 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
                                         processedDocCount++;
                                         processedDocs.push({
                                             path: `${collectionPrefix}_${cultureCode}/${doc.mainDoc.id}`,
-                                            old: doc.orderNo, new: doc.newOrderNo});
+                                            old: getNullInsteadOfUndefined(doc.orderNo), new: doc.newOrderNo});
                                     });
                             }
                         }));
