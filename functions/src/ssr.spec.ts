@@ -14,9 +14,9 @@ describe('SSR', (): void => {
 
     beforeAll(() => {
         test = fTest();
-        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
 
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');
@@ -257,7 +257,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/first-cache',
                 headers: {
-                    Referer: 'https:unittest.com'
+                    Referer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();
@@ -276,7 +276,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/fifth-cache',
                 headers: {
-                    Referrer: 'https:unittest.com'
+                    Referrer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();
@@ -295,7 +295,7 @@ describe('SSR', (): void => {
                 method: 'GET',
                 url: '/first-cache/',
                 headers: {
-                    Referer: 'https:unittest.com'
+                    Referer: 'https://unittest.com'
                 }
             });
             const res = httpMocks.createResponse();

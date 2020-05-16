@@ -17,10 +17,10 @@ describe('Helpers', (): void => {
         myModels = require('./models/index'); // this is a trick to include models into coverage
 
         test = fTest();
-        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'app').and.returnValue(firebaseAppStub);
-        spyOn(admin, 'firestore').and.returnValue(firestoreStub);
-        spyOn(admin, 'storage').and.returnValue(storageStub);
+        spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
+        spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
+        spyOn(admin, 'storage').and.returnValue(storageStub as any);
         spyOn(nodemailer, 'createTransport').and.returnValue({
             sendMail: (data): Promise<any> =>
                 data.subject.indexOf(keyToThrowAnErrorOnMailSend) > -1 ?

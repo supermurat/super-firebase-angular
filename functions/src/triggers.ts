@@ -2,6 +2,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
 import { sendMail } from './helpers';
+import { backupFirestore } from './jobs';
 import { ContactModel, PrivateConfigModel } from './models';
 
 /** firestore instance */
@@ -134,3 +135,23 @@ export const newMessageTr = functions
                 return err;
             })
     );
+
+/** automatically backup firestore */
+export const autoBackupFirestore = functions.pubsub
+    // [Minute (0-59)] [Hour (0-23)] [Day of the month (1-31)] [Month (1-12)] [Day of the week (0-6 Sunday to Saturday)]
+    .schedule('0 2 * * 0')
+    .timeZone('Europe/Istanbul')
+    .onRun(async context => {
+        console.log('autoBackupFirestore is started!');
+
+        return backupFirestore({})
+            .then(value => {
+                console.log('autoBackupFirestore is finished! result:', value);
+
+                return value;
+            }).catch(err => {
+                console.error('autoBackupFirestore', err);
+
+                return err;
+            });
+    });
