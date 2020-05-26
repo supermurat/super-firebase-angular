@@ -244,7 +244,8 @@ const generateDescription = async (jobData: JobModel): Promise<any> => {
 const fixPublicFilesPermissions = async (jobData: JobModel): Promise<any> => {
     console.log('fixPublicFilesPermissions is started');
     const storage = new Storage();
-    const bucketName = `${process.env.GCP_PROJECT}.appspot.com`;
+    const projectId = process.env.GCLOUD_PROJECT;
+    const bucketName = `${projectId}.appspot.com`;
     const bucket = admin.storage().bucket(bucketName);
 
     let processedDocCount = 0;
@@ -446,7 +447,7 @@ export const backupFirestore = async (jobData: JobModel): Promise<any> => {
         ]
     });
     const client = await auth.getClient();
-    const projectId = process.env.GCP_PROJECT;
+    const projectId = process.env.GCLOUD_PROJECT;
     const bucketName = `${projectId}.appspot.com`;
     const backupFileName = new Date().toISOString();
     const backupUrl = `gs://${bucketName}/backups/firestore/${backupFileName}.json`;
