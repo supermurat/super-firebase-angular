@@ -169,7 +169,7 @@ describe('Triggers - Pub/Sub', (): void => {
         const res = await wrapped({});
 
         expect(res.backupUrl)
-            .toContain('gs://undefined.appspot.com/backups/firestore/');
+            .toContain('gs://not-a-project.appspot.com/backups/firestore/');
     });
 
     it('should fail backupFirestore', async () => {
