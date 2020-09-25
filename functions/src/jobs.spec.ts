@@ -680,7 +680,7 @@ describe('Jobs - GoogleAuth', (): void => {
                 set(data): any {
                     if (data.result) {
                         expect(data.result.backupUrl)
-                            .toContain('gs://undefined.appspot.com/backups/firestore/');
+                            .toContain('gs://not-a-project.appspot.com/backups/firestore/');
                         expect(data.isSucceed)
                             .toEqual(true);
                     }
@@ -693,7 +693,7 @@ describe('Jobs - GoogleAuth', (): void => {
         const res = await wrapped(snap);
 
         expect(res.result.backupUrl)
-            .toContain('gs://undefined.appspot.com/backups/firestore/');
+            .toContain('gs://not-a-project.appspot.com/backups/firestore/');
         expect(res.isSucceed)
             .toEqual(true);
     });
