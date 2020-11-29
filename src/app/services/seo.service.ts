@@ -23,7 +23,8 @@ export class SeoService {
         /** type of meta tag; name or property */
         type: string,
         /** value of name or property, NOT content value */
-        value: string}>;
+        value: string
+    }>;
 
     /** config for SEO */
     configSEO: ConfigSeoModel = {};
@@ -56,7 +57,7 @@ export class SeoService {
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
                 @Inject(LOCALE_ID) private readonly locale: string,
-                @Inject(DOCUMENT) public doc,
+                @Inject(DOCUMENT) public doc: Document,
                 private readonly jsonLDService: JsonLDService) {
     }
 
@@ -212,9 +213,10 @@ export class SeoService {
      */
     removeLink(attrSelector: string): void {
         if (attrSelector) {
-            for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
-                this.renderer.removeChild(this.doc.head, oldLink);
-            }
+            this.doc.querySelectorAll(attrSelector)
+                .forEach((oldLink: Element) => {
+                    this.renderer.removeChild(this.doc.head, oldLink);
+                });
         }
     }
 
