@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -44,15 +44,13 @@ export class QuoteListComponent implements OnInit {
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
      * @param pageService: PageService
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
                 private readonly seo: SeoService,
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
-                public pageService: PageService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pageService: PageService) {
     }
 
     /**
@@ -73,7 +71,7 @@ export class QuoteListComponent implements OnInit {
         if (this.firstItem) { // no need to get firstItem again
             this.getQuotes();
         } else {
-            this.afs.collection(`quotes_${this.locale}`,
+            this.afs.collection(`quotes_${this.pageService.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
             )
@@ -102,7 +100,7 @@ export class QuoteListComponent implements OnInit {
     getQuotes(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.quotes$ = this.afs.collection(`quotes_${this.locale}`,
+        this.quotes$ = this.afs.collection(`quotes_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
                 .limit(this.pagerModel.pageSize)

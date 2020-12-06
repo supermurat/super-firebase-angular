@@ -119,7 +119,7 @@ describe('BlogDetailComponent_tr-TR', () => {
                 BlogDetailComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

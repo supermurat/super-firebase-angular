@@ -44,15 +44,13 @@ export class ArticleListComponent implements OnInit {
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
      * @param pageService: PageService
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
                 private readonly seo: SeoService,
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
-                public pageService: PageService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pageService: PageService) {
     }
 
     /**
@@ -73,7 +71,7 @@ export class ArticleListComponent implements OnInit {
         if (this.firstItem) { // no need to get firstItem again
             this.getArticles();
         } else {
-            this.afs.collection(`articles_${this.locale}`,
+            this.afs.collection(`articles_${this.pageService.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
             )
@@ -102,7 +100,7 @@ export class ArticleListComponent implements OnInit {
     getArticles(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.articles$ = this.afs.collection(`articles_${this.locale}`,
+        this.articles$ = this.afs.collection(`articles_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
                 .limit(this.pagerModel.pageSize)

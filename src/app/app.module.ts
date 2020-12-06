@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
@@ -112,8 +112,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         CarouselService,
         PageService,
         ConfigService,
-        {provide: APP_CONFIG, useValue: APP_DI_CONFIG},
-        {provide: FirestoreSettingsToken, useValue: {}}
+        {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
     ],
     bootstrap: [AppComponent]
 })

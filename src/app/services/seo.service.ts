@@ -13,6 +13,8 @@ import { JsonLDService } from './jsonld.service';
  */
 @Injectable()
 export class SeoService {
+    /** locale */
+    locale: string;
     /** Renderer2 object */
     renderer: Renderer2;
     /**
@@ -43,7 +45,7 @@ export class SeoService {
      * @param sanitizer: DomSanitizer
      * @param platformId: PLATFORM_ID
      * @param appConfig: APP_CONFIG
-     * @param locale: LOCALE_ID
+     * @param localeP: LOCALE_ID
      * @param doc: DOCUMENT
      * @param jsonLDService: JsonLDService
      */
@@ -56,9 +58,10 @@ export class SeoService {
                 private readonly sanitizer: DomSanitizer,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
-                @Inject(LOCALE_ID) private readonly locale: string,
+                @Inject(LOCALE_ID) private readonly localeP: string,
                 @Inject(DOCUMENT) public doc: Document,
                 private readonly jsonLDService: JsonLDService) {
+        this.locale = localeP === 'tr' ? 'tr-TR' : 'en-US'; // TODO: fix for other locales, this is quick fix to force to use with culture codes
     }
 
     /**

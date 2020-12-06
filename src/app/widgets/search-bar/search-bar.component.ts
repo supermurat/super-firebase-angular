@@ -1,4 +1,4 @@
-import { Component, Inject, Input, LOCALE_ID } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services';
 
@@ -20,11 +20,9 @@ export class SearchBarComponent {
      * constructor of SearchBarComponent
      * @param router: Router
      * @param alert: AlertService
-     * @param locale: LOCALE_ID
      */
     constructor(public router: Router,
-                private readonly alert: AlertService,
-                @Inject(LOCALE_ID) public locale: string) {
+                private readonly alert: AlertService) {
     }
 
     /**

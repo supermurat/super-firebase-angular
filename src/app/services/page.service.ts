@@ -16,6 +16,8 @@ import { SeoService } from './seo.service';
  */
 @Injectable()
 export class PageService {
+    /** locale */
+    locale: string;
     /** translated router links */
     routerLinks: RouterLinksModel;
     /** collection of PageBaseModel */
@@ -34,7 +36,7 @@ export class PageService {
      * @param ngZone: NgZone
      * @param rendererFactory: RendererFactory2
      * @param document: DOCUMENT
-     * @param locale: LOCALE_ID
+     * @param localeP: LOCALE_ID
      */
     constructor(public seo: SeoService,
                 public carouselService: CarouselService,
@@ -45,9 +47,10 @@ export class PageService {
                 private readonly ngZone: NgZone,
                 private readonly rendererFactory: RendererFactory2,
                 @Inject(DOCUMENT) private readonly document,
-                @Inject(LOCALE_ID) public locale: string) {
+                @Inject(LOCALE_ID) private readonly localeP: string) {
+        this.locale = localeP === 'tr' ? 'tr-TR' : 'en-US'; // TODO: fix for other locales, this is quick fix to force to use with culture codes
         this.renderer = rendererFactory.createRenderer(undefined, undefined);
-        this.routerLinks = locale === 'tr-TR' ? routerLinksTR : routerLinksEN;
+        this.routerLinks = this.locale === 'tr-TR' ? routerLinksTR : routerLinksEN;
     }
 
     /**

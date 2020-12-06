@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/internal/operators';
@@ -26,14 +26,12 @@ export class NavMenuComponent implements OnInit {
     /**
      * constructor of NavMenuComponent
      * @param platformId: PLATFORM_ID
-     * @param locale: LOCALE_ID
      * @param router: Router
      * @param pageService: PageService
      * @param configService: ConfigService
      */
     constructor(
         @Inject(PLATFORM_ID) private readonly platformId: string,
-        @Inject(LOCALE_ID) public locale: string,
         public router: Router,
         public pageService: PageService,
         public configService: ConfigService) {
@@ -66,7 +64,7 @@ export class NavMenuComponent implements OnInit {
             .subscribe((page: PageBaseModel) => {
                 const existLanguages = [];
                 const languageList: Array<LanguageModel> = [];
-                const languageCode = this.locale.substring(0, 2);
+                const languageCode = this.pageService.locale.substring(0, 2);
                 languageList.push({
                     languageCode,
                     languageName: languageNames[languageCode],

@@ -7,10 +7,28 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-dv",
+        "locales": {
+          "en": "src/locale/messages.en.xlf",
+          "tr": "src/locale/messages.tr.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["en"],
+            "aot": true,
             "outputPath": "functions/dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -26,192 +44,109 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "bootstrap",
+              "@angular/fire/firestore",
+              "rxjs/internal/operators"
+            ]
           },
           "configurations": {
-            "en": {
-              "aot": true,
-              "outputPath": "functions/dist/browser/en/",
-              "baseHref": "/en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error",
+            "dev": {
               "fileReplacements": [
                 {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.en.json"
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
                 }
               ],
-              "index": "src/environments/en/index.html"
-            },
-            "tr": {
-              "aot": true,
-              "outputPath": "functions/dist/browser/tr/",
-              "baseHref": "/tr/",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR",
-              "i18nMissingTranslation": "error",
-              "fileReplacements": [
+              "localize": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "budgets": [
                 {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.tr.json"
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 }
-              ],
-              "index": "src/environments/tr/index.html"
+              ]
             },
             "beta": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.beta.ts"
                 }
               ],
-              "serviceWorker": true
-            },
-            "beta-en": {
+              "localize": true,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.beta.ts"
-                },
-                {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.en.beta.json"
-                }
-              ],
               "serviceWorker": true,
-              "outputPath": "functions/dist/browser/en/",
-              "baseHref": "/en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error",
-              "index": "src/environments/en/beta/index.html"
-            },
-            "beta-tr": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
+              "budgets": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.beta.ts"
-                },
-                {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.tr.beta.json"
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 }
-              ],
-              "serviceWorker": true,
-              "outputPath": "functions/dist/browser/tr/",
-              "baseHref": "/tr/",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR",
-              "i18nMissingTranslation": "error",
-              "index": "src/environments/tr/beta/index.html"
+              ]
             },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "serviceWorker": true
-            },
-            "production-en": {
+              "localize": true,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "serviceWorker": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "e2e": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.en.prod.json"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ],
-              "serviceWorker": true,
-              "outputPath": "functions/dist/browser/en/",
-              "baseHref": "/en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "i18nMissingTranslation": "error",
-              "index": "src/environments/en/prod/index.html"
-            },
-            "production-tr": {
+              "localize": ["en"],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "src/manifest.json",
-                  "with": "src/environments/manifest.tr.prod.json"
-                }
-              ],
               "serviceWorker": true,
-              "outputPath": "functions/dist/browser/tr/",
-              "baseHref": "/tr/",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR",
-              "i18nMissingTranslation": "error",
-              "index": "src/environments/tr/prod/index.html"
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
@@ -221,29 +156,17 @@
             "browserTarget": "super-firebase-angular:build"
           },
           "configurations": {
-            "en": {
-              "browserTarget": "super-firebase-angular:build:en"
-            },
-            "tr": {
-              "browserTarget": "super-firebase-angular:build:tr"
+            "dev": {
+              "browserTarget": "super-firebase-angular:build:dev"
             },
             "beta": {
               "browserTarget": "super-firebase-angular:build:beta"
             },
-            "beta-en": {
-              "browserTarget": "super-firebase-angular:build:beta-en"
+            "prod": {
+              "browserTarget": "super-firebase-angular:build:prod"
             },
-            "beta-tr": {
-              "browserTarget": "super-firebase-angular:build:beta-tr"
-            },
-            "production": {
-              "browserTarget": "super-firebase-angular:build:production"
-            },
-            "production-en": {
-              "browserTarget": "super-firebase-angular:build:production-en"
-            },
-            "production-tr": {
-              "browserTarget": "super-firebase-angular:build:production-tr"
+            "e2e": {
+              "browserTarget": "super-firebase-angular:build:e2e"
             }
           }
         },
@@ -256,22 +179,21 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
             "karmaConfig": "./karma.conf.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "src/test.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "sourceMap": true,
-            "scripts": [],
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/manifest.json"
+            ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.scss"
             ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/manifest.json"
-            ]
+            "scripts": []
           }
         },
         "lint": {
@@ -290,87 +212,87 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "functions/dist/server",
-            "main": "src/main-ssr.ts",
+            "main": "server.ts",
             "tsConfig": "src/tsconfig.app-ssr.json"
           },
           "configurations": {
-            "en": {
-              "outputPath": "functions/dist/server/en",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US"
-            },
-            "tr": {
-              "outputPath": "functions/dist/server/tr",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR"
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ],
+              "localize": true,
+              "sourceMap": false,
+              "optimization": true
             },
             "beta": {
-              "outputPath": "functions/dist/server",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.beta.ts"
                 }
-              ]
+              ],
+              "localize": true,
+              "sourceMap": false,
+              "optimization": true
             },
-            "beta-en": {
-              "outputPath": "functions/dist/server/en",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.beta.ts"
-                }
-              ]
-            },
-            "beta-tr": {
-              "outputPath": "functions/dist/server/tr",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.beta.ts"
-                }
-              ]
-            },
-            "production": {
-              "outputPath": "functions/dist/server",
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "localize": true,
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "super-firebase-angular:build",
+            "serverTarget": "super-firebase-angular:server"
+          },
+          "configurations": {
+            "dev": {
+              "browserTarget": "super-firebase-angular:build:dev",
+              "serverTarget": "super-firebase-angular:server:dev"
             },
-            "production-en": {
-              "outputPath": "functions/dist/server/en",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-US",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+            "beta": {
+              "browserTarget": "super-firebase-angular:build:beta",
+              "serverTarget": "super-firebase-angular:server:beta"
             },
-            "production-tr": {
-              "outputPath": "functions/dist/server/tr",
-              "i18nFile": "src/locale/messages.tr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "tr-TR",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+            "prod": {
+              "browserTarget": "super-firebase-angular:build:prod",
+              "serverTarget": "super-firebase-angular:server:prod"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "super-firebase-angular:build",
+            "serverTarget": "super-firebase-angular:server",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "dev": {
+              "browserTarget": "super-firebase-angular:build:dev",
+              "serverTarget": "super-firebase-angular:server:dev"
+            },
+            "beta": {
+              "browserTarget": "super-firebase-angular:build:beta",
+              "serverTarget": "super-firebase-angular:server:beta"
+            },
+            "prod": {
+              "browserTarget": "super-firebase-angular:build:prod",
+              "serverTarget": "super-firebase-angular:server:prod"
             }
           }
         }
@@ -385,7 +307,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./e2e/protractor.conf.js",
-            "devServerTarget": "super-firebase-angular:serve:beta"
+            "devServerTarget": "super-firebase-angular:serve:e2e"
           },
           "configurations": {
             "browserstack": {

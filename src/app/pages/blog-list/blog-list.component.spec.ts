@@ -144,7 +144,7 @@ describe('BlogListComponent_tr-TR', () => {
                 BlogListComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

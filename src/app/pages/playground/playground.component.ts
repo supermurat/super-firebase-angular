@@ -2,7 +2,7 @@
 declare let window: any;
 
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { AlertService, PageService, PaginationService } from '../../services';
@@ -65,15 +65,13 @@ export class PlaygroundComponent implements OnInit {
     /**
      * constructor of PlaygroundComponent
      * @param platformId: PLATFORM_ID
-     * @param locale: LOCALE_ID
      * @param pageService: PageService
      * @param alert: AlertService
      * @param pagination: PaginationService
      * @param storage: AngularFireStorage
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
-                @Inject(LOCALE_ID) public locale: string,
-                private readonly pageService: PageService,
+                public pageService: PageService,
                 public alert: AlertService,
                 public pagination: PaginationService,
                 private readonly storage: AngularFireStorage) {
@@ -83,7 +81,7 @@ export class PlaygroundComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
-        this.pagination.init(`blogs_${this.locale}`, 'created', {reverse: true, prepend: false});
+        this.pagination.init(`blogs_${this.pageService.locale}`, 'created', {reverse: true, prepend: false});
 
         this.rendererText = isPlatformBrowser(this.platformId) ? 'Browser' : 'Server';
 

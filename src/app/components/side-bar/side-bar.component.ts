@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators';
 import { ConfigModel, CustomHtmlModel } from '../../models';
@@ -22,12 +22,10 @@ export class SideBarComponent implements OnInit {
      * @param router: Router
      * @param pageService: PageService
      * @param configService: ConfigService
-     * @param locale: LOCALE_ID
      */
     constructor(public router: Router,
                 public pageService: PageService,
-                public configService: ConfigService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public configService: ConfigService) {
     }
 
     /**

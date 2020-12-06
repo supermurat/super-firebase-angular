@@ -1,8 +1,8 @@
-import { Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/internal/operators';
 import { JokeModel } from '../../models';
-import { AlertService } from '../../services';
+import { AlertService, PageService } from '../../services';
 
 /**
  * Last Jokes Component
@@ -23,12 +23,12 @@ export class LastJokesComponent implements OnInit {
     /**
      * constructor of LastJokesComponent
      * @param alert: AlertService
+     * @param pageService: PageService
      * @param afs: AngularFirestore
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly alert: AlertService,
-                private readonly afs: AngularFirestore,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pageService: PageService,
+                private readonly afs: AngularFirestore) {
     }
 
     /**
@@ -42,7 +42,7 @@ export class LastJokesComponent implements OnInit {
      * get jokes
      */
     getJokes(): void {
-        this.afs.collection(`jokes_${this.locale}`,
+        this.afs.collection(`jokes_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .limit(this.jokeLimit)
         )

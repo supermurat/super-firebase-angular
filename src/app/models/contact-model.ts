@@ -15,5 +15,5 @@ export class ContactModel {
     /** is privacy policy agreed */
     isAgreed?: boolean;
     /** creation date */
-    created?: firebase.firestore.Timestamp | firebase.firestore.FieldValue;
+    created?: firebase.default.firestore.Timestamp | firebase.default.firestore.FieldValue;
 }

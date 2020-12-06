@@ -119,7 +119,7 @@ describe('JokeDetailComponent_tr-TR', () => {
                 JokeDetailComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,
