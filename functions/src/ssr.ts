@@ -11,7 +11,6 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as helmet from 'helmet';
-import * as csp from 'helmet-csp';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
@@ -68,7 +67,7 @@ const app = express();
 app.use(compression());
 app.use(cors(FUNCTIONS_CONFIG.cors));
 app.use(helmet());
-app.use(csp(FUNCTIONS_CONFIG.csp));
+app.use(helmet.contentSecurityPolicy(FUNCTIONS_CONFIG.csp));
 
 /** get current locale */
 const getLocale = (req: express.Request): string => {
@@ -143,22 +142,35 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
 };
 
 /** get SSR result */
-const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
-    const locale = getLocale(req);
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> =>
+    new Promise((resolve, reject): void => {
+        const locale = getLocale(req);
+        const bundle = serverJS[locale];
 
-    await renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
-        url: req.path,
-        document: indexHtml[locale]
-    }).then(async html => {
-        const firstResponse = respondToSSR(req, res, html);
-        const documentID = getDocumentID(req);
-        if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-            await db.collection('firstResponses')
-                .doc(documentID)
-                .set(firstResponse);
-        }
+        app.engine('html', bundle.ngExpressEngine({
+            bootstrap: bundle.AppServerModule
+        }));
+        app.set('view engine', 'html');
+        app.set('views', path.join(__dirname, '../dist/browser'));
+
+        res.render(
+            `${locale}/index`,
+            { req, res, engine: bundle.ngExpressEngine({bootstrap: bundle.AppServerModule})},
+            async (err, html) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const firstResponse = respondToSSR(req, res, html);
+                    const documentID = getDocumentID(req);
+                    if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
+                        await db.collection('firstResponses')
+                            .doc(documentID)
+                            .set(firstResponse);
+                    }
+                    resolve();
+                }
+            });
     });
-};
 
 /** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
