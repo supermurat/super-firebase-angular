@@ -14,6 +14,7 @@ import { CookieLawModule } from 'angular2-cookie-law';
 import { Angulartics2Module } from 'angulartics2';
 
 import { environment } from '../environments/environment';
+
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from './components/alert/alert.component';

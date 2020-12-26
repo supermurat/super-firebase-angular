@@ -213,7 +213,11 @@
           "options": {
             "outputPath": "functions/dist/server",
             "main": "server.ts",
-            "tsConfig": "src/tsconfig.app-ssr.json"
+            "tsConfig": "src/tsconfig.app-ssr.json",
+            "externalDependencies": [
+              "@firebase/app",
+              "@firebase/firestore"
+            ]
           },
           "configurations": {
             "dev": {

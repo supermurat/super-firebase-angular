@@ -2,8 +2,6 @@
 import 'zone.js/dist/zone-node';
 
 // tslint:disable-next-line:ordered-imports
-import { enableProdMode } from '@angular/core';
-import { renderModuleFactory } from '@angular/platform-server';
 import * as compression from 'compression';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -59,12 +57,10 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
         })!`);
 }
 
-enableProdMode();
-
 /** express app instance */
 const app = express();
 
-app.use(compression());
+// app.use(compression());
 app.use(cors(FUNCTIONS_CONFIG.cors));
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy(FUNCTIONS_CONFIG.csp));
@@ -142,35 +138,26 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
 };
 
 /** get SSR result */
-const getSSR = async (req: express.Request, res: express.Response): Promise<void> =>
-    new Promise((resolve, reject): void => {
-        const locale = getLocale(req);
-        const bundle = serverJS[locale];
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
+    const locale = getLocale(req);
+    const distFolder = path.join(__dirname, '../dist/browser', locale);
+    const bundle = serverJS[locale];
+    const baseUrl = `/${locale}/`;
+    const url = req.path;
 
-        app.engine('html', bundle.ngExpressEngine({
-            bootstrap: bundle.AppServerModule
-        }));
-        app.set('view engine', 'html');
-        app.set('views', path.join(__dirname, '../dist/browser'));
+    return bundle.ssrRender(app, distFolder, url, baseUrl, req, res)
+        .then(async (html: string): Promise<void> => {
+            const firstResponse = respondToSSR(req, res, html);
+            const documentID = getDocumentID(req);
+            if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
+                await db.collection('firstResponses')
+                    .doc(documentID)
+                    .set(firstResponse);
+            }
 
-        res.render(
-            `${locale}/index`,
-            { req, res, engine: bundle.ngExpressEngine({bootstrap: bundle.AppServerModule})},
-            async (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    const firstResponse = respondToSSR(req, res, html);
-                    const documentID = getDocumentID(req);
-                    if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-                        await db.collection('firstResponses')
-                            .doc(documentID)
-                            .set(firstResponse);
-                    }
-                    resolve();
-                }
-            });
-    });
+            return Promise.resolve();
+        });
+};
 
 /** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>

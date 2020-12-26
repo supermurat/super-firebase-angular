@@ -268,8 +268,9 @@ export class SeoService {
 
     /**
      * http 404 not found
+     * @param htmlContent: html content, can be useful for debugging
      */
-    http404(): void {
+    http404(htmlContent?: string): void {
         if (isPlatformBrowser(this.platformId)) {
             this.ngZone.run(() => {
                 this.router.navigate([this.router.url, 'http-404'])
@@ -280,7 +281,8 @@ export class SeoService {
             });
         } else {
             this.httpStatus$.next({
-                code: 404
+                code: 404,
+                htmlContent
             });
         }
     }
