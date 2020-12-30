@@ -53,6 +53,9 @@
           },
           "configurations": {
             "dev": {
+              "index": {
+                "input": "src/environments/index.dev.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -77,6 +80,9 @@
               ]
             },
             "beta": {
+              "index": {
+                "input": "src/environments/index.beta.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -101,6 +107,9 @@
               ]
             },
             "prod": {
+              "index": {
+                "input": "src/environments/index.prod.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

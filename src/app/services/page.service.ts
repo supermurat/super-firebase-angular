@@ -110,7 +110,7 @@ export class PageService {
      */
     getDocumentFromFirestore<T>(type: new() => T, path: string): Observable<T> {
         const ssrPageKey = makeStateKey<any>(`ssr_page_${path}`);
-        const existPage = this.state.get(ssrPageKey, new type());
+        const existPage = this.state.get(ssrPageKey, undefined);
 
         return this.afs.doc<T>(path)
             .valueChanges()
@@ -119,7 +119,7 @@ export class PageService {
                         this.state.set(ssrPageKey, pageItem);
                     }
                 }),
-                startWith(existPage)
+                existPage ? startWith(existPage) : tap()
             )
             .pipe(share());
     }
@@ -132,14 +132,14 @@ export class PageService {
      */
     getCollectionFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
         const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
-        const existPage = this.state.get(ssrCollectionKey, []);
+        const existPage = this.state.get(ssrCollectionKey, undefined);
 
         return this.afs.collection<T>(path, queryFn)
             .valueChanges()
             .pipe(tap(docs => {
                     this.state.set(ssrCollectionKey, docs);
                 }),
-                startWith(existPage)
+                existPage ? startWith(existPage) : tap()
             )
             .pipe(share());
     }
@@ -152,7 +152,7 @@ export class PageService {
      */
     getCollectionOfContentFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
         const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
-        const existPage = this.state.get(ssrCollectionKey, []);
+        const existPage = this.state.get(ssrCollectionKey, undefined);
 
         return this.afs.collection(path, queryFn)
             .snapshotChanges()
@@ -169,7 +169,7 @@ export class PageService {
             .pipe(tap(docs => {
                     this.state.set(ssrCollectionKey, docs);
                 }),
-                startWith(existPage)
+                existPage ? startWith(existPage) : tap()
             )
             .pipe(share());
     }

@@ -25,8 +25,8 @@ export const FUNCTIONS_CONFIG = {
             imgSrc: [
                 "'self'", 'data:', '*.googleapis.com', '*.google.com',
                 '*.google.com.tr', '*.google-analytics.com', '*.doubleclick.net'],
-            styleSrc: ["'self'", "'unsafe-inline'"],
-            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", '*.googletagmanager.com', '*.google-analytics.com']
+            styleSrc: ["'self'", "'unsafe-inline'", '*.google.com'],
+            scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", '*.googletagmanager.com', '*.google-analytics.com', '*.google.com']
         }
     },
     /**

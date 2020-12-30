@@ -23,5 +23,8 @@ export const environmentBase = {
         storageBucket: 'super-murat-beta.appspot.com',
         messagingSenderId: '1049127022657',
         appId: '1:1049127022657:web:11d999d7d785e02a'
+    },
+    cse: {
+        cx: '009513577206836808676:joyznri9mmm'
     }
 };
