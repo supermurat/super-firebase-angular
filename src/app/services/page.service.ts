@@ -4,7 +4,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
+import { map, share, startWith, tap } from 'rxjs/operators';
 import { routerLinksEN, routerLinksTR } from '../app-config';
 import { PageBaseModel, RouterLinksModel } from '../models';
 import { AlertService } from './alert.service';
@@ -66,7 +66,8 @@ export class PageService {
      * get current PageBaseModel
      */
     getPage(): Observable<PageBaseModel> {
-        return this.page$.asObservable();
+        return this.page$.asObservable()
+            .pipe(share());
     }
 
     /**
@@ -119,7 +120,8 @@ export class PageService {
                     }
                 }),
                 startWith(existPage)
-            );
+            )
+            .pipe(share());
     }
 
     /**
@@ -129,16 +131,47 @@ export class PageService {
      * @param uniqueKey: unique key for TransferState, if path is already unique without order and limit, no need to use this
      */
     getCollectionFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
-        const ssrCollectioKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
-        const existPage = this.state.get(ssrCollectioKey, []);
+        const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
+        const existPage = this.state.get(ssrCollectionKey, []);
 
         return this.afs.collection<T>(path, queryFn)
             .valueChanges()
             .pipe(tap(docs => {
-                    this.state.set(ssrCollectioKey, docs);
+                    this.state.set(ssrCollectionKey, docs);
                 }),
                 startWith(existPage)
-            );
+            )
+            .pipe(share());
+    }
+
+    /**
+     * get collection of content from firestore
+     * @param path: path of collection to load from Firestore
+     * @param queryFn: QueryFn
+     * @param uniqueKey: unique key for TransferState, if path is already unique without order and limit, no need to use this
+     */
+    getCollectionOfContentFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
+        const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
+        const existPage = this.state.get(ssrCollectionKey, []);
+
+        return this.afs.collection(path, queryFn)
+            .snapshotChanges()
+            .pipe(map(actions =>
+                actions.map(action => {
+                    const id = action.payload.doc.id;
+                    const data = action.payload.doc.data() as PageBaseModel;
+                    if (!data.hasOwnProperty('contentSummary')) {
+                        data.contentSummary = data.content;
+                    }
+
+                    return {id, ...data};
+                })))
+            .pipe(tap(docs => {
+                    this.state.set(ssrCollectionKey, docs);
+                }),
+                startWith(existPage)
+            )
+            .pipe(share());
     }
 
     /**

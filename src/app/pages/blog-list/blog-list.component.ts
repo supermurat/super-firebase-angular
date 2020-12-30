@@ -100,22 +100,12 @@ export class BlogListComponent implements OnInit {
     getBlogs(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.blogs$ = this.afs.collection(`blogs_${this.pageService.locale}`,
+        this.blogs$ = this.pageService.getCollectionOfContentFromFirestore(
+            `blogs_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
-                .limit(this.pagerModel.pageSize)
-        )
-            .snapshotChanges()
-            .pipe(map(actions =>
-                actions.map(action => {
-                    const id = action.payload.doc.id;
-                    const data = action.payload.doc.data() as BlogModel;
-                    if (!data.hasOwnProperty('contentSummary')) {
-                        data.contentSummary = data.content;
-                    }
-
-                    return {id, ...data};
-                })));
+                .limit(this.pagerModel.pageSize),
+            `${this.pagerModel.pageSize}-${startAtOrderNo}`);
         this.blogs$.subscribe(articles => {
             if (articles.length > 0) {
                 this.lastItemOfCurrentPage = articles[articles.length - 1];

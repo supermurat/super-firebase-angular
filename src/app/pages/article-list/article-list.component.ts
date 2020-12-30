@@ -100,22 +100,12 @@ export class ArticleListComponent implements OnInit {
     getArticles(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.articles$ = this.afs.collection(`articles_${this.pageService.locale}`,
+        this.articles$ = this.pageService.getCollectionOfContentFromFirestore(
+            `articles_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
-                .limit(this.pagerModel.pageSize)
-        )
-            .snapshotChanges()
-            .pipe(map(actions =>
-                actions.map(action => {
-                    const id = action.payload.doc.id;
-                    const data = action.payload.doc.data() as ArticleModel;
-                    if (!data.hasOwnProperty('contentSummary')) {
-                        data.contentSummary = data.content;
-                    }
-
-                    return { id, ...data };
-                })));
+                .limit(this.pagerModel.pageSize),
+            `${this.pagerModel.pageSize}-${startAtOrderNo}`);
         this.articles$.subscribe(articles => {
             if (articles.length > 0) {
                 this.lastItemOfCurrentPage = articles[articles.length - 1];
