@@ -352,7 +352,9 @@ const recalculateOrderNo = async (jobData: JobModel): Promise<any> => {
                         allDocs.sort((a, b) =>
                             a.created && a.created.seconds ?
                                 (b.created && b.created.seconds ?
-                                    (a.created.seconds * 1000 > b.created.seconds * 1000 ? 1 : -1)
+                                    (a.created.seconds === b.created.seconds ?
+                                        ((a.id > b.id ? 1 : -1))
+                                        : (a.created.seconds > b.created.seconds ? 1 : -1))
                                     : 1)
                                 : -1);
                         let orderNo = 0;
