@@ -63,7 +63,9 @@ export const FUNCTIONS_CONFIG = {
         }
 
         return Promise.resolve(true);
-    }
+    },
+    /** http port to run unit test */
+    unitTestHttpPort: 5100
 };
 
 // istanbul ignore next

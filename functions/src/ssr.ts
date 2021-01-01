@@ -11,6 +11,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as helmet from 'helmet';
+import * as http from 'http';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
@@ -273,3 +274,21 @@ export const ssr = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
     .https.onRequest(app);
+
+if (process.env.IS_RUNNING_ON_UNIT_TEST === 'TRUE') {
+    // res.render() getting empty result without an error message while UNIT TEST
+    // so let's use http.Server instead of functions.https.onRequest(app) for UNIT TEST
+    app.use(express.static(path.join(__dirname, '../dist/browser'), {
+        dotfiles: 'ignore',
+        etag: false,
+        index: false,
+        maxAge: '1d',
+        redirect: false,
+        setHeaders: (res, fpath, stat): void => {
+            res.set('x-timestamp', Date.now().toString());
+        }
+    }));
+    new http.Server(app).listen(FUNCTIONS_CONFIG.unitTestHttpPort, () => {
+        console.log(`TEST server starting at http://127.0.0.1:${FUNCTIONS_CONFIG.unitTestHttpPort} for UNIT TEST`);
+    });
+}
