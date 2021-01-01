@@ -49,7 +49,7 @@ describe('HomeComponent', () => {
     }));
 
     it('should load home page contents properly with uniqueKey for TransferState', fakeAsync(() => {
-        const contents$ = comp.pageService.getCollectionFromFirestore(`pages_${comp.locale}/home/contents`,
+        const contents$ = comp.pageService.getCollectionFromFirestore(`pages_${comp.pageService.locale}/home/contents`,
             ref => ref.orderBy('created', 'desc')
                 .limit(3), 'unit-test');
         let lastContents = [];
@@ -62,7 +62,7 @@ describe('HomeComponent', () => {
     }));
 
     it('should load config properly', fakeAsync(() => {
-        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.pageService.locale}`)
             .subscribe(config => {
                 comp.configService.init(config);
             });
@@ -72,7 +72,7 @@ describe('HomeComponent', () => {
     }));
 
     it('should load config properly even if initialized after already got', fakeAsync(() => {
-        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.pageService.locale}`)
             .subscribe(config => {
                 comp.configService.init(config);
             });

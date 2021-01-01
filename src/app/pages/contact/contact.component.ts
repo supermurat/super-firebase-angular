@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
@@ -28,13 +28,11 @@ export class ContactComponent implements OnInit {
      * @param pageService: PageService
      * @param afs: AngularFirestore
      * @param alert: AlertService
-     * @param locale: LOCALE_ID
      */
     constructor(@Inject(PLATFORM_ID) private readonly platformId: string,
                 public pageService: PageService,
                 private readonly afs: AngularFirestore,
-                public alert: AlertService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public alert: AlertService) {
     }
 
     /**
@@ -50,8 +48,8 @@ export class ContactComponent implements OnInit {
      * on click send button
      */
     onClickSend(): void {
-        this.contact.created = firebase.firestore.FieldValue.serverTimestamp();
-        this.afs.collection(`messages_${this.locale}`)
+        this.contact.created = firebase.default.firestore.FieldValue.serverTimestamp();
+        this.afs.collection(`messages_${this.pageService.locale}`)
             .add(this.contact)
             .then(value => {
                 this.isShowThankYou = true;

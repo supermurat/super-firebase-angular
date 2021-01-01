@@ -144,7 +144,7 @@ describe('JokeListComponent_tr-TR', () => {
                 JokeListComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

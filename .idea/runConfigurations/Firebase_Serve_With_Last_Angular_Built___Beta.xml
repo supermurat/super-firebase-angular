@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Firebase Serve With Last Angular Built - Beta" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/package.json" />
+    <package-json value="$PROJECT_DIR$/functions/package.json" />
     <command value="run" />
     <scripts>
-      <script value="serve:only:firebase:beta" />
+      <script value="serve:beta" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

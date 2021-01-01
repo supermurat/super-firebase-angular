@@ -1,9 +1,9 @@
-import { Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 import { TaxonomyModel } from '../../models';
-import { AlertService } from '../../services';
+import { AlertService, PageService } from '../../services';
 
 /**
  * Active Tags Component
@@ -24,12 +24,12 @@ export class ActiveTagsComponent implements OnInit {
     /**
      * constructor of ActiveTagsComponent
      * @param alert: AlertService
+     * @param pageService: PageService
      * @param afs: AngularFirestore
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly alert: AlertService,
-                private readonly afs: AngularFirestore,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pageService: PageService,
+                private readonly afs: AngularFirestore) {
     }
 
     /**
@@ -43,7 +43,7 @@ export class ActiveTagsComponent implements OnInit {
      * get taxonomy list
      */
     getTaxonomyList(): void {
-        this.taxonomyList$ = this.afs.collection(`taxonomy_${this.locale}`,
+        this.taxonomyList$ = this.afs.collection(`taxonomy_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .limit(this.tagLimit)
         )

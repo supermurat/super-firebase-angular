@@ -110,7 +110,7 @@ describe('PlaygroundComponent', () => {
     }));
 
     it('pagination.init() should load data with alternate options { reverse: false, prepend: true }', fakeAsync(() => {
-        comp.pagination.init(`blogs_${comp.locale}`, 'created', {reverse: false, prepend: true});
+        comp.pagination.init(`blogs_${comp.pageService.locale}`, 'created', {reverse: false, prepend: true});
         tick();
         let countOfItem = 0;
         comp.pagination.data.subscribe(result => {
@@ -132,7 +132,7 @@ describe('PlaygroundComponent', () => {
         tick();
         comp.scrollHandler('bottom');
         tick();
-        comp.pagination.init(`blogs_${comp.locale}`, 'created', {reverse: true, prepend: false}, false);
+        comp.pagination.init(`blogs_${comp.pageService.locale}`, 'created', {reverse: true, prepend: false}, false);
         tick();
         expect(countOfItem)
             .toEqual(4);

@@ -538,7 +538,7 @@ describe('Jobs - Firestore', (): void => {
                     set(data): any {
                         if (data.result) {
                             expect(data.result.processedDocCount)
-                                .toEqual(14);
+                                .toEqual(20);
                             expect(data.isSucceed)
                                 .toEqual(true);
                         }
@@ -551,7 +551,7 @@ describe('Jobs - Firestore', (): void => {
             const res = await wrapped(snap);
 
             expect(res.result.processedDocCount)
-                .toEqual(14);
+                .toEqual(20);
             expect(res.isSucceed)
                 .toEqual(true);
         });
@@ -663,7 +663,8 @@ describe('Jobs - GoogleAuth', (): void => {
 
     beforeAll(() => {
         test = fTest();
-        spyOn(googleAuthLib, 'GoogleAuth').and.returnValue(googleAuthStub as any);
+        spyOn(googleAuthLib.GoogleAuth.prototype, 'getCredentials').and.returnValue(googleAuthStub.getCredentials() as any);
+        spyOn(googleAuthLib.GoogleAuth.prototype, 'getClient').and.returnValue(googleAuthStub.getClient());
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');
     });

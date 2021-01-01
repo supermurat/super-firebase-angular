@@ -156,7 +156,7 @@ describe('ArticleListComponent_tr-TR', () => {
                 ArticleListComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

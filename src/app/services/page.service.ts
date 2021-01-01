@@ -4,7 +4,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ParamMap, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { startWith, tap } from 'rxjs/operators';
+import { map, share, startWith, tap } from 'rxjs/operators';
 import { routerLinksEN, routerLinksTR } from '../app-config';
 import { PageBaseModel, RouterLinksModel } from '../models';
 import { AlertService } from './alert.service';
@@ -16,6 +16,8 @@ import { SeoService } from './seo.service';
  */
 @Injectable()
 export class PageService {
+    /** locale */
+    locale: string;
     /** translated router links */
     routerLinks: RouterLinksModel;
     /** collection of PageBaseModel */
@@ -34,7 +36,7 @@ export class PageService {
      * @param ngZone: NgZone
      * @param rendererFactory: RendererFactory2
      * @param document: DOCUMENT
-     * @param locale: LOCALE_ID
+     * @param localeP: LOCALE_ID
      */
     constructor(public seo: SeoService,
                 public carouselService: CarouselService,
@@ -45,9 +47,10 @@ export class PageService {
                 private readonly ngZone: NgZone,
                 private readonly rendererFactory: RendererFactory2,
                 @Inject(DOCUMENT) private readonly document,
-                @Inject(LOCALE_ID) public locale: string) {
+                @Inject(LOCALE_ID) private readonly localeP: string) {
+        this.locale = localeP === 'tr' ? 'tr-TR' : 'en-US'; // TODO: fix for other locales, this is quick fix to force to use with culture codes
         this.renderer = rendererFactory.createRenderer(undefined, undefined);
-        this.routerLinks = locale === 'tr-TR' ? routerLinksTR : routerLinksEN;
+        this.routerLinks = this.locale === 'tr-TR' ? routerLinksTR : routerLinksEN;
     }
 
     /**
@@ -63,7 +66,8 @@ export class PageService {
      * get current PageBaseModel
      */
     getPage(): Observable<PageBaseModel> {
-        return this.page$.asObservable();
+        return this.page$.asObservable()
+            .pipe(share());
     }
 
     /**
@@ -106,7 +110,7 @@ export class PageService {
      */
     getDocumentFromFirestore<T>(type: new() => T, path: string): Observable<T> {
         const ssrPageKey = makeStateKey<any>(`ssr_page_${path}`);
-        const existPage = this.state.get(ssrPageKey, new type());
+        const existPage = this.state.get(ssrPageKey, undefined);
 
         return this.afs.doc<T>(path)
             .valueChanges()
@@ -115,8 +119,9 @@ export class PageService {
                         this.state.set(ssrPageKey, pageItem);
                     }
                 }),
-                startWith(existPage)
-            );
+                existPage ? startWith(existPage) : tap()
+            )
+            .pipe(share());
     }
 
     /**
@@ -126,16 +131,47 @@ export class PageService {
      * @param uniqueKey: unique key for TransferState, if path is already unique without order and limit, no need to use this
      */
     getCollectionFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
-        const ssrCollectioKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
-        const existPage = this.state.get(ssrCollectioKey, []);
+        const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
+        const existPage = this.state.get(ssrCollectionKey, undefined);
 
         return this.afs.collection<T>(path, queryFn)
             .valueChanges()
             .pipe(tap(docs => {
-                    this.state.set(ssrCollectioKey, docs);
+                    this.state.set(ssrCollectionKey, docs);
                 }),
-                startWith(existPage)
-            );
+                existPage ? startWith(existPage) : tap()
+            )
+            .pipe(share());
+    }
+
+    /**
+     * get collection of content from firestore
+     * @param path: path of collection to load from Firestore
+     * @param queryFn: QueryFn
+     * @param uniqueKey: unique key for TransferState, if path is already unique without order and limit, no need to use this
+     */
+    getCollectionOfContentFromFirestore<T>(path: string, queryFn?: QueryFn, uniqueKey?: any): Observable<Array<T>> {
+        const ssrCollectionKey = makeStateKey<any>(`ssr_collection_${uniqueKey ? uniqueKey : ''}_${path}`);
+        const existPage = this.state.get(ssrCollectionKey, undefined);
+
+        return this.afs.collection(path, queryFn)
+            .snapshotChanges()
+            .pipe(map(actions =>
+                actions.map(action => {
+                    const id = action.payload.doc.id;
+                    const data = action.payload.doc.data() as PageBaseModel;
+                    if (!data.hasOwnProperty('contentSummary')) {
+                        data.contentSummary = data.content;
+                    }
+
+                    return {id, ...data};
+                })))
+            .pipe(tap(docs => {
+                    this.state.set(ssrCollectionKey, docs);
+                }),
+                existPage ? startWith(existPage) : tap()
+            )
+            .pipe(share());
     }
 
     /**

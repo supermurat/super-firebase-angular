@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -26,7 +26,6 @@ export class BlogDetailComponent implements OnInit {
      * @param router: Router
      * @param route: ActivatedRoute
      * @param pageService: PageService
-     * @param locale: LOCALE_ID
      */
     constructor(
         private readonly afs: AngularFirestore,
@@ -34,8 +33,7 @@ export class BlogDetailComponent implements OnInit {
         private readonly alert: AlertService,
         public router: Router,
         private readonly route: ActivatedRoute,
-        public pageService: PageService,
-        @Inject(LOCALE_ID) public locale: string
+        public pageService: PageService
     ) {
     }
 

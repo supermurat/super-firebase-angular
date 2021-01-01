@@ -39,7 +39,7 @@ describe('SideBarComponent', () => {
     });
 
     it('should load config properly', fakeAsync(() => {
-        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.locale}`)
+        comp.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${comp.pageService.locale}`)
             .subscribe(config => {
                 comp.configService.init(config);
             });

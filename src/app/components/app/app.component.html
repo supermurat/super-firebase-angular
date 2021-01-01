@@ -32,4 +32,4 @@
     <div class="text-monospace small" i18n>By continuing to browse the site, you're agreeing to our use of cookies.</div>
 </cookie-law>
 
-<div [innerHTML]="jsonLD$ | async"></div>
+<div [innerHTML]="jsonLD$ | async" *ngIf="jsonLD$"></div>
