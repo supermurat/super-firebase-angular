@@ -44,39 +44,6 @@ export const app = (): express.Express => {
     return server;
 };
 
-export const ssrRender = (
-    server: express.Express, distFolder: string, url: string, baseUrl: string,
-    req: express.Request, res: express.Response): Promise<string> =>
-    new Promise((resolve, reject): void => {
-        const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
-
-        // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-        server.engine('html', ngExpressEngine({
-            bootstrap: AppServerModule
-        }));
-
-        server.set('view engine', 'html');
-        server.set('views', distFolder);
-
-        res.render(
-            indexHtml,
-            {
-                req, res, url,
-                providers: [
-                    {provide: APP_BASE_HREF, useValue: baseUrl},
-                    {provide: REQUEST, useValue: req},
-                    {provide: RESPONSE, useValue: res}
-                ]
-            },
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(html);
-                }
-            });
-    });
-
 const run = (): void => {
     const port = process.env.PORT ? process.env.PORT : 4200;
 
@@ -99,3 +66,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
 }
 
 export * from './src/main.server';
+export { ngExpressEngine } from '@nguniversal/express-engine';

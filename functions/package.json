@@ -44,6 +44,7 @@
     "@fortawesome/fontawesome-free": "5.15.1",
     "@google-cloud/storage": "5.5.0",
     "@ng-bootstrap/ng-bootstrap": "8.0.0",
+    "@nguniversal/express-engine": "11.0.0",
     "@ngx-loading-bar/core": "5.1.0",
     "@ngx-loading-bar/router": "5.1.0",
     "angular2-cookie-law": "^7.0.1",

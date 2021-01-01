@@ -2,6 +2,8 @@
 import 'zone.js/dist/zone-node';
 
 // tslint:disable-next-line:ordered-imports
+import { APP_BASE_HREF } from '@angular/common';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import * as compression from 'compression';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -138,26 +140,40 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
 };
 
 /** get SSR result */
-const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
-    const locale = getLocale(req);
-    const distFolder = path.join(__dirname, '../dist/browser', locale);
-    const bundle = serverJS[locale];
-    const baseUrl = `/${locale}/`;
-    const url = req.path;
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> =>
+    new Promise((resolve, reject): void => {
+        const locale = getLocale(req);
+        const bundle = serverJS[locale];
 
-    return bundle.ssrRender(app, distFolder, url, baseUrl, req, res)
-        .then(async (html: string): Promise<void> => {
-            const firstResponse = respondToSSR(req, res, html);
-            const documentID = getDocumentID(req);
-            if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-                await db.collection('firstResponses')
-                    .doc(documentID)
-                    .set(firstResponse);
-            }
+        app.engine('html', bundle.ngExpressEngine({
+            bootstrap: bundle.AppServerModule
+        }));
 
-            return Promise.resolve();
-        });
-};
+        app.set('view engine', 'html');
+        app.set('views', path.join(__dirname, '../dist/browser', locale));
+
+        res.render(
+            'index',
+            {req, res, url: req.path, providers: [
+                        {provide: APP_BASE_HREF, useValue: `/${locale}/`},
+                        {provide: REQUEST, useValue: req},
+                        {provide: RESPONSE, useValue: res}
+                    ]},
+            async (err, html): Promise<void> => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const firstResponse = respondToSSR(req, res, html);
+                    const documentID = getDocumentID(req);
+                    if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
+                        await db.collection('firstResponses')
+                            .doc(documentID)
+                            .set(firstResponse);
+                    }
+                    resolve();
+                }
+            });
+    });
 
 /** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
