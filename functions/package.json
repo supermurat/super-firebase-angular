@@ -18,8 +18,8 @@
     "deploy:prod": "firebase deploy --project supermurat-com --only functions",
     "logs:beta": "firebase functions:log --project super-murat-beta",
     "logs:prod": "firebase functions:log --project supermurat-com",
-    "test": "ncp ./.env.unit-test ./.env && jasmine-ts --config=./jasmine.json",
-    "test:cover": "del-cli \"./coverage\" && ncp ./.env.unit-test ./.env && nyc jasmine --config=./jasmine.json",
+    "test": "cross-env IS_RUNNING_ON_UNIT_TEST=TRUE jasmine-ts --config=./jasmine.json",
+    "test:cover": "del-cli \"./coverage\" && cross-env IS_RUNNING_ON_UNIT_TEST=TRUE nyc jasmine --config=./jasmine.json",
     "test:cover:open": "npm run test:cover && open-cli \"./coverage/index.html\"",
     "typedoc": "del-cli \"./documentation\" && typedoc --tsconfig tsconfig.json --exclude **/*.spec.ts --name \"super-firebase-angular functions documentation\" --gitRevision master --out documentation ./src",
     "typedoc:open": "npm run typedoc && open-cli \"./documentation/index.html\""
@@ -56,6 +56,7 @@
     "compression": "1.7.4",
     "core-js": "3.8.0",
     "cors": "2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "8.2.0",
     "firebase": "8.1.1",
     "google-auth-library": "6.1.3",
