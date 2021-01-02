@@ -91,15 +91,15 @@ stories [`angular-cli/wiki/stories`][site-angular-cli-stories]
 MIT
 
 ## Thanks to
-| [![Google Firebase](/docs/images/firebase.png "Google Firebase")][site-firebase]     | [![JetBrains](/docs/images/jetbrains.png "JetBrains")][site-jetbrains] |
-| ---                                                                                  | ---                                                                    |
-| [![Browser Stack](/docs/images/browserstack.png "Browser Stack")][site-browserstack] | [![Travis-CI](/docs/images/travis-ci.png "Travis-CI")][site-travis-ci] |
-| [![Codacy](/docs/images/codacy.png "Codacy")][site-codacy]                           | [![Coveralls](/docs/images/coveralls.png "Coveralls")][site-coveralls] |
+| [![Google Firebase][lg-fb]][st-fb] | [![JetBrains][lg-jb]][st-jb]     |
+| ---                                | ---                              |
+| [![Browser Stack][lg-bs]][st-bs]   | [![Travis-CI][lg-t-ci]][st-t-ci] |
+| [![Codacy][lg-cdc]][st-cdc]        | [![Coveralls][lg-cvr]][st-cvr]   |
 
 [badge-url-travis]: https://travis-ci.org/supermurat/super-firebase-angular.svg?branch=master
 [badge-lnk-travis]: https://travis-ci.org/supermurat/super-firebase-angular
-[badge-url-browserstack]: https://automate.browserstack.com/badge.svg?badge_key=NW5WdStCU1RVVVpZOERoaGFFMnc0VWJRVlF3MVBYQ29EQWswWTJ1bmU1ST0tLTB1T3JrNmpFQWpvcDJwTGZoTHF6Snc9PQ==--d4bf8976f4d2485a4971d6606e5a72bd0559a8cb
-[badge-lnk-browserstack]: https://automate.browserstack.com/public-build/NW5WdStCU1RVVVpZOERoaGFFMnc0VWJRVlF3MVBYQ29EQWswWTJ1bmU1ST0tLTB1T3JrNmpFQWpvcDJwTGZoTHF6Snc9PQ==--d4bf8976f4d2485a4971d6606e5a72bd0559a8cb
+[badge-url-browserstack]: https://automate.browserstack.com/badge.svg?badge_key=bEJzMFVHL3Q2a3MrUDJHOGs5QnNyNVBEcjZnY3VXcUFnV0EybFM4R1YwQT0tLUtNY0hUVldOU2NlekNtOWw0U0J0SHc9PQ==--0c83c47289555797259d7502bf3b06edf066f903
+[badge-lnk-browserstack]: https://automate.browserstack.com/public-build/bEJzMFVHL3Q2a3MrUDJHOGs5QnNyNVBEcjZnY3VXcUFnV0EybFM4R1YwQT0tLUtNY0hUVldOU2NlekNtOWw0U0J0SHc9PQ==--0c83c47289555797259d7502bf3b06edf066f903
 [badge-url-coveralls]: https://coveralls.io/repos/github/supermurat/super-firebase-angular/badge.svg?branch=master
 [badge-lnk-coveralls]: https://coveralls.io/github/supermurat/super-firebase-angular?branch=master
 [badge-url-codacy]: https://api.codacy.com/project/badge/Grade/d8bd28c7d9e4499aa0e0cee622fe2352
@@ -131,9 +131,16 @@ MIT
 [site-angular-cli-generate]: https://github.com/angular/angular-cli/wiki/generate
 [site-angular-cli-stories]: https://github.com/angular/angular-cli/wiki/stories
 
-[site-firebase]: https://firebase.google.com
-[site-jetbrains]: https://www.jetbrains.com/?from=SuperFirebaseAngular
-[site-browserstack]: https://www.browserstack.com
-[site-travis-ci]: https://www.travis-ci.org
-[site-codacy]: https://www.codacy.com
-[site-coveralls]: https://coveralls.io
+[lg-fb]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/firebase.png "Google Firebase"
+[lg-jb]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/jetbrains.png "JetBrains"
+[lg-bs]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/browserstack.png "Browser Stack"
+[lg-t-ci]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/travis-ci.png "Travis-CI"
+[lg-cdc]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/codacy.png "Codacy"
+[lg-coveralls]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/coveralls.png "Coveralls"
+
+[st-fb]: https://firebase.google.com
+[st-jb]: https://www.jetbrains.com/?from=SuperFirebaseAngular
+[st-bs]: https://www.browserstack.com
+[st-t-ci]: https://www.travis-ci.org
+[st-cdc]: https://www.codacy.com
+[st-cvr]: https://coveralls.io
