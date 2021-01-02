@@ -2,8 +2,8 @@
 import 'zone.js/dist/zone-node';
 
 // tslint:disable-next-line:ordered-imports
-import { enableProdMode } from '@angular/core';
-import { renderModuleFactory } from '@angular/platform-server';
+import { APP_BASE_HREF } from '@angular/common';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import * as compression from 'compression';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -11,7 +11,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { existsSync, readFileSync } from 'fs';
 import * as helmet from 'helmet';
-import * as csp from 'helmet-csp';
+import * as http from 'http';
 import * as path from 'path';
 
 import { FUNCTIONS_CONFIG } from './config';
@@ -60,15 +60,13 @@ if (!serverJS.hasOwnProperty(FUNCTIONS_CONFIG.defaultLanguageCode) ||
         })!`);
 }
 
-enableProdMode();
-
 /** express app instance */
 const app = express();
 
-app.use(compression());
+// app.use(compression());
 app.use(cors(FUNCTIONS_CONFIG.cors));
 app.use(helmet());
-app.use(csp(FUNCTIONS_CONFIG.csp));
+app.use(helmet.contentSecurityPolicy(FUNCTIONS_CONFIG.csp));
 
 /** get current locale */
 const getLocale = (req: express.Request): string => {
@@ -143,22 +141,40 @@ const respondToSSR = (req: express.Request, res: express.Response, html: string)
 };
 
 /** get SSR result */
-const getSSR = async (req: express.Request, res: express.Response): Promise<void> => {
-    const locale = getLocale(req);
+const getSSR = async (req: express.Request, res: express.Response): Promise<void> =>
+    new Promise((resolve, reject): void => {
+        const locale = getLocale(req);
+        const bundle = serverJS[locale];
 
-    await renderModuleFactory(serverJS[locale].AppServerModuleNgFactory, {
-        url: req.path,
-        document: indexHtml[locale]
-    }).then(async html => {
-        const firstResponse = respondToSSR(req, res, html);
-        const documentID = getDocumentID(req);
-        if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
-            await db.collection('firstResponses')
-                .doc(documentID)
-                .set(firstResponse);
-        }
+        app.engine('html', bundle.ngExpressEngine({
+            bootstrap: bundle.AppServerModule
+        }));
+
+        app.set('view engine', 'html');
+        app.set('views', path.join(__dirname, '../dist/browser', locale));
+
+        res.render(
+            'index',
+            {req, res, url: req.path, providers: [
+                        {provide: APP_BASE_HREF, useValue: `/${locale}/`},
+                        {provide: REQUEST, useValue: req},
+                        {provide: RESPONSE, useValue: res}
+                    ]},
+            async (err, html): Promise<void> => {
+                if (err) {
+                    reject(err);
+                } else {
+                    const firstResponse = respondToSSR(req, res, html);
+                    const documentID = getDocumentID(req);
+                    if (FUNCTIONS_CONFIG.cacheResponses && firstResponse && documentID) {
+                        await db.collection('firstResponses')
+                            .doc(documentID)
+                            .set(firstResponse);
+                    }
+                    resolve();
+                }
+            });
     });
-};
 
 /** check first responses for requested url */
 const checkFirstResponse = async (req: express.Request, res: express.Response): Promise<any> =>
@@ -258,3 +274,21 @@ export const ssr = functions
     // .region('europe-west1')
     // .runWith({ memory: '1GB', timeoutSeconds: 120 })
     .https.onRequest(app);
+
+if (process.env.IS_RUNNING_ON_UNIT_TEST === 'TRUE') {
+    // res.render() getting empty result without an error message while UNIT TEST
+    // so let's use http.Server instead of functions.https.onRequest(app) for UNIT TEST
+    app.use(express.static(path.join(__dirname, '../dist/browser'), {
+        dotfiles: 'ignore',
+        etag: false,
+        index: false,
+        maxAge: '1d',
+        redirect: false,
+        setHeaders: (res, fpath, stat): void => {
+            res.set('x-timestamp', Date.now().toString());
+        }
+    }));
+    new http.Server(app).listen(FUNCTIONS_CONFIG.unitTestHttpPort, () => {
+        console.log(`TEST server starting at http://127.0.0.1:${FUNCTIONS_CONFIG.unitTestHttpPort} for UNIT TEST`);
+    });
+}

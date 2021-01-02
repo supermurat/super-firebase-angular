@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -27,15 +27,13 @@ export class TaxonomyComponent implements OnInit {
      * @param route: ActivatedRoute
      * @param pageService: PageService
      * @param pagination: PaginationService
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
                 private readonly seo: SeoService,
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 public pageService: PageService,
-                public pagination: PaginationService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pagination: PaginationService) {
     }
 
     /**
@@ -46,7 +44,8 @@ export class TaxonomyComponent implements OnInit {
             this.tagID = pmap.get('id');
             this.tag$ = this.pageService.getPageFromFirestore(TaxonomyModel, 'taxonomy', this.tagID);
 
-            this.pagination.init(`taxonomy_${this.locale}/${this.tagID}/contents`, 'created', {reverse: true, prepend: false, limit: 5});
+            this.pagination.init(
+                `taxonomy_${this.pageService.locale}/${this.tagID}/contents`, 'created', {reverse: true, prepend: false, limit: 5});
 
         });
     }

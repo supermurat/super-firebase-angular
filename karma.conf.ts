@@ -12,8 +12,7 @@ module.exports = config => {
             require('karma-chrome-launcher'),
             require('karma-jasmine-html-reporter'),
             require('karma-coverage-istanbul-reporter'),
-            require('@angular-devkit/build-angular/plugins/karma'),
-            require('karma-scss-preprocessor')
+            require('@angular-devkit/build-angular/plugins/karma')
         ],
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -33,17 +32,6 @@ module.exports = config => {
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: ['Chrome'],
-        singleRun: false,
-        files: [
-            { pattern: './src/**/*.scss', watched: true,  included: true, served: true }
-        ],
-        preprocessors: {
-            'src/**/*.scss': ['scss']
-        },
-        scssPreprocessor: {
-            options: {
-                sourceMap: true
-            }
-        }
+        singleRun: false
     });
 };

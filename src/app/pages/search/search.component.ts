@@ -1,5 +1,8 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { environment } from '../../../environments/environment';
 import { AlertService, PageService } from '../../services';
 
 /**
@@ -44,13 +47,14 @@ export class SearchComponent implements OnInit {
         );
         this.gcseSearchResult = this.sanitizer.bypassSecurityTrustHtml('<gcse:searchresults-only></gcse:searchresults-only>');
 
-        const cx = '009513577206836808676:joyznri9mmm';
-        const gcse = document.createElement('script');
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        gcse.src = `https://cse.google.com/cse.js?cx=${cx}`;
-        const s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
+        if (isPlatformBrowser(this.platformId) && environment.cse.cx) {
+            const gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = `https://cse.google.com/cse.js?cx=${environment.cse.cx}`;
+            const s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        }
     }
 
 }

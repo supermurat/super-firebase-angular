@@ -44,15 +44,13 @@ export class ArticleListComponent implements OnInit {
      * @param route: ActivatedRoute
      * @param pagerService: PagerService
      * @param pageService: PageService
-     * @param locale: LOCALE_ID
      */
     constructor(private readonly afs: AngularFirestore,
                 private readonly seo: SeoService,
                 public router: Router,
                 private readonly route: ActivatedRoute,
                 private readonly pagerService: PagerService,
-                public pageService: PageService,
-                @Inject(LOCALE_ID) public locale: string) {
+                public pageService: PageService) {
     }
 
     /**
@@ -73,7 +71,7 @@ export class ArticleListComponent implements OnInit {
         if (this.firstItem) { // no need to get firstItem again
             this.getArticles();
         } else {
-            this.afs.collection(`articles_${this.locale}`,
+            this.afs.collection(`articles_${this.pageService.locale}`,
                 ref => ref.orderBy('orderNo')
                     .limit(1)
             )
@@ -102,22 +100,12 @@ export class ArticleListComponent implements OnInit {
     getArticles(): void {
         this.checkPageNo();
         const startAtOrderNo = this.firstItemOrderNo + ((this.pagerModel.currentPageNo - 1) * this.pagerModel.pageSize);
-        this.articles$ = this.afs.collection(`articles_${this.locale}`,
+        this.articles$ = this.pageService.getCollectionOfContentFromFirestore(
+            `articles_${this.pageService.locale}`,
             ref => ref.orderBy('orderNo')
                 .startAt(startAtOrderNo)
-                .limit(this.pagerModel.pageSize)
-        )
-            .snapshotChanges()
-            .pipe(map(actions =>
-                actions.map(action => {
-                    const id = action.payload.doc.id;
-                    const data = action.payload.doc.data() as ArticleModel;
-                    if (!data.hasOwnProperty('contentSummary')) {
-                        data.contentSummary = data.content;
-                    }
-
-                    return { id, ...data };
-                })));
+                .limit(this.pagerModel.pageSize),
+            `${this.pagerModel.pageSize}-${startAtOrderNo}`);
         this.articles$.subscribe(articles => {
             if (articles.length > 0) {
                 this.lastItemOfCurrentPage = articles[articles.length - 1];

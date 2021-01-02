@@ -153,7 +153,8 @@ describe('Triggers - Pub/Sub', (): void => {
         spyOn(admin, 'initializeApp').and.returnValue(firebaseAppStub as any);
         spyOn(admin, 'app').and.returnValue(firebaseAppStub as any);
         spyOn(admin, 'firestore').and.returnValue(firestoreStub as any);
-        spyOn(googleAuthLib, 'GoogleAuth').and.returnValue(googleAuthStub as any);
+        spyOn(googleAuthLib.GoogleAuth.prototype, 'getCredentials').and.returnValue(googleAuthStub.getCredentials() as any);
+        spyOn(googleAuthLib.GoogleAuth.prototype, 'getClient').and.returnValue(googleAuthStub.getClient());
 
         // tslint:disable-next-line:no-require-imports
         myFunctions = require('./index');
@@ -169,7 +170,7 @@ describe('Triggers - Pub/Sub', (): void => {
         const res = await wrapped({});
 
         expect(res.backupUrl)
-            .toContain('gs://undefined.appspot.com/backups/firestore/');
+            .toContain('gs://not-a-project.appspot.com/backups/firestore/');
     });
 
     it('should fail backupFirestore', async () => {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import { CookieLawModule } from 'angular2-cookie-law';
 import { Angulartics2Module } from 'angulartics2';
 
 import { environment } from '../environments/environment';
+
 import { APP_CONFIG, APP_DI_CONFIG } from './app-config';
 import { AppRoutingModule } from './app-routing.module';
 import { AlertComponent } from './components/alert/alert.component';
@@ -112,8 +113,7 @@ import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
         CarouselService,
         PageService,
         ConfigService,
-        {provide: APP_CONFIG, useValue: APP_DI_CONFIG},
-        {provide: FirestoreSettingsToken, useValue: {}}
+        {provide: APP_CONFIG, useValue: APP_DI_CONFIG}
     ],
     bootstrap: [AppComponent]
 })

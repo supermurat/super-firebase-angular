@@ -13,6 +13,8 @@ import { JsonLDService } from './jsonld.service';
  */
 @Injectable()
 export class SeoService {
+    /** locale */
+    locale: string;
     /** Renderer2 object */
     renderer: Renderer2;
     /**
@@ -23,7 +25,8 @@ export class SeoService {
         /** type of meta tag; name or property */
         type: string,
         /** value of name or property, NOT content value */
-        value: string}>;
+        value: string
+    }>;
 
     /** config for SEO */
     configSEO: ConfigSeoModel = {};
@@ -42,7 +45,7 @@ export class SeoService {
      * @param sanitizer: DomSanitizer
      * @param platformId: PLATFORM_ID
      * @param appConfig: APP_CONFIG
-     * @param locale: LOCALE_ID
+     * @param localeP: LOCALE_ID
      * @param doc: DOCUMENT
      * @param jsonLDService: JsonLDService
      */
@@ -55,9 +58,10 @@ export class SeoService {
                 private readonly sanitizer: DomSanitizer,
                 @Inject(PLATFORM_ID) private readonly platformId: string,
                 @Inject(APP_CONFIG) private readonly appConfig: InterfaceAppConfig,
-                @Inject(LOCALE_ID) private readonly locale: string,
-                @Inject(DOCUMENT) public doc,
+                @Inject(LOCALE_ID) private readonly localeP: string,
+                @Inject(DOCUMENT) public doc: Document,
                 private readonly jsonLDService: JsonLDService) {
+        this.locale = localeP === 'tr' ? 'tr-TR' : 'en-US'; // TODO: fix for other locales, this is quick fix to force to use with culture codes
     }
 
     /**
@@ -212,9 +216,10 @@ export class SeoService {
      */
     removeLink(attrSelector: string): void {
         if (attrSelector) {
-            for (const oldLink of this.doc.querySelectorAll(attrSelector)) {
-                this.renderer.removeChild(this.doc.head, oldLink);
-            }
+            this.doc.querySelectorAll(attrSelector)
+                .forEach((oldLink: Element) => {
+                    this.renderer.removeChild(this.doc.head, oldLink);
+                });
         }
     }
 
@@ -263,8 +268,9 @@ export class SeoService {
 
     /**
      * http 404 not found
+     * @param htmlContent: html content, can be useful for debugging
      */
-    http404(): void {
+    http404(htmlContent?: string): void {
         if (isPlatformBrowser(this.platformId)) {
             this.ngZone.run(() => {
                 this.router.navigate([this.router.url, 'http-404'])
@@ -275,7 +281,8 @@ export class SeoService {
             });
         } else {
             this.httpStatus$.next({
-                code: 404
+                code: 404,
+                htmlContent
             });
         }
     }

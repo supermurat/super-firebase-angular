@@ -143,7 +143,7 @@ describe('QuoteListComponent_tr-TR', () => {
                 QuoteListComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

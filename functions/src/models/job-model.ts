@@ -7,14 +7,14 @@ export class JobModel {
     /** action key to do */
     actionKey?: string;
     /** created date */
-    created?: firebase.firestore.Timestamp;
+    created?: firebase.default.firestore.Timestamp;
     /** who is want to create this job? */
     createdBy?: string;
 
     /** started date */
-    started?: firebase.firestore.Timestamp;
+    started?: firebase.default.firestore.Timestamp;
     /** finished date */
-    finished?: firebase.firestore.Timestamp;
+    finished?: firebase.default.firestore.Timestamp;
     /** duration as seconds */
     duration?: number;
     /** result of action */

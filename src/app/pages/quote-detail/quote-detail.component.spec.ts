@@ -119,7 +119,7 @@ describe('QuoteDetailComponent_tr-TR', () => {
                 QuoteDetailComponent
             ],
             providers: [
-                {provide: LOCALE_ID, useValue: 'tr-TR'}
+                {provide: LOCALE_ID, useValue: 'tr'}
             ],
             imports: [
                 TestHelperModule,

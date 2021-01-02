@@ -116,3 +116,8 @@ export const sendMail = async (mailContent: MailModel, privateConfig: PrivateCon
             }
         }
     });
+
+/** get null instead of undefined because of firestore */
+export const getNullInsteadOfUndefined = (value: string): string =>
+    // tslint:disable-next-line:no-null-keyword
+    value === undefined ? null : value;
