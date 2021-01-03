@@ -29,8 +29,8 @@ script:
   - if [[ ($TRAVIS_BRANCH != "beta" && $TRAVIS_BRANCH != "master") || "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run test:cover:all; else echo "!Skipped to run test:cover!"; fi
   - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:beta; else echo "!Skipped to run deploy:prepare:beta!"; fi
   - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == false ]]; then npm run deploy:prepare:prod; else echo "!Skipped to run deploy:prepare:prod!"; fi
-  - cat ./public/all-coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - cat ./public/all-coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN"
+  - cat ./public/all-coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js | echo $1
+  - cat ./public/all-coverage/lcov.info | ./node_modules/.bin/codacy-coverage -p . --token "$CODACY_PROJECT_TOKEN" | echo $1
 after_success:
   - echo "!after_success!"
   - if [[ $TRAVIS_BRANCH == "beta" && $TRAVIS_PULL_REQUEST == false ]]; then firebase deploy --project super-murat-beta --token "$FIREBASE_TOKEN_BETA" -m "Deploying by Travis CI - Build $TRAVIS_BUILD_NUMBER# $TRAVIS_BUILD_WEB_URL" --non-interactive; else echo "!Skipped to deploy firebase:beta!"; fi
