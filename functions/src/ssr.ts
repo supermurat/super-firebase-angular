@@ -145,13 +145,10 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
     new Promise((resolve, reject): void => {
         const locale = getLocale(req);
         const bundle = serverJS[locale];
-        // try to understand what is going on beta
         console.log(
             'getSSR:locale:', `"${locale}"`,
             Object.keys(serverJS).toString(),
-            Object.keys(indexHtml).toString(),
-            req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//).join(';'),
-            req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//).toString()
+            Object.keys(indexHtml).toString()
         );
         console.log('getSSR:url:', `"${req.url}"`);
         console.log('getSSR:path:', `"${req.path}"`);
@@ -161,10 +158,10 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
         }));
 
         app.set('view engine', 'html');
-        app.set('views', path.join(__dirname, '../dist/browser', locale));
+        app.set('views', path.join(__dirname, '../dist/browser'));
 
         res.render(
-            'index',
+            `${locale}/index`,
             {req, res, url: req.path, providers: [
                         {provide: APP_BASE_HREF, useValue: `/${locale}/`},
                         {provide: REQUEST, useValue: req},

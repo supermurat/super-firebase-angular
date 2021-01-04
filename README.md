@@ -136,7 +136,7 @@ MIT
 [lg-bs]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/browserstack.png "Browser Stack"
 [lg-t-ci]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/travis-ci.png "Travis-CI"
 [lg-cdc]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/codacy.png "Codacy"
-[lg-coveralls]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/coveralls.png "Coveralls"
+[lg-cvr]: https://raw.githubusercontent.com/supermurat/super-firebase-angular/master/docs/images/coveralls.png "Coveralls"
 
 [st-fb]: https://firebase.google.com
 [st-jb]: https://www.jetbrains.com/?from=SuperFirebaseAngular
