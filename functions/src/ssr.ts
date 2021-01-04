@@ -148,8 +148,7 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
         console.log(
             'getSSR:locale:', `"${locale}"`,
             Object.keys(serverJS).toString(),
-            Object.keys(indexHtml).toString(),
-            req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//)
+            Object.keys(indexHtml).toString()
         );
         console.log('getSSR:url:', `"${req.url}"`);
         console.log('getSSR:path:', `"${req.path}"`);
