@@ -145,16 +145,24 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
     new Promise((resolve, reject): void => {
         const locale = getLocale(req);
         const bundle = serverJS[locale];
+        console.log(
+            'getSSR:locale:', `"${locale}"`,
+            Object.keys(serverJS).toString(),
+            Object.keys(indexHtml).toString(),
+            req.url.match(/^\/([a-z]{2}(?:-[A-Z]{2})?)\//)
+        );
+        console.log('getSSR:url:', `"${req.url}"`);
+        console.log('getSSR:path:', `"${req.path}"`);
 
         app.engine('html', bundle.ngExpressEngine({
             bootstrap: bundle.AppServerModule
         }));
 
         app.set('view engine', 'html');
-        app.set('views', path.join(__dirname, '../dist/browser', locale));
+        app.set('views', path.join(__dirname, '../dist/browser'));
 
         res.render(
-            'index',
+            `${locale}/index`,
             {req, res, url: req.path, providers: [
                         {provide: APP_BASE_HREF, useValue: `/${locale}/`},
                         {provide: REQUEST, useValue: req},
