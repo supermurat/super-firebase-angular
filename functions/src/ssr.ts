@@ -145,6 +145,7 @@ const getSSR = async (req: express.Request, res: express.Response): Promise<void
     new Promise((resolve, reject): void => {
         const locale = getLocale(req);
         const bundle = serverJS[locale];
+        // try to understand what is going on beta
         console.log(
             'getSSR:locale:', `"${locale}"`,
             Object.keys(serverJS).toString(),
