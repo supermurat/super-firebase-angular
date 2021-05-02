@@ -106,6 +106,7 @@
     "bootstrap": "4.5.3",
     "classlist.js": "1.1.20150312",
     "core-js": "3.8.0",
+    "dotenv": "8.2.0",
     "express": "^4.17.1",
     "firebase": "8.1.1",
     "grpc": "1.24.4",
