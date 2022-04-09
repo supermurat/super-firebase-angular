@@ -63,7 +63,7 @@
     "grpc": "1.24.4",
     "helmet": "4.2.0",
     "html2plaintext": "2.1.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "nodemailer": "^6.4.16",
     "protractor": "7.0.0",
     "rxjs": "6.6.3",
